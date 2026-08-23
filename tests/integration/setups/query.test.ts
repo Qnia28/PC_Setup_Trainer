@@ -414,15 +414,18 @@ describe("setup catalog/query", () => {
     expect(candidates[0]?.setup.solveRate).toBe(98.45);
   });
 
-  it("L>O replacement 상태에는 일반 1회차 셋업을 추천하지 않는다", () => {
-    expect(querySetups({
+  it("L>O replacement 상태에는 Cycle 8 L/J>X 셋업만 추천한다", () => {
+    const candidates = querySetups({
       cycle: 1,
       board: createBoard(),
       active: "L",
       hold: "I",
       next: ["S", "Z", "T", "J", "L"],
       holdAvailable: true,
-    })).toEqual([]);
+    });
+    expect(candidates.length).toBeGreaterThan(0);
+    expect(candidates.every(({ setup }) => setup.cycle === 8)).toBe(true);
+    expect(candidates.some(({ setup }) => setup.cycle === 1)).toBe(false);
   });
 
   it("동일 확률인 좌우 미러 셋업은 추천 목록에 하나만 반환한다", () => {

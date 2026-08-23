@@ -636,6 +636,30 @@
       },
       "complete": false,
       "note": "Normal Cycle 7, reviewed advanced 4P, and the reviewed LSZ/JSZ/ISZ/OSZ QB subset are active. OQB-gated advanced 4P branches remain staged; duplicate-pool QB remains unavailable."
+    },
+    "8": {
+      "setups": "cycle-8-tx-setups.json",
+      "policy": "cycle-8-tx-policy.json",
+      "setupCount": 220,
+      "logicalSetupCount": 220,
+      "runtimeEnabled": true,
+      "conditionCompilerReady": true,
+      "setupsSha256": "0f069d2f7f7d62701bae665ce39f30927910858df303d50c06b984038ef91eaa",
+      "policySha256": "1191b091c35ae64863ded26601ae7e50df7625e5cc1e76e4a3dd949a92fa2617",
+      "complete": false,
+      "note": "The reviewed T>X and L/J>X source scopes are active for their exact replacement classes. General 4P/3P and T-specific QB/OQB are routed without Cycle 1 or geometry-only fallback.",
+      "additionalCatalogs": [
+        {
+          "setups": "cycle-8-ljx-setups.json",
+          "policy": "cycle-8-ljx-policy.json",
+          "setupCount": 123,
+          "logicalSetupCount": 123,
+          "runtimeEnabled": true,
+          "conditionCompilerReady": true,
+          "setupsSha256": "081d6067880da4767a4cdbaa1f8c9e8532c764b2fbb06ec9d5d5f19c8f5f5a95",
+          "policySha256": "420f054f461a85c5b3bb48bdb00458f679d6e619f0588643d6e0d7484e2651f5"
+        }
+      ]
     }
   },
   "geometryFumen": {
@@ -646,8 +670,8 @@
     "colored": true,
     "comments": false,
     "operations": false,
-    "fileCount": 57,
-    "setupCount": 1967,
+    "fileCount": 59,
+    "setupCount": 2187,
     "allRoundTripExact": true
   }
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createBoard } from "../engine/board";
-import { cycle1QueueContext } from "./cycle1Context";
+import { cycle1QueueContext, displayCycleForQuery } from "./cycle1Context";
 import type { SetupQuery } from "./query";
 
 function query(overrides: Partial<SetupQuery> = {}): SetupQuery {
@@ -34,6 +34,11 @@ describe("Cycle 1 normal-bag and replacement-cycle boundary", () => {
         label: "L>O",
       },
     });
+    expect(displayCycleForQuery(replacement)).toBe(8);
+  });
+
+  it("keeps the normal Cycle 1 window displayed as Cycle 1", () => {
+    expect(displayCycleForQuery(query())).toBe(1);
   });
 
   it("keeps a distinct six-piece prefix valid at the initial HOLD-empty start", () => {

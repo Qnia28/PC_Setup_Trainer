@@ -1,0 +1,77 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e9eef7;
+  background: #090c11;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { min-width: 900px; min-height: 100vh; margin: 0; background: radial-gradient(circle at 50% 0, #171f2b 0, #090c11 55%); }
+button, input, textarea, select { font: inherit; }
+button, input, textarea, select { color: #e9eef7; background: #151d27; border: 1px solid #3a4859; border-radius: 6px; }
+button { padding: 9px 13px; cursor: pointer; }
+button:hover:not(:disabled) { background: #243140; border-color: #5c7188; }
+button:disabled { cursor: default; opacity: .48; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, canvas:focus-visible { outline: 2px solid #64d5f5; outline-offset: 2px; }
+
+.sfinder-command-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 38px 0 64px; }
+.sfinder-command-heading { margin-bottom: 24px; padding: 0 0 20px; border-bottom: 1px solid #2c3745; }
+.sfinder-command-heading h1 { margin: 0 0 8px; font-size: 30px; }
+.sfinder-command-heading p { margin: 0; color: #91a0b3; font-size: 14px; }
+
+.sfinder-line-modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; margin-bottom: 20px; padding: 4px; background: #0e141c; border: 1px solid #293543; border-radius: 7px; }
+.sfinder-line-modes button { min-height: 42px; color: #91a0b3; background: transparent; border-color: transparent; font-size: 12px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.sfinder-line-modes button.selected { color: #dff8ff; background: #173744; border-color: #3f94ad; }
+
+.sfinder-command-workspace { display: grid; grid-template-columns: 420px minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.sfinder-field-panel, .sfinder-command-form, .sfinder-command-results { padding: 20px; background: rgba(17, 24, 33, .9); border: 1px solid #344152; border-radius: 9px; }
+.sfinder-panel-heading { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 13px; }
+.sfinder-panel-heading span, .sfinder-command-form label > span, .sfinder-fumen-input > span { color: #7f90a4; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.sfinder-panel-heading button { padding: 6px 10px; font-size: 12px; }
+.sfinder-field-panel canvas { display: block; width: 360px; max-width: 100%; border: 1px solid #526174; cursor: crosshair; touch-action: none; user-select: none; }
+.sfinder-field-panel > p { margin: 9px 0 0; color: #75869a; font-size: 12px; }
+.sfinder-fumen-input { display: grid; gap: 6px; margin-top: 15px; }
+.sfinder-fumen-input textarea { min-height: 68px; padding: 9px 10px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.sfinder-fumen-input textarea[aria-invalid="true"] { color: #ffc1c4; border-color: #9a4754; background: #29191f; }
+.sfinder-apply-fumen { width: 100%; margin-top: 8px; }
+.sfinder-field-error { color: #ffb2b6 !important; }
+
+.sfinder-command-form { display: grid; min-width: 0; align-content: start; gap: 18px; overflow: hidden; }
+.sfinder-form-grid { display: grid; min-width: 0; grid-template-columns: minmax(0, 2fr) 110px minmax(150px, 1fr); gap: 14px; }
+.sfinder-form-grid label { display: grid; min-width: 0; align-content: start; gap: 6px; }
+.sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { min-height: 42px; padding: 9px 11px; }
+.sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { width: 100%; min-width: 0; max-width: 100%; }
+.sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.sfinder-queue-input { grid-column: 1; }
+.sfinder-target-input { grid-column: 2; }
+.sfinder-save-input { grid-column: 3; }
+.sfinder-wide-input { grid-column: 1 / -1; }
+.sfinder-wide-input textarea { min-height: 92px; resize: vertical; }
+.sfinder-form-grid .sfinder-checkbox-input { display: flex; flex-direction: row; align-items: center; gap: 8px; min-height: 42px; padding: 0 3px; }
+.sfinder-checkbox-input input { width: auto; min-height: 0; margin: 0; accent-color: #63d3f3; }
+.sfinder-checkbox-input span { color: #bdc9d6 !important; letter-spacing: 0 !important; text-transform: none !important; }
+.sfinder-command-action { display: grid; gap: 6px; }
+.sfinder-run-command { min-height: 48px; color: #061016; background: #67d4f5; border-color: #67d4f5; font-weight: 800; }
+.sfinder-finished-time { color: #718196; font-size: 11px; line-height: 1.4; text-align: center; }
+
+.sfinder-command-results { min-height: 180px; margin-top: 20px; text-align: left; }
+.sfinder-command-results h2 { margin: 7px 0; font-size: 21px; }
+.sfinder-command-results p { margin: 0; color: #718196; }
+.sfinder-command-results.error { color: #ffc1c4; border-color: #854451; background: #28171d; }
+.sfinder-result-metrics { display: flex; flex-wrap: wrap; gap: 10px; }
+.sfinder-result-metrics div { display: grid; min-width: 120px; gap: 4px; padding: 11px 13px; background: #121b25; border: 1px solid #334152; border-radius: 6px; }
+.sfinder-result-metrics span, .sfinder-result-fumen > span { color: #7f90a4; font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+.sfinder-result-metrics strong { font-size: 18px; }
+.sfinder-save-table { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin-top: 16px; }
+.sfinder-save-table div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; background: #121b25; border: 1px solid #334152; border-radius: 6px; }
+.sfinder-save-table span { color: #91a0b3; font-size: 12px; }
+.sfinder-failed-queues { margin-top: 16px; color: #aab8c8; }
+.sfinder-failed-queues code { display: block; max-height: 140px; margin-top: 8px; padding: 10px; overflow: auto; white-space: normal; background: #0d141c; border-radius: 5px; }
+.sfinder-result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 18px; }
+.sfinder-result-page { display: grid; gap: 8px; padding: 12px; background: #121b25; border: 1px solid #334152; border-radius: 7px; }
+.sfinder-result-page strong { overflow: hidden; color: #cbd6e1; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.sfinder-result-page canvas { display: block; max-width: 100%; height: auto; }
+.sfinder-result-limit { margin-top: 12px !important; }
+.sfinder-result-fumen { display: grid; gap: 7px; margin-top: 18px; }
+.sfinder-result-fumen textarea { width: 100%; min-width: 0; max-width: 100%; min-height: 80px; padding: 10px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }

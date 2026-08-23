@@ -37,6 +37,27 @@ import {
   type SelectedRecommendationScope,
 } from "./recommendationScope";
 import { normalizeSelectedCycle5AdvancedPolicy } from "./selectedCycle5AdvancedPolicyAdapter";
+import {
+  canonicalCycle8TxSetupId,
+  cycle8TxCatalogForClass,
+  cycle8TxConditionLabel,
+  cycle8TxExactClass,
+  cycle8TxOqbBranch,
+  cycle8TxRuntimeBundle,
+  cycle8TxRuntimeEntryForSetup,
+  matchingCycle8TxDirectQbEntries,
+  matchingCycle8TxOqbPlans,
+  type Cycle8TxFamilyKind,
+  type Cycle8TxQueueState,
+} from "./cycle8TxCatalog";
+import {
+  cycle8LjxCatalogForClass,
+  cycle8LjxExactClass,
+  cycle8LjxRuntimeBundle,
+  cycle8LjxRuntimeEntryForSetup,
+  cycle8LjxScoreForSetup,
+  type Cycle8LjxFamilyKind,
+} from "./cycle8LjxCatalog";
 
 export interface SetupQuery {
   cycle: Cycle;
@@ -354,6 +375,8 @@ export interface RecommendationCatalogSearch {
   placeableNextCount?: number;
   candidateLimit?: number;
   scoreForSetup?: (setup: SetupVariant) => readonly number[];
+  /** Data-domain cycle when it differs from the live game phase (Cycle 8 uses game Cycle 1). */
+  setupCycle?: number;
   source?: RecommendationSourceIdentity;
 }
 
@@ -713,6 +736,7 @@ function executeRecommendationSearchSync(search: RecommendationCatalogSearch): S
     search.placeableNextCount,
     search.candidateLimit,
     search.scoreForSetup,
+    search.setupCycle,
   );
   return search.source
     ? candidates.map((candidate) => ({ ...candidate, recommendationSource: search.source }))
@@ -1042,6 +1066,180 @@ export function* recommendationProgram(
   query: SetupQuery,
   scope?: SelectedRecommendationScope,
 ): RecommendationProgram {
+  if (!scope && query.cycle === 1) {
+    const context = cycle1QueueContext(query);
+    if (context?.classificationMode === "replacement-cycle" && context.replacement) {
+      const ljxExactClass = cycle8LjxExactClass(
+        context.replacement.extraPiece,
+        context.replacement.replacedPiece,
+      );
+      const ljxBundle = cycle8LjxRuntimeBundle();
+      if (ljxExactClass && ljxBundle) {
+        const familyRank = new Map<Cycle8LjxFamilyKind, number>([
+          ["general-4p", 0],
+          ["general-3p", 1],
+        ]);
+        const search = (
+          catalog: readonly SetupVariant[],
+          familyKind: Cycle8LjxFamilyKind,
+        ): RecommendationCatalogSearch => ({
+          catalog,
+          query: { ...query, next: context.searchNext },
+          policyCatalog: ljxBundle.setups,
+          placeableNextCount: context.placeableNextCount,
+          setupCycle: 8,
+          scoreForSetup: (setup) => [
+            familyRank.get(familyKind)!,
+            ...cycle8LjxScoreForSetup(setup, ljxExactClass),
+            ...candidateScore(setup),
+          ],
+        });
+        const annotate = (candidates: SetupCandidate[], familyKind: Cycle8LjxFamilyKind) =>
+          candidates.map((candidate) => {
+            const entry = cycle8LjxRuntimeEntryForSetup(candidate.setup);
+            return {
+              ...candidate,
+              reasons: [
+                `Classified as Cycle 8 ${ljxExactClass} from the exact seven-piece replacement window.`,
+                `${familyKind === "general-4p" ? "General 4P" : "General 3P"} source family.`,
+                ...(entry?.sourceRecommended === false ? ["The source marks this exact class as non-recommended."] : []),
+                ...candidate.reasons,
+              ],
+            };
+          });
+        const general4 = annotate(yield {
+          type: "search",
+          search: search(cycle8LjxCatalogForClass(ljxExactClass, "general-4p"), "general-4p"),
+        }, "general-4p");
+        const general3 = annotate(yield {
+          type: "search",
+          search: search(cycle8LjxCatalogForClass(ljxExactClass, "general-3p"), "general-3p"),
+        }, "general-3p");
+        const candidates = limitSetupCandidatesForCycle([...general4, ...general3], 1, query.maxCandidates);
+        yield {
+          type: "stage",
+          result: {
+            stage: "primary",
+            candidates,
+            preferredCandidateId: candidates[0]?.setup.id ?? null,
+            complete: true,
+          },
+        };
+        return candidates;
+      }
+      const exactClass = cycle8TxExactClass(
+        context.replacement.extraPiece,
+        context.replacement.replacedPiece,
+      );
+      const bundle = cycle8TxRuntimeBundle();
+      if (!exactClass || !bundle) {
+        const result = { stage: "primary" as const, candidates: [], preferredCandidateId: null, complete: true };
+        yield { type: "stage", result };
+        return [];
+      }
+
+      const state: Cycle8TxQueueState = { hold: query.hold, active: query.active, next: query.next };
+      const familyRank = new Map<Cycle8TxFamilyKind, number>([
+        ["general-4p", 0],
+        ["general-3p", 1],
+        ["qb", 2],
+        ["oqb", 3],
+      ]);
+      const search = (catalog: readonly SetupVariant[], familyKind: Cycle8TxFamilyKind): RecommendationCatalogSearch => ({
+        catalog,
+        query: { ...query, next: context.searchNext },
+        policyCatalog: bundle.setups,
+        placeableNextCount: context.placeableNextCount,
+        setupCycle: 8,
+        scoreForSetup: (setup) => [
+          cycle8TxRuntimeEntryForSetup(setup)?.sourceOrder ?? Number.MAX_SAFE_INTEGER,
+          ...candidateScore(setup),
+        ],
+      });
+      const annotateGeneral = (candidates: SetupCandidate[], familyKind: Cycle8TxFamilyKind) =>
+        candidates.map((candidate) => ({
+          ...candidate,
+          score: [familyRank.get(familyKind)!, ...candidate.score],
+          reasons: [
+            `Classified as Cycle 8 ${exactClass} from the exact seven-piece replacement window.`,
+            `${familyKind === "general-4p" ? "General 4P" : "General 3P"} source family.`,
+            ...candidate.reasons,
+          ],
+        }));
+
+      const general4 = annotateGeneral(yield {
+        type: "search",
+        search: search(cycle8TxCatalogForClass(exactClass, "general-4p"), "general-4p"),
+      }, "general-4p");
+      const general3 = annotateGeneral(yield {
+        type: "search",
+        search: search(cycle8TxCatalogForClass(exactClass, "general-3p"), "general-3p"),
+      }, "general-3p");
+
+      const directEntries = matchingCycle8TxDirectQbEntries(exactClass, state);
+      const directBySetup = new Map(directEntries.flatMap((entry) =>
+        entry.setupIds.map((setupId) => [setupId, entry] as const)));
+      const directCatalog = cycle8TxCatalogForClass(exactClass, "qb").filter((setup) =>
+        directBySetup.has(canonicalCycle8TxSetupId(setup)));
+      const directRaw = directCatalog.length > 0
+        ? yield { type: "search", search: search(directCatalog, "qb") }
+        : [];
+      const direct = directRaw.flatMap((candidate) => {
+        const entry = directBySetup.get(canonicalCycle8TxSetupId(candidate.setup));
+        if (!entry) return [];
+        return [{
+          ...candidate,
+          score: [familyRank.get("qb")!, ...candidate.score],
+          reasons: [
+            `Cycle 8 ${exactClass} direct QB · exact HOLD/ACTIVE/NEXT condition.`,
+            ...(entry.postBuildHold ? [`The normalized queue window preserves ${entry.postBuildHold} in HOLD after the 3P build.`] : []),
+            ...candidate.reasons,
+          ],
+          policy: { ruleId: entry.id, branchId: "direct", preferred: true },
+          qbCondition: cycle8TxConditionLabel(entry, exactClass, "QB"),
+          recommendationLabel: cycle8TxConditionLabel(entry, exactClass, "QB"),
+        }];
+      });
+
+      const oqbPlans = matchingCycle8TxOqbPlans(exactClass, state);
+      const oqbBySetup = new Map(oqbPlans.map((plan) => [plan.preconditionSetupId, plan]));
+      const oqbCatalog = cycle8TxCatalogForClass(exactClass, "oqb").filter((setup) =>
+        oqbBySetup.has(canonicalCycle8TxSetupId(setup)));
+      const oqbRaw = oqbCatalog.length > 0
+        ? yield { type: "search", search: search(oqbCatalog, "oqb") }
+        : [];
+      const oqb = oqbRaw.flatMap((candidate) => {
+        const plan = oqbBySetup.get(canonicalCycle8TxSetupId(candidate.setup));
+        if (!plan) return [];
+        const branch = cycle8TxOqbBranch(plan, exactClass, state, candidate.plan);
+        if (!branch) return [];
+        return [{
+          ...candidate,
+          score: [familyRank.get("oqb")!, plan.checkpoint.placedCount, ...candidate.score],
+          reasons: [
+            `Cycle 8 ${exactClass} OQB precondition · exact staged queue policy.`,
+            `Observe the selected ${branch.id} branch after ${plan.checkpoint.placedCount} placement(s).`,
+            ...candidate.reasons,
+          ],
+          policy: { ruleId: plan.id, branchId: branch.id, preferred: true },
+          qbCondition: cycle8TxConditionLabel(plan, exactClass, "OQB"),
+          recommendationLabel: cycle8TxConditionLabel(plan, exactClass, "OQB"),
+        }];
+      });
+      const ordered = [...general4, ...general3, ...direct, ...oqb];
+      const candidates = limitSetupCandidatesForCycle(ordered, 1, query.maxCandidates);
+      yield {
+        type: "stage",
+        result: {
+          stage: "primary",
+          candidates,
+          preferredCandidateId: candidates[0]?.setup.id ?? null,
+          complete: true,
+        },
+      };
+      return candidates;
+    }
+  }
   if (scope && query.cycle === 5) {
     const standardPlan = selectedStructuredPlan(query, scope);
     const standardBatches: SetupCandidate[][] = [];
@@ -1634,10 +1832,11 @@ function queryCatalogInternal(
   placeableNextCount?: number,
   candidateLimit?: number,
   scoreForSetup?: (setup: SetupVariant) => readonly number[],
+  setupCycle: number = query.cycle,
 ): SetupCandidate[] {
   const reachabilityCache: ReachabilityCache = new Map();
   const rankedSetups = catalog
-    .filter((setup) => setup.cycle === query.cycle && !isSolutionShadowSetup(setup))
+    .filter((setup) => setup.cycle === setupCycle && !isSolutionShadowSetup(setup))
     .map((setup) => {
       const policyEvaluation = evaluateSelectionPolicy(policy, setup, policyCatalog, policyPrefix);
       const effectiveSetup = policyEvaluation?.solveRate === undefined
@@ -1727,10 +1926,11 @@ export async function queryCatalogCooperative(
   placeableNextCount?: number,
   candidateLimit?: number,
   scoreForSetup?: (setup: SetupVariant) => readonly number[],
+  setupCycle: number = query.cycle,
 ): Promise<SetupCandidate[]> {
   const reachabilityCache: ReachabilityCache = new Map();
   const rankedSetups = catalog
-    .filter((setup) => setup.cycle === query.cycle && !isSolutionShadowSetup(setup))
+    .filter((setup) => setup.cycle === setupCycle && !isSolutionShadowSetup(setup))
     .map((setup) => {
       const policyEvaluation = evaluateSelectionPolicy(policy, setup, policyCatalog, policyPrefix);
       const effectiveSetup = policyEvaluation?.solveRate === undefined

@@ -5,6 +5,7 @@ import type { GameAction, Piece } from "../engine/types";
 import { normalizePieceNotationForDisplay } from "../engine/pieceDisplay";
 import { InputController } from "../input/controller";
 import { releaseGameplayButtonFocus } from "../input/buttonFocus";
+import { SiteHeader } from "../site/SiteHeader";
 import { SettingsPanel } from "../input/SettingsPanel";
 import { loadInputSettings, saveInputSettings } from "../input/settings";
 import { drawPiecePreview, drawSetupPreview, drawSolutionPreview } from "../render/canvas";
@@ -30,7 +31,7 @@ import {
   type SolveQueueAnalysis,
 } from "../solver/solveQueue";
 import { drawReplayFrame, drawReplaySnapshotGame } from "./canvas";
-import { deserializeBoard, MAX_REPLAY_INPUT_SIZE, parseReplayInput, QPCR3_CODE_PREFIX, REPLAY_TRANSFER_STORAGE_KEY } from "./format";
+import { deserializeBoard, encodeReplayCode, MAX_REPLAY_INPUT_SIZE, parseReplayInput, QPCR3_CODE_PREFIX, REPLAY_TRANSFER_STORAGE_KEY, type ReplayData } from "./format";
 import { decodeQpcr3Container, QPCR3_MAX_BINARY_SIZE } from "./qpcr3";
 import { segmentForFrame } from "./navigation";
 import { splitReplayQueueByBag } from "./queueBag";
@@ -46,6 +47,8 @@ import { createReplayTimeline, type ReplayTimeline } from "./timeline";
 import { importJstrisReplay } from "./jstris";
 import { snapshotGameStateAt } from "./snapshot";
 import { matchesSnapshotExitBinding } from "./snapshotShortcut";
+import { ReplayGifDialog } from "./ReplayGifDialog";
+import { buildReplayShareUrl, MAX_REPLAY_SHARE_URL_LENGTH, parseReplayShareLaunch, resolveReplaySharePosition, type ReplayShareTarget } from "./shareRoute";
 import {
   formatReplaySolvePrediction,
   matchesReplaySeeSolveBinding,
@@ -54,6 +57,8 @@ import {
   replaySolveSessionKey,
   replaySolveUnavailableReason,
 } from "./solveController";
+
+const REPLAY_SHARE_UI_ENABLED = false;
 
 function PiecePreview({ piece, label }: { piece: Piece | null; label?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -131,6 +136,9 @@ export function ReplayApp() {
   const [snapshotRevision, setSnapshotRevision] = useState(0);
   const [settings, setSettings] = useState(loadInputSettings);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [gifDialogOpen, setGifDialogOpen] = useState(false);
+  const [portableReplayCode, setPortableReplayCode] = useState<string | null>(null);
+  const [shareButtonLabel, setShareButtonLabel] = useState("Copy Link");
   const [recommendationView, setRecommendationView] = useState<RecommendationViewState>({ status: "unavailable" });
   const [selectedRecommendationId, setSelectedRecommendationId] = useState<string | null>(null);
   const [replaySolveView, setReplaySolveView] = useState<ReplaySolveView>({ status: "idle" });
@@ -150,14 +158,30 @@ export function ReplayApp() {
   const replaySolveShortcutPending = useRef(false);
   if (!replaySolver.current) replaySolver.current = new LiveSolverClient();
 
-  function installReplay(loaded: ReplayTimeline) {
+  function installReplay(loaded: ReplayTimeline, data: ReplayData, target: ReplayShareTarget | null = null) {
     recommendationPool.current?.cancelAll();
     replayGeneration.current += 1;
     selectedRecommendationSegment.current = null;
     setSelectedRecommendationId(null);
     setReplay(loaded);
-    setPosition(0);
-    setError("");
+    try {
+      const code = encodeReplayCode(data);
+      setPortableReplayCode(code.length <= MAX_REPLAY_SHARE_URL_LENGTH ? code : null);
+    } catch {
+      setPortableReplayCode(null);
+    }
+    if (target) {
+      try {
+        setPosition(resolveReplaySharePosition(loaded, target));
+        setError("");
+      } catch (reason) {
+        setPosition(0);
+        setError(reason instanceof Error ? reason.message : "Shared replay position is unavailable.");
+      }
+    } else {
+      setPosition(0);
+      setError("");
+    }
   }
 
   function clearReplay() {
@@ -165,16 +189,18 @@ export function ReplayApp() {
     selectedRecommendationSegment.current = null;
     setSelectedRecommendationId(null);
     setReplay(null);
+    setPortableReplayCode(null);
+    setShareButtonLabel("Copy Link");
   }
 
-  async function loadReplay(raw: string) {
+  async function loadReplay(raw: string, target: ReplayShareTarget | null = null) {
     setLoading(true);
     try {
       const trimmed = raw.trim();
       const data = trimmed.startsWith("QPCR") || trimmed.startsWith("{")
         ? parseReplayInput(trimmed)
         : await importJstrisReplay(trimmed);
-      installReplay(createReplayTimeline(data));
+      installReplay(createReplayTimeline(data), data, target);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not load replay.");
     } finally {
@@ -185,17 +211,29 @@ export function ReplayApp() {
   useEffect(() => {
     if (initialLoadStarted.current) return;
     initialLoadStarted.current = true;
+    let shareLaunch;
+    try {
+      shareLaunch = parseReplayShareLaunch(new URL(window.location.href));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Shared replay link is invalid.");
+      return;
+    }
+    if (shareLaunch.replayCode) {
+      setInput(shareLaunch.replayCode);
+      void loadReplay(shareLaunch.replayCode, shareLaunch.target);
+      return;
+    }
     const routeReplayUrl = jstrisReplayUrlFromViewerPath(window.location.pathname);
     if (routeReplayUrl) {
       setInput(routeReplayUrl);
-      void loadReplay(routeReplayUrl);
+      void loadReplay(routeReplayUrl, shareLaunch.target);
       return;
     }
     try {
       const transferred = localStorage.getItem(REPLAY_TRANSFER_STORAGE_KEY);
       if (transferred) {
         localStorage.removeItem(REPLAY_TRANSFER_STORAGE_KEY);
-        void loadReplay(transferred);
+        void loadReplay(transferred, shareLaunch.target);
       }
     } catch {
       // Manual code and file loading remain available.
@@ -215,6 +253,11 @@ export function ReplayApp() {
   }) : null, [frame, snapshotState, snapshotRevision]);
   const currentSegment = frame ? segmentForFrame(segments, position) : undefined;
   const segmentPosition = currentSegment ? segments.indexOf(currentSegment) : -1;
+  const currentShareUrl = useMemo(() => {
+    if (!frame || typeof window === "undefined") return null;
+    try { return buildReplayShareUrl(new URL(window.location.href), portableReplayCode, frame); }
+    catch { return null; }
+  }, [frame, portableReplayCode]);
   const cycles = useMemo(() => {
     const grouped = new Map<number, typeof segments>();
     for (const segment of segments) {
@@ -471,7 +514,7 @@ export function ReplayApp() {
       if (file.name.toLowerCase().endsWith(".bin")) {
         if (file.size > QPCR3_MAX_BINARY_SIZE) { setError("QPCR3 binary file is too large."); return; }
         const data = decodeQpcr3Container(new Uint8Array(await file.arrayBuffer()));
-        installReplay(createReplayTimeline(data));
+        installReplay(createReplayTimeline(data), data);
         return;
       }
       if (file.size > MAX_REPLAY_INPUT_SIZE) { setError("Replay file is too large."); return; }
@@ -480,6 +523,26 @@ export function ReplayApp() {
       setError("Could not read the selected file.");
     } finally {
       event.target.value = "";
+    }
+  }
+
+  useEffect(() => { setShareButtonLabel("Copy Link"); }, [position, replay]);
+
+  async function copyShareLink() {
+    if (!currentShareUrl) return;
+    try {
+      await navigator.clipboard.writeText(currentShareUrl);
+      setShareButtonLabel("Copied");
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = currentShareUrl;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      setShareButtonLabel(copied ? "Copied" : "Copy failed");
     }
   }
 
@@ -502,10 +565,9 @@ export function ReplayApp() {
     return () => window.removeEventListener("keydown", handleShortcut);
   }, [replay, segmentPosition, segments, snapshotSession]);
 
-  return <main className="replay-shell" onPointerUpCapture={releaseGameplayButtonFocus}>
+  return <><SiteHeader active="replay" /><main className="replay-shell" onPointerUpCapture={releaseGameplayButtonFocus}>
     <header className="replay-header">
       <div><span>GUIDED PC MODE</span><h1>Replay Viewer</h1><p>Review every placement or jump directly to a Perfect Clear.</p></div>
-      <a href="/">Back to Game</a>
     </header>
 
     {!replay && <section className="replay-loader" aria-labelledby="load-replay-title">
@@ -557,8 +619,22 @@ export function ReplayApp() {
                   className="replay-pc-solver-link disabled"
                   role="link"
                   aria-disabled="true"
-                  title="A complete seven-piece queue and encodable field are required."
-                >PC Solver <span aria-hidden="true">↗</span></span>}
+                 title="A complete seven-piece queue and encodable field are required."
+                 >PC Solver <span aria-hidden="true">↗</span></span>}
+              {REPLAY_SHARE_UI_ENABLED && <button
+                type="button"
+                className="replay-copy-link-button"
+                disabled={snapshotSession !== null || currentShareUrl === null}
+                title={snapshotSession ? "Exit Snapshot before sharing the replay position." : currentShareUrl ? "Copy a link that opens this exact PC and placement." : "This replay is too large for a reliable share link."}
+                onClick={() => void copyShareLink()}
+              >{shareButtonLabel}</button>}
+              <button
+                type="button"
+                className="replay-make-gif-button"
+                disabled={snapshotSession !== null}
+                title={snapshotSession ? "Exit Snapshot before exporting the replay." : "Export a range of replay stops as an animated GIF."}
+                onClick={() => setGifDialogOpen(true)}
+              >Make GIF</button>
             </aside>
             <aside className="replay-hold"><PiecePreview piece={snapshotState ? snapshotState.hold : frame.snapshot.hold} label="HOLD" /></aside>
             <div className="replay-field">
@@ -688,6 +764,7 @@ export function ReplayApp() {
         </aside>
       </section>
       {settingsOpen && <SettingsPanel settings={settings} onChange={setSettings} onClose={() => setSettingsOpen(false)} />}
+      {gifDialogOpen && <ReplayGifDialog replay={replay} currentPosition={position} onClose={() => setGifDialogOpen(false)} />}
     </>}
-  </main>;
+  </main></>;
 }

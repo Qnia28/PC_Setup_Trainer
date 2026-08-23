@@ -18,9 +18,12 @@ export interface EquivalentPlacementVariant {
   }>;
 }
 
+/** Recommendation data domain. Cycle 8 is routed while the game phase is Cycle 1. */
+export type SetupCycle = Cycle | 8;
+
 export interface SetupVariant {
   id: string;
-  cycle: Cycle;
+  cycle: SetupCycle;
   family: string;
   displayName: string;
   /** 같은 setup family 안에서 구축 큐가 달라지는 원본 형태를 구분한다. */

@@ -8,8 +8,38 @@
   },
   "redirects": [
     {
+      "source": "/",
+      "destination": "/game",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/game",
+      "permanent": true
+    },
+    {
       "source": "/replay.html",
       "destination": "/replay",
+      "permanent": true
+    },
+    {
+      "source": "/licence.html",
+      "destination": "/licence",
+      "permanent": true
+    },
+    {
+      "source": "/solver.html",
+      "destination": "/solver",
+      "permanent": true
+    },
+    {
+      "source": "/sfinder.html",
+      "destination": "/sfinder/chance",
+      "permanent": true
+    },
+    {
+      "source": "/sfinder",
+      "destination": "/sfinder/chance",
       "permanent": true
     },
     {
@@ -20,8 +50,24 @@
   ],
   "rewrites": [
     {
+      "source": "/game",
+      "destination": "/index.html"
+    },
+    {
       "source": "/replay",
       "destination": "/replay.html"
+    },
+    {
+      "source": "/licence",
+      "destination": "/licence.html"
+    },
+    {
+      "source": "/solver",
+      "destination": "/solver.html"
+    },
+    {
+      "source": "/sfinder/:command",
+      "destination": "/sfinder.html"
     },
     {
       "source": "/replay/:id",

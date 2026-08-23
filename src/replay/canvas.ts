@@ -4,8 +4,8 @@ import { BOARD_WIDTH, type BoardCell, type Cell, type GameState, type Piece } fr
 import { PIECE_COLORS } from "../render/canvas";
 import { deserializeBoard, type ReplayFrame } from "./format";
 
-function prepareCanvas(canvas: HTMLCanvasElement, width: number, height: number): CanvasRenderingContext2D {
-  const ratio = window.devicePixelRatio || 1;
+function prepareCanvas(canvas: HTMLCanvasElement, width: number, height: number, pixelRatio = window.devicePixelRatio || 1): CanvasRenderingContext2D {
+  const ratio = Math.max(1, pixelRatio);
   canvas.width = Math.round(width * ratio);
   canvas.height = Math.round(height * ratio);
   canvas.style.width = `${width}px`;
@@ -53,9 +53,13 @@ function drawGrid(context: CanvasRenderingContext2D, size: number): void {
   }
 }
 
-export function drawReplayFrame(canvas: HTMLCanvasElement, frame: ReplayFrame): void {
+export function drawReplayFrame(
+  canvas: HTMLCanvasElement,
+  frame: ReplayFrame,
+  options: { pixelRatio?: number } = {},
+): void {
   const size = REPLAY_CELL_SIZE;
-  const context = prepareCanvas(canvas, BOARD_WIDTH * size, REPLAY_VISIBLE_HEIGHT * size);
+  const context = prepareCanvas(canvas, BOARD_WIDTH * size, REPLAY_VISIBLE_HEIGHT * size, options.pixelRatio);
   drawGrid(context, size);
 
   context.fillStyle = "rgba(111,211,244,.035)";

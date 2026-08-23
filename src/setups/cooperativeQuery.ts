@@ -40,6 +40,7 @@ export async function querySetupsStagedCooperative(
       search.placeableNextCount,
       search.candidateLimit,
       search.scoreForSetup,
+      search.setupCycle,
     );
     const candidates = search.source
       ? rawCandidates.map((candidate) => ({ ...candidate, recommendationSource: search.source }))

@@ -1,4 +1,4 @@
-import { PIECES, type Piece } from "../engine/types";
+import { PIECES, type Cycle, type Piece } from "../engine/types";
 import type { SetupQuery } from "./query";
 
 export type Cycle1ClassificationMode =
@@ -116,4 +116,14 @@ export function cycle1QueueContext(query: SetupQuery): Cycle1QueueContext | null
 export function isNormalCycle1Context(context: Cycle1QueueContext): boolean {
   return context.classificationMode === "normal-seven-bag"
     || context.classificationMode === "normal-seven-bag-prefix";
+}
+
+/**
+ * User-facing cycle number. Replacement windows are the alternate Cycle 1
+ * bag form documented as Cycle 8, while the authoritative game phase remains
+ * Cycle 1 for progression and bag arithmetic.
+ */
+export function displayCycleForQuery(query: SetupQuery): Cycle | 8 {
+  if (query.cycle !== 1) return query.cycle;
+  return cycle1QueueContext(query)?.classificationMode === "replacement-cycle" ? 8 : 1;
 }

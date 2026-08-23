@@ -1,0 +1,9650 @@
+[
+  {
+    "id": "geometry-cycle-8-tx-item-001-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 001",
+    "formLabel": "Item 1 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-001-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-001-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-001-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-001-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhBthlGeBtglFeR4wwglEeR4ywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-002-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 002",
+    "formLabel": "Item 2 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-002-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-002-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-002-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-002-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0R4Feg0R4Geg0wwGeglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-003-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 003",
+    "formLabel": "Item 3 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-003-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhilFewhglAtGewhBtwwFewhAtywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-003-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 003 · Frame 2",
+    "formLabel": "Item 3 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-003-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhywFewhglwwGewhglBtFewhhlBtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-003-f002",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 003 · Frame 3",
+    "formLabel": "Item 3 · Frame 2",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-003-f002-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f002-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f002-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-003-f002-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFeilGeglwwBtFeywBtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-004-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 004",
+    "formLabel": "Item 4 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-004-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-004-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-004-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-004-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhHeAtwhwwFeBtwhxwEeAtglwhwwEeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-005-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 005",
+    "formLabel": "Item 5 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-005-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhzhGeQ4hlFewwR4glEeywQ4glJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-005-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 005 · Frame 2",
+    "formLabel": "Item 5 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-005-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f001-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-005-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhzhGeywFeR4wwglEeR4ilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-006-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 006",
+    "formLabel": "Item 6 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-006-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-006-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-006-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-006-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gBtHewwBtGexwR4FewwR4CezhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-007-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>O GENERAL-4P · 007",
+    "formLabel": "Item 7 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-007-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-007-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-007-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-007-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglwwHeywDei0zhEeg0JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-008-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>O GENERAL-3P · 008",
+    "formLabel": "Item 8 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-008-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-008-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-008-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglFeR4wwglEeR4ywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-009-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>O GENERAL-3P · 009",
+    "formLabel": "Item 9 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-009-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-009-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-009-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhCeR4DewhBeR4EewhBewwFewhAeywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-010-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>O GENERAL-3P · 010",
+    "formLabel": "Item 10 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-010-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-010-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-010-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@HhwwIexwR4FewwR4CezhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-011-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>O GENERAL-3P · 011",
+    "formLabel": "Item 11 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-011-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-011-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-011-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglg0Gewwgli0DeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-012-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>O GENERAL-3P · 012",
+    "formLabel": "Item 12 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-012-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-012-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-012-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gglIeglHewwhlFexwzhEewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-013-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-qb",
+    "displayName": "T>O QB · 013",
+    "formLabel": "Item 13 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-013-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-013-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-013-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglHewwglzhCeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-014-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 014",
+    "formLabel": "Item 14 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-014-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-014-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-014-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-014-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhBthlGeBtglFeR4wwglEeR4ywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-015-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 015",
+    "formLabel": "Item 15 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-015-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-015-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-015-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-015-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gBtHewwBtGexwR4DeRpwwR4EeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-016-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 016",
+    "formLabel": "Item 16 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-016-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-016-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-016-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-016-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglywFeRpwwR4EeRpR4PeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-017-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 017",
+    "formLabel": "Item 17 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-017-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-017-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-017-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-017-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhR4RpEeR4wwRpFeywglGeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-018-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 018",
+    "formLabel": "Item 18 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-018-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gywGeglwwHeglBtEeRphlBtDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-018-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 018 · Frame 2",
+    "formLabel": "Item 18 · Frame 1",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-018-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-018-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglAtHeBtwwEeRpAtywDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-019-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 019",
+    "formLabel": "Item 19 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-019-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-019-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-019-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-019-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhBthlGeBtglRpFewwglRpEeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-020-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 020",
+    "formLabel": "Item 20 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-020-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-020-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-020-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-020-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglRpDeR4wwglRpCeR4ywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-021-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 021",
+    "formLabel": "Item 21 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-021-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-021-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-021-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-021-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0R4Feg0R4Geg0wwGeglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-022-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 022",
+    "formLabel": "Item 22 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-022-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-022-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-022-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-022-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglRpFewwg0RpEexwi0FewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-023-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>I GENERAL-4P · 023",
+    "formLabel": "Item 23 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-023-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-023-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-023-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-023-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gg0Gehli0FeglRpFewwglRpEeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-024-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>I GENERAL-3P · 024",
+    "formLabel": "Item 24 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-024-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-024-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-024-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglRpFewwglRpEeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-025-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>I GENERAL-3P · 025",
+    "formLabel": "Item 25 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-025-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-025-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-025-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhR4GeR4wwRpFexwRpGewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-026-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>I GENERAL-3P · 026",
+    "formLabel": "Item 26 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-026-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-026-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-026-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglAtHeBtwwGeAtywPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-026-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>I GENERAL-3P · 026 · Frame 2",
+    "formLabel": "Item 26 · Frame 1",
+    "pieceSignature": [
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-026-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-026-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-026-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gywGeglwwHeglBtGehlBtPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-027-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>I GENERAL-3P · 027",
+    "formLabel": "Item 27 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-027-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-027-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-027-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglFeR4wwglEeR4ywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-028-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 028",
+    "formLabel": "Item 28 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-028-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-028-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-028-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-028-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhR4GeR4wwRpDeBtxwRpEeBtwwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-029-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 029",
+    "formLabel": "Item 29 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-029-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-029-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-029-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-029-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhGeR4whFeR4wwwhEeBtxwwhFeBtwwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-030-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 030",
+    "formLabel": "Item 30 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-030-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-030-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-030-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-030-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@Ehi0Feywg0EeBtwwRpFeBtRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-031-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 031",
+    "formLabel": "Item 31 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-031-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-031-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-031-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-031-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhHewwwhGexwwhRpDeBtwwwhRpEeBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-032-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 032",
+    "formLabel": "Item 32 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-032-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-032-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-032-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-032-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gRpBtFeRpwwBtEeg0ywFei0QeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-033-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 033",
+    "formLabel": "Item 33 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-033-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-033-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-033-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-033-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gRpHeRpwwGeg0ywR4Dei0R4OeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-034-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 034",
+    "formLabel": "Item 34 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-034-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-034-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-034-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-034-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhIewhHewwwhRpCeBtxwwhRpDeBtwwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-035-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 035",
+    "formLabel": "Item 35 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-035-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-035-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-035-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-035-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gQ4IeR4RpFeg0Q4RpwwEei0ywNeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-036-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 036",
+    "formLabel": "Item 36 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-036-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-036-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-036-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-036-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhGeR4whFeR4wwwhRpEexwwhRpFewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-037-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 037",
+    "formLabel": "Item 37 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "S",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-037-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-037-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-037-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-037-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0R4Feg0R4Geg0wwBtFeywBtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-038-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 038",
+    "formLabel": "Item 38 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-038-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gi0GeRpg0wwFeRpywEezhPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-038-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 038 · Frame 2",
+    "formLabel": "Item 38 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-038-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhRpGewhRpwwFewhg0ywEewhi0PeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-038-f002",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 038 · Frame 3",
+    "formLabel": "Item 38 · Frame 2",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-038-f002-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f002-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f002-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-038-f002-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@EhRpg0FewwRpg0Eeywh0FezhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-039-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 039",
+    "formLabel": "Item 39 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-039-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFei0GeRpg0wwFeRpywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-039-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 039 · Frame 2",
+    "formLabel": "Item 39 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-039-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-039-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhzhGeRpg0FewwRpg0Eeywh0JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-040-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 040",
+    "formLabel": "Item 40 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-040-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-040-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-040-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-040-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhzhGei0FewwBtg0EeywBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-041-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 041",
+    "formLabel": "Item 41 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-041-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-041-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-041-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-041-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@BhR4Dei0R4EeRpg0wwFeRpywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-042-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 042",
+    "formLabel": "Item 42 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-042-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-042-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-042-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-042-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@BhBtIeBtRpg0FewwRpg0Eeywh0JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-043-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 043",
+    "formLabel": "Item 43 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-043-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-043-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-043-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-043-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gg0Hewwi0EexwRpEeBtwwRpFeBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-044-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 044",
+    "formLabel": "Item 44 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-044-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-044-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-044-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-044-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@Hhi0GeRpg0wwBtDeRpywBtMeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-045-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 045",
+    "formLabel": "Item 45 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-045-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhh0Gewhg0Hewhg0wwEeRpwhywDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-045-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 045 · Frame 2",
+    "formLabel": "Item 45 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-045-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-045-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gywGeg0wwHei0EeRpzhDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-046-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 046",
+    "formLabel": "Item 46 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-046-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-046-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-046-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-046-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@Ehi0HeQ4g0RpEewwR4RpDeywQ4JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-047-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 047",
+    "formLabel": "Item 47 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-047-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-047-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-047-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-047-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0R4Eewhg0R4Fewhg0wwGewhywFewhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-048-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>L GENERAL-4P · 048",
+    "formLabel": "Item 48 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-048-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-048-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-048-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-048-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhh0Gewhg0Hewhg0wwBtEewhywBtNeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-049-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 049",
+    "formLabel": "Item 49 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-049-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-049-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-049-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhR4GeR4wwRpFexwRpGewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-050-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 050",
+    "formLabel": "Item 50 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-050-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-050-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-050-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@GhwwHexwRpEeBtwwRpFeBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-051-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 051",
+    "formLabel": "Item 51 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-051-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-051-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-051-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwwHewhxwGewhwwR4FewhR4GewhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-052-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 052",
+    "formLabel": "Item 52 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-052-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-052-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-052-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gRpHeRpwwGeg0ywFei0QeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-053-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 053",
+    "formLabel": "Item 53 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-053-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-053-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-053-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhHewwwhGexwwhFeBtwwwhGeBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-054-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 054",
+    "formLabel": "Item 54 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-054-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-054-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-054-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gBtGewhwwBtFewhxwGewhwwHewhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-055-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 055",
+    "formLabel": "Item 55 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-055-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-055-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-055-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhIewhHewwwhRpEexwwhRpFewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-056-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>L GENERAL-3P · 056",
+    "formLabel": "Item 56 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "S",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-056-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-056-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-056-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhGeR4whFeR4wwwhGexwwhHewwJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-057-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 057",
+    "formLabel": "Item 57 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-057-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-057-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-057-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-057-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFeglRpGeglRpwwFehlywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-058-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 058",
+    "formLabel": "Item 58 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-058-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-058-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-058-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-058-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhzhGeilFewwglRpEeywRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-059-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 059",
+    "formLabel": "Item 59 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-059-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFeh0AtGeg0BtwwFeg0AtywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-059-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 059 · Frame 2",
+    "formLabel": "Item 59 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-059-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-059-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFeywGeg0wwBtFei0BtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-060-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 060",
+    "formLabel": "Item 60 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-060-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhilFewhglAtGewhBtwwFewhAtywOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-060-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 060 · Frame 2",
+    "formLabel": "Item 60 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-060-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhywFewhglwwGewhglBtFewhhlBtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-060-f002",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 060 · Frame 3",
+    "formLabel": "Item 60 · Frame 2",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-060-f002-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f002-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f002-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-060-f002-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gzhFeilGeglwwBtFeywBtOeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-061-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 061",
+    "formLabel": "Item 61 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-061-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-061-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-061-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-061-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhBthlGeBtglRpFewwglRpEeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-062-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 062",
+    "formLabel": "Item 62 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-062-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gywGeglwwHeglBtEeRphlBtDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-062-f001",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 062 · Frame 2",
+    "formLabel": "Item 62 · Frame 1",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-062-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f001-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-062-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglAtHeBtwwEeRpAtywDeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-063-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 063",
+    "formLabel": "Item 63 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-063-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-063-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-063-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-063-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Gewhg0Hewhg0wwEeRpwhywDeRpwhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-064-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 064",
+    "formLabel": "Item 64 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-064-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-064-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-064-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-064-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Heg0BtGeg0wwBtDeRpywEeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-065-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 065",
+    "formLabel": "Item 65 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-065-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-065-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-065-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-065-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhh0Gewhg0BtFewhg0wwBtEewhywPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-066-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 066",
+    "formLabel": "Item 66 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-066-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-066-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-066-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-066-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gRpBtFeRpwwBtEeg0ywFei0QeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-067-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-4p",
+    "displayName": "T>S GENERAL-4P · 067",
+    "formLabel": "Item 67 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-067-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-067-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-067-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-067-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhHewwwhGexwwhRpDeBtwwwhRpEeBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-068-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 068",
+    "formLabel": "Item 68 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-068-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-068-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-068-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@GhwhIewhAewwEeRpwhywDeRpwhJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-069-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 069",
+    "formLabel": "Item 69 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-069-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-069-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-069-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@FhhlIeglRpFewwglRpEeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-070-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 070",
+    "formLabel": "Item 70 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-070-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-070-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-070-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Heg0Ieg0wwFeRpywEeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-071-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 071",
+    "formLabel": "Item 71 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-071-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-071-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-071-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@ShwwBtDeRpywBtCeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-072-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 072",
+    "formLabel": "Item 72 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-072-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-072-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-072-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhIewhIewhEewwBtAewhDeywBtJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-073-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 073",
+    "formLabel": "Item 73 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-073-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-073-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-073-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@DhBthlGeBtglHewwglGeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-074-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-general-3p",
+    "displayName": "T>S GENERAL-3P · 074",
+    "formLabel": "Item 74 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-074-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-074-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-074-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@HhwwIexwEei0wwDezhg0JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-075-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-qb",
+    "displayName": "T>S QB · 075",
+    "formLabel": "Item 75 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-075-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-075-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-075-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhGehlwhHeglwhGewwglwhFeywJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-076-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-qb",
+    "displayName": "T>S QB · 076",
+    "formLabel": "Item 76 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-076-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-076-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-076-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-076-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Heg0BtGeg0wwBtDeRpywEeRpJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-077-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-qb",
+    "displayName": "T>S QB · 077",
+    "formLabel": "Item 77 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-077-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-077-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-077-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-077-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gwhh0Gewhg0BtFewhg0wwBtEewhywPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-078-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 078",
+    "formLabel": "Item 78 · Frame 0",
+    "pieceSignature": [
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-078-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@ThwwHeywPeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-079-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 079",
+    "formLabel": "Item 79 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-079-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-079-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-079-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@+gh0Heg0Ieg0wwBtFeywBtNeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "geometryKind": "solution-shadow"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-080-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 080",
+    "formLabel": "Item 80 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-080-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-080-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-080-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-080-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gilGeglAtGeg0BtwwFeg0AtywDeh0JeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "geometryKind": "solution-shadow"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-081-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 081",
+    "formLabel": "Item 81 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-081-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-081-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-081-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Heg0Ieg0wwGeglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-082-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 082",
+    "formLabel": "Item 82 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-082-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-082-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-082-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-082-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0FeRpg0GeRpg0wwGeglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "geometryKind": "solution-shadow"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-083-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 083",
+    "formLabel": "Item 83 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "T"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-083-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-083-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-083-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-083-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0Heg0Ieg0wwCezhglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "geometryKind": "solution-shadow"
+  },
+  {
+    "id": "geometry-cycle-8-tx-item-084-f000",
+    "cycle": 8,
+    "family": "cycle-8-tx-oqb",
+    "displayName": "T>S OQB · 084",
+    "formLabel": "Item 84 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "T",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-tx-item-084-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-084-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-084-f000-t-1",
+        "piece": "T",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-tx-item-084-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "fumen": "v115@9gh0GeAtg0GeBtg0wwFeAtglywDeilJeAgH",
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "geometryKind": "solution-shadow"
+  }
+]

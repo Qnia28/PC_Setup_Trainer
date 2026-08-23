@@ -19,6 +19,13 @@ import {
 } from "./query";
 import { isSolutionShadowSetup, type SetupVariant } from "./schema";
 import { setupGeometryProgress, type SetupGeometryProgress } from "./setupGeometryProgress";
+import {
+  canonicalCycle8TxSetupId,
+  cycle8TxExactClassForSetup,
+  cycle8TxOqbContinuation,
+  cycle8TxOqbPlanById,
+  cycle8TxSourceQueueState,
+} from "./cycle8TxCatalog";
 
 export interface Cycle5AdvancedOqbPolicySource {
   bundle: Cycle5AdvancedPolicyBundle;
@@ -57,7 +64,7 @@ export interface OqbProgressInput {
 export type OqbProgressObservation = Cycle5AdvancedObservedQueue | {
   kind: "sequence";
   pieces: Piece[];
-  source: "cycle3-visible-next-tail";
+  source: "cycle3-visible-next-tail" | "cycle8-post-build-seven";
 };
 
 export interface OqbContinuationCandidate {
@@ -75,7 +82,7 @@ export interface OqbProgressValue {
 
 interface OqbProgressBase {
   cycle: number;
-  policyKind: "cycle3-staged" | "cycle5-advanced";
+  policyKind: "cycle3-staged" | "cycle5-advanced" | "cycle8-tx";
   planId: string;
   stage: "precondition" | "checkpoint" | "continuation" | "terminal";
   progress: OqbProgressValue;
@@ -661,9 +668,152 @@ function resolveCycle3Progress(input: OqbProgressInput): OqbProgressResult {
   };
 }
 
+function resolveCycle8Progress(input: OqbProgressInput): OqbProgressResult {
+  const { selectedCandidate, query } = input;
+  const planId = input.planId ?? selectedCandidate.policy?.ruleId;
+  const plan = planId ? cycle8TxOqbPlanById(planId) : undefined;
+  if (!plan) {
+    return {
+      status: "no-follow-up",
+      cycle: 8,
+      instruction: "",
+    };
+  }
+  const exactClass = cycle8TxExactClassForSetup(selectedCandidate.setup);
+  if (!exactClass || !plan.exactClasses.includes(exactClass)) {
+    return {
+      status: "unresolved",
+      cycle: 8,
+      planId: plan.id,
+      reason: "cycle8-exact-class-mismatch",
+      instruction: "The selected Cycle 8 OQB setup no longer matches its exact replacement class.",
+    };
+  }
+  const branch = plan.branches.find(({ id }) => id === selectedCandidate.policy?.branchId);
+  if (!branch) {
+    return {
+      status: "unresolved",
+      cycle: 8,
+      planId: plan.id,
+      reason: "cycle8-branch-cursor-not-found",
+      instruction: "The exact staged queue branch is no longer attached to this OQB candidate.",
+    };
+  }
+  if (selectedCandidate.setup.geometryKind === "solution-shadow") {
+    return {
+      status: "terminal",
+      cycle: 8,
+      policyKind: "cycle8-tx",
+      planId: plan.id,
+      branchId: branch.id,
+      stage: "terminal",
+      progress: {
+        completedPlacements: selectedCandidate.setup.placements.length,
+        checkpointPlacements: selectedCandidate.setup.placements.length,
+      },
+      instruction: "The authoritative Cycle 8 OQB solution shadow has no further checkpoint.",
+    };
+  }
+
+  const progress = setupGeometryProgress(selectedCandidate.setup, query.board);
+  if (progress.status === "invalid") {
+    return {
+      status: "unresolved",
+      cycle: 8,
+      planId: plan.id,
+      stage: "precondition",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      reason: progress.reason ?? "invalid-cycle8-precondition-board",
+      instruction: "The current board does not match the selected Cycle 8 OQB precondition.",
+    };
+  }
+  if (progress.totalCount !== plan.checkpoint.placedCount) {
+    return {
+      status: "unresolved",
+      cycle: 8,
+      planId: plan.id,
+      stage: "precondition",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      reason: "cycle8-checkpoint-geometry-count-mismatch",
+      instruction: "The selected Cycle 8 precondition does not match its policy checkpoint.",
+    };
+  }
+  if (progress.status !== "complete") {
+    return {
+      status: "precondition",
+      cycle: 8,
+      policyKind: "cycle8-tx",
+      planId: plan.id,
+      branchId: branch.id,
+      stage: "precondition",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      instruction: `Complete the Cycle 8 OQB precondition (${progress.completedCount}/${plan.checkpoint.placedCount}).`,
+      remainingPrecondition: progress.remainingSetup,
+    };
+  }
+
+  const sourceState = cycle8TxSourceQueueState({
+    hold: query.hold,
+    active: query.active,
+    next: query.next,
+  }, exactClass);
+  const observation: OqbProgressObservation = {
+    kind: "sequence",
+    pieces: [sourceState.hold ?? sourceState.active, sourceState.active, ...sourceState.next.slice(0, 5)],
+    source: "cycle8-post-build-seven",
+  };
+  if (branch.action === "solve-from-precondition") {
+    return {
+      status: "terminal",
+      cycle: 8,
+      policyKind: "cycle8-tx",
+      planId: plan.id,
+      branchId: branch.id,
+      stage: "terminal",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      observation,
+      instruction: "No listed OQB extension matches; solve from the reviewed 3P precondition.",
+    };
+  }
+  const continuations = (branch.continuationSetupIds ?? []).flatMap((setupId) => {
+    const setup = cycle8TxOqbContinuation(setupId, exactClass);
+    return setup ? [{
+      sourceSetupId: canonicalCycle8TxSetupId(setup),
+      transform: (exactClass === "T>J" || exactClass === "T>Z") ? "mirror-x" as const : "identity" as const,
+      displayName: `${setup.displayName} · ${branch.id}`,
+      setup,
+    }] : [];
+  });
+  if (continuations.length === 0) {
+    return {
+      status: "unresolved",
+      cycle: 8,
+      planId: plan.id,
+      stage: "continuation",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      observation,
+      reason: "cycle8-continuation-not-found",
+      instruction: "The selected Cycle 8 OQB continuation is unavailable.",
+    };
+  }
+  return {
+    status: "continuation",
+    cycle: 8,
+    policyKind: "cycle8-tx",
+    planId: plan.id,
+    branchId: branch.id,
+    stage: "continuation",
+    progress: progressValue(progress, plan.checkpoint.placedCount),
+    observation,
+    instruction: `Apply the reviewed Cycle 8 OQB ${branch.id} continuation.`,
+    continuations,
+  };
+}
+
 /** Pure recommendation-domain projection for setup_test Play 0P. */
 export function resolveOqbProgress(input: OqbProgressInput): OqbProgressResult {
-  if (input.query.cycle !== input.selectedCandidate.setup.cycle) {
+  const cycle8Replacement = input.query.cycle === 1 && input.selectedCandidate.setup.cycle === 8;
+  if (input.query.cycle !== input.selectedCandidate.setup.cycle && !cycle8Replacement) {
     return {
       status: "unresolved",
       cycle: input.query.cycle,
@@ -671,6 +821,7 @@ export function resolveOqbProgress(input: OqbProgressInput): OqbProgressResult {
       instruction: "The selected setup and live game state belong to different cycles.",
     };
   }
+  if (cycle8Replacement) return resolveCycle8Progress(input);
   if (input.query.cycle === 3) return resolveCycle3Progress(input);
   if (input.query.cycle === 5) {
     if (input.policyOverride) return resolveCycle5Progress(input, input.policyOverride);

@@ -12,7 +12,9 @@ import { drawBoard, drawPiecePreview, drawSetupPreview, drawSolutionPreview } fr
 import { ReplayExportDialog } from "./replay/ReplayExportDialog";
 import { ReplayRecorder } from "./replay/recorder";
 import type { ReplayData } from "./replay/format";
+import { SiteHeader } from "./site/SiteHeader";
 import { setupCoverageForCycle, type SetupCatalogCoverage } from "./setups/catalog";
+import { displayCycleForQuery } from "./setups/cycle1Context";
 import { cycle4ClassLabel } from "./setups/cycle4Catalog";
 import { GuideUndoHistory, guideSegmentIdentity, type GuideSnapshot } from "./setups/guideHistory";
 import { countSetupShadowWrongCells, shouldAutoHideSetupShadow } from "./setups/shadow";
@@ -158,6 +160,14 @@ export default function App() {
   const [guideTab, setGuideTab] = useState<GuideTab>("setup");
   const [coverage, setCoverage] = useState<SetupCatalogCoverage | null>(null);
   const state = session.current.state;
+  const displayCycle = displayCycleForQuery({
+    cycle: state.run.cycle,
+    board: state.board,
+    active: state.active.piece,
+    hold: state.hold,
+    next: state.bag.queue,
+    holdAvailable: !state.holdUsedThisTurn,
+  });
 
   useEffect(() => {
     guideState.current = { candidates, selectedId, guideDone, stagedInstruction };
@@ -483,10 +493,9 @@ export default function App() {
 
   const wrongCells = selected && !guideDone ? countSetupShadowWrongCells(state.board, selected) : 0;
 
-  return <main className="app-shell" onPointerUpCapture={releaseGameplayButtonFocus}>
+  return <><SiteHeader active="game" /><main className="app-shell" onPointerUpCapture={releaseGameplayButtonFocus}>
     <header className="topbar">
       <div><h1>GUIDED PC MODE</h1></div>
-      <a href="/replay">Replay Viewer</a>
     </header>
 
     <section className="game-layout">
@@ -507,7 +516,7 @@ export default function App() {
       <aside className="next-column">
         <div className="next-list"><span>NEXT</span>{state.bag.queue.slice(0, 5).map((piece, index) => <PiecePreview key={`${index}-${piece}`} piece={piece} />)}</div>
         <div className="side-stats" aria-label="Run progress">
-          <span><small>CYCLE</small><b>{state.run.cycle}</b></span>
+          <span><small>CYCLE</small><b>{displayCycle}</b></span>
           <span><small>PC</small><b>{state.run.pcCount}</b></span>
           <span><small>PIECES</small><b>{state.run.piecesLockedSinceLastPc}/10</b></span>
         </div>
@@ -640,5 +649,5 @@ export default function App() {
     </section>
     {settingsOpen && <SettingsPanel settings={settings} onChange={setSettings} onClose={() => setSettingsOpen(false)} />}
     {replayExport && <ReplayExportDialog replay={replayExport} onClose={() => setReplayExport(null)} />}
-  </main>;
+  </main></>;
 }

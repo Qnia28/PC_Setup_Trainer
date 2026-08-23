@@ -1,7 +1,7 @@
 import { decoder, encoder, Field } from "tetris-fumen";
 import { BOARD_WIDTH, PIECES, type Board, type Cycle, type Piece } from "../engine/types";
 import type { SetupVariant, TargetPlacement } from "../setups/schema";
-import { SolverWorkerClient, viteWorkerFactory } from "./sfinderPort/worker-client.mjs";
+import { SolverWorkerClient, viteWorkerFactory } from "./workerClient";
 
 export const LIVE_SOLVE_SAVE_ORDER = [..."TILJOSZ"] as Piece[];
 const PORT_PAGE_ORDER = [..."TILJSZO"] as Piece[];
@@ -188,11 +188,11 @@ export class LiveSolverClient {
   }
 
   cancel(): void {
-    this.client?.dispose();
-    this.client = null;
+    this.client?.cancel();
   }
 
   dispose(): void {
-    this.cancel();
+    this.client?.dispose();
+    this.client = null;
   }
 }

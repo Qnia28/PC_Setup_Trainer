@@ -1,0 +1,1984 @@
+{
+  "schemaVersion": 2,
+  "id": "cycle-8-ljx-policy",
+  "cycle": 8,
+  "classId": "ljx-umbrella",
+  "reviewStatus": "reviewed",
+  "metrics": [
+    {
+      "setupId": "geometry-cycle-8-ljx-item-001-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 97.06
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-002-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 97.02
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-002-f000",
+      "direction": "J>T",
+      "values": {
+        "solveRate": 96.98
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-003-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 96.67
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-004-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 96.11
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-005-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 95.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-006-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 93.65
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-007-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 93.1
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-008-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 93.1
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-009-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 93.1
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-009-f000",
+      "direction": "J>T",
+      "values": {
+        "solveRate": 92.86
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-010-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-011-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-012-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 92.1
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-013-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 91.11
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-014-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 91.03
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-015-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 90.6
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-016-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 89.68
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-017-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 89.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-018-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 88.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-019-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 88.49
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-020-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 85.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-021-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 84.6
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-022-f000",
+      "direction": "L>T",
+      "values": {
+        "solveRate": 80.95
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-022-f000",
+      "direction": "J>T",
+      "values": {
+        "solveRate": 80.71
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-023-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-024-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-025-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.92
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-026-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-027-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-028-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-029-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.64
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-030-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.56
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-031-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.44
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-032-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.4
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-033-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-034-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-035-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.21
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-035-f000",
+      "direction": "J>O",
+      "values": {
+        "solveRate": 99.25
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-036-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 99.01
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-037-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 98.41
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-038-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 98.33
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-039-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 98.02
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-039-f000",
+      "direction": "J>O",
+      "values": {
+        "solveRate": 97.9
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-040-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 97.94
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-041-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 97.02
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-042-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 96.47
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-043-f000",
+      "direction": "L>O",
+      "values": {
+        "solveRate": 95.71
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-044-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-045-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 99.09
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-046-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 99.09
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-047-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 98.37
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-048-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 97.54
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-049-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 97.54
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-050-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.94
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-051-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-052-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.47
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-053-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.35
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-054-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.31
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-055-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-056-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-057-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-058-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 95.99
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-059-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 95.91
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-060-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 94.72
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-061-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 94.37
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-062-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 93.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-063-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-064-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 91.47
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-065-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 87.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-066-f000",
+      "direction": "L>I",
+      "values": {
+        "solveRate": 86.43
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-067-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-068-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-069-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 99.17
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-070-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 99.01
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-071-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 98.77
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-072-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 98.65
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-073-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 98.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-074-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 96.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-075-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 92.86
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-076-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 92.82
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-076-f000",
+      "direction": "J>L",
+      "values": {
+        "solveRate": 92.9
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-077-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-078-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 90.08
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-079-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 89.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-080-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 88.69
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-081-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 88.69
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-081-f000",
+      "direction": "J>L",
+      "values": {
+        "solveRate": 88.41
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-082-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 88.37
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-083-f000",
+      "direction": "L>J",
+      "values": {
+        "solveRate": 87.98
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-084-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-085-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-086-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-087-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.96
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-088-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-089-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-090-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-091-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.56
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-092-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.4
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-093-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 99.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-094-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 98.65
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-095-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 98.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-096-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 98.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-097-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 98.25
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-098-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 97.78
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-099-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 97.34
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-100-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 97.14
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-101-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 96.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-101-f000",
+      "direction": "J>Z",
+      "values": {
+        "solveRate": 96.35
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-102-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-103-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 95.95
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-104-f000",
+      "direction": "L>S",
+      "values": {
+        "solveRate": 95.79
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-105-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-106-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-107-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-108-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-109-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-110-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-111-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-112-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-113-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-114-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-115-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-116-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-117-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 99.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-118-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 99.56
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-119-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 98.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-120-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 98.25
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-121-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 97.78
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-122-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 97.62
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ljx-item-123-f000",
+      "direction": "L>Z",
+      "values": {
+        "solveRate": 96.07
+      }
+    }
+  ],
+  "buildConstraints": [],
+  "selectionRules": [],
+  "rankingHints": {
+    "primary": "family-order",
+    "sourceBasisWithinFamily": "solve-rate-desc-then-source-order",
+    "mirrorDirectionWithinFamily": "source-order-only-when-metrics-incomplete",
+    "missingDirectionMetric": "leave-undefined"
+  },
+  "symmetryPolicy": {
+    "exactClassPairs": [
+      {
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T"
+      },
+      {
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O"
+      },
+      {
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I"
+      },
+      {
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L"
+      },
+      {
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z"
+      },
+      {
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S"
+      }
+    ]
+  },
+  "runtimePolicy": {
+    "schemaVersion": 1,
+    "catalogKind": "cycle8-ljx",
+    "integrationState": "active",
+    "classSelector": {
+      "gameCycle": 1,
+      "classificationMode": "replacement-cycle",
+      "allowedExtraPieces": [
+        "L",
+        "J"
+      ],
+      "exactMissingPiecesByExtra": {
+        "L": [
+          "T",
+          "O",
+          "I",
+          "J",
+          "S",
+          "Z"
+        ],
+        "J": [
+          "T",
+          "O",
+          "I",
+          "L",
+          "S",
+          "Z"
+        ]
+      }
+    },
+    "familyOrder": [
+      "general-4p",
+      "general-3p"
+    ],
+    "entries": [
+      {
+        "setupId": "geometry-cycle-8-ljx-item-001-f000",
+        "sourceOrder": 100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-002-f000",
+        "sourceOrder": 200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-003-f000",
+        "sourceOrder": 300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-004-f000",
+        "sourceOrder": 400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-005-f000",
+        "sourceOrder": 500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-006-f000",
+        "sourceOrder": 600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-007-f000",
+        "sourceOrder": 700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-008-f000",
+        "sourceOrder": 800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-009-f000",
+        "sourceOrder": 900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-010-f000",
+        "sourceOrder": 1000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-011-f000",
+        "sourceOrder": 1100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-012-f000",
+        "sourceOrder": 1200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-013-f000",
+        "sourceOrder": 1300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-014-f000",
+        "sourceOrder": 1400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-015-f000",
+        "sourceOrder": 1500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-016-f000",
+        "sourceOrder": 1600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-017-f000",
+        "sourceOrder": 1700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-018-f000",
+        "sourceOrder": 1800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-019-f000",
+        "sourceOrder": 1900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-020-f000",
+        "sourceOrder": 2000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-021-f000",
+        "sourceOrder": 2100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-022-f000",
+        "sourceOrder": 2200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>T",
+        "mirrorClass": "J>T",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-023-f000",
+        "sourceOrder": 2300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-024-f000",
+        "sourceOrder": 2400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-025-f000",
+        "sourceOrder": 2500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-026-f000",
+        "sourceOrder": 2600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-027-f000",
+        "sourceOrder": 2700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-028-f000",
+        "sourceOrder": 2800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-029-f000",
+        "sourceOrder": 2900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-030-f000",
+        "sourceOrder": 3000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-031-f000",
+        "sourceOrder": 3100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-032-f000",
+        "sourceOrder": 3200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-033-f000",
+        "sourceOrder": 3300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-034-f000",
+        "sourceOrder": 3400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-035-f000",
+        "sourceOrder": 3500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-036-f000",
+        "sourceOrder": 3600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-037-f000",
+        "sourceOrder": 3700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-038-f000",
+        "sourceOrder": 3800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-039-f000",
+        "sourceOrder": 3900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-040-f000",
+        "sourceOrder": 4000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-041-f000",
+        "sourceOrder": 4100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-042-f000",
+        "sourceOrder": 4200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-043-f000",
+        "sourceOrder": 4300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>O",
+        "mirrorClass": "J>O",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-044-f000",
+        "sourceOrder": 4400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-045-f000",
+        "sourceOrder": 4500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-046-f000",
+        "sourceOrder": 4600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-047-f000",
+        "sourceOrder": 4700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-048-f000",
+        "sourceOrder": 4800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-049-f000",
+        "sourceOrder": 4900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-050-f000",
+        "sourceOrder": 5000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-051-f000",
+        "sourceOrder": 5100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-052-f000",
+        "sourceOrder": 5200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-053-f000",
+        "sourceOrder": 5300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-054-f000",
+        "sourceOrder": 5400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-055-f000",
+        "sourceOrder": 5500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-056-f000",
+        "sourceOrder": 5600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-057-f000",
+        "sourceOrder": 5700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-058-f000",
+        "sourceOrder": 5800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-059-f000",
+        "sourceOrder": 5900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-060-f000",
+        "sourceOrder": 6000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-061-f000",
+        "sourceOrder": 6100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-062-f000",
+        "sourceOrder": 6200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-063-f000",
+        "sourceOrder": 6300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-064-f000",
+        "sourceOrder": 6400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-065-f000",
+        "sourceOrder": 6500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-066-f000",
+        "sourceOrder": 6600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>I",
+        "mirrorClass": "J>I",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-067-f000",
+        "sourceOrder": 6700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-068-f000",
+        "sourceOrder": 6800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-069-f000",
+        "sourceOrder": 6900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-070-f000",
+        "sourceOrder": 7000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-071-f000",
+        "sourceOrder": 7100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-072-f000",
+        "sourceOrder": 7200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-073-f000",
+        "sourceOrder": 7300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-074-f000",
+        "sourceOrder": 7400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-075-f000",
+        "sourceOrder": 7500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-076-f000",
+        "sourceOrder": 7600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-077-f000",
+        "sourceOrder": 7700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-078-f000",
+        "sourceOrder": 7800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-079-f000",
+        "sourceOrder": 7900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-080-f000",
+        "sourceOrder": 8000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-081-f000",
+        "sourceOrder": 8100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-082-f000",
+        "sourceOrder": 8200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-083-f000",
+        "sourceOrder": 8300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>J",
+        "mirrorClass": "J>L",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-084-f000",
+        "sourceOrder": 8400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-085-f000",
+        "sourceOrder": 8500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-086-f000",
+        "sourceOrder": 8600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-087-f000",
+        "sourceOrder": 8700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-088-f000",
+        "sourceOrder": 8800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-089-f000",
+        "sourceOrder": 8900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-090-f000",
+        "sourceOrder": 9000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-091-f000",
+        "sourceOrder": 9100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-092-f000",
+        "sourceOrder": 9200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-093-f000",
+        "sourceOrder": 9300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-094-f000",
+        "sourceOrder": 9400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-095-f000",
+        "sourceOrder": 9500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-096-f000",
+        "sourceOrder": 9600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-097-f000",
+        "sourceOrder": 9700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-098-f000",
+        "sourceOrder": 9800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-099-f000",
+        "sourceOrder": 9900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-100-f000",
+        "sourceOrder": 10000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-101-f000",
+        "sourceOrder": 10100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-102-f000",
+        "sourceOrder": 10200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-103-f000",
+        "sourceOrder": 10300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-104-f000",
+        "sourceOrder": 10400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>S",
+        "mirrorClass": "J>Z",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-105-f000",
+        "sourceOrder": 10500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-106-f000",
+        "sourceOrder": 10600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-107-f000",
+        "sourceOrder": 10700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-108-f000",
+        "sourceOrder": 10800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-109-f000",
+        "sourceOrder": 10900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-110-f000",
+        "sourceOrder": 11000,
+        "familyKind": "general-3p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-111-f000",
+        "sourceOrder": 11100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-112-f000",
+        "sourceOrder": 11200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-113-f000",
+        "sourceOrder": 11300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-114-f000",
+        "sourceOrder": 11400,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-115-f000",
+        "sourceOrder": 11500,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-116-f000",
+        "sourceOrder": 11600,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-117-f000",
+        "sourceOrder": 11700,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-118-f000",
+        "sourceOrder": 11800,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-119-f000",
+        "sourceOrder": 11900,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-120-f000",
+        "sourceOrder": 12000,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-121-f000",
+        "sourceOrder": 12100,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-122-f000",
+        "sourceOrder": 12200,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ljx-item-123-f000",
+        "sourceOrder": 12300,
+        "familyKind": "general-4p",
+        "sourceClass": "L>Z",
+        "mirrorClass": "J>S",
+        "sourceRecommended": true
+      }
+    ],
+    "fallback": "none"
+  }
+}

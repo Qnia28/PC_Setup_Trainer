@@ -43,6 +43,8 @@ import { applyStructuredPolicyMetrics, type StructuredSetupPolicy } from "./poli
 import { expandBoxSetups } from "./rotation";
 import { assertValidCatalog, type SetupVariant } from "./schema";
 import type { Piece } from "../engine/types";
+import { cycle8TxAllRuntimeCatalog, cycle8TxSourceCatalog } from "./cycle8TxCatalog";
+import { cycle8LjxAllRuntimeCatalog, cycle8LjxSourceCatalog } from "./cycle8LjxCatalog";
 
 const cycle1Policy = rawCycle1Policy as unknown as StructuredSetupPolicy;
 const cycle1Catalog = applyStructuredPolicyMetrics(rawCycle1 as SetupVariant[], cycle1Policy);
@@ -164,6 +166,8 @@ export const sourceSetupCatalog = [
   ...cycle6LJ,
   ...cycle6I,
   ...cycle6T,
+  ...cycle8TxSourceCatalog(),
+  ...cycle8LjxSourceCatalog(),
 ];
 assertValidCatalog(sourceSetupCatalog);
 
@@ -185,6 +189,8 @@ export const setupCatalog = [
   ...cycle6RuntimeByPiece.J,
   ...cycle6RuntimeByPiece.I,
   ...cycle6RuntimeByPiece.T,
+  ...cycle8TxAllRuntimeCatalog(),
+  ...cycle8LjxAllRuntimeCatalog(),
 ];
 assertValidCatalog(setupCatalog);
 
