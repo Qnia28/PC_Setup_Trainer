@@ -11,11 +11,14 @@ import {
   defaultTargetLines,
   fieldFromFumen,
   formatCalculationDuration,
+  formatRatioPercentage,
+  groupPerSavePages,
   normalizeCommandSource,
+  PER_SAVE_RESULT_ORDER,
   type CommandLineGroup,
   type CommandTargetLines,
 } from "./commandModel";
-import type { SfinderCommandDefinition } from "./commands";
+import { defaultWantedSave, type SfinderCommandDefinition } from "./commands";
 import "./sfinderCommand.css";
 
 type WarmupState = "loading" | "ready" | "error";
@@ -27,8 +30,6 @@ type ResultView =
   | { status: "ready"; value: ResultRecord };
 
 const BATCH_COMMANDS = new Set(["cover", "congruent_cover", "congruent"]);
-const SAVE_ORDER = "TILJOSZ";
-
 function commandWorkerKind(commandId: string): string {
   if (commandId === "per_save_minimals") return "per-save-minimals";
   if (commandId === "congruent_cover") return "congruentcover";
@@ -48,6 +49,10 @@ function metricEntries(result: ResultRecord): [string, string][] {
     const value = result[key];
     if (typeof value === "number") metrics.push([label, `${Number.isInteger(value) ? value : value.toFixed(2)}${suffix}`]);
   };
+  const addRatio = (label: string, key: string) => {
+    const value = result[key];
+    if (typeof value === "number") metrics.push([label, formatRatioPercentage(value)]);
+  };
   add("Chance", "percent", "%");
   add("Success", "success");
   add("Covered", "covered");
@@ -55,7 +60,7 @@ function metricEntries(result: ResultRecord): [string, string][] {
   add("Failed", "failed");
   add("Minimals", "minimalCount");
   add("Solutions", "count");
-  add("PC rate", "pcRate", "%");
+  addRatio("PC rate", "pcRate");
   return metrics;
 }
 
@@ -70,7 +75,15 @@ function SolutionCanvas({ page, displayRows, label }: { page: Page; displayRows:
   </article>;
 }
 
-function ResultPanel({ view, displayRows }: { view: ResultView; displayRows: 4 | 6 }) {
+function ResultPanel({
+  view,
+  displayRows,
+  commandId,
+}: {
+  view: ResultView;
+  displayRows: 4 | 6;
+  commandId: SfinderCommandDefinition["id"];
+}) {
   if (view.status === "idle") return <section className="sfinder-command-results"><p>Results will appear here.</p></section>;
   if (view.status === "loading") return <section className="sfinder-command-results"><p>Calculating…</p></section>;
   if (view.status === "error") return <section className="sfinder-command-results error" role="alert"><h2>Calculation failed</h2><p>{view.message}</p></section>;
@@ -84,21 +97,34 @@ function ResultPanel({ view, displayRows }: { view: ResultView; displayRows: 4 |
   const saveResults = result.results && typeof result.results === "object"
     ? result.results as Record<string, Record<string, unknown>>
     : null;
+  const shownPages = pages.slice(0, 200);
+  const perSaveGroups = commandId === "per_save_minimals" ? groupPerSavePages(shownPages) : [];
   return <section className="sfinder-command-results">
     <div className="sfinder-result-metrics">
       {metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
     </div>
     {saveResults ? <div className="sfinder-save-table">
-      {[...SAVE_ORDER].flatMap((piece) => {
+      {[...PER_SAVE_RESULT_ORDER].flatMap((piece) => {
         const row = saveResults[piece];
         if (!row) return [];
-        return <div key={piece}><strong>Save {piece}</strong><span>{Number(row.minimalCount ?? 0)} minimals · {Number(row.saveRate ?? 0).toFixed(2)}%</span></div>;
+        const saveRate = typeof row.saveRate === "number" ? formatRatioPercentage(row.saveRate) : "N/A";
+        return <div key={piece}><strong>Save {piece}</strong><span>{Number(row.minimalCount ?? 0)} minimals · {saveRate}</span></div>;
       })}
     </div> : null}
     {failedQueues.length ? <details className="sfinder-failed-queues"><summary>{failedQueues.length} failed queues</summary><code>{failedQueues.join(" ")}</code></details> : null}
-    {pages.length ? <>
+    {perSaveGroups.length ? <>
+      <div className="sfinder-result-groups">
+        {perSaveGroups.map((group) => <section className="sfinder-result-group" key={group.piece}>
+          <h3><span>{group.label}</span><small>{group.pages.length}</small></h3>
+          <div className="sfinder-result-grid">
+            {group.pages.map((page, index) => <SolutionCanvas key={`${group.piece}-${index}-${page.comment}`} page={page} displayRows={displayRows} label={`Solution ${index + 1}`} />)}
+          </div>
+        </section>)}
+      </div>
+      {pages.length > 200 ? <p className="sfinder-result-limit">Showing the first 200 of {pages.length} pages.</p> : null}
+    </> : pages.length ? <>
       <div className="sfinder-result-grid">
-        {pages.slice(0, 200).map((page, index) => <SolutionCanvas key={`${index}-${page.comment}`} page={page} displayRows={displayRows} label={page.comment || `Solution ${index + 1}`} />)}
+        {shownPages.map((page, index) => <SolutionCanvas key={`${index}-${page.comment}`} page={page} displayRows={displayRows} label={page.comment || `Solution ${index + 1}`} />)}
       </div>
       {pages.length > 200 ? <p className="sfinder-result-limit">Showing the first 200 of {pages.length} pages.</p> : null}
     </> : null}
@@ -112,7 +138,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const [field, setField] = useState<CommandField>(createEmptyCommandField);
   const [fumen, setFumen] = useState("");
   const [pattern, setPattern] = useState("");
-  const [wantedSave, setWantedSave] = useState("T");
+  const [wantedSave, setWantedSave] = useState(() => defaultWantedSave(command.id));
   const [title, setTitle] = useState("");
   const [useHold, setUseHold] = useState(true);
   const [mirror, setMirror] = useState(false);
@@ -283,7 +309,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
           </div>
         </form>
       </section>
-      <ResultPanel view={view} displayRows={displayRows} />
+      <ResultPanel view={view} displayRows={displayRows} commandId={command.id} />
     </main>
   </>;
 }

@@ -11,7 +11,7 @@ describe("standalone solver input planning", () => {
       ready: true,
       analysis: {
         kind: "solve-one",
-        placedPieces: 3,
+        occupiedCells: 12,
         piecesNeeded: 7,
         queueWindow: "TILJOSZ",
         queueWindowLength: 7,
@@ -29,7 +29,7 @@ describe("standalone solver input planning", () => {
       ready: true,
       analysis: {
         kind: "per-save-all",
-        placedPieces: 4,
+        occupiedCells: 16,
         piecesNeeded: 6,
         queueWindow: "TILJOSZ",
         queueWindowLength: 7,
@@ -45,7 +45,7 @@ describe("standalone solver input planning", () => {
       displayMode: "one",
     })).toMatchObject({
       ready: true,
-      analysis: { placedPieces: 5, piecesNeeded: 5, kind: "per-save-minimals" },
+      analysis: { occupiedCells: 20, piecesNeeded: 5, kind: "per-save-minimals" },
     });
   });
 
@@ -56,16 +56,35 @@ describe("standalone solver input planning", () => {
       displayMode: "all",
     })).toMatchObject({
       ready: true,
-      analysis: { placedPieces: 7, piecesNeeded: 3, kind: "solve-all" },
+      analysis: { occupiedCells: 28, piecesNeeded: 3, kind: "solve-all" },
     });
   });
 
-  it("rejects a field that cannot represent whole placed pieces", () => {
+  it("rejects a field whose remaining cells cannot complete the target", () => {
     expect(prepareStandaloneSolve({
       occupiedCells: 13,
       queue: "TILJOSZ",
       displayMode: "one",
     })).toMatchObject({ ready: false });
+  });
+
+  it("accepts the reported 26-cell 5-line Fumen geometry", () => {
+    expect(prepareStandaloneSolve({
+      occupiedCells: 26,
+      queue: "LIOZSJT",
+      displayMode: "all",
+      targetLines: 5,
+    })).toEqual({
+      ready: true,
+      analysis: {
+        kind: "per-save-all",
+        occupiedCells: 26,
+        piecesNeeded: 6,
+        queueWindow: "LIOZSJT",
+        queueWindowLength: 7,
+        saveMode: true,
+      },
+    });
   });
 
   it("preserves invalid queue text for the UI but blocks calculation", () => {
@@ -79,6 +98,17 @@ describe("standalone solver input planning", () => {
     });
   });
 
+  it("reports required pieces without see notation when the queue is short", () => {
+    expect(prepareStandaloneSolve({
+      occupiedCells: 0,
+      queue: "",
+      displayMode: "all",
+    })).toEqual({
+      ready: false,
+      reason: "10P required to complete this field.",
+    });
+  });
+
   it("plans a six-line save calculation from a compatibility field", () => {
     expect(prepareStandaloneSolve({
       occupiedCells: 40,
@@ -89,7 +119,7 @@ describe("standalone solver input planning", () => {
       ready: true,
       analysis: {
         kind: "per-save-all",
-        placedPieces: 10,
+        occupiedCells: 40,
         piecesNeeded: 5,
         queueWindow: "OOOOOI",
         queueWindowLength: 6,

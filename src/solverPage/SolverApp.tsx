@@ -117,8 +117,8 @@ function preparationCopy(preparation: StandaloneSolvePreparation): string {
   if (!preparation.ready) return preparation.reason;
   const { analysis } = preparation;
   return analysis.saveMode
-    ? `${analysis.placedPieces}P field + see${analysis.queueWindowLength} · save-by-save`
-    : `${analysis.placedPieces}P field + see${analysis.queueWindowLength} · exact queue solve`;
+    ? `${analysis.occupiedCells}-cell field + see${analysis.queueWindowLength} · save-by-save`
+    : `${analysis.occupiedCells}-cell field + see${analysis.queueWindowLength} · exact queue solve`;
 }
 
 export function SolverApp() {
@@ -272,7 +272,6 @@ export function SolverApp() {
     onKeyUp={(event) => event.stopPropagation()}
   >
     <header className="standalone-solver-heading">
-      <span>QNIAPC</span>
       <h1>Perfect Clear Solver</h1>
       <p>Draw the current post-clear field, enter the visible queue, and calculate directly in the browser.</p>
     </header>

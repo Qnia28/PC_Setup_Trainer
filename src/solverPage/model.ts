@@ -3,7 +3,7 @@ export type StandaloneSolveKind = "solve-one" | "solve-all" | "per-save-minimals
 
 export interface StandaloneSolveAnalysis {
   kind: StandaloneSolveKind;
-  placedPieces: number;
+  occupiedCells: number;
   piecesNeeded: number;
   queueWindow: string;
   queueWindowLength: number;
@@ -28,17 +28,13 @@ export function prepareStandaloneSolve(input: {
   if (occupiedCells < 0 || occupiedCells > targetCells) {
     return { ready: false, reason: `The field exceeds the ${targetLines}-line solver format.` };
   }
-  if (occupiedCells % 4 !== 0) {
-    return { ready: false, reason: "The field does not correspond to a whole number of placed pieces." };
-  }
   const remainingCells = targetCells - occupiedCells;
   if (remainingCells <= 0 || remainingCells % 4 !== 0) {
     return { ready: false, reason: `The field cannot complete the ${targetLines}-line Perfect Clear target.` };
   }
-  const placedPieces = occupiedCells / 4;
   const piecesNeeded = remainingCells / 4;
   if (queue.length < piecesNeeded) {
-    return { ready: false, reason: `This field requires see${piecesNeeded}, but the queue has ${queue.length} pieces.` };
+    return { ready: false, reason: `${piecesNeeded}P required to complete this field.` };
   }
   const saveMode = queue.length >= piecesNeeded + 1;
   const queueWindowLength = piecesNeeded + (saveMode ? 1 : 0);
@@ -49,7 +45,7 @@ export function prepareStandaloneSolve(input: {
     ready: true,
     analysis: {
       kind,
-      placedPieces,
+      occupiedCells,
       piecesNeeded,
       queueWindow: queue.slice(0, queueWindowLength),
       queueWindowLength,

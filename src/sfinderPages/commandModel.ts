@@ -7,6 +7,13 @@ import {
 
 export type CommandTargetLines = 2 | 3 | 4 | 5 | 6;
 export type CommandLineGroup = "2-4" | "5-6";
+export const PER_SAVE_RESULT_ORDER = "TILJOSZ";
+
+export interface PerSavePageGroup {
+  piece: string;
+  label: string;
+  pages: Page[];
+}
 
 export function commandDisplayRows(group: CommandLineGroup): 4 | 6 {
   return group === "2-4" ? 4 : 6;
@@ -23,6 +30,23 @@ export function commandTargetOptions(group: CommandLineGroup): readonly CommandT
 export function formatCalculationDuration(elapsedMs: number): string {
   const roundedMs = Math.max(0, Math.round(elapsedMs));
   return roundedMs >= 10_000 ? `${(roundedMs / 1_000).toFixed(1)} s` : `${roundedMs} ms`;
+}
+
+export function formatRatioPercentage(ratio: number): string {
+  const percent = ratio * 100;
+  return `${Number.isInteger(percent) ? percent : percent.toFixed(2)}%`;
+}
+
+export function groupPerSavePages(pages: readonly Page[]): PerSavePageGroup[] {
+  const byPiece = new Map([...PER_SAVE_RESULT_ORDER].map((piece) => [piece, [] as Page[]]));
+  for (const page of pages) {
+    const piece = page.comment.match(/\bSave ([TILJOSZ])\b/i)?.[1]?.toUpperCase();
+    if (piece) byPiece.get(piece)?.push(page);
+  }
+  return [...PER_SAVE_RESULT_ORDER].flatMap((piece) => {
+    const savedPages = byPiece.get(piece) ?? [];
+    return savedPages.length ? [{ piece, label: `Save ${piece}`, pages: savedPages }] : [];
+  });
 }
 
 export function extractFumenCode(value: string): string | null {

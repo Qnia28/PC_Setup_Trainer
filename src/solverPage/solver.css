@@ -17,8 +17,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, canvas:focus-vi
 
 .standalone-solver-shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 38px 0 64px; }
 .standalone-solver-heading { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #2c3745; }
-.standalone-solver-heading > span { color: #6fd3f4; font-size: 11px; font-weight: 700; letter-spacing: .15em; }
-.standalone-solver-heading h1 { margin: 5px 0 8px; font-size: 30px; }
+.standalone-solver-heading h1 { margin: 0 0 8px; font-size: 30px; }
 .standalone-solver-heading p { margin: 0; color: #91a0b3; font-size: 14px; }
 .standalone-line-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-bottom: 20px; padding: 4px; background: #0e141c; border: 1px solid #293543; border-radius: 7px; }
 .standalone-line-modes button { min-height: 42px; color: #91a0b3; background: transparent; border-color: transparent; font-size: 12px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }

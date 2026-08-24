@@ -21,9 +21,9 @@ source's stated terms.
   original sfinder-wasm contributions and shipped binaries for inclusion and
   distribution in this project under the MIT License. That project-specific
   grant is independent of the upstream repository's GPL-3.0-only release.
-- Third-party material identified by sfinder-wasm remains under its respective
+- Third-party material listed by sfinder-wasm remains under its respective
   license; the bundled runtime uses no non-permissive third-party source.
-- The full upstream public license and acknowledgement document are retained as
+- The full upstream public license and acknowledgements document are retained as
   `vendor/sfinder-wasm/upstream/LICENSE` and
   `vendor/sfinder-wasm/upstream/THIRD_PARTY_NOTICES.md`.
 
@@ -85,8 +85,8 @@ source's stated terms.
 
 ## sfinder-wasm upstream acknowledgements
 
-The following acknowledgements are retained from the sfinder-wasm project.
-Unless identified above as a bundled dependency, these projects are behavioral,
+The following acknowledgements are from the sfinder-wasm project.
+Unless listed above as a bundled dependency, these projects are behavioral,
 historical, or architectural references and their source is not distributed as
 part of QniaPC.
 
@@ -105,7 +105,7 @@ part of QniaPC.
 - Author: Marfung37
 - Relationship: save-analysis semantics and save-expression behavior informed
   sfinder-wasm. Its Python source is not included.
-- License status: no explicit software license was present when reviewed.
+- License: not declared by the upstream repository.
 
 ### sfinder-man
 
@@ -113,7 +113,7 @@ part of QniaPC.
 - Repository owner: cringemoment
 - Relationship: earlier command workflows and wrapper behavior informed
   sfinder-wasm. Its Python source is not included.
-- License status: no explicit software license was present when reviewed.
+- License: not declared by the upstream repository.
 
 ### tetra-tools solver design reference
 
@@ -155,15 +155,14 @@ SOFTWARE.
 
 The sources in this section were consulted when researching, transcribing,
 normalizing, or validating setup geometry, queue conditions, continuations,
-probabilities, terminology, and related metadata. No open-content license was
-identified for these sources. They are listed as references and acknowledgements,
-not as open-source license grants.
+probabilities, terminology, and related metadata. These entries are references
+and acknowledgements, not open-content license grants.
 
 ### PC INFO KOREA / Perfect Clear Info Korea
 
 - Website: [Perfect Clear Info Korea](https://www.perfectclearinfokorea.com/)
 - Organization: Korean Perfect Clear Association (KPCA)
-- Site editing team identified by the site: Bibii (까망고양이 비비), Holifyre
+- Site editing team: Bibii (까망고양이 비비), Holifyre
   (홀리파이어), Paback (파백), SingSing7538 (양플), ozsitjl (z), and algebruh.
 - Use in QniaPC: primary reference for multiple cycle-based Perfect Clear setup
   catalogs, advanced setups, QB/OQB conditions, and associated explanations.
@@ -181,8 +180,8 @@ not as open-source license grants.
 - Author: algebruh
 - Use in QniaPC: source and research reference for seventh-cycle Perfect Clear
   setups, including advanced seventh-cycle material.
-- No stable public document URL or explicit public license was identified in the
-  retained source provenance.
+- Public document URL: unavailable.
+- License: not specified.
 
 ## External tools, services, and compatibility formats
 
@@ -197,9 +196,7 @@ Their code is not bundled into QniaPC unless stated elsewhere in this document.
   underlying code collected or used by the project.
 - Use in QniaPC: external/offline SFinder helper scripts and setup-analysis
   workflow reference.
-- License status: the upstream repository does not declare a license. This entry
-  is an acknowledgement only and does not assert permission to redistribute its
-  code.
+- License: not declared by the upstream repository.
 
 ### PC Solver / tetra-tools
 
@@ -219,5 +216,5 @@ Their code is not bundled into QniaPC unless stated elsewhere in this document.
 - Use in QniaPC: external replay source and compatibility format. The local
   importer implements the explicitly tested Jstris V3 PC Mode replay subset.
   Unsupported future versions fail closed.
-- License status: no open-source license for the Jstris service or replay format
-  was identified. No Jstris application code is bundled into QniaPC.
+- License: not declared for the Jstris service or replay format.
+- No Jstris application code is bundled into QniaPC.

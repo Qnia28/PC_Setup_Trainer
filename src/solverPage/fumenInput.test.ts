@@ -35,4 +35,11 @@ describe("standalone solver Fumen input", () => {
     expect(parsed.field[4]?.[0]).toBe(true);
     expect(parsed.field[5]?.[9]).toBe(true);
   });
+
+  it("decodes the reported valid five-line Fumen with all 26 occupied cells", () => {
+    const parsed = parseSolverFumen("v115@zgB8GeC8GeE8EeD8DeG8AeE8JeAgH", 5);
+    expect(parsed).toMatchObject({ status: "ready" });
+    if (parsed.status !== "ready") return;
+    expect(parsed.field.flat().filter(Boolean)).toHaveLength(26);
+  });
 });

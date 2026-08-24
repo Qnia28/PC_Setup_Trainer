@@ -6,6 +6,8 @@ import {
   commandTargetOptions,
   defaultTargetLines,
   formatCalculationDuration,
+  formatRatioPercentage,
+  groupPerSavePages,
   normalizeCommandSource,
 } from "./commandModel";
 
@@ -25,6 +27,31 @@ describe("sfinder command line groups", () => {
     expect(formatCalculationDuration(10_000)).toBe("10.0 s");
     expect(formatCalculationDuration(10_549)).toBe("10.5 s");
     expect(formatCalculationDuration(61_234)).toBe("61.2 s");
+  });
+
+  it("formats ratio values as percentages", () => {
+    expect(formatRatioPercentage(0)).toBe("0%");
+    expect(formatRatioPercentage(0.9523809524)).toBe("95.24%");
+    expect(formatRatioPercentage(1)).toBe("100%");
+  });
+
+  it("groups per-save pages by saved piece in PC Solver display order", () => {
+    const pages = decoder.decode(encoder.encode([
+      { field: Field.create(), comment: "Save Z (50.00%)" },
+      { field: Field.create(), comment: "☆ Save T" },
+      { field: Field.create(), comment: "Save Z (50.00%)" },
+      { field: Field.create(), comment: "Save O (25.00%)" },
+    ]));
+
+    expect(groupPerSavePages(pages).map(({ piece, label, pages: savedPages }) => ({
+      piece,
+      label,
+      count: savedPages.length,
+    }))).toEqual([
+      { piece: "T", label: "Save T", count: 1 },
+      { piece: "O", label: "Save O", count: 1 },
+      { piece: "Z", label: "Save Z", count: 2 },
+    ]);
   });
 
   it("ignores the top displayed row when a 6-row board targets 5 lines", () => {

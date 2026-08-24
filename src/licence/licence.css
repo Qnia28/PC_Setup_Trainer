@@ -17,3 +17,21 @@ body { margin: 0; min-width: 720px; min-height: 100vh; background: radial-gradie
 .licence-section { margin-top: 20px; padding: 22px; background: rgba(17, 24, 33, .9); border: 1px solid #344152; border-radius: 9px; }
 .licence-section h2 { margin: 0 0 14px; font-size: 20px; }
 .licence-section pre { margin: 16px 0 0; padding: 18px; overflow: auto; color: #cbd7e4; background: #090e14; border: 1px solid #2d3947; border-radius: 6px; font: 12px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.licence-list { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.licence-list li { padding: 15px 16px; background: #0d141c; border: 1px solid #2d3947; border-radius: 7px; }
+.licence-list h3 { margin: 0 0 10px; font-size: 15px; }
+.licence-list a { color: #8bddf5; }
+.licence-list dl { display: grid; gap: 7px; margin: 0; }
+.licence-list dl > div { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; }
+.licence-list dt { color: #7f90a4; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.licence-list dd { margin: 0; color: #cbd7e4; font-size: 13px; line-height: 1.5; }
+.acknowledgement-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.acknowledgement-groups article { min-width: 0; padding: 16px; background: #0d141c; border: 1px solid #2d3947; border-radius: 7px; }
+.acknowledgement-groups h3 { margin: 0 0 12px; font-size: 16px; }
+.acknowledgement-groups ul { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+.acknowledgement-groups li { padding-top: 13px; border-top: 1px solid #273342; }
+.acknowledgement-groups li:first-child { padding-top: 0; border-top: 0; }
+.acknowledgement-groups h4 { margin: 0 0 5px; color: #dbe7f2; font-size: 13px; }
+.acknowledgement-groups a { color: #8bddf5; }
+.acknowledgement-groups p { margin: 0; color: #9eacbd; font-size: 12px; line-height: 1.55; }
+.acknowledgement-groups strong { color: #cbd7e4; font-weight: 650; }

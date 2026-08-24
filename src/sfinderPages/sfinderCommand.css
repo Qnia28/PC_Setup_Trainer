@@ -68,6 +68,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-save-table span { color: #91a0b3; font-size: 12px; }
 .sfinder-failed-queues { margin-top: 16px; color: #aab8c8; }
 .sfinder-failed-queues code { display: block; max-height: 140px; margin-top: 8px; padding: 10px; overflow: auto; white-space: normal; background: #0d141c; border-radius: 5px; }
+.sfinder-result-groups { display: grid; gap: 24px; margin-top: 18px; }
+.sfinder-result-group { min-width: 0; }
+.sfinder-result-group > h3 { display: flex; align-items: center; gap: 9px; margin: 0 0 11px; color: #dce7f1; font-size: 16px; }
+.sfinder-result-group > h3 small { min-width: 24px; padding: 2px 7px; color: #8bdbf3; background: #182a34; border-radius: 100px; text-align: center; }
+.sfinder-result-group .sfinder-result-grid { margin-top: 0; }
 .sfinder-result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 18px; }
 .sfinder-result-page { display: grid; gap: 8px; padding: 12px; background: #121b25; border: 1px solid #334152; border-radius: 7px; }
 .sfinder-result-page strong { overflow: hidden; color: #cbd6e1; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }

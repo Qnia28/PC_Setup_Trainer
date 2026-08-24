@@ -42,7 +42,7 @@ export const SFINDER_COMMANDS: readonly SfinderCommandDefinition[] = [
     label: "Per-save minimals",
     summary: "Find a minimal solution group for every available saved piece.",
     patternLabel: "Visible queue",
-    patternPlaceholder: "TILJOSZ",
+    patternPlaceholder: "[TILJS]!,*p2",
   },
   {
     id: "cover",
@@ -71,6 +71,10 @@ const COMMAND_BY_ID = new Map(SFINDER_COMMANDS.map((command) => [command.id, com
 
 export function sfinderCommandPath(command: SfinderCommandId): string {
   return `/sfinder/${command}`;
+}
+
+export function defaultWantedSave(command: SfinderCommandId): string {
+  return command === "minimals" ? "" : "T";
 }
 
 export function resolveSfinderCommand(pathname: string, fallback?: string | null): SfinderCommandDefinition {
