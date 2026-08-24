@@ -1252,15 +1252,9 @@ struct DagEdge {
     saved: u8,
 }
 
-#[derive(Default, Debug)]
-struct DagNode {
-    edges: Vec<DagEdge>,
-}
-
-// Compatibility-mode pattern DAGs can contain hundreds of thousands of
-// nodes. Keep their edges in one flat arena instead of one Vec allocation per
-// node. The established concrete-queue DAG above stays unchanged for the
-// 2..=4-line fast path.
+// Structural search and pattern-level compatibility search share one flat
+// edge arena. This keeps allocation/cache behaviour consistent across every
+// wrapper and avoids one Vec allocation per DAG node.
 #[derive(Clone, Copy, Debug, Default)]
 struct FlatDagNode {
     edge_start: u32,
@@ -1268,12 +1262,12 @@ struct FlatDagNode {
 }
 
 #[derive(Debug, Default)]
-struct FlatMultisetDag {
+struct FlatDag {
     nodes: Vec<FlatDagNode>,
     edges: Vec<DagEdge>,
     productive: Vec<u8>,
 }
-impl FlatMultisetDag {
+impl FlatDag {
     #[inline]
     fn edges(&self, node: u32) -> &[DagEdge] {
         let meta = self.nodes[node as usize];
@@ -2670,7 +2664,7 @@ impl PcSolver {
         &mut self,
         start_board: u64,
         roots: &FastSet<u32>,
-    ) -> (FlatMultisetDag, Vec<u32>) {
+    ) -> (FlatDag, Vec<u32>) {
         let mut state_ids = FastMap::default();
         let mut states = Vec::new();
         let mut nodes = Vec::new();
@@ -2755,19 +2749,19 @@ impl PcSolver {
             cursor += 1;
         }
 
-        let mut dag = FlatMultisetDag {
+        let mut dag = FlatDag {
             productive: vec![0u8; nodes.len()],
             nodes,
             edges,
         };
         for &root in &root_ids {
-            Self::flat_multiset_productive(&mut dag, root);
+            Self::flat_dag_productive(&mut dag, root);
         }
         root_ids.retain(|&root| dag.productive[root as usize] == 2);
         (dag, root_ids)
     }
 
-    fn flat_multiset_productive(dag: &mut FlatMultisetDag, node: u32) -> bool {
+    fn flat_dag_productive(dag: &mut FlatDag, node: u32) -> bool {
         match dag.productive[node as usize] {
             1 => return false,
             2 => return true,
@@ -2781,17 +2775,16 @@ impl PcSolver {
         let mut productive = false;
         for index in start..end {
             let next = dag.edges[index].next;
-            let edge_productive =
-                next == TERMINAL_NODE || Self::flat_multiset_productive(dag, next);
+            let edge_productive = next == TERMINAL_NODE || Self::flat_dag_productive(dag, next);
             productive |= edge_productive;
         }
         dag.productive[node as usize] = if productive { 2 } else { 1 };
         productive
     }
 
-    fn collect_multiset_dag_paths(
+    fn collect_flat_dag_paths(
         height: u8,
-        dag: &FlatMultisetDag,
+        dag: &FlatDag,
         node: u32,
         path: DagPathState,
         out: &mut FastMap<CompactSolution, FastSet<u64>>,
@@ -2816,7 +2809,7 @@ impl PcSolver {
             if edge.next == TERMINAL_NODE {
                 out.entry(next_compact).or_default().insert(next_order);
             } else {
-                Self::collect_multiset_dag_paths(
+                Self::collect_flat_dag_paths(
                     height,
                     dag,
                     edge.next,
@@ -2832,8 +2825,8 @@ impl PcSolver {
         }
     }
 
-    fn collect_multiset_dag_orders(
-        dag: &FlatMultisetDag,
+    fn collect_flat_dag_orders(
+        dag: &FlatDag,
         node: u32,
         depth: u8,
         order_bits: u64,
@@ -2847,7 +2840,7 @@ impl PcSolver {
             if edge.next == TERMINAL_NODE {
                 out.insert(next_order);
             } else {
-                Self::collect_multiset_dag_orders(dag, edge.next, depth + 1, next_order, out);
+                Self::collect_flat_dag_orders(dag, edge.next, depth + 1, next_order, out);
             }
         }
     }
@@ -2899,7 +2892,7 @@ impl PcSolver {
 
         let mut orders = FastSet::default();
         for root in root_ids {
-            Self::collect_multiset_dag_orders(&dag, root, 0, 0, &mut orders);
+            Self::collect_flat_dag_orders(&dag, root, 0, 0, &mut orders);
         }
         if orders.is_empty() {
             return true;
@@ -2976,7 +2969,7 @@ impl PcSolver {
 
         let mut compact = FastMap::default();
         for root in root_ids {
-            Self::collect_multiset_dag_paths(
+            Self::collect_flat_dag_paths(
                 self.height,
                 &dag,
                 root,
@@ -3068,8 +3061,24 @@ impl PcSolver {
         if remaining == 1 { saved } else { 7 }
     }
 
+    fn ensure_structural_state(
+        st: StructuralState,
+        state_ids: &mut FastMap<StructuralState, u32>,
+        states: &mut Vec<StructuralState>,
+        nodes: &mut Vec<FlatDagNode>,
+    ) -> u32 {
+        if let Some(&id) = state_ids.get(&st) {
+            return id;
+        }
+        let id = states.len() as u32;
+        state_ids.insert(st, id);
+        states.push(st);
+        nodes.push(FlatDagNode::default());
+        id
+    }
+
     #[allow(clippy::too_many_arguments)]
-    fn add_dag_transition(
+    fn push_structural_transition(
         &mut self,
         st: StructuralState,
         piece: Piece,
@@ -3078,25 +3087,12 @@ impl PcSolver {
         pl: Placement,
         queue: &[Piece],
         req: u8,
-        use_hold: bool,
         state_ids: &mut FastMap<StructuralState, u32>,
-        nodes: &mut Vec<DagNode>,
-        edge_seen: &mut FastSet<(u64, u8, u8, u8, u8, i8, i8)>,
+        states: &mut Vec<StructuralState>,
+        nodes: &mut Vec<FlatDagNode>,
         edges: &mut Vec<DagEdge>,
     ) {
         let next_placed = st.placed + 1;
-        let edge_key = (
-            pl.raw_board,
-            next_idx,
-            next_hold,
-            piece as u8,
-            pl.orientation,
-            pl.x,
-            pl.y,
-        );
-        if !edge_seen.insert(edge_key) {
-            return;
-        }
         if pl.board == full_board(self.height) {
             if next_placed == req {
                 edges.push(DagEdge {
@@ -3118,210 +3114,37 @@ impl PcSolver {
         if remaining_cells != (req - next_placed) as u32 * 4 {
             return;
         }
-        let next_state = StructuralState {
-            board: pl.board,
-            idx: next_idx,
-            hold: next_hold,
-            placed: next_placed,
-        };
-        let child = self.build_dag_node(next_state, queue, req, use_hold, state_ids, nodes);
-        if !nodes[child as usize].edges.is_empty() {
-            edges.push(DagEdge {
-                raw_board: pl.raw_board,
-                next: child,
-                piece,
-                orientation: pl.orientation,
-                x: pl.x,
-                y: pl.y,
-                saved: 7,
-            });
-        }
+        let child = Self::ensure_structural_state(
+            StructuralState {
+                board: pl.board,
+                idx: next_idx,
+                hold: next_hold,
+                placed: next_placed,
+            },
+            state_ids,
+            states,
+            nodes,
+        );
+        edges.push(DagEdge {
+            raw_board: pl.raw_board,
+            next: child,
+            piece,
+            orientation: pl.orientation,
+            x: pl.x,
+            y: pl.y,
+            saved: 7,
+        });
     }
 
-    fn build_dag_node(
-        &mut self,
-        st: StructuralState,
-        queue: &[Piece],
-        req: u8,
-        use_hold: bool,
-        state_ids: &mut FastMap<StructuralState, u32>,
-        nodes: &mut Vec<DagNode>,
-    ) -> u32 {
-        if let Some(&id) = state_ids.get(&st) {
-            return id;
-        }
-        let id = nodes.len() as u32;
-        state_ids.insert(st, id);
-        nodes.push(DagNode::default());
-        self.nodes += 1;
-
-        let mut edges = Vec::new();
-        let mut edge_seen = FastSet::default();
-        let n = queue.len() as u8;
-        let remaining = req - st.placed;
-        if st.idx < n {
-            let cur = queue[st.idx as usize];
-            if self.stage8_pair_allows(
-                st.board,
-                cur,
-                Self::next_piece_mask(queue, st.idx + 1, st.hold, use_hold),
-                remaining,
-            ) {
-                let set = self.placement_set_for_remaining(st.board, cur, remaining);
-                for &pl in set.placements.iter() {
-                    self.add_dag_transition(
-                        st,
-                        cur,
-                        st.idx + 1,
-                        st.hold,
-                        pl,
-                        queue,
-                        req,
-                        use_hold,
-                        state_ids,
-                        nodes,
-                        &mut edge_seen,
-                        &mut edges,
-                    );
-                }
-            }
-            if use_hold {
-                if st.hold == 7 {
-                    if st.idx + 1 < n {
-                        let next_piece = queue[st.idx as usize + 1];
-                        if self.stage8_pair_allows(
-                            st.board,
-                            next_piece,
-                            Self::next_piece_mask(queue, st.idx + 2, cur as u8, use_hold),
-                            remaining,
-                        ) {
-                            let set =
-                                self.placement_set_for_remaining(st.board, next_piece, remaining);
-                            for &pl in set.placements.iter() {
-                                self.add_dag_transition(
-                                    st,
-                                    next_piece,
-                                    st.idx + 2,
-                                    cur as u8,
-                                    pl,
-                                    queue,
-                                    req,
-                                    use_hold,
-                                    state_ids,
-                                    nodes,
-                                    &mut edge_seen,
-                                    &mut edges,
-                                );
-                            }
-                        }
-                    }
-                } else {
-                    let held = Piece::from_u8(st.hold).unwrap();
-                    if self.stage8_pair_allows(
-                        st.board,
-                        held,
-                        Self::next_piece_mask(queue, st.idx + 1, cur as u8, use_hold),
-                        remaining,
-                    ) {
-                        let set = self.placement_set_for_remaining(st.board, held, remaining);
-                        for &pl in set.placements.iter() {
-                            self.add_dag_transition(
-                                st,
-                                held,
-                                st.idx + 1,
-                                cur as u8,
-                                pl,
-                                queue,
-                                req,
-                                use_hold,
-                                state_ids,
-                                nodes,
-                                &mut edge_seen,
-                                &mut edges,
-                            );
-                        }
-                    }
-                }
-            }
-        } else if use_hold && st.hold != 7 {
-            let held = Piece::from_u8(st.hold).unwrap();
-            if self.stage8_pair_allows(
-                st.board,
-                held,
-                Self::next_piece_mask(queue, st.idx, 7, use_hold),
-                remaining,
-            ) {
-                let set = self.placement_set_for_remaining(st.board, held, remaining);
-                for &pl in set.placements.iter() {
-                    self.add_dag_transition(
-                        st,
-                        held,
-                        st.idx,
-                        7,
-                        pl,
-                        queue,
-                        req,
-                        use_hold,
-                        state_ids,
-                        nodes,
-                        &mut edge_seen,
-                        &mut edges,
-                    );
-                }
-            }
-        }
-        nodes[id as usize].edges = edges;
-        id
-    }
-
-    fn collect_dag_paths(
-        height: u8,
-        nodes: &[DagNode],
-        node: u32,
-        path: DagPathState,
-        out: &mut FastMap<CompactSolution, FastSet<u64>>,
-    ) {
-        for edge in &nodes[node as usize].edges {
-            let Some((next_cleared, original_mask)) = map_placement_to_original(
-                height,
-                path.cleared_rows,
-                edge.piece,
-                edge.orientation,
-                edge.x,
-                edge.y,
-                edge.raw_board,
-            ) else {
-                continue;
-            };
-            let next_compact = path.compact.with_piece_mask(edge.piece, original_mask);
-            // piece+1 uses 1..7, so leading I placements do not collapse with a
-            // shorter sequence. All successful paths have the same depth.
-            let next_order = path.order_bits | ((edge.piece as u64 + 1) << (path.depth as u32 * 3));
-            if edge.next == TERMINAL_NODE {
-                out.entry(next_compact).or_default().insert(next_order);
-            } else {
-                Self::collect_dag_paths(
-                    height,
-                    nodes,
-                    edge.next,
-                    DagPathState {
-                        depth: path.depth + 1,
-                        cleared_rows: next_cleared,
-                        compact: next_compact,
-                        order_bits: next_order,
-                    },
-                    out,
-                );
-            }
-        }
-    }
-
+    // Concrete-queue search and pattern search use the same flat DAG storage.
+    // Building iteratively keeps every node's outgoing edges contiguous and
+    // avoids recursive child construction plus per-node Vec allocations.
     fn build_structural_dag(
         &mut self,
         initial: u64,
         queue: &[Piece],
         use_hold: bool,
-    ) -> Option<(Vec<DagNode>, u32, u8, u8)> {
+    ) -> Option<(FlatDag, u32, u8, u8)> {
         self.trim_cache_between_requests();
         let total = self.height as u32 * 10;
         let empty = total.saturating_sub(initial.count_ones());
@@ -3345,12 +3168,139 @@ impl PcSolver {
             placed: 0,
         };
         let mut state_ids = FastMap::default();
+        let mut states = Vec::new();
         let mut nodes = Vec::new();
-        let root = self.build_dag_node(start, queue, req, use_hold, &mut state_ids, &mut nodes);
-        if nodes[root as usize].edges.is_empty() {
+        let mut edges = Vec::new();
+        let root = Self::ensure_structural_state(start, &mut state_ids, &mut states, &mut nodes);
+        let n = queue.len() as u8;
+        let mut cursor = 0usize;
+        while cursor < states.len() {
+            let st = states[cursor];
+            self.nodes += 1;
+            let remaining = req - st.placed;
+            let edge_start = edges.len();
+            if st.idx < n {
+                let cur = queue[st.idx as usize];
+                if self.stage8_pair_allows(
+                    st.board,
+                    cur,
+                    Self::next_piece_mask(queue, st.idx + 1, st.hold, use_hold),
+                    remaining,
+                ) {
+                    let set = self.placement_set_for_remaining(st.board, cur, remaining);
+                    for &pl in set.placements.iter() {
+                        self.push_structural_transition(
+                            st,
+                            cur,
+                            st.idx + 1,
+                            st.hold,
+                            pl,
+                            queue,
+                            req,
+                            &mut state_ids,
+                            &mut states,
+                            &mut nodes,
+                            &mut edges,
+                        );
+                    }
+                }
+                if use_hold {
+                    if st.hold == 7 {
+                        if st.idx + 1 < n {
+                            let next_piece = queue[st.idx as usize + 1];
+                            if self.stage8_pair_allows(
+                                st.board,
+                                next_piece,
+                                Self::next_piece_mask(queue, st.idx + 2, cur as u8, use_hold),
+                                remaining,
+                            ) {
+                                let set = self
+                                    .placement_set_for_remaining(st.board, next_piece, remaining);
+                                for &pl in set.placements.iter() {
+                                    self.push_structural_transition(
+                                        st,
+                                        next_piece,
+                                        st.idx + 2,
+                                        cur as u8,
+                                        pl,
+                                        queue,
+                                        req,
+                                        &mut state_ids,
+                                        &mut states,
+                                        &mut nodes,
+                                        &mut edges,
+                                    );
+                                }
+                            }
+                        }
+                    } else {
+                        let held = Piece::from_u8(st.hold).unwrap();
+                        // Swapping equal piece types is structurally identical
+                        // to using the active piece directly, so skip the
+                        // duplicate transition instead of hashing every edge.
+                        if held != cur
+                            && self.stage8_pair_allows(
+                                st.board,
+                                held,
+                                Self::next_piece_mask(queue, st.idx + 1, cur as u8, use_hold),
+                                remaining,
+                            )
+                        {
+                            let set = self.placement_set_for_remaining(st.board, held, remaining);
+                            for &pl in set.placements.iter() {
+                                self.push_structural_transition(
+                                    st,
+                                    held,
+                                    st.idx + 1,
+                                    cur as u8,
+                                    pl,
+                                    queue,
+                                    req,
+                                    &mut state_ids,
+                                    &mut states,
+                                    &mut nodes,
+                                    &mut edges,
+                                );
+                            }
+                        }
+                    }
+                }
+            } else if use_hold && st.hold != 7 {
+                let held = Piece::from_u8(st.hold).unwrap();
+                if self.stage8_pair_allows(st.board, held, 0, remaining) {
+                    let set = self.placement_set_for_remaining(st.board, held, remaining);
+                    for &pl in set.placements.iter() {
+                        self.push_structural_transition(
+                            st,
+                            held,
+                            st.idx,
+                            7,
+                            pl,
+                            queue,
+                            req,
+                            &mut state_ids,
+                            &mut states,
+                            &mut nodes,
+                            &mut edges,
+                        );
+                    }
+                }
+            }
+            nodes[cursor] = FlatDagNode {
+                edge_start: edge_start as u32,
+                edge_len: (edges.len() - edge_start) as u32,
+            };
+            cursor += 1;
+        }
+        let mut dag = FlatDag {
+            productive: vec![0u8; nodes.len()],
+            nodes,
+            edges,
+        };
+        if !Self::flat_dag_productive(&mut dag, root) {
             None
         } else {
-            Some((nodes, root, req, initial_cleared))
+            Some((dag, root, req, initial_cleared))
         }
     }
 
@@ -3360,15 +3310,15 @@ impl PcSolver {
         queue: &[Piece],
         use_hold: bool,
     ) -> FastMap<CompactSolution, FastSet<u64>> {
-        let Some((nodes, root, _req, initial_cleared)) =
+        let Some((dag, root, _req, initial_cleared)) =
             self.build_structural_dag(initial, queue, use_hold)
         else {
             return FastMap::default();
         };
         let mut solutions = FastMap::default();
-        Self::collect_dag_paths(
+        Self::collect_flat_dag_paths(
             self.height,
-            &nodes,
+            &dag,
             root,
             DagPathState {
                 depth: 0,
@@ -3390,28 +3340,117 @@ impl PcSolver {
                 order_count: orders.len().min(u32::MAX as usize) as u32,
             })
             .collect();
-        // Stable output is useful for tests and API determinism; no SFinder
-        // compatibility ordering is implied by this key.
         out.sort_by_key(|solution| solution.masks);
         out
+    }
+
+    // Exact single-queue preferred solution. This preserves the existing
+    // qniapc ranking (highest playable-order count, then lexicographic Fumen
+    // mask key) while keeping all filtering and reduction inside Rust.
+    pub fn best_pc(&mut self, initial: u64, queue: &[Piece], use_hold: bool) -> Option<Solution> {
+        let compact = self.enumerate_compact(initial, queue, use_hold);
+        let mut best: Option<Solution> = None;
+        for (solution, orders) in compact {
+            let candidate = Solution {
+                masks: solution.masks(self.height),
+                order_count: orders.len().min(u32::MAX as usize) as u32,
+            };
+            let replace = match &best {
+                None => true,
+                Some(current) if candidate.order_count != current.order_count => {
+                    candidate.order_count > current.order_count
+                }
+                Some(current) => Self::solution_key_cmp(&candidate.masks, &current.masks).is_lt(),
+            };
+            if replace {
+                best = Some(candidate);
+            }
+        }
+        best
+    }
+
+    fn write_solution_key(masks: &[u64; 7], output: &mut [u8; 118]) -> usize {
+        const HEX: &[u8; 16] = b"0123456789abcdef";
+        let mut cursor = 0usize;
+        for (piece_index, &mask) in masks.iter().enumerate() {
+            if piece_index != 0 {
+                output[cursor] = b':';
+                cursor += 1;
+            }
+            if mask == 0 {
+                output[cursor] = b'0';
+                cursor += 1;
+                continue;
+            }
+            let leading_nibbles = mask.leading_zeros() as usize / 4;
+            for nibble_index in leading_nibbles..16 {
+                let shift = (15 - nibble_index) * 4;
+                output[cursor] = HEX[((mask >> shift) & 0x0f) as usize];
+                cursor += 1;
+            }
+        }
+        cursor
+    }
+
+    fn solution_key_cmp(left: &[u64; 7], right: &[u64; 7]) -> std::cmp::Ordering {
+        let mut left_key = [0u8; 118];
+        let mut right_key = [0u8; 118];
+        let left_len = Self::write_solution_key(left, &mut left_key);
+        let right_len = Self::write_solution_key(right, &mut right_key);
+        left_key[..left_len].cmp(&right_key[..right_len])
+    }
+
+    #[cfg(test)]
+    fn solution_key(masks: &[u64; 7]) -> String {
+        format!(
+            "{:x}:{:x}:{:x}:{:x}:{:x}:{:x}:{:x}",
+            masks[0], masks[1], masks[2], masks[3], masks[4], masks[5], masks[6]
+        )
+    }
+
+    pub fn saved_piece_for_solution(queue: &[Piece], solution: &Solution) -> u8 {
+        let mut remaining = [0i16; 7];
+        for &piece in queue {
+            remaining[piece as usize] += 1;
+        }
+        for piece in Piece::ALL {
+            let used = (solution.masks[piece as usize].count_ones() / 4) as i16;
+            remaining[piece as usize] -= used;
+            if remaining[piece as usize] < 0 {
+                return 7;
+            }
+        }
+        let mut saved = 7u8;
+        let mut total = 0i16;
+        for piece in Piece::ALL {
+            let count = remaining[piece as usize];
+            total += count;
+            if count > 0 {
+                if count != 1 || saved != 7 {
+                    return 7;
+                }
+                saved = piece as u8;
+            }
+        }
+        if total == 1 { saved } else { 7 }
     }
 
     // Return the save-piece set reachable from a DAG node.  Because every
     // edge advances `placed`, the graph is acyclic even when multiple paths
     // merge into the same structural state.
-    fn reachable_save_mask(nodes: &[DagNode], node: u32, memo: &mut [u8]) -> u8 {
+    fn reachable_save_mask(dag: &FlatDag, node: u32, memo: &mut [u8]) -> u8 {
         let cached = memo[node as usize];
         if cached != u8::MAX {
             return cached;
         }
         let mut mask = 0u8;
-        for edge in &nodes[node as usize].edges {
+        for edge in dag.edges(node) {
             if edge.next == TERMINAL_NODE {
                 if edge.saved < 7 {
                     mask |= 1 << edge.saved;
                 }
             } else {
-                mask |= Self::reachable_save_mask(nodes, edge.next, memo);
+                mask |= Self::reachable_save_mask(dag, edge.next, memo);
             }
         }
         memo[node as usize] = mask;
@@ -3431,7 +3470,7 @@ impl PcSolver {
     #[allow(clippy::too_many_arguments)]
     fn collect_save_candidates(
         height: u8,
-        nodes: &[DagNode],
+        dag: &FlatDag,
         node: u32,
         cleared_rows: u8,
         compact: CompactSolution,
@@ -3440,7 +3479,7 @@ impl PcSolver {
         seen: &mut [FastSet<CompactSolution>; 7],
         out: &mut [Vec<CompactSolution>; 7],
     ) -> bool {
-        for edge in &nodes[node as usize].edges {
+        for edge in dag.edges(node) {
             let Some((next_cleared, original_mask)) = map_placement_to_original(
                 height,
                 cleared_rows,
@@ -3462,7 +3501,7 @@ impl PcSolver {
                 }
             } else if Self::collect_save_candidates(
                 height,
-                nodes,
+                dag,
                 edge.next,
                 next_cleared,
                 next_compact,
@@ -3486,7 +3525,7 @@ impl PcSolver {
     #[allow(clippy::too_many_arguments)]
     fn collect_candidate_orders(
         height: u8,
-        nodes: &[DagNode],
+        dag: &FlatDag,
         node: u32,
         depth: u8,
         cleared_rows: u8,
@@ -3496,7 +3535,7 @@ impl PcSolver {
         order_bits: u64,
         orders: &mut FastSet<u64>,
     ) {
-        for edge in &nodes[node as usize].edges {
+        for edge in dag.edges(node) {
             let Some((next_cleared, original_mask)) = map_placement_to_original(
                 height,
                 cleared_rows,
@@ -3521,7 +3560,7 @@ impl PcSolver {
             } else {
                 Self::collect_candidate_orders(
                     height,
-                    nodes,
+                    dag,
                     edge.next,
                     depth + 1,
                     next_cleared,
@@ -3543,7 +3582,7 @@ impl PcSolver {
         candidate_limit: usize,
     ) -> Vec<(Piece, Solution)> {
         let limit = candidate_limit.max(1);
-        let Some((nodes, root, req, initial_cleared)) =
+        let Some((dag, root, req, initial_cleared)) =
             self.build_structural_dag(initial, queue, use_hold)
         else {
             return Vec::new();
@@ -3554,8 +3593,8 @@ impl PcSolver {
         if queue.len() != req as usize + 1 {
             return Vec::new();
         }
-        let mut save_memo = vec![u8::MAX; nodes.len()];
-        let reachable_mask = Self::reachable_save_mask(&nodes, root, &mut save_memo);
+        let mut save_memo = vec![u8::MAX; dag.nodes.len()];
+        let reachable_mask = Self::reachable_save_mask(&dag, root, &mut save_memo);
         if reachable_mask == 0 {
             return Vec::new();
         }
@@ -3564,7 +3603,7 @@ impl PcSolver {
         let mut seen: [FastSet<CompactSolution>; 7] = core::array::from_fn(|_| FastSet::default());
         Self::collect_save_candidates(
             self.height,
-            &nodes,
+            &dag,
             root,
             initial_cleared,
             CompactSolution::default(),
@@ -3586,7 +3625,7 @@ impl PcSolver {
                 let mut orders = FastSet::default();
                 Self::collect_candidate_orders(
                     self.height,
-                    &nodes,
+                    &dag,
                     root,
                     0,
                     initial_cleared,
@@ -3886,6 +3925,64 @@ mod tests {
         assert_eq!(best.len(), 1);
         assert_eq!(best[0].0, Piece::O);
         assert!(best[0].1.order_count >= 1);
+    }
+
+    #[test]
+    fn best_pc_matches_full_enumeration_ranking() {
+        let board = 0x3c0f03c0fu64;
+        let queue = [
+            Piece::O,
+            Piece::J,
+            Piece::I,
+            Piece::L,
+            Piece::S,
+            Piece::Z,
+            Piece::T,
+        ];
+        let mut solver = PcSolver::new(4);
+        let mut all = solver.enumerate_pc(board, &queue, true);
+        assert_eq!(all.len(), 44);
+        all.sort_by(|left, right| {
+            right
+                .order_count
+                .cmp(&left.order_count)
+                .then_with(|| PcSolver::solution_key_cmp(&left.masks, &right.masks))
+        });
+        let expected = all[0];
+        let actual = solver.best_pc(board, &queue, true).expect("best PC");
+        assert_eq!(actual.masks, expected.masks);
+        assert_eq!(actual.order_count, expected.order_count);
+    }
+
+    #[test]
+    fn solution_key_comparator_matches_string_order() {
+        let samples = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0xf, 0x10, 0xa, 0x9, 0x100, 0xabcd, 1],
+            [0x10, 0xf, 0xb, 0x90, 0x101, 0xabce, 2],
+            [u64::MAX, 1, 2, 3, 4, 5, 6],
+        ];
+        for left in &samples {
+            for right in &samples {
+                assert_eq!(
+                    PcSolver::solution_key_cmp(left, right),
+                    PcSolver::solution_key(left).cmp(&PcSolver::solution_key(right))
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn saved_piece_is_derived_from_solution_multiset() {
+        let mut solver = PcSolver::new(2);
+        let queue = [Piece::O; 6];
+        let solutions = solver.enumerate_pc(0, &queue, true);
+        assert!(!solutions.is_empty());
+        assert!(
+            solutions.iter().all(
+                |solution| PcSolver::saved_piece_for_solution(&queue, solution) == Piece::O as u8
+            )
+        );
     }
 
     #[test]

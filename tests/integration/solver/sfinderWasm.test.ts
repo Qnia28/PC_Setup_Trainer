@@ -30,10 +30,18 @@ describe("sfinder-wasm live solver integration", () => {
         targetLines: 2,
         useHold: true,
       },
-    }) as { solutionCount: number; fumen: string | null };
+    }) as {
+      solutionCount: number;
+      solutionKey: string | null;
+      playableOrderCount: number;
+      fumen: string | null;
+    };
 
     expect(result.solutionCount).toBe(1);
+    expect(result.solutionKey).toBeTruthy();
+    expect(result.playableOrderCount).toBeGreaterThan(0);
     expect(result.fumen).not.toBeNull();
+    expect(result.fumen).toBe("v115@vhAAgHRhjpJeAAPIAT3khE0eDKE");
     expect(decoder.decode(result.fumen!).length).toBe(2);
   });
 
@@ -73,6 +81,7 @@ describe("sfinder-wasm live solver integration", () => {
     }) as { solutionCount: number; fumen: string | null };
 
     expect(result.solutionCount).toBeGreaterThan(0);
+    expect(result.fumen).toBe("v115@vhAAgHRhjpJeAAPMAT3khE0eDKEFb85A");
     expect(decoder.decode(result.fumen!).length).toBe(result.solutionCount + 1);
   });
 
@@ -89,13 +98,16 @@ describe("sfinder-wasm live solver integration", () => {
 
     expect(result.solutionCount).toBeGreaterThan(0);
     expect(result.pageCounts.I).toBeGreaterThan(0);
+    expect(result.pageCounts).toEqual({ T: 0, I: 1, L: 0, J: 0, S: 0, Z: 0, O: 0 });
+    expect(result.fumen).toBe("v115@vhAAgHRhjpJeAAPIATC7rDFb8KC");
     expect(decoder.decode(result.fumen!).length).toBe(result.solutionCount + 1);
   });
 
   it.each([
-    { targetLines: 5, filledRows: 3 },
-    { targetLines: 6, filledRows: 4 },
-  ] as const)("solves a fast $targetLines-line compatibility field", async ({ targetLines, filledRows }) => {
+    { targetLines: 4, filledRows: 2, expectedFumen: null },
+    { targetLines: 5, filledRows: 3, expectedFumen: "v115@Hhd8JeAgHzgjpd8JeAAPIAT3khE0eDKE" },
+    { targetLines: 6, filledRows: 4, expectedFumen: null },
+  ] as const)("solves a fast $targetLines-line compatibility field", async ({ targetLines, filledRows, expectedFumen }) => {
     const result = await runWorkerRequest({
       kind: "solve-one",
       input: {
@@ -107,6 +119,7 @@ describe("sfinder-wasm live solver integration", () => {
     }) as { targetLines: number; solutionCount: number; fumen: string | null };
 
     expect(result).toMatchObject({ targetLines, solutionCount: 1 });
+    if (expectedFumen) expect(result.fumen).toBe(expectedFumen);
     expect(decoder.decode(result.fumen!)).toHaveLength(2);
   });
 

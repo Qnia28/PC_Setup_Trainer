@@ -1,8 +1,9 @@
 import{lastBagInfo}from'./pattern.mjs';
 import{popcount}from'./board.mjs';
 import{MASK_PIECES}from'./tiling.mjs';
+import { TETRIS_DISPLAY_ORDER } from './piece-order.mjs';
 
-const ORDER='TILJSZO';
+const ORDER=TETRIS_DISPLAY_ORDER;
 const PIECE_BIT=Object.fromEntries([...ORDER].map((p,i)=>[p,1<<i]));
 const SOLUTION_INDEX=Object.fromEntries([...MASK_PIECES].map((p,i)=>[p,i]));
 const expressionTables=new Map();

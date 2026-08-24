@@ -1,4 +1,6 @@
-const ALL='TILJSZO';
+import { TETRIS_DISPLAY_ORDER } from "./piece-order.mjs";
+
+const ALL = TETRIS_DISPLAY_ORDER;
 export const PIECE_ORDER=ALL;
 
 export class PatternSyntaxError extends Error{

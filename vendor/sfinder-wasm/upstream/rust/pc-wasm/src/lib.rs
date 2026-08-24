@@ -13,6 +13,23 @@ pub struct WasmSolver {
     min_cover_searched_states: u64,
 }
 
+const SOLUTION_WORD_STRIDE: usize = 9;
+
+fn set_concrete_solutions(
+    solver: &mut WasmSolver,
+    queue: &[pc_core::Piece],
+    solutions: Vec<Solution>,
+) {
+    solver.solutions = solutions;
+    solver.solution_saves.clear();
+    solver.solution_saves.reserve(solver.solutions.len());
+    for solution in &solver.solutions {
+        solver
+            .solution_saves
+            .push(PcSolver::saved_piece_for_solution(queue, solution));
+    }
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn solver_new(height: u32) -> *mut WasmSolver {
     if !(2..=6).contains(&height) {
@@ -187,10 +204,36 @@ pub unsafe extern "C" fn solver_enumerate_pc(
         return 0;
     };
     let s = unsafe { &mut *ptr };
-    s.solutions = s.core.enumerate_pc(board, &q[..qn], hold != 0);
-    s.solution_saves.clear();
-    s.solution_saves.resize(s.solutions.len(), 7);
+    let solutions = s.core.enumerate_pc(board, &q[..qn], hold != 0);
+    set_concrete_solutions(s, &q[..qn], solutions);
     s.solutions.len() as u32
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn solver_best_pc(
+    ptr: *mut WasmSolver,
+    board: u64,
+    qbits: u64,
+    qlen: u32,
+    hold: u32,
+) -> u32 {
+    if ptr.is_null() || qlen > 21 {
+        return 0;
+    }
+    let Some((q, qn)) = decode_queue_array(qbits, qlen as u8) else {
+        return 0;
+    };
+    let s = unsafe { &mut *ptr };
+    s.solutions.clear();
+    s.solution_saves.clear();
+    if let Some(solution) = s.core.best_pc(board, &q[..qn], hold != 0) {
+        let saved = PcSolver::saved_piece_for_solution(&q[..qn], &solution);
+        s.solutions.push(solution);
+        s.solution_saves.push(saved);
+        1
+    } else {
+        0
+    }
 }
 
 // Pattern-level 5..=6-line compatibility enumeration. The Rust core shares
@@ -317,6 +360,43 @@ pub unsafe extern "C" fn solver_per_save_best(
         s.solutions.push(solution);
     }
     s.solutions.len() as u32
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn solver_solution_word_stride() -> u32 {
+    SOLUTION_WORD_STRIDE as u32
+}
+
+// Bulk solution export: seven piece masks, order count, saved-piece code.
+// This replaces 8-9 JS->WASM getter calls per solution on hot UI paths.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn solver_copy_solution_words(
+    ptr: *mut WasmSolver,
+    out_ptr: *mut u64,
+    capacity_words: u32,
+) -> u32 {
+    if ptr.is_null() {
+        return u32::MAX;
+    }
+    let s = unsafe { &*ptr };
+    let required = s.solutions.len().saturating_mul(SOLUTION_WORD_STRIDE);
+    if required > u32::MAX as usize {
+        return u32::MAX;
+    }
+    if required == 0 {
+        return 0;
+    }
+    if out_ptr.is_null() || (capacity_words as usize) < required {
+        return required as u32;
+    }
+    let out = unsafe { core::slice::from_raw_parts_mut(out_ptr, required) };
+    for (index, solution) in s.solutions.iter().enumerate() {
+        let base = index * SOLUTION_WORD_STRIDE;
+        out[base..base + 7].copy_from_slice(&solution.masks);
+        out[base + 7] = solution.order_count as u64;
+        out[base + 8] = s.solution_saves.get(index).copied().unwrap_or(7) as u64;
+    }
+    required as u32
 }
 
 #[unsafe(no_mangle)]

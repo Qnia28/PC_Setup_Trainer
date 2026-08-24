@@ -16,10 +16,13 @@ PC Worker:
 
 - `chance` — PC success rate and failed queues
 - `saves` — save-condition success rate
-- `minimals` — exact minimum-cover solution set for a save condition
+- `minimals` — exact minimum-cover solution set for a save condition; selected solutions are emitted by coverage descending, then solution key ascending
 - `fourth` — fourth-PC save distribution
 - `fifth` — fifth-PC per-piece minimal analysis
 - `per-save-minimals` — save-grouped solutions; one concrete queue uses a ranked Top-K fast path, matrices use exact minimum cover
+- `solve-one` — exact single-queue preferred solution, selected inside Rust
+- `solve-all` — exact single-queue complete solution enumeration
+- `per-save-all` — exact single-queue complete enumeration grouped by saved piece
 
 Batch Worker:
 
@@ -42,6 +45,9 @@ src/
 ├─ worker-client.mjs
 ├─ worker-runtime.mjs
 ├─ batch-worker-runtime.mjs
+├─ path-engine.mjs       # shared queue/pattern solver dispatch
+├─ pc-input.mjs          # shared PC/Fumen/queue validation
+├─ pc-solve.mjs          # single-queue one/all/per-save-all wrappers
 └─ feature modules
 
 wasm/
@@ -79,6 +85,13 @@ The 5-6 line cover fallback likewise uses a structural operation DAG and a
 prefix-sharing queue/Hold projector. Coverpercent reuses the pattern-level PC
 existence path for broad solve patterns. These are internal optimizations and
 do not change the public Worker request format.
+
+Single-queue and pattern features share the same placement/reachability core.
+Concrete-queue and compatibility pattern searches both use the flat DAG arena,
+while `path-engine.mjs` owns the scalar-vs-pattern dispatch policy. Feature
+modules consume raw pattern rows directly on broad hot paths instead of paying a
+per-coverage-hit callback abstraction cost. Solution materialization is shared
+through one bulk WASM export, and saved-piece metadata is produced in Rust.
 
 ## Installation
 
@@ -173,6 +186,32 @@ const result = await runWorkerRequest({
 
 Batch requests use `runBatchWorkerRequest()` from
 `src/batch-worker-runtime.mjs`.
+
+## Single-queue solver API
+
+For applications such as QniaPC, use the dedicated wrappers in
+`src/pc-solve.mjs` instead of calling `enumeratePc()` and reimplementing result
+selection/Fumen generation in the application.
+
+```js
+import { solveOnePc, solveAllPc, solvePerSaveAllPc } from './src/pc-solve.mjs';
+
+const one = solveOnePc({
+  sourceFumen,
+  pattern: 'TOILJS',
+  targetLines: 5,
+  solver,
+  useHold: true,
+});
+```
+
+`solve-one` preserves the existing ranking contract: maximize the number of
+distinct playable piece-placement orders, then use the lexicographically
+smallest solution mask key as the deterministic tie-break. `solve-all` returns
+every distinct solution for the exact queue. `per-save-all` expects one extra
+queue piece and groups the complete solution set by that saved piece. The same
+three operations are available through the PC Worker request kinds. See
+`docs/SINGLE_QUEUE_SOLVER.md`.
 
 ## Pattern syntax
 

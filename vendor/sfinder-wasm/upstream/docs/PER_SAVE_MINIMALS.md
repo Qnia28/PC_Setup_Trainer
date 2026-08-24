@@ -98,3 +98,9 @@ PC 0% is a valid empty analysis, not an error:
 - every `minimalCount = 0`
 - comments use `Save X (N/A)`, never a star
 - Fumen output has only the intro page
+
+## Output order
+
+Within each Save group, selected minimal solutions are emitted in descending coverage order.
+Solutions with the same coverage count are ordered by solution key ascending for deterministic output.
+This ordering is presentation-only: it does not alter exact minimum-cover selection or coverage.

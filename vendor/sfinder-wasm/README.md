@@ -4,12 +4,11 @@ This directory isolates [`Qnia28/sfinder_wasm`](https://github.com/Qnia28/sfinde
 from QniaPC's application code so frequent solver updates remain bounded.
 
 - `upstream/` is the complete 2L–6L-compatible snapshot imported from
-  `D:\AI\sfinder-wasm-6Lfix2` on 2026-08-24, including its optimized 5–6L
-  pattern and cover pipelines and excluding only generated dependency/build
-  output.
+  `D:\AI\sfinder-wasm_260824` on 2026-08-24, including its shared single-queue,
+  broad-pattern, and cover engines.
 - Upstream source, tests, documentation, license, acknowledgements, WASM modules,
   and the four-line legal-board pack stay together under `upstream/`.
-- QniaPC's browser asset adapter, persistent Worker lifecycle, 128 MiB recycle
+- QniaPC's thin public-API adapters, persistent Worker lifecycle, 128 MiB recycle
   policy, and application request protocol live under `src/solver/`.
 - Refresh this dependency by replacing `upstream/` as one unit, then reviewing
   the narrow `src/solver/` compatibility boundary.

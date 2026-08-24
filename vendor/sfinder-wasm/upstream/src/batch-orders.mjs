@@ -1,6 +1,6 @@
 import{advanceCleared,mapOriginalMask,normalizeBase,mirrorMask}from'./batch-geometry.mjs';
+import { PIECE_CODE } from './piece-order.mjs';
 const MIRROR_PIECE={J:'L',L:'J',S:'Z',Z:'S',I:'I',O:'O',T:'T'};
-const PIECE_CODE={I:0,J:1,L:2,O:3,S:4,T:5,Z:6};
 const bits=n=>{let c=0;for(;n;n>>=1)c+=n&1;return c};
 const floorMask=lines=>lines?((1n<<BigInt(lines*10))-1n):0n;
 

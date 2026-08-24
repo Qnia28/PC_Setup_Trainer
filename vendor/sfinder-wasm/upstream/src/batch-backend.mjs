@@ -1,6 +1,6 @@
 import fs from'node:fs';
-const PIECE_CODE={I:0,J:1,L:2,O:3,S:4,T:5,Z:6};
-const CODE_PIECE=['I','J','L','O','S','T','Z'];
+import { PIECE_CODE, RUST_PIECE_ORDER } from './piece-order.mjs';
+const CODE_PIECE=[...RUST_PIECE_ORDER];
 const MODE_CODE={normal:0,tetris:1,'tetris-end':2,'1l':3,'1l-or-pc':4,'2l':5,'2l-or-pc':6,'3l':7,'3l-or-pc':8,'4l':9,'4l-or-pc':10,tsm:11,tss:12,tsd:13,tst:14,b2b:15};
 async function bytesFor(url){if(typeof process!=='undefined'&&process.versions?.node)return new Uint8Array(fs.readFileSync(url));const r=await fetch(url);if(!r.ok)throw new Error(`fetch ${url}: ${r.status}`);return new Uint8Array(await r.arrayBuffer())}
 let promise;
