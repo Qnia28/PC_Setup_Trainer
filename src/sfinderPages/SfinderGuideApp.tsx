@@ -1,5 +1,6 @@
-import { createElement, Fragment, type ReactNode } from "react";
-import guideMarkdown from "./SFinder_User_Guide_EN.md?raw";
+import { createElement, Fragment, useState, type ReactNode } from "react";
+import englishGuideMarkdown from "./SFinder_User_Guide_EN.md?raw";
+import koreanGuideMarkdown from "./SFinder_User_Guide_KR.md?raw";
 import { SiteHeader } from "../site/SiteHeader";
 import "./sfinderGuide.css";
 
@@ -112,10 +113,17 @@ export function renderGuideMarkdown(markdown: string): ReactNode[] {
 }
 
 export function SfinderGuideApp() {
+  const [language, setLanguage] = useState<"en" | "ko">("en");
+  const guideMarkdown = language === "en" ? englishGuideMarkdown : koreanGuideMarkdown;
+
   return <>
     <SiteHeader active="sfinder" sfinderCommand="guide" />
     <main className="sfinder-guide-shell">
-      <article className="sfinder-guide-document">
+      <article className="sfinder-guide-document" lang={language}>
+        <nav className="sfinder-guide-languages" aria-label="Guide language">
+          <button type="button" className={language === "en" ? "selected" : undefined} aria-pressed={language === "en"} onClick={() => setLanguage("en")}>EN</button>
+          <button type="button" className={language === "ko" ? "selected" : undefined} aria-pressed={language === "ko"} onClick={() => setLanguage("ko")}>KR</button>
+        </nav>
         {renderGuideMarkdown(guideMarkdown)}
       </article>
     </main>

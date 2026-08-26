@@ -38,7 +38,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-field-error { color: #ffb2b6 !important; }
 
 .sfinder-command-form { display: grid; min-width: 0; align-content: start; gap: 18px; overflow: hidden; }
-.sfinder-form-grid { display: grid; min-width: 0; grid-template-columns: minmax(0, 2fr) 110px minmax(150px, 1fr); gap: 14px; }
+.sfinder-form-grid { display: grid; min-width: 0; grid-template-columns: minmax(180px, 2fr) minmax(72px, .35fr) minmax(120px, 1fr); gap: 14px; }
+.sfinder-form-grid:not(:has(.sfinder-save-input)) { grid-template-columns: minmax(180px, 1fr) minmax(72px, .18fr); }
 .sfinder-form-grid label { display: grid; min-width: 0; align-content: start; gap: 6px; }
 .sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { min-height: 42px; padding: 9px 11px; }
 .sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { width: 100%; min-width: 0; max-width: 100%; }
@@ -80,3 +81,38 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-result-limit { margin-top: 12px !important; }
 .sfinder-result-fumen { display: grid; gap: 7px; margin-top: 18px; }
 .sfinder-result-fumen textarea { width: 100%; min-width: 0; max-width: 100%; min-height: 80px; padding: 10px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+@media (max-width: 900px) {
+  body { min-width: 0; }
+  .sfinder-command-shell { width: min(100% - 24px, 620px); padding: 26px 0 48px; }
+  .sfinder-command-heading { margin-bottom: 18px; padding-bottom: 16px; }
+  .sfinder-command-heading h1 { font-size: 27px; }
+  .sfinder-line-modes { margin-bottom: 14px; }
+  .sfinder-command-workspace { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .sfinder-field-panel, .sfinder-command-form, .sfinder-command-results { min-width: 0; padding: 17px; }
+  .sfinder-field-panel canvas { width: min(360px, 100%); }
+  .sfinder-form-grid { grid-template-columns: minmax(72px, .25fr) minmax(120px, 1fr); gap: 13px; }
+  .sfinder-form-grid:not(:has(.sfinder-save-input)) { grid-template-columns: minmax(180px, 1fr) minmax(72px, .18fr); }
+  .sfinder-queue-input { grid-column: 1 / -1; }
+  .sfinder-target-input { grid-column: 1; }
+  .sfinder-save-input { grid-column: 2; }
+  .sfinder-form-grid:not(:has(.sfinder-save-input)) .sfinder-queue-input { grid-column: 1; }
+  .sfinder-form-grid:not(:has(.sfinder-save-input)) .sfinder-target-input { grid-column: 2; }
+  .sfinder-wide-input { grid-column: 1 / -1; }
+  .sfinder-form-grid .sfinder-checkbox-input { grid-column: 1 / -1; min-height: 34px; }
+  .sfinder-command-results { margin-top: 14px; }
+  .sfinder-result-metrics div { flex: 1 1 120px; min-width: 0; }
+  .sfinder-save-table { grid-template-columns: minmax(0, 1fr); }
+  .sfinder-result-grid { grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .sfinder-command-shell { width: calc(100% - 16px); padding-top: 20px; }
+  .sfinder-command-heading h1 { font-size: 24px; }
+  .sfinder-command-heading p { line-height: 1.5; }
+  .sfinder-line-modes button { padding-inline: 7px; font-size: 11px; }
+  .sfinder-field-panel, .sfinder-command-form, .sfinder-command-results { padding: 14px; }
+  .sfinder-result-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sfinder-result-metrics div { padding: 10px; }
+  .sfinder-save-table div { align-items: flex-start; }
+}

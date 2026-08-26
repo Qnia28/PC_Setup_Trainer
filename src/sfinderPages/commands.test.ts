@@ -49,10 +49,9 @@ describe("SFinder command routes", () => {
       .toBe("Check which queues can build at least one supplied target.");
   });
 
-  it("keeps unfinished colored-field tools out of the public menu", () => {
+  it("keeps incomplete Saves and colored-field tools out of the public menu", () => {
     expect(SFINDER_MENU_COMMANDS.map(({ id }) => id)).toEqual([
       "chance",
-      "saves",
       "minimals",
       "per_save_minimals",
     ]);

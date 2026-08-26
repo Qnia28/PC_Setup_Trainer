@@ -282,8 +282,8 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
         </div>
         <form className="sfinder-command-form" onSubmit={(event) => { event.preventDefault(); void runCommand(); }}>
           <div className="sfinder-form-grid">
-            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue pattern"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /></label>
-            <label className="sfinder-target-input"><span>Target lines</span><input
+            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /></label>
+            <label className="sfinder-target-input"><span>Lines</span><input
               type="number"
               inputMode="numeric"
               min={commandTargetOptions(lineGroup)[0]}
@@ -295,7 +295,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
                 if (commandTargetOptions(lineGroup).includes(lines)) setTargetLines(lines);
               }}
             /></label>
-            {(command.id === "saves" || command.id === "minimals") ? <label className="sfinder-save-input"><span>Wanted save</span><input value={wantedSave} placeholder="T || I" spellCheck={false} onChange={(event) => setWantedSave(event.target.value)} /></label> : null}
+            {(command.id === "saves" || command.id === "minimals") ? <label className="sfinder-save-input"><span>Saves</span><input value={wantedSave} placeholder="T || I" spellCheck={false} onChange={(event) => setWantedSave(event.target.value)} /></label> : null}
             {(command.id === "minimals" || command.id === "per_save_minimals") ? <label className="sfinder-wide-input"><span>Result title</span><input value={title} placeholder="Optional title" onChange={(event) => setTitle(event.target.value)} /></label> : null}
             <label className="sfinder-checkbox-input"><input type="checkbox" checked={useHold} onChange={(event) => setUseHold(event.target.checked)} /><span>Use hold</span></label>
             {(command.id === "cover" || command.id === "congruent_cover") ? <label className="sfinder-checkbox-input"><input type="checkbox" checked={mirror} onChange={(event) => setMirror(event.target.checked)} /><span>Mirror</span></label> : null}

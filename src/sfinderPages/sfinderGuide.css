@@ -10,9 +10,15 @@
 body { margin: 0; min-width: 720px; min-height: 100vh; background: radial-gradient(circle at 50% 0, #171f2b 0, #090c11 52%); }
 
 .sfinder-guide-shell { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 40px 0 72px; }
-.sfinder-guide-document { padding: 30px 34px 40px; background: rgba(17, 24, 33, .92); border: 1px solid #344152; border-radius: 9px; }
+.sfinder-guide-document { position: relative; padding: 30px 34px 40px; background: rgba(17, 24, 33, .92); border: 1px solid #344152; border-radius: 9px; }
+.sfinder-guide-languages { position: absolute; top: 30px; right: 34px; display: flex; overflow: hidden; border: 1px solid #46566a; border-radius: 6px; }
+.sfinder-guide-languages button { min-width: 48px; padding: 7px 12px; color: #aab8c8; background: #18212c; border: 0; font: inherit; font-size: 13px; font-weight: 700; letter-spacing: .08em; cursor: pointer; }
+.sfinder-guide-languages button + button { border-left: 1px solid #46566a; }
+.sfinder-guide-languages button:hover { color: #e9f6fc; background: #223242; }
+.sfinder-guide-languages button.selected { color: #081219; background: #64ceef; }
+.sfinder-guide-languages button:focus-visible { position: relative; z-index: 1; outline: 2px solid #b8edff; outline-offset: -2px; }
 .sfinder-guide-document h1 { margin: 42px 0 14px; padding-top: 28px; color: #f0f5fb; font-size: 28px; border-top: 1px solid #2e3a48; }
-.sfinder-guide-document h1:first-child { margin-top: 0; padding-top: 0; font-size: 32px; border-top: 0; }
+.sfinder-guide-document > h1:first-of-type { margin-top: 0; padding-top: 0; padding-right: 120px; font-size: 32px; border-top: 0; }
 .sfinder-guide-document h2 { margin: 32px 0 14px; color: #e8f1f8; font-size: 23px; }
 .sfinder-guide-document h3 { margin: 28px 0 10px; color: #d9e6f0; font-size: 17px; }
 .sfinder-guide-document p, .sfinder-guide-document li, .sfinder-guide-document blockquote { color: #aab8c8; font-size: 14px; line-height: 1.72; }
@@ -24,3 +30,14 @@ body { margin: 0; min-width: 720px; min-height: 100vh; background: radial-gradie
 .sfinder-guide-document pre { margin: 12px 0 20px; padding: 14px 16px; overflow: auto; background: #090f15; border: 1px solid #2d3947; border-radius: 6px; }
 .sfinder-guide-document pre code { color: #c8d8e5; font-size: 12px; line-height: 1.65; white-space: pre; }
 .sfinder-guide-document hr { height: 1px; margin: 26px 0; background: #2e3a48; border: 0; }
+
+@media (max-width: 720px) {
+  body { min-width: 0; }
+  .sfinder-guide-shell { width: calc(100% - 20px); padding: 24px 0 48px; }
+  .sfinder-guide-document { padding: 22px 20px 30px; }
+  .sfinder-guide-languages { position: static; justify-self: end; width: max-content; margin: 0 0 18px auto; }
+  .sfinder-guide-document h1 { font-size: 25px; }
+  .sfinder-guide-document > h1:first-of-type { padding-right: 0; font-size: 28px; }
+  .sfinder-guide-document h2 { font-size: 21px; }
+  .sfinder-guide-document pre { max-width: 100%; padding: 12px; }
+}

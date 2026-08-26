@@ -11,15 +11,15 @@ The SFinder analysis pages support 2 through 6 target lines. The separate PC Sol
 
 ### Field / Fumen
 You can draw the field directly or paste a Fumen code or Fumen URL.
-`Target lines` is the height that must be filled to complete the PC. The SFinder analysis pages support **2 through 6 lines**.
+`Lines` is the target height that must be filled to complete the PC. The SFinder analysis pages support **2 through 6 lines**.
 
 - `2-4L Mode`: 2, 3, or 4 lines
 - `5-6L Mode`: 5 or 6 lines
 - These two mode groups belong to the analysis pages. PC Solver instead provides separate 4L, 5L, and 6L buttons.
 - Blocks above the selected target height are not allowed.
-- Chance / Saves / Minimals / Per-save minimals normally analyze the first Fumen page.
+- Chance / Minimals / Per-save minimals normally analyze the first Fumen page.
 
-### Queue pattern
+### Queue
 SFinder-style queue patterns are supported.
 
 ```text
@@ -85,8 +85,8 @@ PC Solver does not accept SFinder pattern syntax such as `*p7` or `[TILJS]!`.
 
 ### Inputs
 - Field or Fumen
-- Queue pattern
-- Target lines
+- Queue
+- Lines
 - Use hold
 
 ### Results
@@ -102,44 +102,6 @@ Chance is the best choice when you only need **whether a PC is possible**. If yo
 
 ---
 
-# Saves
-
-> **Calculates how often a PC is possible while preserving a requested saved piece or save condition.**
-> For example, it can tell you how many successful queues can finish while keeping T.
-
-### Inputs
-- Field or Fumen
-- Queue pattern
-- Target lines
-- `Wanted save`
-- Use hold
-
-### Wanted save examples
-
-```text
-T          save T
-TI         save both T and I
-T || I     save T or I
-T && I     save both T and I
-!T         do not save T
-(T || I) && !O
-```
-
-Parentheses can be combined with `||`, `&&`, and `!`.
-
-### Important
-Saves must know which pieces belong to the **final bag**. Use a bag-aware SFinder pattern such as `*p7`, `[....]!`, or `...pN` when performing save analysis.
-
-### Results
-- Number of cases satisfying the save condition
-- Total analysis cases
-- Success percentage
-- Failed queue list
-
-Leaving `Wanted save` empty removes the save filter, although in that case Chance is usually the more appropriate tool.
-
----
-
 # Minimals
 
 > **Finds the smallest set of solutions needed to cover the queue pattern.**
@@ -147,17 +109,17 @@ Leaving `Wanted save` empty removes the save filter, although in that case Chanc
 
 ### Inputs
 - Field or Fumen
-- Queue pattern
-- Target lines
-- Optional: `Wanted save`
+- Queue
+- Lines
+- Optional: `Saves`
 - Optional: Result title
 - Use hold
 
-Leave `Wanted save` empty to find minimals across all PC solutions.
+Leave `Saves` empty to find minimals across all PC solutions.
 
-> In the current web UI, use an **empty Wanted save field** for all solutions. Do not type `all`.
+> In the current web UI, use an **empty Saves field** for all solutions. Do not type `all`.
 
-To restrict the result to a save condition, use the same expressions as Saves.
+To restrict the result to a save condition, enter one of the following expression forms in `Saves`. Parentheses can be combined with `||`, `&&`, and `!`.
 
 ```text
 T
@@ -165,6 +127,8 @@ T || I
 TI
 !O
 ```
+
+Save conditions require a bag-aware SFinder pattern such as `*p7`, `[....]!`, or `...pN` so the final-bag pieces can be identified.
 
 ### Results
 - Number of queues satisfying the PC/save condition
@@ -191,15 +155,15 @@ As with Saves, use a pattern that provides final-bag information when applying a
 
 ### Inputs
 - Field or Fumen
-- `Visible queue`
-- Target lines
+- `Queue`
+- Lines
 - Optional: Result title
 - Use hold
 
 If the current field needs `P` pieces to complete the PC, every input queue must contain exactly **P+1 pieces**.
 
 ```text
-pieces needed = (Target lines × 10 - occupied cells) / 4
+pieces needed = (Lines × 10 - occupied cells) / 4
 queue length = pieces needed + 1
 ```
 

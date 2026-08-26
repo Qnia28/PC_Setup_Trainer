@@ -151,3 +151,18 @@
   outline: 2px solid #b8efff;
   outline-offset: -4px;
 }
+
+@media (max-width: 640px) {
+  .site-navigation { width: 100%; min-height: 52px; padding: 0 8px; }
+  .site-brand { padding: 0 9px 0 0; font-size: 18px; }
+  .site-navigation-links { min-width: 0; }
+  .site-navigation-links > .site-navigation-licence { margin-left: 0; }
+  .site-navigation-links > a, .site-navigation-menu > summary { min-width: 0; padding: 0 8px; font-size: 12px; }
+  .site-navigation-menu > summary { gap: 4px; }
+  .site-navigation-dropdown { right: 0; left: auto; width: min(250px, calc(100vw - 16px)); }
+}
+
+@media (max-width: 390px) {
+  .site-brand { font-size: 16px; }
+  .site-navigation-links > a, .site-navigation-menu > summary { padding-inline: 6px; font-size: 11px; }
+}

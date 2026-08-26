@@ -20,54 +20,54 @@ export const SFINDER_COMMANDS: readonly SfinderCommandDefinition[] = [
     id: "chance",
     label: "Chance",
     summary: "Measure the chance of completing the selected field across a queue pattern.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "T,*p7",
   },
   {
     id: "saves",
     label: "Saves",
     summary: "Compare save conditions for the selected field and queue pattern.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "T,[^TIL]!,*p2",
   },
   {
     id: "minimals",
     label: "Minimals",
     summary: "Reduce the solution set to a minimal group that covers the queue pattern.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "[TILJS]!,*p2",
   },
   {
     id: "per_save_minimals",
     label: "Per-save minimals",
     summary: "Find a minimal solution group for every available saved piece.",
-    patternLabel: "Visible queue",
+    patternLabel: "Queue",
     patternPlaceholder: "[TILJS]!,*p2",
   },
   {
     id: "cover",
     label: "Cover",
     summary: "Check which queues can build at least one supplied target.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "[TILJS]!",
   },
   {
     id: "congruent_cover",
     label: "Congruent cover",
     summary: "Calculate coverage while grouping congruent solution geometries.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "[TILJS]!",
   },
   {
     id: "congruent",
     label: "Congruent",
     summary: "Group equivalent solution geometries from the supplied Fumen pages.",
-    patternLabel: "Queue pattern",
+    patternLabel: "Queue",
     patternPlaceholder: "[TILJS]!",
   },
 ] as const;
 
-const HIDDEN_SFINDER_COMMANDS = new Set<SfinderCommandId>(["cover", "congruent_cover", "congruent"]);
+const HIDDEN_SFINDER_COMMANDS = new Set<SfinderCommandId>(["saves", "cover", "congruent_cover", "congruent"]);
 export const SFINDER_MENU_COMMANDS = SFINDER_COMMANDS.filter(({ id }) => !HIDDEN_SFINDER_COMMANDS.has(id));
 
 const COMMAND_BY_ID = new Map(SFINDER_COMMANDS.map((command) => [command.id, command]));
