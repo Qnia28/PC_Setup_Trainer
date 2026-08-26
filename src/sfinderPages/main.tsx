@@ -1,12 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { resolveSfinderCommand } from "./commands";
+import { isSfinderGuideRoute, resolveSfinderCommand } from "./commands";
 import { SfinderCommandApp } from "./SfinderCommandApp";
+import { SfinderGuideApp } from "./SfinderGuideApp";
 
 const search = new URLSearchParams(window.location.search);
+const isGuide = isSfinderGuideRoute(window.location.pathname, search.get("command"));
 const command = resolveSfinderCommand(window.location.pathname, search.get("command"));
-document.title = `${command.label} · QniaPC`;
+document.title = `${isGuide ? "SFinder Use Guide" : command.label} · QniaPC`;
 
 createRoot(document.getElementById("root")!).render(<StrictMode>
-  <SfinderCommandApp command={command} />
+  {isGuide ? <SfinderGuideApp /> : <SfinderCommandApp command={command} />}
 </StrictMode>);

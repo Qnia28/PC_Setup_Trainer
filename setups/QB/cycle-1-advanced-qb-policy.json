@@ -1,0 +1,3777 @@
+{
+  "id": "pcinfokorea-cycle-1-advanced-qb-v1",
+  "schemaVersion": 3,
+  "cycle": 1,
+  "classId": "advanced-qb",
+  "reviewStatus": "reviewed",
+  "qbSemantics": {
+    "family": "QB",
+    "oqbIncluded": false,
+    "holdOccupied": {
+      "completeBagSlots": [
+        "HOLD",
+        "ACTIVE",
+        "NEXT[0]",
+        "NEXT[1]",
+        "NEXT[2]",
+        "NEXT[3]",
+        "NEXT[4]"
+      ],
+      "buildWindowSlots": [
+        "HOLD",
+        "ACTIVE",
+        "NEXT[0]",
+        "NEXT[1]",
+        "NEXT[2]"
+      ],
+      "orderedLastTwoSlots": [
+        "NEXT[3]",
+        "NEXT[4]"
+      ]
+    },
+    "holdEmpty": {
+      "distinctPrefixSlots": [
+        "ACTIVE",
+        "NEXT[0]",
+        "NEXT[1]",
+        "NEXT[2]",
+        "NEXT[3]",
+        "NEXT[4]"
+      ],
+      "buildWindowSlots": [
+        "ACTIVE",
+        "NEXT[0]",
+        "NEXT[1]",
+        "NEXT[2]",
+        "NEXT[3]"
+      ],
+      "orderedLastTwoSlots": [
+        "NEXT[4]",
+        "INFERRED_COMPLEMENT"
+      ],
+      "uniqueComplementRequired": true
+    },
+    "fallback": "none"
+  },
+  "entries": [
+    {
+      "id": "cycle1-advanced-qb-to",
+      "orderedLastTwo": [
+        "T",
+        "O"
+      ],
+      "unorderedPair": [
+        "O",
+        "T"
+      ],
+      "sectionOrder": 1,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-001-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-002-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-003-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-004-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-ot",
+      "orderedLastTwo": [
+        "O",
+        "T"
+      ],
+      "unorderedPair": [
+        "O",
+        "T"
+      ],
+      "sectionOrder": 1,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-001-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-004-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-002-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-003-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-tl",
+      "orderedLastTwo": [
+        "T",
+        "L"
+      ],
+      "unorderedPair": [
+        "L",
+        "T"
+      ],
+      "sectionOrder": 2,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-005-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-006-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-007-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-008-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-lt",
+      "orderedLastTwo": [
+        "L",
+        "T"
+      ],
+      "unorderedPair": [
+        "L",
+        "T"
+      ],
+      "sectionOrder": 2,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-005-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-006-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-008-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-007-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-tj",
+      "orderedLastTwo": [
+        "T",
+        "J"
+      ],
+      "unorderedPair": [
+        "J",
+        "T"
+      ],
+      "sectionOrder": 2,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-005-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-006-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-007-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-008-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-jt",
+      "orderedLastTwo": [
+        "J",
+        "T"
+      ],
+      "unorderedPair": [
+        "J",
+        "T"
+      ],
+      "sectionOrder": 2,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-005-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-006-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-008-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-007-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-ol",
+      "orderedLastTwo": [
+        "O",
+        "L"
+      ],
+      "unorderedPair": [
+        "L",
+        "O"
+      ],
+      "sectionOrder": 3,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-009-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-010-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-011-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-012-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-013-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-014-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.55,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-lo",
+      "orderedLastTwo": [
+        "L",
+        "O"
+      ],
+      "unorderedPair": [
+        "L",
+        "O"
+      ],
+      "sectionOrder": 3,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-009-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-010-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-011-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-012-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-013-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-014-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.43,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-oj",
+      "orderedLastTwo": [
+        "O",
+        "J"
+      ],
+      "unorderedPair": [
+        "J",
+        "O"
+      ],
+      "sectionOrder": 3,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-009-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-010-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-011-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-012-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-013-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-014-f000",
+            "transform": "identity",
+            "transformRule": "fixed-left-srs-exception",
+            "solveRate": 96.55,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-jo",
+      "orderedLastTwo": [
+        "J",
+        "O"
+      ],
+      "unorderedPair": [
+        "J",
+        "O"
+      ],
+      "sectionOrder": 3,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-009-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 100,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-010-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.17,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-011-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-012-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-013-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-014-f000",
+            "transform": "identity",
+            "transformRule": "fixed-left-srs-exception",
+            "solveRate": 96.43,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-ti",
+      "orderedLastTwo": [
+        "T",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "T"
+      ],
+      "sectionOrder": 4,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-015-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-016-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-it",
+      "orderedLastTwo": [
+        "I",
+        "T"
+      ],
+      "unorderedPair": [
+        "I",
+        "T"
+      ],
+      "sectionOrder": 4,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-016-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-015-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-ts",
+      "orderedLastTwo": [
+        "T",
+        "S"
+      ],
+      "unorderedPair": [
+        "S",
+        "T"
+      ],
+      "sectionOrder": 5,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-017-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-018-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-019-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-020-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-021-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-st",
+      "orderedLastTwo": [
+        "S",
+        "T"
+      ],
+      "unorderedPair": [
+        "S",
+        "T"
+      ],
+      "sectionOrder": 5,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-017-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-019-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-020-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.81,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-021-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.69,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-018-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-tz",
+      "orderedLastTwo": [
+        "T",
+        "Z"
+      ],
+      "unorderedPair": [
+        "T",
+        "Z"
+      ],
+      "sectionOrder": 5,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-017-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-018-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-019-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-020-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-021-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-zt",
+      "orderedLastTwo": [
+        "Z",
+        "T"
+      ],
+      "unorderedPair": [
+        "T",
+        "Z"
+      ],
+      "sectionOrder": 5,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-017-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-019-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-020-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.81,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-021-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-018-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-lz",
+      "orderedLastTwo": [
+        "L",
+        "Z"
+      ],
+      "unorderedPair": [
+        "L",
+        "Z"
+      ],
+      "sectionOrder": 6,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-022-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-023-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-024-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-025-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.86,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-026-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-zl",
+      "orderedLastTwo": [
+        "Z",
+        "L"
+      ],
+      "unorderedPair": [
+        "L",
+        "Z"
+      ],
+      "sectionOrder": 6,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-022-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-023-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.81,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-024-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-026-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.9,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-025-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-js",
+      "orderedLastTwo": [
+        "J",
+        "S"
+      ],
+      "unorderedPair": [
+        "J",
+        "S"
+      ],
+      "sectionOrder": 6,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-022-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-023-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-024-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-025-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.86,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-026-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-sj",
+      "orderedLastTwo": [
+        "S",
+        "J"
+      ],
+      "unorderedPair": [
+        "J",
+        "S"
+      ],
+      "sectionOrder": 6,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-022-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-023-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.81,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-024-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-026-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.9,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-025-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-il",
+      "orderedLastTwo": [
+        "I",
+        "L"
+      ],
+      "unorderedPair": [
+        "I",
+        "L"
+      ],
+      "sectionOrder": 7,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-027-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-028-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-029-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-030-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-031-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-032-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-li",
+      "orderedLastTwo": [
+        "L",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "L"
+      ],
+      "sectionOrder": 7,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-027-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-028-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-029-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-032-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-031-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.42,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-030-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-ij",
+      "orderedLastTwo": [
+        "I",
+        "J"
+      ],
+      "unorderedPair": [
+        "I",
+        "J"
+      ],
+      "sectionOrder": 7,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-028-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-027-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.29,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-029-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-030-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-031-f000",
+            "transform": "identity",
+            "transformRule": "fixed-left-srs-exception",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-032-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-ji",
+      "orderedLastTwo": [
+        "J",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "J"
+      ],
+      "sectionOrder": 7,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-028-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.52,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-027-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-029-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-032-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-031-f000",
+            "transform": "identity",
+            "transformRule": "fixed-left-srs-exception",
+            "solveRate": 96.42,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-030-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-ls",
+      "orderedLastTwo": [
+        "L",
+        "S"
+      ],
+      "unorderedPair": [
+        "L",
+        "S"
+      ],
+      "sectionOrder": 8,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-033-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-034-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-035-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-036-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-037-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.55,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-sl",
+      "orderedLastTwo": [
+        "S",
+        "L"
+      ],
+      "unorderedPair": [
+        "L",
+        "S"
+      ],
+      "sectionOrder": 8,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-033-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.69,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-035-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.33,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-034-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.86,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-036-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-037-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-jz",
+      "orderedLastTwo": [
+        "J",
+        "Z"
+      ],
+      "unorderedPair": [
+        "J",
+        "Z"
+      ],
+      "sectionOrder": 8,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-033-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-034-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.33,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-035-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-036-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-037-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.55,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-zj",
+      "orderedLastTwo": [
+        "Z",
+        "J"
+      ],
+      "unorderedPair": [
+        "J",
+        "Z"
+      ],
+      "sectionOrder": 8,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-033-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.69,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-035-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.33,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-034-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-036-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-037-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-lj",
+      "orderedLastTwo": [
+        "L",
+        "J"
+      ],
+      "unorderedPair": [
+        "J",
+        "L"
+      ],
+      "sectionOrder": 9,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-038-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-039-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.1,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-040-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-041-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-042-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 95.36,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-jl",
+      "orderedLastTwo": [
+        "J",
+        "L"
+      ],
+      "unorderedPair": [
+        "J",
+        "L"
+      ],
+      "sectionOrder": 9,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-039-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-038-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.1,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-040-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-042-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.79,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-041-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 95.36,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-oi",
+      "orderedLastTwo": [
+        "O",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "O"
+      ],
+      "sectionOrder": 10,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-043-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-044-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.1,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-045-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.5,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-io",
+      "orderedLastTwo": [
+        "I",
+        "O"
+      ],
+      "unorderedPair": [
+        "I",
+        "O"
+      ],
+      "sectionOrder": 10,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-044-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 99.05,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-043-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.57,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-045-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.26,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-is",
+      "orderedLastTwo": [
+        "I",
+        "S"
+      ],
+      "unorderedPair": [
+        "I",
+        "S"
+      ],
+      "sectionOrder": 11,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-046-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-047-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.19,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-048-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.64,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-049-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 93.93,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-050-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-051-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-051-f001",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 1
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-052-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 6,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-053-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 7,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-054-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.26,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 8,
+            "itemOrder": 9,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-055-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 91.9,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 9,
+            "itemOrder": 10,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-si",
+      "orderedLastTwo": [
+        "S",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "S"
+      ],
+      "sectionOrder": 11,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-046-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 98.1,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-047-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-048-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.64,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-051-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-051-f001",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 1
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-052-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-050-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.5,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-055-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 6,
+            "itemOrder": 10,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-053-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 7,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-049-f000",
+        "cycle1-advanced-qb-054-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-iz",
+      "orderedLastTwo": [
+        "I",
+        "Z"
+      ],
+      "unorderedPair": [
+        "I",
+        "Z"
+      ],
+      "sectionOrder": 11,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-046-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-047-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-048-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 94.52,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 1,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-049-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 93.93,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-050-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-051-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 6,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-051-f001",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.62,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 6,
+            "frameOrder": 1
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-052-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-053-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 6,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-054-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.26,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 7,
+            "itemOrder": 9,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-055-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 91.9,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 8,
+            "itemOrder": 10,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": []
+    },
+    {
+      "id": "cycle1-advanced-qb-zi",
+      "orderedLastTwo": [
+        "Z",
+        "I"
+      ],
+      "unorderedPair": [
+        "I",
+        "Z"
+      ],
+      "sectionOrder": 11,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-046-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 98.1,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-047-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.62,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-048-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 94.64,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-051-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-051-f001",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.98,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 1
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-052-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 7,
+            "frameOrder": 0
+          },
+          {
+            "setupId": "cycle1-advanced-qb-050-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.74,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-053-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 5,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-055-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.14,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 6,
+            "itemOrder": 10,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-049-f000",
+        "cycle1-advanced-qb-054-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-sz",
+      "orderedLastTwo": [
+        "S",
+        "Z"
+      ],
+      "unorderedPair": [
+        "S",
+        "Z"
+      ],
+      "sectionOrder": 12,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-056-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-057-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-058-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 95.24,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-059-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.76,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-060-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.29,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-061-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 93.81,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-062-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 6,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-063-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 90.48,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 7,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-064-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 89.88,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 8,
+            "itemOrder": 9,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-065-f000",
+        "cycle1-advanced-qb-066-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-zs",
+      "orderedLastTwo": [
+        "Z",
+        "S"
+      ],
+      "unorderedPair": [
+        "S",
+        "Z"
+      ],
+      "sectionOrder": 12,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-057-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-056-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-059-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 95.24,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-058-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.76,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 3,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-061-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.29,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 6,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-060-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 93.81,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 5,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-062-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.38,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 6,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-066-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 90.48,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 7,
+            "itemOrder": 11,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-065-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 89.88,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 8,
+            "itemOrder": 10,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-063-f000",
+        "cycle1-advanced-qb-064-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-os",
+      "orderedLastTwo": [
+        "O",
+        "S"
+      ],
+      "unorderedPair": [
+        "O",
+        "S"
+      ],
+      "sectionOrder": 13,
+      "branchOrder": 0,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-067-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-068-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 94.29,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-069-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 93.33,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-070-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 92.86,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-071-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 90.48,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-072-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 90,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0,
+            "boxMode": "all-wall-minimals"
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-073-f000",
+        "cycle1-advanced-qb-074-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-oz",
+      "orderedLastTwo": [
+        "O",
+        "Z"
+      ],
+      "unorderedPair": [
+        "O",
+        "Z"
+      ],
+      "sectionOrder": 13,
+      "branchOrder": 1,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-067-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.67,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-068-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 94.29,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-069-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 93.33,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 2,
+            "itemOrder": 3,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-070-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 92.86,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-071-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 90.48,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 4,
+            "itemOrder": 5,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-072-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 90,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 6,
+            "frameOrder": 0,
+            "boxMode": "all-wall-minimals"
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-073-f000",
+        "cycle1-advanced-qb-074-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-so",
+      "orderedLastTwo": [
+        "S",
+        "O"
+      ],
+      "unorderedPair": [
+        "O",
+        "S"
+      ],
+      "sectionOrder": 13,
+      "branchOrder": 2,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-067-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-068-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 96.19,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-070-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 93.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-072-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 90.36,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 0,
+            "boxMode": "all-wall-minimals"
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-073-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 89.64,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-074-f000",
+            "transform": "identity",
+            "transformRule": "identity",
+            "solveRate": 88.81,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-069-f000",
+        "cycle1-advanced-qb-071-f000"
+      ]
+    },
+    {
+      "id": "cycle1-advanced-qb-zo",
+      "orderedLastTwo": [
+        "Z",
+        "O"
+      ],
+      "unorderedPair": [
+        "O",
+        "Z"
+      ],
+      "sectionOrder": 13,
+      "branchOrder": 3,
+      "candidateGroups": [
+        [
+          {
+            "setupId": "cycle1-advanced-qb-067-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 97.14,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 0,
+            "itemOrder": 1,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-068-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 96.19,
+            "recommended": true,
+            "pieceCount": 3,
+            "rankGroup": 1,
+            "itemOrder": 2,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-070-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 93.57,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 2,
+            "itemOrder": 4,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-072-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 90.36,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 3,
+            "itemOrder": 6,
+            "frameOrder": 0,
+            "boxMode": "all-wall-minimals"
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-073-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 89.64,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 4,
+            "itemOrder": 7,
+            "frameOrder": 0
+          }
+        ],
+        [
+          {
+            "setupId": "cycle1-advanced-qb-074-f000",
+            "transform": "mirror-x",
+            "transformRule": "mirror-x",
+            "solveRate": 88.45,
+            "recommended": true,
+            "pieceCount": 4,
+            "rankGroup": 5,
+            "itemOrder": 8,
+            "frameOrder": 0
+          }
+        ]
+      ],
+      "excludedSetupIds": [
+        "cycle1-advanced-qb-069-f000",
+        "cycle1-advanced-qb-071-f000"
+      ]
+    }
+  ],
+  "runtimePolicy": {
+    "schemaVersion": 1,
+    "catalogKind": "cycle1-advanced-qb",
+    "integrationState": "active",
+    "executable": true,
+    "orderedBranchCount": 42,
+    "unorderedPairCount": 21,
+    "physicalSetupCount": 75,
+    "logicalSetupCount": 74,
+    "fallback": "none",
+    "geometryRules": [
+      {
+        "setupId": "cycle1-advanced-qb-014-f000",
+        "orderedLastTwo": [
+          "O",
+          "J"
+        ],
+        "transformRule": "fixed-left-srs-exception"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-014-f000",
+        "orderedLastTwo": [
+          "J",
+          "O"
+        ],
+        "transformRule": "fixed-left-srs-exception"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-031-f000",
+        "orderedLastTwo": [
+          "I",
+          "J"
+        ],
+        "transformRule": "fixed-left-srs-exception"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-031-f000",
+        "orderedLastTwo": [
+          "J",
+          "I"
+        ],
+        "transformRule": "fixed-left-srs-exception"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-072-f000",
+        "orderedLastTwo": [
+          "O",
+          "S"
+        ],
+        "transformRule": "identity",
+        "boxMode": "all-wall-minimals"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-072-f000",
+        "orderedLastTwo": [
+          "O",
+          "Z"
+        ],
+        "transformRule": "mirror-x",
+        "boxMode": "all-wall-minimals"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-072-f000",
+        "orderedLastTwo": [
+          "S",
+          "O"
+        ],
+        "transformRule": "identity",
+        "boxMode": "all-wall-minimals"
+      },
+      {
+        "setupId": "cycle1-advanced-qb-072-f000",
+        "orderedLastTwo": [
+          "Z",
+          "O"
+        ],
+        "transformRule": "mirror-x",
+        "boxMode": "all-wall-minimals"
+      }
+    ]
+  }
+}

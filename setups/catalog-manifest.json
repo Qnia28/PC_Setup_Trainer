@@ -20,7 +20,19 @@
       "setupsSha256": "58f02fe2e1f7939e127de4c7ea2886bcf45c91a797ffa0d25dc8a0e4fb262388",
       "policySha256": "ce6a15e9de48f4f7ff51982b4a1e65061f830db0ce296ae51e014f1bbcfaaf86",
       "complete": false,
-      "note": "Partial Cycle 1 catalog: 44 logical setups represented by 45 canonical source geometries."
+      "note": "General Cycle 1 remains partial. The reviewed direct advanced-QB family is active under exact ordered final-two conditions; OQB is not part of this source.",
+      "qb": {
+        "setups": "QB/cycle-1-advanced-qb-setups.json",
+        "policy": "QB/cycle-1-advanced-qb-policy.json",
+        "setupCount": 75,
+        "logicalSetupCount": 74,
+        "runtimeEnabled": true,
+        "conditionCompilerReady": true,
+        "setupsSha256": "045cb4144b30432c7e2f13921bcfc1e8e5004b8b18b2452b31c216180a8a5282",
+        "policySha256": "57652eec048c57479f3e7a40ee4bd315a81e75043ab2dc0cad34455b8dcc4de2",
+        "queueSurveyPerformed": false,
+        "surveyDecision": "not-applicable-without-an-immutable-advanced-qb-profile"
+      }
     },
     "2": {
       "setups": "cycle-2-setups.json",
@@ -404,7 +416,7 @@
             "logicalSetupCount": 53,
             "runtimeEnabled": true,
             "setupsSha256": "c06910e213566a5fa2a5bab4a03ca89c3816480dadb55558f78612db9e58cbbb",
-            "policySha256": "07aba927f6a2a2cce11476173bd1e20b843f153609904ff86de2ae4ce473509e",
+            "policySha256": "4557ad380d333e98079a2dd9569cc06bdee0bf91d5f1413a81da3a2e73a835fa",
             "conditionCompilerReady": true
           },
           "tltj": {
@@ -424,7 +436,7 @@
             "logicalSetupCount": 24,
             "runtimeEnabled": true,
             "setupsSha256": "92581e2d039e77620d476cff92ab075e98f002cef5b9d6b497499b9e8a6c508a",
-            "policySha256": "06e629c565e2ef12c39cafca8e600b96e908086cbf3d7f3d629b9297ed31545c",
+            "policySha256": "5b1ef6d8821f73aea7c275f8c4ad87b70802e0f89e1e61a4b2f842a70f73d166",
             "conditionCompilerReady": true
           },
           "to": {
@@ -670,8 +682,8 @@
     "colored": true,
     "comments": false,
     "operations": false,
-    "fileCount": 59,
-    "setupCount": 2187,
+    "fileCount": 60,
+    "setupCount": 2262,
     "allRoundTripExact": true
   }
 }

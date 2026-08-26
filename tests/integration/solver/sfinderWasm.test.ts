@@ -123,12 +123,12 @@ describe("sfinder-wasm live solver integration", () => {
     expect(decoder.decode(result.fumen!)).toHaveLength(2);
   });
 
-  it("uses the optimized pattern pipeline for a broad five-line matrix", async () => {
+  it("accepts wildcard-bang in the optimized broad five-line pipeline", async () => {
     const chance = await runWorkerRequest({
       kind: "chance",
       input: {
         sourceFumen: broadFiveLineField,
-        pattern: "*p7",
+        pattern: "*!",
         targetLines: 5,
         useHold: true,
       },

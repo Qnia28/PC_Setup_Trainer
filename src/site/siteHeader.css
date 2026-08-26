@@ -30,7 +30,12 @@
 
 .site-navigation-links {
   display: flex;
+  flex: 1;
   align-items: stretch;
+}
+
+.site-navigation-links > .site-navigation-licence {
+  margin-left: auto;
 }
 
 .site-navigation-links > a,

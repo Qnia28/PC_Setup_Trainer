@@ -9,9 +9,43 @@ test('negative bag changes only finder expression',()=>{
 
 test('golden queue expansion counts',()=>{
   assert.equal(expandPattern('*p7').length,5040);
+  assert.equal(expandPattern('*!').length,5040);
   assert.equal(expandPattern('T,[JSZO]!,*p2').length,1008);
   assert.equal(expandPattern('[IO]!,*p2').length,84);
   assert.equal(expandPattern('T,T,O,[LJISZ]p4').length,120);
+});
+
+
+test('SFinder wildcard bang is an exact alias of *p7',()=>{
+  const bang=expandPattern('*!');
+  const p7=expandPattern('*p7');
+  assert.deepEqual(bang,p7);
+  assert.deepEqual(bang,expandPattern('[TILJSZO]p7'));
+  assert.equal(queuesForFinder('*!'),'*!');
+
+  const parsed=parsePattern('*!');
+  assert.equal(parsed.depth,7);
+  assert.equal(parsed.branches[0].lastBag.drawCount,7);
+  assert.deepEqual(parsed.branches[0].lastBag.pieces,new Set('TILJSZO'));
+  assert.equal(parsed.branches[0].observedBag.drawCount,7);
+
+  const info=lastBagInfo('*!');
+  assert.equal(info.drawCount,7);
+  assert.deepEqual(info.pieces,new Set('TILJSZO'));
+
+  // Every modifier accepted after *p7 must keep the same meaning with *!.
+  assert.deepEqual(expandPattern('*!{T<I}'),expandPattern('*p7{T<I}'));
+});
+
+test('all documented SFinder pattern element forms are accepted',()=>{
+  assert.deepEqual(expandPattern('I'),['I']);
+  assert.deepEqual(expandPattern('[SZLJ]'),['S','Z','L','J']);
+  assert.equal(expandPattern('[^TI]').length,5);
+  assert.equal(expandPattern('[SZLJ]p2').length,12);
+  assert.equal(expandPattern('*').length,7);
+  assert.equal(expandPattern('*p3').length,210);
+  assert.equal(expandPattern('[SZLJ]!').length,24);
+  assert.equal(expandPattern('*!').length,5040);
 });
 
 test('ordering constraint subset',()=>{assert.equal(expandPattern('[SZ]p2{S<Z}').join(','),'SZ')});

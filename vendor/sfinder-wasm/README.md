@@ -4,8 +4,10 @@ This directory isolates [`Qnia28/sfinder_wasm`](https://github.com/Qnia28/sfinde
 from QniaPC's application code so frequent solver updates remain bounded.
 
 - `upstream/` is the complete 2L–6L-compatible snapshot imported from
-  `D:\AI\sfinder-wasm_260824` on 2026-08-24, including its shared single-queue,
+  `D:\AI\sfinder-wasm_260826` on 2026-08-26, including its shared single-queue,
   broad-pattern, and cover engines.
+- QniaPC integration instructions and end-user guide drafts from the source
+  workspace are not part of the vendored upstream snapshot.
 - Upstream source, tests, documentation, license, acknowledgements, WASM modules,
   and the four-line legal-board pack stay together under `upstream/`.
 - QniaPC's thin public-API adapters, persistent Worker lifecycle, 128 MiB recycle

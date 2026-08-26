@@ -1,17 +1,16 @@
 import "./siteHeader.css";
-import { SFINDER_COMMANDS, sfinderCommandPath, type SfinderCommandId } from "../sfinderPages/commands";
+import { SFINDER_MENU_COMMANDS, sfinderCommandPath, type SfinderCommandId } from "../sfinderPages/commands";
 
 type SitePage = "game" | "replay" | "licence" | "sfinder";
 
 const NAV_ITEMS: ReadonlyArray<{ page: SitePage; href: string; label: string }> = [
   { page: "game", href: "/game", label: "Game" },
   { page: "replay", href: "/replay", label: "Replay" },
-  { page: "licence", href: "/licence", label: "Licence" },
 ];
 
 interface SiteHeaderProps {
   active: SitePage;
-  sfinderCommand?: SfinderCommandId | "solver";
+  sfinderCommand?: SfinderCommandId | "guide" | "solver";
 }
 
 export function SiteHeader({ active, sfinderCommand }: SiteHeaderProps) {
@@ -28,12 +27,16 @@ export function SiteHeader({ active, sfinderCommand }: SiteHeaderProps) {
         <details className={`site-navigation-menu ${active === "sfinder" ? "active" : ""}`}>
           <summary>SFinder <span aria-hidden="true">▾</span></summary>
           <div className="site-navigation-dropdown">
-            <a href="/solver" className={sfinderCommand === "solver" ? "current" : undefined} aria-current={sfinderCommand === "solver" ? "page" : undefined}>
-              <strong>PC Solver</strong>
-              <small>Interactive 4-line solver</small>
+            <a href="/sfinder/guide" className={sfinderCommand === "guide" ? "current" : undefined} aria-current={sfinderCommand === "guide" ? "page" : undefined}>
+              <strong>Use Guide</strong>
+              <small>SFinder tools overview</small>
             </a>
             <div className="site-navigation-dropdown-divider" />
-            {SFINDER_COMMANDS.map((command) => <a
+            <a href="/solver" className={sfinderCommand === "solver" ? "current" : undefined} aria-current={sfinderCommand === "solver" ? "page" : undefined}>
+              <strong>PC Solver</strong>
+              <small>Concrete-queue PC solutions</small>
+            </a>
+            {SFINDER_MENU_COMMANDS.map((command) => <a
               key={command.id}
               href={sfinderCommandPath(command.id)}
               className={sfinderCommand === command.id ? "current" : undefined}
@@ -44,6 +47,11 @@ export function SiteHeader({ active, sfinderCommand }: SiteHeaderProps) {
             </a>)}
           </div>
         </details>
+        <a
+          className={`site-navigation-licence ${active === "licence" ? "active" : ""}`}
+          href="/licence"
+          aria-current={active === "licence" ? "page" : undefined}
+        >Licence</a>
       </div>
     </nav>
   </header>;

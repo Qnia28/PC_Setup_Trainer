@@ -947,7 +947,8 @@
         ]
       },
       "observation": {
-        "kind": "reveal"
+        "kind": "reveal",
+        "uiSlot": "NEXT[4]"
       },
       "branches": [
         {

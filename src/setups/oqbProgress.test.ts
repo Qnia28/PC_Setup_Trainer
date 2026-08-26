@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createBoard, placeCells } from "../engine/board";
 import type { Board, Piece } from "../engine/types";
+import rawOiPolicy from "../../setups/QB/cycle-5-advanced-oi-policy.json";
+import rawOiSetups from "../../setups/QB/cycle-5-advanced-oi-setups.json";
 import rawTiPolicy from "../../setups/QB/cycle-5-advanced-ti-policy.json";
 import rawTiSetups from "../../setups/QB/cycle-5-advanced-ti-setups.json";
 import type { Cycle5AdvancedOqbPlan, Cycle5AdvancedPolicyBundle } from "./cycle5AdvancedPolicy";
@@ -79,9 +81,21 @@ const realTiSource: Cycle5AdvancedOqbPolicySource = {
   sourceId: "promoted:ti-test",
 };
 
+const realOiSource: Cycle5AdvancedOqbPolicySource = {
+  bundle: normalizeSelectedCycle5AdvancedPolicy(rawOiPolicy, "promoted:oi-test"),
+  catalog: rawOiSetups as unknown as SetupVariant[],
+  sourceId: "promoted:oi-test",
+};
+
 function setupById(id: string): SetupVariant {
   const value = realTiSource.catalog.find((entry) => entry.id === id);
   if (!value) throw new Error(`Missing TI fixture ${id}`);
+  return value;
+}
+
+function oiSetupById(id: string): SetupVariant {
+  const value = realOiSource.catalog.find((entry) => entry.id === id);
+  if (!value) throw new Error(`Missing OI fixture ${id}`);
   return value;
 }
 
@@ -392,6 +406,43 @@ describe("shared OQB progress projection", () => {
     if (fallback.status === "continuation") {
       expect(fallback.continuations[0]?.sourceSetupId).toBe("cycle5-advanced-ti-014-f000");
     }
+  });
+
+  it.each(["O", "I", "L", "J", "S", "Z"] as const)(
+    "keeps the real OI T[LJ]!IO plan at 3P when NEXT[4] reveals %s",
+    (revealedPiece) => {
+      const planId = "oi5-advanced-oqb-tlj-io-last-t";
+      const precondition = oiSetupById("cycle5-advanced-oi-051-f000");
+      const result = resolveOqbProgress({
+        selectedCandidate: candidate(precondition, planId),
+        query: query(boardForSetup(precondition), ["T", "O", "I", "L", revealedPiece]),
+        policyOverride: realOiSource,
+      });
+
+      expect(result).toMatchObject({
+        status: "terminal",
+        stage: "terminal",
+        branchId: "oi5-advanced-oqb-tlj-io-last-t-branch-2-terminal-3p",
+        observation: { kind: "piece", piece: revealedPiece, uiSlot: "NEXT[4]" },
+      });
+    },
+  );
+
+  it("advances the real OI T[LJ]!IO plan to 4P only when NEXT[4] reveals T", () => {
+    const planId = "oi5-advanced-oqb-tlj-io-last-t";
+    const precondition = oiSetupById("cycle5-advanced-oi-051-f000");
+    const result = resolveOqbProgress({
+      selectedCandidate: candidate(precondition, planId),
+      query: query(boardForSetup(precondition), ["O", "I", "L", "J", "T"]),
+      policyOverride: realOiSource,
+    });
+
+    expect(result).toMatchObject({
+      status: "continuation",
+      branchId: "oi5-advanced-oqb-tlj-io-last-t-branch-1",
+      observation: { kind: "piece", piece: "T", uiSlot: "NEXT[4]" },
+      continuations: [{ sourceSetupId: "cycle5-advanced-oi-052-f000" }],
+    });
   });
 
   it("mirrors both nested observations and the authoritative TI solution geometry", () => {

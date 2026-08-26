@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { defaultWantedSave, resolveSfinderCommand, sfinderCommandPath, SFINDER_COMMANDS } from "./commands";
+import {
+  defaultWantedSave,
+  isSfinderGuideRoute,
+  resolveSfinderCommand,
+  sfinderCommandPath,
+  SFINDER_COMMANDS,
+  SFINDER_MENU_COMMANDS,
+} from "./commands";
 
 describe("SFinder command routes", () => {
   it("keeps every command on a stable detail route", () => {
@@ -20,6 +27,12 @@ describe("SFinder command routes", () => {
     expect(resolveSfinderCommand("/sfinder/unknown").id).toBe("chance");
   });
 
+  it("recognizes the guide route and local HTML query fallback", () => {
+    expect(isSfinderGuideRoute("/sfinder/guide")).toBe(true);
+    expect(isSfinderGuideRoute("/sfinder.html", "guide")).toBe(true);
+    expect(isSfinderGuideRoute("/sfinder/chance")).toBe(false);
+  });
+
   it("starts Minimals with an empty wanted-save expression", () => {
     expect(defaultWantedSave("minimals")).toBe("");
     expect(defaultWantedSave("saves")).toBe("T");
@@ -29,5 +42,19 @@ describe("SFinder command routes", () => {
     const placeholders = Object.fromEntries(SFINDER_COMMANDS.map(({ id, patternPlaceholder }) => [id, patternPlaceholder]));
     expect(placeholders.per_save_minimals).toBe(placeholders.minimals);
     expect(placeholders.minimals).toBe("[TILJS]!,*p2");
+  });
+
+  it("describes Cover as a coverage check rather than a minimal-cover command", () => {
+    expect(SFINDER_COMMANDS.find(({ id }) => id === "cover")?.summary)
+      .toBe("Check which queues can build at least one supplied target.");
+  });
+
+  it("keeps unfinished colored-field tools out of the public menu", () => {
+    expect(SFINDER_MENU_COMMANDS.map(({ id }) => id)).toEqual([
+      "chance",
+      "saves",
+      "minimals",
+      "per_save_minimals",
+    ]);
   });
 });

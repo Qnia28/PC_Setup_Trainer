@@ -186,6 +186,50 @@ describe("promoted Cycle 5 advanced policy integration", () => {
     ]);
   });
 
+  it("binds TI [TLJ]!IS to NEXT[4] and keeps O/Z reveal branches executable", () => {
+    const policy = normalizeSelectedCycle5AdvancedPolicy(rawPromotedTiPolicy, "promoted:ti");
+    const plan = policy.entries.find(({ id }) => id === "ti5-tlj-is");
+    expect(plan?.kind).toBe("oqb");
+    if (plan?.kind !== "oqb") return;
+
+    expect(plan.observation).toEqual({ kind: "reveal", uiSlot: "NEXT[4]" });
+    for (const [piece, branchId] of [
+      ["O", "ti5-tlj-is-branch-1"],
+      ["Z", "ti5-tlj-is-branch-2"],
+    ] as const) {
+      expect(observeCycle5AdvancedOqb(plan, {
+        hold: "T",
+        active: "I",
+        next: ["T", "L", "J", "I", piece],
+      })).toMatchObject({
+        status: "matched",
+        observation: { piece, uiSlot: "NEXT[4]" },
+        decision: { branchId },
+      });
+    }
+  });
+
+  it("compiles OI T[LJ]!IO as T-to-4P and every other reveal as terminal 3P", () => {
+    const policy = normalizeSelectedCycle5AdvancedPolicy(rawPromotedOiPolicy, "promoted:oi");
+    const plan = policy.entries.find(({ id }) => id === "oi5-advanced-oqb-tlj-io-last-t");
+    expect(plan?.kind).toBe("oqb");
+    if (plan?.kind !== "oqb") return;
+
+    expect(plan.observation).toEqual({ kind: "reveal", uiSlot: "NEXT[4]" });
+    expect(plan.branches).toMatchObject([
+      {
+        observedPieces: ["T"],
+        continuationSetupRefs: [{ setupId: "cycle5-advanced-oi-052-f000" }],
+      },
+      {
+        id: "oi5-advanced-oqb-tlj-io-last-t-branch-2-terminal-3p",
+        observedPieces: ["O", "I", "L", "J", "S", "Z"],
+        continuationSetupRefs: [],
+        terminal: true,
+      },
+    ]);
+  });
+
   it("keeps [TOS]! and mirrored [TOZ]! hidden-piece plans distinct", () => {
     const policy = normalizeSelectedCycle5AdvancedPolicy(rawPromotedOiPolicy, "promoted:oi");
     const tos = policy.entries.find(({ id }) => id === "oi5-advanced-oqb-tos-hidden-last");

@@ -220,6 +220,7 @@ Supported SFinder-style forms include:
 ```text
 TOILJSZ
 *p7
+*!
 [JSZO]!
 [LJISZ]p4
 [^TIL]!
@@ -230,6 +231,10 @@ TI,[JOS]!,*p2;TO,[IJS]!,*p2
 Comma-separated and concatenated forms are accepted. Semicolon-separated
 branches are distinct analysis cases; if two branches expand to the same
 concrete queue, both cases are retained.
+
+`*!` is accepted as the SFinder alias of `*p7` (equivalently,
+`[TILJSZO]p7`). The documented element forms `I`, `[SZLJ]`, `[^TI]`,
+`[SZLJ]p2`, `*`, `*p3`, `[SZLJ]!`, and `*!` are all supported.
 
 Malformed patterns such as `*BAD`, `[TT]!`, or `[TI]p3` raise
 `PatternSyntaxError` instead of being silently reinterpreted.

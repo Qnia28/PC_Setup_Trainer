@@ -47,7 +47,7 @@ export const SFINDER_COMMANDS: readonly SfinderCommandDefinition[] = [
   {
     id: "cover",
     label: "Cover",
-    summary: "Calculate queue coverage and a minimal cover for the selected field.",
+    summary: "Check which queues can build at least one supplied target.",
     patternLabel: "Queue pattern",
     patternPlaceholder: "[TILJS]!",
   },
@@ -67,10 +67,18 @@ export const SFINDER_COMMANDS: readonly SfinderCommandDefinition[] = [
   },
 ] as const;
 
+const HIDDEN_SFINDER_COMMANDS = new Set<SfinderCommandId>(["cover", "congruent_cover", "congruent"]);
+export const SFINDER_MENU_COMMANDS = SFINDER_COMMANDS.filter(({ id }) => !HIDDEN_SFINDER_COMMANDS.has(id));
+
 const COMMAND_BY_ID = new Map(SFINDER_COMMANDS.map((command) => [command.id, command]));
 
 export function sfinderCommandPath(command: SfinderCommandId): string {
   return `/sfinder/${command}`;
+}
+
+export function isSfinderGuideRoute(pathname: string, fallback?: string | null): boolean {
+  const pathCommand = pathname.match(/^\/sfinder\/([^/?#]+)/)?.[1];
+  return (pathCommand ?? fallback) === "guide";
 }
 
 export function defaultWantedSave(command: SfinderCommandId): string {

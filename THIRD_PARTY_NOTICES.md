@@ -14,7 +14,7 @@ source's stated terms.
 - Author: Qnia ([@Qnia28](https://github.com/Qnia28))
 - Use in QniaPC: browser-native Rust/WASM Perfect Clear solver under
   `vendor/sfinder-wasm/upstream`; the current 2L–6L-compatible snapshot was
-  imported from the author's `sfinder-wasm_260824` workspace on 2026-08-24.
+  imported from the author's `sfinder-wasm_260826` workspace on 2026-08-26.
 - Upstream public license: GPL-3.0-only.
 - Upstream license text: [GNU GPL version 3](https://github.com/Qnia28/sfinder_wasm/blob/main/LICENSE).
 - QniaPC license grant: the copyright holder has separately authorized their

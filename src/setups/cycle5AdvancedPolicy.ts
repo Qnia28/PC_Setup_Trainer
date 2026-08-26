@@ -65,6 +65,8 @@ export interface Cycle5AdvancedOqbBranch {
     after: Piece;
   };
   continuationSetupRefs: Cycle5AdvancedSetupRef[];
+  /** Explicitly completes the selected setup at its current checkpoint. */
+  terminal?: true;
   bestsave?: boolean | null;
   postCheckpoint?: Cycle5AdvancedPostCheckpoint;
 }
@@ -158,6 +160,7 @@ export interface Cycle5AdvancedContinuationDecision {
   planId: string;
   branchId: string;
   continuationSetupRefs: Cycle5AdvancedSetupRef[];
+  terminal?: true;
   bestsave?: boolean | null;
 }
 
@@ -410,6 +413,7 @@ function decisionForBranch(
     planId: plan.id,
     branchId: branch.id,
     continuationSetupRefs: branch.continuationSetupRefs,
+    ...(branch.terminal ? { terminal: true as const } : {}),
     bestsave: typeof branch.bestsave === "boolean" ? branch.bestsave : plan.bestsave,
   };
 }

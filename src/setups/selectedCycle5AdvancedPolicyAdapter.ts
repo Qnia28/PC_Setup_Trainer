@@ -668,6 +668,18 @@ function normalizePromotedEntry(
       observation: normalizeObservation(entry.observation, sourceId, id),
       branches: asRecords(entry.branches, sourceId, `${id}.branches`).map((branch, branchIndex) => {
         const branchId = typeof branch.id === "string" ? branch.id : `${id}-branch-${branchIndex + 1}`;
+        const continuationSetupRefs = asRecords(
+          branch.continuationSetupRefs,
+          sourceId,
+          `${id}.branches[${branchIndex}].continuationSetupRefs`,
+        ).map((ref) => validateSetupRef(ref, sourceId, `${id}.branches[${branchIndex}].continuationSetupRefs`));
+        const terminal = branch.terminal === true;
+        if (terminal === (continuationSetupRefs.length > 0)) {
+          throw new SelectedCycle5AdvancedPolicyError(
+            sourceId,
+            `${id}.branches[${branchIndex}] needs exactly one continuation or terminal outcome.`,
+          );
+        }
         const postCheckpoint = normalizePostCheckpoint(
           branch.postCheckpoint,
           sourceId,
@@ -685,11 +697,8 @@ function normalizePromotedEntry(
             after: asPiece(branch.relativeOrder.after, sourceId, `${id}.branches[${branchIndex}].relativeOrder.after`),
           },
         } : {}),
-        continuationSetupRefs: asRecords(
-          branch.continuationSetupRefs,
-          sourceId,
-          `${id}.branches[${branchIndex}].continuationSetupRefs`,
-        ).map((ref) => validateSetupRef(ref, sourceId, `${id}.branches[${branchIndex}].continuationSetupRefs`)),
+        continuationSetupRefs,
+        ...(terminal ? { terminal: true as const } : {}),
         bestsave: typeof branch.bestsave === "boolean" ? branch.bestsave : null,
         ...(postCheckpoint ? { postCheckpoint } : {}),
       }; }),

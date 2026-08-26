@@ -111,19 +111,12 @@ function parseBranch(source,branchIndex){
     }
     if(ch==='*'){
       const start=i++;
-      let drawCount=1;
-      if(source[i]==='P'||source[i]==='p'){
-        const digit=source[i+1];
-        if(!digit||!/^[0-9]$/.test(digit))syntax('wildcard p suffix requires a draw count',branchIndex,i);
-        drawCount=Number(digit);
-        if(drawCount<1)syntax('wildcard draw count must be at least 1',branchIndex,i+1);
-        if(drawCount>7)syntax('wildcard draw count cannot exceed 7',branchIndex,i+1);
-        i+=2;
-      }else if(i<source.length&&/[0-9]/.test(source[i])){
+      const suffix=parseDrawSuffix(source,i,ALL.length,branchIndex,start);i=suffix.index;
+      if(i<source.length&&/[0-9]/.test(source[i])){
         syntax('wildcard draw count requires p, e.g. *p7',branchIndex,i);
       }
       const c=parseConstraint(source,i,branchIndex);i=c.index;
-      elements.push({kind:'bag',source:source.slice(start,i),pieces:ALL,drawCount,depth:drawCount,constraint:c.constraint});
+      elements.push({kind:'bag',source:source.slice(start,i),pieces:ALL,drawCount:suffix.drawCount,depth:suffix.drawCount,constraint:c.constraint});
       continue;
     }
     if(ch==='['){

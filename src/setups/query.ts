@@ -2,6 +2,15 @@ import type { Board, Cycle, Piece } from "../engine/types";
 import { formatPieceSetForDisplay } from "../engine/pieceDisplay";
 import { setupPolicyForCycle, setupsForCycle, setupsForCycle2Advanced3P, setupsForCycle2General, setupsForCycle3Class, setupsForCycle4Class, setupsForCycle5Class, setupsForCycle6Class } from "./catalog";
 import { cycle1QueueContext, isNormalCycle1Context } from "./cycle1Context";
+import {
+  cycle1AdvancedQbCatalogForEntry,
+  cycle1AdvancedQbConditionLabel,
+  cycle1AdvancedQbMetaForSetup,
+  cycle1AdvancedQbObservation,
+  cycle1AdvancedQbRuntimeBundle,
+  cycle1AdvancedQbScoreForSetup,
+  matchingCycle1AdvancedQbEntry,
+} from "./cycle1AdvancedQbCatalog";
 import { cycle2AdvancedQbConditionLabel, cycle2AdvancedQbSaveTargets, selectCycle2AdvancedQbSetups } from "./cycle2AdvancedQb";
 import { cycle2AdvancedQbRuntimeBundle } from "./cycle2AdvancedQbCatalog";
 import { cycle2QueueContext, fitsCycle2BuildPool } from "./cycle2Context";
@@ -1228,6 +1237,59 @@ export function* recommendationProgram(
       });
       const ordered = [...general4, ...general3, ...direct, ...oqb];
       const candidates = limitSetupCandidatesForCycle(ordered, 1, query.maxCandidates);
+      yield {
+        type: "stage",
+        result: {
+          stage: "primary",
+          candidates,
+          preferredCandidateId: candidates[0]?.setup.id ?? null,
+          complete: true,
+        },
+      };
+      return candidates;
+    }
+    const advancedBundle = cycle1AdvancedQbRuntimeBundle();
+    const observation = context ? cycle1AdvancedQbObservation(query, context) : null;
+    const advancedEntry = context ? matchingCycle1AdvancedQbEntry(query, context) : null;
+    if (advancedBundle && observation && advancedEntry) {
+      const advancedRaw = yield {
+        type: "search",
+        search: {
+          catalog: cycle1AdvancedQbCatalogForEntry(advancedEntry),
+          query: { ...query, next: observation.buildNext },
+          policyCatalog: advancedBundle.setups,
+          placeableNextCount: observation.placeableNextCount,
+          scoreForSetup: (setup) => [
+            ...cycle1AdvancedQbScoreForSetup(setup),
+            ...candidateScore(setup),
+          ],
+        },
+      };
+      const conditionLabel = cycle1AdvancedQbConditionLabel(advancedEntry);
+      const advanced = advancedRaw.map((candidate) => {
+        const meta = cycle1AdvancedQbMetaForSetup(candidate.setup);
+        return {
+          ...candidate,
+          reasons: [
+            `${conditionLabel} · exact ${observation.basis === "hold-occupied" ? "NEXT[3:4]" : "NEXT[4] + inferred complement"} order.`,
+            ...(meta?.ref.transformRule === "fixed-left-srs-exception"
+              ? ["Uses the source-authored fixed-left SRS exception without mirroring geometry."]
+              : []),
+            ...candidate.reasons,
+          ],
+          policy: { ruleId: advancedEntry.id, branchId: advancedEntry.orderedLastTwo.join(""), preferred: true },
+          qbCondition: conditionLabel,
+          recommendationLabel: conditionLabel,
+        };
+      });
+      const standardPlan = singleStageRecommendationPlan(query);
+      const standardBatches: SetupCandidate[][] = [];
+      for (const search of standardPlan?.searches ?? []) {
+        standardBatches.push(yield { type: "search", search });
+      }
+      const standard = standardPlan?.finalize(standardBatches) ?? [];
+      const candidates = limitSetupCandidatesForCycle(
+        [...advanced, ...standard].sort(compareScores), 1, query.maxCandidates);
       yield {
         type: "stage",
         result: {

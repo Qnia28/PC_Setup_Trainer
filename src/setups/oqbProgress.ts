@@ -505,7 +505,7 @@ function resolveCycle5Progress(
   }
 
   const refs = observed.decision.continuationSetupRefs;
-  if (refs.length === 0) {
+  if (observed.decision.terminal) {
     return {
       status: "terminal",
       cycle: query.cycle,
@@ -516,6 +516,18 @@ function resolveCycle5Progress(
       progress: progressValue(progress, plan.checkpoint.placedCount),
       observation,
       instruction: "The selected policy branch has no follow-up geometry.",
+    };
+  }
+  if (refs.length === 0) {
+    return {
+      status: "unresolved",
+      cycle: query.cycle,
+      planId: plan.id,
+      stage: "continuation",
+      progress: progressValue(progress, plan.checkpoint.placedCount),
+      reason: "continuation-missing-or-incompatible",
+      instruction: "The selected OQB branch has no declared continuation outcome.",
+      observation,
     };
   }
 

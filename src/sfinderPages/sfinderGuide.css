@@ -1,0 +1,26 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e9eef7;
+  background: #090c11;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 720px; min-height: 100vh; background: radial-gradient(circle at 50% 0, #171f2b 0, #090c11 52%); }
+
+.sfinder-guide-shell { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 40px 0 72px; }
+.sfinder-guide-document { padding: 30px 34px 40px; background: rgba(17, 24, 33, .92); border: 1px solid #344152; border-radius: 9px; }
+.sfinder-guide-document h1 { margin: 42px 0 14px; padding-top: 28px; color: #f0f5fb; font-size: 28px; border-top: 1px solid #2e3a48; }
+.sfinder-guide-document h1:first-child { margin-top: 0; padding-top: 0; font-size: 32px; border-top: 0; }
+.sfinder-guide-document h2 { margin: 32px 0 14px; color: #e8f1f8; font-size: 23px; }
+.sfinder-guide-document h3 { margin: 28px 0 10px; color: #d9e6f0; font-size: 17px; }
+.sfinder-guide-document p, .sfinder-guide-document li, .sfinder-guide-document blockquote { color: #aab8c8; font-size: 14px; line-height: 1.72; }
+.sfinder-guide-document p { margin: 10px 0 16px; }
+.sfinder-guide-document ul, .sfinder-guide-document ol { display: grid; gap: 6px; margin: 10px 0 18px; padding-left: 24px; }
+.sfinder-guide-document strong { color: #e4edf5; }
+.sfinder-guide-document blockquote { margin: 14px 0 20px; padding: 13px 16px; color: #c4d7e5; background: #13212c; border-left: 3px solid #64ceeF; border-radius: 0 6px 6px 0; }
+.sfinder-guide-document code { color: #9de5fa; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .92em; }
+.sfinder-guide-document pre { margin: 12px 0 20px; padding: 14px 16px; overflow: auto; background: #090f15; border: 1px solid #2d3947; border-radius: 6px; }
+.sfinder-guide-document pre code { color: #c8d8e5; font-size: 12px; line-height: 1.65; white-space: pre; }
+.sfinder-guide-document hr { height: 1px; margin: 26px 0; background: #2e3a48; border: 0; }
