@@ -27,14 +27,14 @@ for(const [index,fixture] of CASES.entries()){
   test(`5-line *p7 minimals regression setup ${index+1}`,async()=>{
     const solver=await createWasmSolver(5);
     try{
-      const normal=calculateMinimalsFeature({
+      const normal=await calculateMinimalsFeature({
         sourceFumen:fixture.fumen,pattern:PATTERN,wantedSave:'',clear:5,solver,useHold:true,
       });
       assert.equal(normal.total,5040);
       assert.equal(normal.saveSuccess,fixture.pc);
       assert.equal(normal.minimalCount,fixture.minimal);
 
-      const perSave=calculatePerSaveMinimalsFeature({
+      const perSave=await calculatePerSaveMinimalsFeature({
         sourceFumen:fixture.fumen,pattern:PATTERN,targetLines:5,solver,useHold:true,
       });
       assert.equal(perSave.total,5040);

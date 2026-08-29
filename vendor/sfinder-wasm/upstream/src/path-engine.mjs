@@ -1,4 +1,5 @@
 export const PATTERN_BATCH_MIN_CASES = 24;
+export const FOUR_LINE_PATTERN_BATCH_MIN_CASES = 256;
 
 export function solveQueuesExistence({ board, queues, solver, useHold = true }) {
   return typeof solver.canPcMany === "function"
@@ -18,17 +19,19 @@ export function enumerateQueuesCached({ board, queues, solver, useHold = true })
   });
 }
 
-export function canUsePatternPath({ cases, solver }) {
-  return cases.length >= PATTERN_BATCH_MIN_CASES
-    && solver.height >= 5
-    && typeof solver.enumeratePcPattern === "function";
+export function canUsePatternPath({ cases, solver, fourLineMinCases = FOUR_LINE_PATTERN_BATCH_MIN_CASES }) {
+  const threshold = solver.height <= 4 ? fourLineMinCases : PATTERN_BATCH_MIN_CASES;
+  return cases.length >= threshold && typeof solver.enumeratePcPattern === "function";
 }
 
 // Shared solver dispatch only. Feature-specific interpretation stays outside
 // this layer so hot pattern loops do not pay a callback/object allocation per
 // coverage hit.
-export function enumerateCasePath({ board, cases, solver, useHold = true }) {
-  if (canUsePatternPath({ cases, solver })) {
+export function enumerateCasePath({
+  board, cases, solver, useHold = true,
+  fourLinePatternMinCases = FOUR_LINE_PATTERN_BATCH_MIN_CASES,
+}) {
+  if (canUsePatternPath({ cases, solver, fourLineMinCases: fourLinePatternMinCases })) {
     const rows = solver.enumeratePcPattern(board, cases.map((entry) => entry.queue), useHold);
     if (Array.isArray(rows)) return { mode: "pattern", rows };
   }
@@ -55,10 +58,11 @@ export function visitCaseSolutions({
   visit = null,
   collectByKey = true,
   trackCaseSolutions = true,
+  fourLinePatternMinCases = FOUR_LINE_PATTERN_BATCH_MIN_CASES,
 }) {
   const caseHasSolution = trackCaseSolutions ? new Uint8Array(cases.length) : null;
   const byKey = collectByKey ? new Map() : null;
-  const path = enumerateCasePath({ board, cases, solver, useHold });
+  const path = enumerateCasePath({ board, cases, solver, useHold, fourLinePatternMinCases });
 
   if (path.mode === "pattern") {
     for (const solution of path.rows) {

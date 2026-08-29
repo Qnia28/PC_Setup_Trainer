@@ -13,8 +13,8 @@ source's stated terms.
 - Project: [sfinder_wasm](https://github.com/Qnia28/sfinder_wasm)
 - Author: Qnia ([@Qnia28](https://github.com/Qnia28))
 - Use in QniaPC: browser-native Rust/WASM Perfect Clear solver under
-  `vendor/sfinder-wasm/upstream`; the current 2L–6L-compatible snapshot was
-  imported from the author's `sfinder-wasm_260826` workspace on 2026-08-26.
+  `vendor/sfinder-wasm/upstream`; the current Release 2.2 snapshot was imported
+  from the author's `sfinder-wasm_2.2` workspace on 2026-08-30.
 - Upstream public license: GPL-3.0-only.
 - Upstream license text: [GNU GPL version 3](https://github.com/Qnia28/sfinder_wasm/blob/main/LICENSE).
 - QniaPC license grant: the copyright holder has separately authorized their
@@ -26,6 +26,20 @@ source's stated terms.
 - The full upstream public license and acknowledgements document are retained as
   `vendor/sfinder-wasm/upstream/LICENSE` and
   `vendor/sfinder-wasm/upstream/THIRD_PARTY_NOTICES.md`.
+
+### highs-js and HiGHS
+
+- Projects: [highs-js](https://github.com/lovasoa/highs-js) and
+  [HiGHS](https://github.com/ERGO-Code/HiGHS)
+- Versions: 1.15.1.
+- Use in QniaPC: sfinder-wasm Release 2.2 lazily loads the browser HiGHS build
+  for exact minimum-cardinality proofs on difficult minimum-cover matrices.
+  Secondary human-quality selection remains in sfinder-wasm.
+- License: MIT License.
+- Copyright notices: Copyright (c) 2023 highs-js; Copyright (c) 2026 HiGHS.
+- License texts are retained as
+  `vendor/sfinder-wasm/upstream/third_party/highs-js.LICENSE` and
+  `vendor/sfinder-wasm/upstream/third_party/HiGHS.LICENSE`.
 
 ### React runtime packages
 
@@ -127,9 +141,9 @@ part of QniaPC.
 
 ### MIT License text
 
-The following license text applies to the React runtime packages, loose-envify,
-js-tokens, LZ-String, tetris-fumen, gifenc, and solution-finder, together with each project's
-copyright notice above.
+The following license text applies to highs-js, HiGHS, the React runtime
+packages, loose-envify, js-tokens, LZ-String, tetris-fumen, gifenc, and
+solution-finder, together with each project's copyright notice above.
 
 MIT License
 

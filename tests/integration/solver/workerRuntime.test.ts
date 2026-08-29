@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   MAX_RETAINED_SOLVER_MEMORY_BYTES,
   exceedsSolverWorkerMemoryLimit,
+  resultUsedHiGHS,
+  shouldRecycleSolverWorkerAfterError,
+  shouldRecycleSolverWorkerAfterResult,
   runWorkerRequest,
 } from "../../../src/solver/worker-runtime.mjs";
 
@@ -24,5 +27,19 @@ describe("Solver Worker memory limit", () => {
       targetLines: 6,
       ready: true,
     });
+  });
+
+  it("detects global and per-save HiGHS results for post-result recycling", () => {
+    expect(resultUsedHiGHS({ useHiGHSResolved: true })).toBe(true);
+    expect(resultUsedHiGHS({ cardinalityBackend: "highs" })).toBe(true);
+    expect(resultUsedHiGHS({ results: { T: { cardinalityBackend: "highs" } } })).toBe(true);
+    expect(resultUsedHiGHS({ results: { T: { cardinalityBackend: "kernel" } } })).toBe(false);
+    expect(shouldRecycleSolverWorkerAfterResult({ cardinalityBackend: "highs" })).toBe(true);
+  });
+
+  it("recycles adaptive minimals Workers after errors so a rejected HiGHS load is not cached", () => {
+    expect(shouldRecycleSolverWorkerAfterError("minimals")).toBe(true);
+    expect(shouldRecycleSolverWorkerAfterError("per-save-minimals")).toBe(true);
+    expect(shouldRecycleSolverWorkerAfterError("chance")).toBe(false);
   });
 });

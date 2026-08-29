@@ -1,17 +1,16 @@
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
+import { minimumCoverAdaptiveAsync } from "./highs-min-cover.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
-import { visitCaseSolutions } from "./path-engine.mjs";
+import { canUsePatternPath, enumerateCasePath, visitCaseSolutions } from "./path-engine.mjs";
 import { pieceFromRustCode, TETRIS_DISPLAY_ORDER } from "./piece-order.mjs";
-import { placedCounts } from "./tiling.mjs";
+import {
+  prepareQueuePieceCounts,
+  prepareSolutionPieceCounts,
+  unusedPiecePrepared,
+} from "./saves.mjs";
 
 export const PER_SAVE_DISPLAY_ORDER = TETRIS_DISPLAY_ORDER;
-
-function counter(sequence) {
-  const counts = new Map();
-  for (const piece of sequence) counts.set(piece, (counts.get(piece) ?? 0) + 1);
-  return counts;
-}
 
 function normalizeCases(queues) {
   return queues.map((entry, index) =>
@@ -19,16 +18,7 @@ function normalizeCases(queues) {
 }
 
 export function unusedPieceForSolution(queue, solution) {
-  const available = counter(queue);
-  const used = placedCounts(solution);
-  const left = [];
-  for (const piece of PER_SAVE_DISPLAY_ORDER) {
-    const remaining = (available.get(piece) ?? 0) - (used.get(piece) ?? 0);
-    if (remaining < 0) throw new Error(`solution uses more ${piece} pieces than queue provides`);
-    for (let index = 0; index < remaining; index += 1) left.push(piece);
-  }
-  if (left.length !== 1) throw new Error(`expected exactly one saved piece, got ${left.length}`);
-  return left[0];
+  return unusedPiecePrepared(prepareQueuePieceCounts(queue), prepareSolutionPieceCounts(solution));
 }
 
 export function perSaveLabel(piece, { pcSuccess, success, saveRate, guaranteed }) {
@@ -67,6 +57,10 @@ function directSingleQueueResult({ board, cases, direct, displayOrder }) {
       coverage,
       humanQualityVector: solution ? [solution.orderCount ?? 0] : [],
       playableOrderCount: solution ? Number(solution.orderCount ?? 0) : null,
+      minimumCoverBackend: "direct",
+      cardinalityBackend: "direct",
+      qualityBackend: "direct-exact",
+      humanQualityExact: true,
     };
     data.label = perSaveLabel(piece, data);
     results[piece] = data;
@@ -74,6 +68,163 @@ function directSingleQueueResult({ board, cases, direct, displayOrder }) {
   return { board, queues: [entry.queue], total: 1, pcSuccess, pcRate: pcSuccess, results };
 }
 
+function collectPerSaveData({ board, cases, solver, useHold, displayOrder }) {
+  const coverageByPiece = new Map([...displayOrder].map((piece) => [piece, new Map()]));
+  const qualityIndex = new Map();
+  const queueCounts = cases.map((entry) => prepareQueuePieceCounts(entry.queue));
+  const usageByKey = new Map();
+  const { caseHasSolution, byKey } = visitCaseSolutions({
+    board,
+    cases,
+    solver,
+    useHold,
+    visit: (entry, caseIndex, solution, orderCount) => {
+      recordOrderCount(qualityIndex, entry.caseId, { key: solution.key, orderCount });
+      let usage = usageByKey.get(solution.key);
+      if (!usage) {
+        usage = prepareSolutionPieceCounts(solution);
+        usageByKey.set(solution.key, usage);
+      }
+      const saved = unusedPiecePrepared(queueCounts[caseIndex], usage);
+      let keys = coverageByPiece.get(saved).get(entry.caseId);
+      if (!keys) {
+        keys = new Set();
+        coverageByPiece.get(saved).set(entry.caseId, keys);
+      }
+      keys.add(solution.key);
+    },
+  });
+  return {
+    coverageByPiece,
+    qualityFor: makeOrderCountQuality(qualityIndex),
+    byKey,
+    pcSuccess: caseHasSolution.reduce((count, value) => count + value, 0),
+  };
+}
+
+function finishPieceResult({
+  piece, coverage, successOverride = null, coverageCountForKey = null,
+  pcSuccess, total, minimal, byKey,
+}) {
+  const success = successOverride ?? coverage.size;
+  const saveRate = pcSuccess === 0 ? null : success / pcSuccess;
+  const guaranteed = pcSuccess > 0 && success === pcSuccess;
+  let minimalCount = 0;
+  let keys = [];
+  let solutions = [];
+  let coverageCounts = [];
+  let humanQualityVector = [];
+  if (minimal && Number.isFinite(minimal.count) && minimal.keys.length) {
+    minimalCount = minimal.count;
+    if (coverageCountForKey) {
+      const ordered = minimal.keys
+        .map((key) => ({ key, coverageCount: coverageCountForKey(key) }))
+        .sort((left, right) => right.coverageCount - left.coverageCount || left.key.localeCompare(right.key));
+      keys = ordered.map((row) => row.key);
+      coverageCounts = ordered.map((row) => row.coverageCount);
+    } else {
+      const ordered = orderMinimalKeysByCoverage(minimal.keys, coverage);
+      keys = ordered.keys;
+      coverageCounts = ordered.coverageCounts;
+    }
+    solutions = keys.map((key) => byKey.get(key));
+    humanQualityVector = minimal.qualityVector ?? [];
+  }
+  const data = {
+    piece,
+    success,
+    pcSuccess,
+    total,
+    saveRate,
+    guaranteed,
+    minimalCount,
+    keys,
+    solutions,
+    coverageCounts,
+    coverage: coverage ?? new Map(),
+    humanQualityVector,
+    playableOrderCount: total === 1 && solutions.length ? humanQualityVector[0] ?? 0 : null,
+    minimumCoverBackend: minimal?.backend ?? (success > 0 ? "rust-legacy" : null),
+    cardinalityBackend: minimal?.cardinalityBackend ?? null,
+    qualityBackend: minimal?.qualityBackend ?? null,
+    humanQualityExact: minimal?.qualityExact ?? true,
+  };
+  data.label = perSaveLabel(piece, data);
+  return data;
+}
+
+function maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrder }) {
+  if (cases.length !== 1 || typeof solver.perSaveBest !== "function") return null;
+  const direct = solver.perSaveBest(board, cases[0].queue, useHold, { candidateLimit });
+  return Array.isArray(direct) ? directSingleQueueResult({ board, cases, direct, displayOrder }) : null;
+}
+
+function collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOrder }) {
+  const path = enumerateCasePath({ board, cases, solver, useHold });
+  if (path.mode !== "pattern") return null;
+  const solutions = [...path.rows].sort((left, right) => left.key.localeCompare(right.key));
+  const idByKey = new Map(solutions.map((solution, id) => [solution.key, id]));
+  const byKey = new Map(solutions.map((solution) => [solution.key, solution]));
+  const pieceIndex = new Map([...displayOrder].map((piece, index) => [piece, index]));
+  const rowsByPiece = Array.from({ length: displayOrder.length }, () => Array(cases.length));
+  const coverageCountsByPiece = Array.from(
+    { length: displayOrder.length }, () => new Uint32Array(solutions.length),
+  );
+  const candidateSeenByPiece = Array.from(
+    { length: displayOrder.length }, () => new Uint8Array(solutions.length),
+  );
+  const candidateCounts = new Uint32Array(displayOrder.length);
+  const caseHasSolution = new Uint8Array(cases.length);
+  const queueCounts = cases.map((entry) => prepareQueuePieceCounts(entry.queue));
+  const usageById = new Array(solutions.length);
+
+  for (const solution of path.rows) {
+    const id = idByKey.get(solution.key);
+    let usage = usageById[id];
+    if (!usage) usageById[id] = usage = prepareSolutionPieceCounts(solution);
+    for (const hit of solution.coverage) {
+      const caseIndex = hit.caseIndex;
+      caseHasSolution[caseIndex] = 1;
+      const saved = unusedPiecePrepared(queueCounts[caseIndex], usage);
+      const pi = pieceIndex.get(saved);
+      if (pi === undefined) throw new Error(`invalid saved piece ${String(saved)}`);
+      let row = rowsByPiece[pi][caseIndex];
+      if (!row) rowsByPiece[pi][caseIndex] = row = [];
+      row.push([id, Number(hit.orderCount ?? 0)]);
+      coverageCountsByPiece[pi][id] += 1;
+      if (!candidateSeenByPiece[pi][id]) {
+        candidateSeenByPiece[pi][id] = 1;
+        candidateCounts[pi] += 1;
+      }
+    }
+  }
+  return {
+    solutions, byKey, rowsByPiece, coverageCountsByPiece, candidateCounts,
+    pcSuccess: caseHasSolution.reduce((count, value) => count + value, 0),
+  };
+}
+
+function numericRowsToCoverage(rows, cases, solutions) {
+  const coverage = new Map();
+  const qualityIndex = new Map();
+  for (let caseIndex = 0; caseIndex < rows.length; caseIndex += 1) {
+    const row = rows[caseIndex];
+    if (!row?.length) continue;
+    const caseId = cases[caseIndex].caseId;
+    const keys = new Set();
+    const qualityByKey = new Map();
+    for (const [id, quality] of row) {
+      const key = solutions[id].key;
+      keys.add(key);
+      qualityByKey.set(key, quality);
+    }
+    coverage.set(caseId, keys);
+    qualityIndex.set(caseId, qualityByKey);
+  }
+  return { coverage, qualityFor: makeOrderCountQuality(qualityIndex) };
+}
+
+// Legacy synchronous exact API retained for compatibility/reference.
 export function calculatePerSaveMinimalsFromBoard({
   board,
   queues,
@@ -83,88 +234,155 @@ export function calculatePerSaveMinimalsFromBoard({
   candidateLimit = 16,
 }) {
   const cases = normalizeCases(queues);
-
-  // Single exact queue uses the bounded Rust path and avoids all-solution
-  // transfer/set-cover work. The general path below is shared with minimals.
-  if (cases.length === 1 && typeof solver.perSaveBest === "function") {
-    const direct = solver.perSaveBest(board, cases[0].queue, useHold, { candidateLimit });
-    if (Array.isArray(direct)) {
-      return directSingleQueueResult({ board, cases, direct, displayOrder });
-    }
-  }
-
-  const coverageByPiece = new Map([...displayOrder].map((piece) => [piece, new Map()]));
-  const qualityIndex = new Map();
-  const { caseHasSolution, byKey } = visitCaseSolutions({
-    board,
-    cases,
-    solver,
-    useHold,
-    visit: (entry, _caseIndex, solution, orderCount) => {
-      recordOrderCount(qualityIndex, entry.caseId, { key: solution.key, orderCount });
-      const saved = unusedPieceForSolution(entry.queue, solution);
-      let keys = coverageByPiece.get(saved).get(entry.caseId);
-      if (!keys) {
-        keys = new Set();
-        coverageByPiece.get(saved).set(entry.caseId, keys);
-      }
-      keys.add(solution.key);
-    },
-  });
-  const pcSuccess = caseHasSolution.reduce((count, value) => count + value, 0);
-
-  const qualityFor = makeOrderCountQuality(qualityIndex);
+  const direct = maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrder });
+  if (direct) return direct;
+  const collected = collectPerSaveData({ board, cases, solver, useHold, displayOrder });
   const results = {};
   for (const piece of displayOrder) {
-    const coverage = coverageByPiece.get(piece);
-    const success = coverage.size;
-    const saveRate = pcSuccess === 0 ? null : success / pcSuccess;
-    const guaranteed = pcSuccess > 0 && success === pcSuccess;
-    let minimalCount = 0;
-    let keys = [];
-    let solutions = [];
-    let coverageCounts = [];
-    let humanQualityVector = [];
-
-    if (success > 0) {
-      const minimal = minimumCover(coverage, { qualityFor, solver });
-      if (Number.isFinite(minimal.count) && minimal.keys.length) {
-        minimalCount = minimal.count;
-        const ordered = orderMinimalKeysByCoverage(minimal.keys, coverage);
-        keys = ordered.keys;
-        coverageCounts = ordered.coverageCounts;
-        solutions = keys.map((key) => byKey.get(key));
-        humanQualityVector = minimal.qualityVector ?? [];
-      }
-    }
-
-    const data = {
+    const coverage = collected.coverageByPiece.get(piece);
+    const minimal = coverage.size > 0
+      ? minimumCover(coverage, { qualityFor: collected.qualityFor, solver })
+      : null;
+    results[piece] = finishPieceResult({
       piece,
-      success,
-      pcSuccess,
-      total: cases.length,
-      saveRate,
-      guaranteed,
-      minimalCount,
-      keys,
-      solutions,
-      coverageCounts,
       coverage,
-      humanQualityVector,
-      playableOrderCount: cases.length === 1 && solutions.length
-        ? humanQualityVector[0] ?? 0
-        : null,
-    };
-    data.label = perSaveLabel(piece, data);
-    results[piece] = data;
+      pcSuccess: collected.pcSuccess,
+      total: cases.length,
+      minimal,
+      byKey: collected.byKey,
+    });
   }
-
   return {
     board,
     queues: cases.map((entry) => entry.queue),
     total: cases.length,
-    pcSuccess,
-    pcRate: cases.length === 0 ? null : pcSuccess / cases.length,
+    pcSuccess: collected.pcSuccess,
+    pcRate: cases.length === 0 ? null : collected.pcSuccess / cases.length,
+    results,
+  };
+}
+
+// Production adaptive API. Exact human-quality remains the default.
+export async function calculatePerSaveMinimalsFromBoardAsync({
+  board,
+  queues,
+  solver,
+  useHold = true,
+  displayOrder = PER_SAVE_DISPLAY_ORDER,
+  candidateLimit = 16,
+  exactHumanQuality = "true",
+  useHiGHS = "auto",
+  fastStateBudget = undefined,
+  tinyExactMaxCandidates = 48,
+  includeCoverage = true,
+}) {
+  const cases = normalizeCases(queues);
+  const direct = maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrder });
+  if (direct) return direct;
+
+  const tinyLimit = Math.max(0, Math.floor(Number(tinyExactMaxCandidates) || 0));
+  const canUseNumericPattern = typeof solver?.minimumCoverIds === "function"
+    && canUsePatternPath({ cases, solver });
+  if (canUseNumericPattern) {
+    const numeric = collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOrder });
+    if (numeric) {
+      const results = {};
+      const idByKey = new Map(numeric.solutions.map((solution, id) => [solution.key, id]));
+      for (let pi = 0; pi < displayOrder.length; pi += 1) {
+        const piece = displayOrder[pi];
+        const rows = numeric.rowsByPiece[pi];
+        const activeRows = rows.filter((row) => row?.length);
+        const candidateCount = numeric.candidateCounts[pi];
+        let coverage = null;
+        let minimal = null;
+        let coverageCountForKey = null;
+
+        if (activeRows.length > 0 && tinyLimit > 0 && candidateCount <= tinyLimit) {
+          const exact = solver.minimumCoverIds(activeRows, numeric.solutions.length);
+          if (exact && Number.isFinite(exact.count)) {
+            minimal = {
+              count: exact.count,
+              keys: exact.selectedIds.map((id) => numeric.solutions[id].key),
+              qualityVector: exact.qualityVector,
+              searchedStates: exact.searchedStates ?? 0,
+              backend: "rust-legacy",
+              cardinalityBackend: "rust-legacy-integrated",
+              qualityBackend: "rust-legacy-exact",
+              qualityExact: true,
+            };
+            coverageCountForKey = (key) => {
+              const id = idByKey.get(key);
+              return id === undefined ? 0 : numeric.coverageCountsByPiece[pi][id];
+            };
+          }
+        }
+
+        if (activeRows.length > 0 && !minimal) {
+          const converted = numericRowsToCoverage(rows, cases, numeric.solutions);
+          coverage = converted.coverage;
+          minimal = await minimumCoverAdaptiveAsync(coverage, {
+            qualityFor: converted.qualityFor,
+            solver,
+            exactQuality: exactHumanQuality,
+            useHiGHS,
+            fastStateBudget,
+            tinyExactMaxCandidates,
+          });
+        } else if (includeCoverage && activeRows.length > 0) {
+          coverage = numericRowsToCoverage(rows, cases, numeric.solutions).coverage;
+        }
+
+        results[piece] = finishPieceResult({
+          piece,
+          coverage,
+          successOverride: activeRows.length,
+          coverageCountForKey,
+          pcSuccess: numeric.pcSuccess,
+          total: cases.length,
+          minimal,
+          byKey: numeric.byKey,
+        });
+      }
+      return {
+        board,
+        queues: cases.map((entry) => entry.queue),
+        total: cases.length,
+        pcSuccess: numeric.pcSuccess,
+        pcRate: cases.length === 0 ? null : numeric.pcSuccess / cases.length,
+        results,
+      };
+    }
+  }
+
+  const collected = collectPerSaveData({ board, cases, solver, useHold, displayOrder });
+  const results = {};
+  for (const piece of displayOrder) {
+    const coverage = collected.coverageByPiece.get(piece);
+    const minimal = coverage.size > 0
+      ? await minimumCoverAdaptiveAsync(coverage, {
+        qualityFor: collected.qualityFor,
+        solver,
+        exactQuality: exactHumanQuality,
+        useHiGHS,
+        fastStateBudget,
+        tinyExactMaxCandidates,
+      })
+      : null;
+    results[piece] = finishPieceResult({
+      piece,
+      coverage,
+      pcSuccess: collected.pcSuccess,
+      total: cases.length,
+      minimal,
+      byKey: collected.byKey,
+    });
+  }
+  return {
+    board,
+    queues: cases.map((entry) => entry.queue),
+    total: cases.length,
+    pcSuccess: collected.pcSuccess,
+    pcRate: cases.length === 0 ? null : collected.pcSuccess / cases.length,
     results,
   };
 }

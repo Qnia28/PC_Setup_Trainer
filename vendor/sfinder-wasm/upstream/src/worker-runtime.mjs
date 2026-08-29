@@ -1,6 +1,7 @@
 import {
   calculateChance,
   calculateFifthFeature,
+  calculateLegacyMinimalsFeature,
   calculateMinimalsFeature,
   calculatePerSaveMinimalsFeature,
   calculateSaves,
@@ -39,6 +40,7 @@ export async function runWorkerRequest(request) {
     case "chance": return calculateChance(input);
     case "saves": return calculateSaves(input);
     case "minimals": return calculateMinimalsFeature(input);
+    case "legacy-minimals": return calculateLegacyMinimalsFeature(input);
     case "fourth": return calculateFourthDistribution(input);
     case "fifth": return calculateFifthFeature(input);
     case "per-save-minimals": return calculatePerSaveMinimalsFeature(input);

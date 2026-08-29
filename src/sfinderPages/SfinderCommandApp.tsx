@@ -8,17 +8,23 @@ import { COMMAND_FIELD_WIDTH, createEmptyCommandField, drawCommandField, type Co
 import {
   commandDisplayRows,
   commandTargetOptions,
+  defaultHumanQualityMode,
   defaultTargetLines,
   fieldFromFumen,
   formatCalculationDuration,
   formatRatioPercentage,
   groupPerSavePages,
+  isAdaptiveMinimalsCommand,
+  minimumCoverWorkerOptions,
   normalizeCommandSource,
   PER_SAVE_RESULT_ORDER,
   type CommandLineGroup,
   type CommandTargetLines,
+  type HiGHSMode,
+  type HumanQualityMode,
 } from "./commandModel";
 import { defaultWantedSave, type SfinderCommandDefinition } from "./commands";
+import { copyText } from "./copyText";
 import "./sfinderCommand.css";
 
 type WarmupState = "loading" | "ready" | "error";
@@ -64,6 +70,22 @@ function metricEntries(result: ResultRecord): [string, string][] {
   return metrics;
 }
 
+function backendLabel(value: unknown): string | null {
+  return typeof value === "string" && value ? value : null;
+}
+
+function minimalsMetadata(result: ResultRecord): [string, string][] {
+  const metadata: [string, string][] = [];
+  const cardinalityBackend = backendLabel(result.cardinalityBackend ?? result.minimumCoverBackend);
+  const qualityBackend = backendLabel(result.qualityBackend);
+  const requested = result.useHiGHSRequested === true ? "On" : result.useHiGHSRequested === false ? "Off" : "Auto";
+  const resolved = result.useHiGHSResolved === true ? "Used" : "Not used";
+  if (cardinalityBackend) metadata.push(["Minimum set", `Exact · ${cardinalityBackend}`]);
+  if (qualityBackend) metadata.push(["Quality", `${result.humanQualityExact === false ? "Fast" : "Exact"} · ${qualityBackend}`]);
+  if ("useHiGHSRequested" in result || "useHiGHSResolved" in result) metadata.push(["HiGHS", `${resolved} · ${requested}`]);
+  return metadata;
+}
+
 function SolutionCanvas({ page, displayRows, label }: { page: Page; displayRows: 4 | 6; label: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -73,6 +95,31 @@ function SolutionCanvas({ page, displayRows, label }: { page: Page; displayRows:
     <strong>{label}</strong>
     <canvas ref={ref} aria-label={label} />
   </article>;
+}
+
+function ResultFumen({ value }: { value: string }) {
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">("idle");
+
+  useEffect(() => { setCopyStatus("idle"); }, [value]);
+
+  async function copyFumen(): Promise<void> {
+    try {
+      await copyText(value);
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("error");
+    }
+  }
+
+  return <div className="sfinder-result-fumen-block">
+    <label className="sfinder-result-fumen"><span>Result Fumen</span><textarea readOnly value={value} /></label>
+    <button type="button" className="sfinder-copy-fumen" onClick={() => { void copyFumen(); }}>
+      {copyStatus === "copied" ? "Copied" : copyStatus === "error" ? "Copy failed" : "Copy Fumen"}
+    </button>
+    <span className="sfinder-copy-status" role="status" aria-live="polite">
+      {copyStatus === "copied" ? "Result Fumen copied to clipboard." : copyStatus === "error" ? "Could not copy Result Fumen." : ""}
+    </span>
+  </div>;
 }
 
 function ResultPanel({
@@ -99,16 +146,27 @@ function ResultPanel({
     : null;
   const shownPages = pages.slice(0, 200);
   const perSaveGroups = commandId === "per_save_minimals" ? groupPerSavePages(shownPages) : [];
+  const metadata = commandId === "minimals" ? minimalsMetadata(result) : [];
   return <section className="sfinder-command-results">
     <div className="sfinder-result-metrics">
       {metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
     </div>
+    {metadata.length ? <dl className="sfinder-result-metadata">
+      {metadata.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+    </dl> : null}
     {saveResults ? <div className="sfinder-save-table">
       {[...PER_SAVE_RESULT_ORDER].flatMap((piece) => {
         const row = saveResults[piece];
         if (!row) return [];
         const saveRate = typeof row.saveRate === "number" ? formatRatioPercentage(row.saveRate) : "N/A";
-        return <div key={piece}><strong>Save {piece}</strong><span>{Number(row.minimalCount ?? 0)} minimals · {saveRate}</span></div>;
+        const cardinalityBackend = backendLabel(row.cardinalityBackend ?? row.minimumCoverBackend);
+        const qualityBackend = backendLabel(row.qualityBackend);
+        return <div key={piece}>
+          <strong>Save {piece}</strong>
+          <span>{Number(row.minimalCount ?? 0)} minimals · {saveRate}</span>
+          {cardinalityBackend ? <small>Minimum set: Exact · {cardinalityBackend}</small> : null}
+          {qualityBackend ? <small>Quality: {row.humanQualityExact === false ? "Fast" : "Exact"} · {qualityBackend}</small> : null}
+        </div>;
       })}
     </div> : null}
     {failedQueues.length ? <details className="sfinder-failed-queues"><summary>{failedQueues.length} failed queues</summary><code>{failedQueues.join(" ")}</code></details> : null}
@@ -128,7 +186,7 @@ function ResultPanel({
       </div>
       {pages.length > 200 ? <p className="sfinder-result-limit">Showing the first 200 of {pages.length} pages.</p> : null}
     </> : null}
-    {result.fumen ? <label className="sfinder-result-fumen"><span>Result Fumen</span><textarea readOnly value={result.fumen} /></label> : null}
+    {result.fumen ? <ResultFumen value={result.fumen} /> : null}
   </section>;
 }
 
@@ -141,6 +199,9 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const [wantedSave, setWantedSave] = useState(() => defaultWantedSave(command.id));
   const [title, setTitle] = useState("");
   const [useHold, setUseHold] = useState(true);
+  const [useHiGHSMode, setUseHiGHSMode] = useState<HiGHSMode>("auto");
+  const [humanQualityMode, setHumanQualityMode] = useState<HumanQualityMode>(() => defaultHumanQualityMode(command.id));
+  const [advancedOpen, setAdvancedOpen] = useState(false);
   const [mirror, setMirror] = useState(false);
   const [blueGarbage, setBlueGarbage] = useState(false);
   const [warmup, setWarmup] = useState<WarmupState>("loading");
@@ -153,6 +214,13 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const paintValue = useRef(true);
   const displayRows = commandDisplayRows(lineGroup);
   const isBatch = BATCH_COMMANDS.has(command.id);
+  const isAdaptiveMinimals = isAdaptiveMinimalsCommand(command.id);
+
+  useEffect(() => {
+    setUseHiGHSMode("auto");
+    setHumanQualityMode(defaultHumanQualityMode(command.id));
+    setAdvancedOpen(false);
+  }, [command.id]);
 
   useEffect(() => {
     if (canvasRef.current) drawCommandField(canvasRef.current, field, displayRows);
@@ -186,7 +254,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
     requestAbort.current?.abort();
     setView({ status: "idle" });
     setFinishedDurationMs(null);
-  }, [command.id, field, fumen, pattern, targetLines, wantedSave, title, useHold, mirror, blueGarbage]);
+  }, [command.id, field, fumen, pattern, targetLines, wantedSave, title, useHold, useHiGHSMode, humanQualityMode, mirror, blueGarbage]);
 
   const paintCell = useCallback((event: ReactPointerEvent<HTMLCanvasElement>, value: boolean) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -252,6 +320,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
         wantedSave,
         title,
         useHold,
+        ...minimumCoverWorkerOptions(command.id, useHiGHSMode, humanQualityMode),
         mode: "normal",
         mirror,
         blueGarbage,
@@ -297,7 +366,27 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
             /></label>
             {(command.id === "saves" || command.id === "minimals") ? <label className="sfinder-save-input"><span>Saves</span><input value={wantedSave} placeholder="T || I" spellCheck={false} onChange={(event) => setWantedSave(event.target.value)} /></label> : null}
             {(command.id === "minimals" || command.id === "per_save_minimals") ? <label className="sfinder-wide-input"><span>Result title</span><input value={title} placeholder="Optional title" onChange={(event) => setTitle(event.target.value)} /></label> : null}
-            <label className="sfinder-checkbox-input"><input type="checkbox" checked={useHold} onChange={(event) => setUseHold(event.target.checked)} /><span>Use hold</span></label>
+            <div className="sfinder-runtime-options">
+              <label className="sfinder-checkbox-input"><input type="checkbox" checked={useHold} onChange={(event) => setUseHold(event.target.checked)} /><span>Use hold</span></label>
+              {isAdaptiveMinimals ? <button
+                type="button"
+                className="sfinder-advanced-toggle"
+                aria-expanded={advancedOpen}
+                aria-controls="sfinder-advanced-settings"
+                onClick={() => setAdvancedOpen((open) => !open)}
+              >Advanced <span aria-hidden="true">▾</span></button> : null}
+            </div>
+            {isAdaptiveMinimals && advancedOpen ? <div className="sfinder-advanced-panel" id="sfinder-advanced-settings" aria-label="Advanced minimum-cover settings">
+                <label className="sfinder-option-input"><span>HiGHS</span><select value={useHiGHSMode} onChange={(event) => setUseHiGHSMode(event.target.value as HiGHSMode)}>
+                  <option value="auto">Auto</option>
+                  <option value="on">On</option>
+                  <option value="off">Off</option>
+                </select></label>
+                <label className="sfinder-option-input"><span>Quality</span><select value={humanQualityMode} onChange={(event) => setHumanQualityMode(event.target.value as HumanQualityMode)}>
+                  <option value="Fast">Fast</option>
+                  <option value="True">Exact</option>
+                </select></label>
+              </div> : null}
             {(command.id === "cover" || command.id === "congruent_cover") ? <label className="sfinder-checkbox-input"><input type="checkbox" checked={mirror} onChange={(event) => setMirror(event.target.checked)} /><span>Mirror</span></label> : null}
             {(command.id === "congruent" || command.id === "congruent_cover") ? <label className="sfinder-checkbox-input"><input type="checkbox" checked={blueGarbage} onChange={(event) => setBlueGarbage(event.target.checked)} /><span>Blue garbage</span></label> : null}
           </div>

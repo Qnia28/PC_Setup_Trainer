@@ -222,7 +222,7 @@ export class WasmPcSolver {
   }
 
   enumeratePcPattern(board, queues, useHold = true) {
-    if (this.height <= 4 || !this.e.solver_enumerate_pc_pattern || !this.e.solver_pattern_coverage_offset) {
+    if (!this.e.solver_enumerate_pc_pattern || !this.e.solver_pattern_coverage_offset) {
       return null;
     }
     if (queues.length === 0) return [];
@@ -256,7 +256,8 @@ export class WasmPcSolver {
   }
 
   enumeratePcMany(board, queues, useHold = true) {
-    if (this.height <= 4 || queues.length < 24 || typeof this.enumeratePcPattern !== "function") {
+    const threshold = this.height <= 4 ? 256 : 24;
+    if (queues.length < threshold || typeof this.enumeratePcPattern !== "function") {
       return queues.map((queue) => this.enumeratePc(board, queue, useHold));
     }
     const rows = this.enumeratePcPattern(board, queues, useHold);
@@ -292,6 +293,205 @@ export class WasmPcSolver {
       ...solution,
       saved: Number(solution.saved ?? 7),
     }));
+  }
+
+  primaryKernelize(rawCases, solutionCount) {
+    if (!this.e.solver_primary_kernelize || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
+    let entryCount = 0;
+    for (const row of rawCases) entryCount += row.length;
+    const offsets = new Uint32Array(rawCases.length + 1);
+    const ids = new Uint32Array(entryCount);
+    let position = 0;
+    for (let caseIndex = 0; caseIndex < rawCases.length; caseIndex += 1) {
+      offsets[caseIndex] = position;
+      for (const id of rawCases[caseIndex]) ids[position++] = id;
+    }
+    offsets[rawCases.length] = position;
+    const offsetPointer = this.e.wasm_alloc_u32(offsets.length);
+    const idPointer = this.e.wasm_alloc_u32(ids.length);
+    try {
+      new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
+      if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
+      const status = Number(this.e.solver_primary_kernelize(
+        this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, Number(solutionCount),
+      ));
+      if ((status >>> 0) === 0xffffffff) throw new Error('Rust primary kernelization failed');
+      const caseCount = Number(this.e.solver_primary_kernel_case_count(this.ptr));
+      const kernelEntryCount = Number(this.e.solver_primary_kernel_entry_count(this.ptr));
+      const kernelSolutionCount = Number(this.e.solver_primary_kernel_solution_count(this.ptr));
+      const forcedCount = Number(this.e.solver_primary_kernel_forced_count(this.ptr));
+      const memory = this.e.memory.buffer;
+      const offsetsPtr = Number(this.e.solver_primary_kernel_offsets_ptr(this.ptr));
+      const idsPtr = Number(this.e.solver_primary_kernel_ids_ptr(this.ptr));
+      const solutionIdsPtr = Number(this.e.solver_primary_kernel_solution_ids_ptr(this.ptr));
+      const forcedPtr = Number(this.e.solver_primary_kernel_forced_ptr(this.ptr));
+      const kernelOffsets = caseCount
+        ? new Uint32Array(memory, offsetsPtr, caseCount + 1).slice()
+        : new Uint32Array([0]);
+      const kernelIds = kernelEntryCount
+        ? new Uint32Array(memory, idsPtr, kernelEntryCount).slice()
+        : new Uint32Array(0);
+      const solutionIds = kernelSolutionCount
+        ? [...new Uint32Array(memory, solutionIdsPtr, kernelSolutionCount)]
+        : [];
+      const forced = forcedCount
+        ? [...new Uint32Array(memory, forcedPtr, forcedCount)]
+        : [];
+      const cases = new Array(caseCount);
+      for (let caseIndex = 0; caseIndex < caseCount; caseIndex += 1) {
+        cases[caseIndex] = [...kernelIds.subarray(kernelOffsets[caseIndex], kernelOffsets[caseIndex + 1])];
+      }
+      return { cases, solutionIds, forced, entryCount: kernelEntryCount, backend: 'rust-kernel' };
+    } finally {
+      this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
+      this.e.wasm_dealloc_u32(idPointer, ids.length);
+    }
+  }
+
+  minimumCoverCardinalityIds(rawCases, solutionCount) {
+    if (!this.e.solver_min_cover_cardinality || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
+    if (!rawCases.length) return { count: 0, selectedIds: [], searchedStates: 0 };
+    let entryCount = 0;
+    for (const row of rawCases) entryCount += row.length;
+    const offsets = new Uint32Array(rawCases.length + 1);
+    const ids = new Uint32Array(entryCount);
+    let position = 0;
+    for (let caseIndex = 0; caseIndex < rawCases.length; caseIndex += 1) {
+      offsets[caseIndex] = position;
+      for (const id of rawCases[caseIndex]) ids[position++] = id;
+    }
+    offsets[rawCases.length] = position;
+    const offsetPointer = this.e.wasm_alloc_u32(offsets.length);
+    const idPointer = this.e.wasm_alloc_u32(ids.length);
+    try {
+      new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
+      if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
+      const count = Number(this.e.solver_min_cover_cardinality(
+        this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, Number(solutionCount),
+      ));
+      if ((count >>> 0) === 0xffffffff) {
+        return { count: Infinity, selectedIds: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n) };
+      }
+      const selectedIds = [];
+      for (let index = 0; index < count; index += 1) {
+        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        if (id < 0 || id >= solutionCount) throw new Error('invalid WASM numeric cardinality-only result');
+        selectedIds.push(id);
+      }
+      return { count, selectedIds, searchedStates: Number(this.e.solver_min_cover_searched_states(this.ptr)) };
+    } finally {
+      this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
+      this.e.wasm_dealloc_u32(idPointer, ids.length);
+    }
+  }
+
+  minimumCoverCardinality(coverage) {
+    if (!this.e.solver_min_cover_cardinality || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
+    const rawCases = [];
+    const keySet = new Set();
+    for (const [caseId, solutions] of coverage) {
+      if (!solutions?.size) continue;
+      const row = [...solutions];
+      for (const key of row) keySet.add(key);
+      rawCases.push({ caseId, row });
+    }
+    if (rawCases.length === 0) return { count: 0, keys: [], qualityVector: [], searchedStates: 0 };
+    const keys = [...keySet].sort();
+    const keyIndex = new Map(keys.map((key, index) => [key, index]));
+    let entryCount = 0;
+    for (const row of rawCases) entryCount += row.row.length;
+    const offsets = new Uint32Array(rawCases.length + 1);
+    const ids = new Uint32Array(entryCount);
+    let position = 0;
+    for (let caseIndex = 0; caseIndex < rawCases.length; caseIndex += 1) {
+      offsets[caseIndex] = position;
+      for (const key of rawCases[caseIndex].row) ids[position++] = keyIndex.get(key);
+    }
+    offsets[rawCases.length] = position;
+    const offsetPointer = this.e.wasm_alloc_u32(offsets.length);
+    const idPointer = this.e.wasm_alloc_u32(ids.length);
+    try {
+      new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
+      if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
+      const count = Number(this.e.solver_min_cover_cardinality(
+        this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, keys.length,
+      ));
+      if (count === 0xffffffff) return { count: Infinity, keys: [], qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n) };
+      const selected = [];
+      for (let index = 0; index < count; index += 1) {
+        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        if (id >= keys.length) throw new Error('invalid WASM cardinality-only minimum-cover result');
+        selected.push(keys[id]);
+      }
+      return { count, keys: selected, qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states(this.ptr)) };
+    } finally {
+      this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
+      this.e.wasm_dealloc_u32(idPointer, ids.length);
+    }
+  }
+
+  minimumCoverIds(rawCases, solutionCount) {
+    if (!this.e.solver_min_cover || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
+    const cases = rawCases.filter((row) => row?.length);
+    if (cases.length === 0) return { count: 0, selectedIds: [], qualityVector: [], searchedStates: 0 };
+    let entryCount = 0;
+    for (const row of cases) entryCount += row.length;
+    const offsets = new Uint32Array(cases.length + 1);
+    const ids = new Uint32Array(entryCount);
+    const qualities = new Uint32Array(entryCount);
+    let position = 0;
+    for (let caseIndex = 0; caseIndex < cases.length; caseIndex += 1) {
+      offsets[caseIndex] = position;
+      for (const entry of cases[caseIndex]) {
+        const id = Number(entry[0]);
+        const rawQuality = Number(entry[1] ?? 0);
+        if (!Number.isInteger(id) || id < 0 || id >= solutionCount) {
+          throw new Error(`invalid numeric minimum-cover candidate ${entry[0]}`);
+        }
+        ids[position] = id;
+        qualities[position] = Number.isFinite(rawQuality)
+          ? Math.max(0, Math.min(0xffffffff, Math.floor(rawQuality)))
+          : 0;
+        position += 1;
+      }
+    }
+    offsets[cases.length] = position;
+    const offsetPointer = this.e.wasm_alloc_u32(offsets.length);
+    const idPointer = this.e.wasm_alloc_u32(ids.length);
+    const qualityPointer = this.e.wasm_alloc_u32(qualities.length);
+    try {
+      new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
+      if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
+      if (qualities.length) new Uint32Array(this.e.memory.buffer, qualityPointer, qualities.length).set(qualities);
+      const count = Number(this.e.solver_min_cover(
+        this.ptr, offsetPointer, cases.length, idPointer, qualityPointer, entryCount, solutionCount,
+      ));
+      if ((count >>> 0) === 0xffffffff) {
+        return {
+          count: Infinity, selectedIds: [], qualityVector: [],
+          searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n),
+        };
+      }
+      const selectedIds = [];
+      for (let index = 0; index < count; index += 1) {
+        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        if (id >= solutionCount) throw new Error("invalid WASM numeric minimum-cover result");
+        selectedIds.push(id);
+      }
+      const qualityCount = Number(this.e.solver_min_cover_quality_len(this.ptr));
+      const qualityVector = [];
+      for (let index = 0; index < qualityCount; index += 1) {
+        qualityVector.push(Number(this.e.solver_min_cover_quality(this.ptr, index)));
+      }
+      return {
+        count, selectedIds, qualityVector,
+        searchedStates: Number(this.e.solver_min_cover_searched_states(this.ptr)),
+      };
+    } finally {
+      this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
+      this.e.wasm_dealloc_u32(idPointer, ids.length);
+      this.e.wasm_dealloc_u32(qualityPointer, qualities.length);
+    }
   }
 
   minimumCover(coverage, { qualityFor = null } = {}) {
@@ -373,6 +573,139 @@ export class WasmPcSolver {
       this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
       this.e.wasm_dealloc_u32(idPointer, ids.length);
       this.e.wasm_dealloc_u32(qualityPointer, qualities.length);
+    }
+  }
+
+  minimumCoverAtCount(coverage, exactCount, {
+    qualityFor = null,
+    seedKeys = [],
+    lockedPrefix = [],
+    stateBudget = null,
+    integrated = false,
+  } = {}) {
+    const bounded = stateBudget != null;
+    if (integrated && lockedPrefix.length) throw new Error('integrated fixed-K search does not accept lockedPrefix');
+    if (bounded && lockedPrefix.length) throw new Error('bounded fixed-K probe does not accept lockedPrefix');
+    const exactExport = this.e.solver_min_cover_at_count_locked;
+    const boundedExport = integrated
+      ? this.e.solver_min_cover_at_count_integrated_bounded
+      : this.e.solver_min_cover_at_count_bounded;
+    if ((integrated || bounded ? !boundedExport : !exactExport) || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
+    const rawCases = [];
+    const keySet = new Set();
+    for (const [caseId, solutions] of coverage) {
+      if (!solutions?.size) continue;
+      const row = [...solutions];
+      for (const key of row) keySet.add(key);
+      rawCases.push({ caseId, row });
+    }
+    if (rawCases.length === 0) {
+      const completed = Number(exactCount) === 0;
+      return completed
+        ? { count: 0, keys: [], qualityVector: [], searchedStates: 0, completed: true }
+        : { count: Infinity, keys: [], qualityVector: [], searchedStates: 0, completed: false, error: true };
+    }
+    const keys = [...keySet].sort();
+    const keyIndex = new Map(keys.map((key, index) => [key, index]));
+    const seedIds = Uint32Array.from(seedKeys.map((key) => {
+      const id = keyIndex.get(key);
+      if (id === undefined) throw new Error(`fixed-count seed key is not a candidate: ${key}`);
+      return id;
+    }));
+    const locked = Uint32Array.from(lockedPrefix.map((value) => Math.max(0, Math.floor(Number(value) || 0))));
+    let entryCount = 0;
+    for (const row of rawCases) entryCount += row.row.length;
+    const offsets = new Uint32Array(rawCases.length + 1);
+    const ids = new Uint32Array(entryCount);
+    const qualities = new Uint32Array(entryCount);
+    let position = 0;
+    for (let caseIndex = 0; caseIndex < rawCases.length; caseIndex += 1) {
+      offsets[caseIndex] = position;
+      const row = rawCases[caseIndex];
+      for (const key of row.row) {
+        ids[position] = keyIndex.get(key);
+        const raw = qualityFor ? Number(qualityFor(key, row.caseId)) : 0;
+        qualities[position] = Number.isFinite(raw)
+          ? Math.max(0, Math.min(0xffffffff, Math.floor(raw)))
+          : 0;
+        position += 1;
+      }
+    }
+    offsets[rawCases.length] = position;
+    const offsetPointer = this.e.wasm_alloc_u32(offsets.length);
+    const idPointer = this.e.wasm_alloc_u32(ids.length);
+    const qualityPointer = this.e.wasm_alloc_u32(qualities.length);
+    const seedPointer = this.e.wasm_alloc_u32(seedIds.length);
+    const lockedPointer = this.e.wasm_alloc_u32(locked.length);
+    try {
+      new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
+      if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
+      if (qualities.length) new Uint32Array(this.e.memory.buffer, qualityPointer, qualities.length).set(qualities);
+      if (seedIds.length) new Uint32Array(this.e.memory.buffer, seedPointer, seedIds.length).set(seedIds);
+      if (locked.length) new Uint32Array(this.e.memory.buffer, lockedPointer, locked.length).set(locked);
+
+      let status;
+      if (integrated || bounded) {
+        const budget = bounded
+          ? Math.max(1, Math.min(0xfffffffd, Math.floor(Number(stateBudget) || 0)))
+          : 0;
+        status = Number(boundedExport(
+          this.ptr,
+          offsetPointer,
+          rawCases.length,
+          idPointer,
+          qualityPointer,
+          entryCount,
+          keys.length,
+          Number(exactCount),
+          seedPointer,
+          seedIds.length,
+          budget,
+        ));
+      } else {
+        status = Number(exactExport(
+          this.ptr,
+          offsetPointer,
+          rawCases.length,
+          idPointer,
+          qualityPointer,
+          entryCount,
+          keys.length,
+          Number(exactCount),
+          seedPointer,
+          seedIds.length,
+          lockedPointer,
+          locked.length,
+        ));
+      }
+      const statusU32 = status >>> 0;
+      if (statusU32 === 0xffffffff) {
+        return { count: Infinity, keys: [], qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n), completed: false, error: true };
+      }
+      const completed = statusU32 !== 0xfffffffe;
+      const selectedCount = completed ? statusU32 : Number(exactCount);
+      const selected = [];
+      for (let index = 0; index < selectedCount; index += 1) {
+        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        if (id >= keys.length) throw new Error('invalid WASM fixed-count minimum-cover result');
+        selected.push(keys[id]);
+      }
+      const qualityCount = Number(this.e.solver_min_cover_quality_len(this.ptr));
+      const qualityVector = [];
+      for (let index = 0; index < qualityCount; index += 1) qualityVector.push(Number(this.e.solver_min_cover_quality(this.ptr, index)));
+      return {
+        count: completed ? statusU32 : Number(exactCount),
+        keys: selected,
+        qualityVector,
+        searchedStates: Number(this.e.solver_min_cover_searched_states(this.ptr)),
+        completed,
+      };
+    } finally {
+      this.e.wasm_dealloc_u32(offsetPointer, offsets.length);
+      this.e.wasm_dealloc_u32(idPointer, ids.length);
+      this.e.wasm_dealloc_u32(qualityPointer, qualities.length);
+      this.e.wasm_dealloc_u32(seedPointer, seedIds.length);
+      this.e.wasm_dealloc_u32(lockedPointer, locked.length);
     }
   }
 

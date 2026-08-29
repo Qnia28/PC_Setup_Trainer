@@ -33,7 +33,7 @@ for(const [clear,rows] of [[5,3],[6,4]]){
       assert.equal(saves.success,1);
       assert.equal(saves.failed,0);
 
-      const minimals=calculateMinimalsFeature({sourceFumen,pattern:'OOOO,[O]!',wantedSave:'',clear,solver});
+      const minimals=await calculateMinimalsFeature({sourceFumen,pattern:'OOOO,[O]!',wantedSave:'',clear,solver});
       assert.equal(minimals.total,1);
       assert.equal(minimals.saveSuccess,1);
       assert.equal(minimals.minimalCount,1);

@@ -9,6 +9,8 @@ export interface WorkerRuntimeRequest {
     title?: string;
     clear?: 2 | 3 | 4 | 5 | 6;
     wantedSave?: string;
+    useHiGHS?: boolean | "auto";
+    exactHumanQuality?: "Fast" | "True";
   };
 }
 
@@ -16,4 +18,7 @@ export const MAX_RETAINED_SOLVER_MEMORY_BYTES: number;
 export function retainedSolverMemoryBytes(): number;
 export function exceedsSolverWorkerMemoryLimit(memoryBytes: number): boolean;
 export function shouldRecycleSolverWorker(): boolean;
+export function resultUsedHiGHS(value: unknown): boolean;
+export function shouldRecycleSolverWorkerAfterResult(value: unknown): boolean;
+export function shouldRecycleSolverWorkerAfterError(requestKind: WorkerRuntimeRequest["kind"]): boolean;
 export function runWorkerRequest(request: WorkerRuntimeRequest): Promise<unknown>;

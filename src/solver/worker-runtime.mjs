@@ -27,6 +27,30 @@ export function shouldRecycleSolverWorker() {
   return exceedsSolverWorkerMemoryLimit(retainedSolverMemoryBytes());
 }
 
+function backendUsesHiGHS(value) {
+  return typeof value === "string" && value.toLowerCase().includes("highs");
+}
+
+export function resultUsedHiGHS(value) {
+  if (!value || typeof value !== "object") return false;
+  if (value.useHiGHSResolved === true) return true;
+  if (backendUsesHiGHS(value.minimumCoverBackend)
+    || backendUsesHiGHS(value.cardinalityBackend)
+    || backendUsesHiGHS(value.qualityBackend)) return true;
+  if (!value.results || typeof value.results !== "object") return false;
+  return Object.values(value.results).some((row) => resultUsedHiGHS(row));
+}
+
+export function shouldRecycleSolverWorkerAfterResult(value) {
+  return shouldRecycleSolverWorker() || resultUsedHiGHS(value);
+}
+
+export function shouldRecycleSolverWorkerAfterError(requestKind) {
+  return shouldRecycleSolverWorker()
+    || requestKind === "minimals"
+    || requestKind === "per-save-minimals";
+}
+
 async function getSolver(height) {
   let solver = solvers.get(height);
   if (solver) return solver;

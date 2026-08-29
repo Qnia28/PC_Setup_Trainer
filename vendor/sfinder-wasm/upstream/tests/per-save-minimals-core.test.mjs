@@ -61,7 +61,7 @@ test('PC 0% is a normal empty result and never divides by zero',()=>{
 });
 
 
-test('single queue uses bounded direct per-save best API without full enumeration',()=>{
+test('single queue uses exact direct per-save best API without JS full enumeration',()=>{
   const masks=Array(7).fill(0n);masks[0]=0xfn;
   let enumerated=false,receivedLimit=null;
   const solver={

@@ -5,6 +5,7 @@ import { TETRIS_DISPLAY_ORDER } from './piece-order.mjs';
 
 const ORDER=TETRIS_DISPLAY_ORDER;
 const PIECE_BIT=Object.fromEntries([...ORDER].map((p,i)=>[p,1<<i]));
+const ORDER_INDEX=Object.fromEntries([...ORDER].map((p,i)=>[p,i]));
 const SOLUTION_INDEX=Object.fromEntries([...MASK_PIECES].map((p,i)=>[p,i]));
 const expressionTables=new Map();
 const bagInfoCache=new Map();
@@ -22,27 +23,55 @@ function resolveBagInfo(analysis){
   throw new Error('missing last-bag metadata for save analysis');
 }
 
+
+export function prepareQueuePieceCounts(queue){
+  const counts=new Uint8Array(7);
+  for(const piece of queue){const index=ORDER_INDEX[piece];if(index!==undefined)counts[index]++}
+  return counts;
+}
+
+export function prepareSolutionPieceCounts(solution){
+  const counts=new Uint8Array(7);
+  for(let oi=0;oi<7;oi++){
+    const piece=ORDER[oi],si=SOLUTION_INDEX[piece];
+    counts[oi]=si===undefined?0:popcount(solution.masks[si])/4;
+  }
+  return counts;
+}
+
+export function prepareSaveCase(queue,analysis){
+  const{pieces,drawCount}=resolveBagInfo(analysis);
+  let bagMask=0,drawnMask=0;
+  for(const piece of pieces){const bit=PIECE_BIT[piece];if(bit)bagMask|=bit}
+  const start=drawCount===0?0:Math.max(0,queue.length-drawCount);
+  for(let i=start;i<queue.length;i++){const bit=PIECE_BIT[queue[i]];if(bit)drawnMask|=bit}
+  return{queueCounts:prepareQueuePieceCounts(queue),baseSavedMask:bagMask&~drawnMask};
+}
+
+export function savedMaskPrepared(caseMeta,solutionCounts){
+  let saved=caseMeta.baseSavedMask;
+  for(let oi=0;oi<7;oi++)if(caseMeta.queueCounts[oi]>solutionCounts[oi])saved|=1<<oi;
+  return saved&0x7f;
+}
+
+export function unusedPiecePrepared(queueCounts,solutionCounts){
+  let saved=null,total=0;
+  for(let oi=0;oi<7;oi++){
+    const remaining=queueCounts[oi]-solutionCounts[oi];
+    if(remaining<0)throw new Error(`solution uses more ${ORDER[oi]} pieces than queue provides`);
+    if(remaining){total+=remaining;saved=ORDER[oi]}
+  }
+  if(total!==1)throw new Error(`expected exactly one saved piece, got ${total}`);
+  return saved;
+}
+
 export function saveMaskToString(mask){let out='';for(let i=0;i<ORDER.length;i++)if(mask&(1<<i))out+=ORDER[i];return out}
 export function saveStringToMask(save){let mask=0;for(const piece of save){const bit=PIECE_BIT[piece];if(bit)mask|=bit}return mask}
 
 // Return the 7-bit save set directly.  Strings/Sets/Maps are only created at
 // API boundaries now; the hot saves/minimals loops use this compact value.
 export function savedMask(queue,solution,analysis){
-  const{pieces,drawCount}=resolveBagInfo(analysis);
-  let bagMask=0,drawnMask=0,saved=0;
-  for(const piece of pieces){const bit=PIECE_BIT[piece];if(bit)bagMask|=bit}
-  const start=drawCount===0?0:Math.max(0,queue.length-drawCount);
-  for(let i=start;i<queue.length;i++){const bit=PIECE_BIT[queue[i]];if(bit)drawnMask|=bit}
-  saved|=bagMask&~drawnMask;
-
-  const queueCounts=new Uint8Array(7);
-  for(const piece of queue){const oi=ORDER.indexOf(piece);if(oi>=0)queueCounts[oi]++}
-  for(let oi=0;oi<7;oi++){
-    const piece=ORDER[oi],si=SOLUTION_INDEX[piece];
-    const used=si===undefined?0:popcount(solution.masks[si])/4;
-    if(queueCounts[oi]>used)saved|=1<<oi;
-  }
-  return saved&0x7f;
+  return savedMaskPrepared(prepareSaveCase(queue,analysis),prepareSolutionPieceCounts(solution));
 }
 
 export function savedString(queue,solution,analysis){return saveMaskToString(savedMask(queue,solution,analysis))}

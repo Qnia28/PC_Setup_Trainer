@@ -72,3 +72,101 @@ test('Rust/WASM exact minimum-cover matches JavaScript fallback including human-
     }
   }finally{solver.close()}
 });
+
+test('Rust/WASM fixed-count locked-prefix search matches full exact result',async()=>{
+  const solver=await createWasmSolver(4);
+  try{
+    const c=coverage([
+      ['A',['X','Y','Q']],
+      ['B',['X','Z']],
+      ['C',['Y','W']],
+      ['D',['Z','W','Q']],
+    ]);
+    const q=new Map([
+      ['A|X',5],['A|Y',3],['A|Q',4],
+      ['B|X',2],['B|Z',6],
+      ['C|Y',6],['C|W',2],
+      ['D|Z',3],['D|W',5],['D|Q',4],
+    ]);
+    const qualityFor=(key,caseId)=>q.get(`${caseId}|${key}`)??0;
+    const full=solver.minimumCover(c,{qualityFor});
+    const fixed=solver.minimumCoverAtCount(c,full.count,{qualityFor,seedKeys:full.keys});
+    assert.deepEqual(fixed.keys,full.keys);
+    assert.deepEqual(fixed.qualityVector,full.qualityVector);
+    const levels=[...new Set([...q.values()])].sort((a,b)=>a-b).slice(1);
+    const first=levels[0];
+    const lockedCount=[...c.keys()].filter(caseId=>full.keys.some(key=>(q.get(`${caseId}|${key}`)??0)>=first)).length;
+    const locked=solver.minimumCoverAtCount(c,full.count,{qualityFor,seedKeys:full.keys,lockedPrefix:[lockedCount]});
+    assert.deepEqual(locked.keys,full.keys);
+    assert.deepEqual(locked.qualityVector,full.qualityVector);
+  }finally{solver.close()}
+});
+
+test('Rust/WASM fully locked quality prefix still resolves stable key tie',async()=>{
+  const solver=await createWasmSolver(4);
+  try{
+    const c=coverage([
+      ['C1',['A','B']],
+      ['C2',['B','C']],
+      ['C3',['C','D']],
+    ]);
+    const q=new Map([
+      ['C1|A',1],['C1|B',1],
+      ['C2|B',1],['C2|C',1],
+      ['C3|C',2],['C3|D',2],
+    ]);
+    const qualityFor=(key,caseId)=>q.get(`${caseId}|${key}`)??0;
+    const full=solver.minimumCover(c,{qualityFor});
+    assert.deepEqual(full.keys,['A','C']);
+    const locked=solver.minimumCoverAtCount(c,2,{qualityFor,seedKeys:['B','C'],lockedPrefix:[1]});
+    assert.deepEqual(locked.keys,['A','C']);
+    assert.deepEqual(locked.qualityVector,full.qualityVector);
+  }finally{solver.close()}
+});
+
+test('Rust/WASM cardinality-only minimum cover matches full exact K',async()=>{
+  const solver=await createWasmSolver(4);
+  try{
+    const coverage=new Map([
+      ['A',new Set(['X','Y'])],
+      ['B',new Set(['X','Z'])],
+      ['C',new Set(['Y','Z'])],
+      ['D',new Set(['W','Z'])],
+    ]);
+    const full=solver.minimumCover(coverage,{qualityFor:()=>1});
+    const cardinality=solver.minimumCoverCardinality(coverage);
+    assert.equal(cardinality.count,full.count);
+    assert.equal(cardinality.keys.length,full.count);
+    for(const solutions of coverage.values()) assert.ok(cardinality.keys.some((key)=>solutions.has(key)));
+    assert.deepEqual(cardinality.qualityVector,[]);
+  }finally{solver.close()}
+});
+
+
+test('Rust/WASM integrated fixed-K matches legacy exact and reports budget exhaustion',async()=>{
+  const solver=await createWasmSolver(4);
+  try{
+    const c=coverage([
+      ['A',['X','Y','Q']],
+      ['B',['X','Z']],
+      ['C',['Y','W']],
+      ['D',['Z','W','Q']],
+    ]);
+    const q=new Map([
+      ['A|X',5],['A|Y',3],['A|Q',4],
+      ['B|X',2],['B|Z',6],
+      ['C|Y',6],['C|W',2],
+      ['D|Z',3],['D|W',5],['D|Q',4],
+    ]);
+    const qualityFor=(key,caseId)=>q.get(`${caseId}|${key}`)??0;
+    const legacy=solver.minimumCover(c,{qualityFor});
+    const integrated=solver.minimumCoverAtCount(c,legacy.count,{qualityFor,seedKeys:legacy.keys,integrated:true});
+    assert.equal(integrated.completed,true);
+    assert.deepEqual(integrated.keys,legacy.keys);
+    assert.deepEqual(integrated.qualityVector,legacy.qualityVector);
+    const bounded=solver.minimumCoverAtCount(c,legacy.count,{qualityFor,seedKeys:legacy.keys,integrated:true,stateBudget:1});
+    assert.equal(bounded.completed,false);
+    assert.equal(bounded.count,legacy.count);
+    assert.equal(bounded.keys.length,legacy.count);
+  }finally{solver.close();}
+});

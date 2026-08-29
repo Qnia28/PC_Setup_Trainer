@@ -20,6 +20,18 @@ export const THIRD_PARTY_LICENCES: readonly ThirdPartyLicence[] = [
     copyright: "Qnia (@Qnia28)",
   },
   {
+    name: "highs-js",
+    sourceUrl: "https://github.com/lovasoa/highs-js",
+    licence: "MIT License",
+    copyright: "Copyright (c) 2023 highs-js",
+  },
+  {
+    name: "HiGHS",
+    sourceUrl: "https://github.com/ERGO-Code/HiGHS",
+    licence: "MIT License",
+    copyright: "Copyright (c) 2026 HiGHS",
+  },
+  {
     name: "React, React DOM, and Scheduler",
     sourceUrl: "https://github.com/facebook/react",
     licence: "MIT License",

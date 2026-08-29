@@ -23,7 +23,7 @@ test('5th per-save minimals keep exact minimal counts and comments',async()=>{
       counts[p]=calc.results[p].solutions.length;
     }
     assert.deepEqual(counts,COUNTS);
-    const r=calculateFifthFeature({sourceFumen:B,pattern:P,title:'Regression 5th',solver:s});
+    const r=await calculateFifthFeature({sourceFumen:B,pattern:P,title:'Regression 5th',solver:s});
     const pages=decoder.decode(r.fumen);
     assert.equal(pages.length,9);
     assert.deepEqual(pages.map(p=>p.comment),['Regression 5th','☆ See S','☆ See Z','☆ See O','☆ See L','☆ See L','☆ See J','☆ See I','☆ See T']);
@@ -33,7 +33,7 @@ test('5th per-save minimals keep exact minimal counts and comments',async()=>{
 test('5th comments star only guaranteed See groups and never include percentages',async()=>{
   const f='v115@DhzhGeQ4hlEeBtR4glFeBtQ4glJeAgH',p='T,[^TIL]!,*p2',s=await createWasmSolver(4);
   try{
-    const r=calculateFifthFeature({sourceFumen:f,pattern:p,title:'ALT JAWS',solver:s});
+    const r=await calculateFifthFeature({sourceFumen:f,pattern:p,title:'ALT JAWS',solver:s});
     const comments=decoder.decode(r.fumen).map(x=>x.comment);
     assert.equal(comments[0],'ALT JAWS');
     assert.ok(comments.includes('☆ See O'));
@@ -81,7 +81,7 @@ test('5th semicolon union uses each branch last bag and exact per-piece See deno
       assert.ok(u.usages[p].success<=u.usages[p].seen,`success must not exceed seen for ${p}`);
       assert.equal(u.usages[p].availability,u.usages[p].seen?u.usages[p].success/u.usages[p].seen:0);
     }
-    const r=calculateFifthFeature({sourceFumen:B,pattern:U,title:'Union 5th',solver:s});
+    const r=await calculateFifthFeature({sourceFumen:B,pattern:U,title:'Union 5th',solver:s});
     const comments=decoder.decode(r.fumen).map(x=>x.comment);
     assert.equal(comments[0],'Union 5th');
     assert.ok(comments.every(x=>!x.includes('%')));

@@ -1,7 +1,8 @@
 import {
   retainedSolverMemoryBytes,
   runWorkerRequest,
-  shouldRecycleSolverWorker,
+  shouldRecycleSolverWorkerAfterError,
+  shouldRecycleSolverWorkerAfterResult,
 } from "./worker-runtime.mjs";
 
 self.onmessage = async (event) => {
@@ -12,14 +13,14 @@ self.onmessage = async (event) => {
       id: request.id,
       ok: true,
       value,
-      recycle: shouldRecycleSolverWorker(),
+      recycle: shouldRecycleSolverWorkerAfterResult(value),
       memoryBytes: retainedSolverMemoryBytes(),
     });
   } catch (error) {
     self.postMessage({
       id: request.id,
       ok: false,
-      recycle: shouldRecycleSolverWorker(),
+      recycle: shouldRecycleSolverWorkerAfterError(request.kind),
       memoryBytes: retainedSolverMemoryBytes(),
       error: {
         name: error?.name ?? "Error",

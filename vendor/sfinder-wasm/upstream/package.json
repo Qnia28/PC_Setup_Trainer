@@ -8,7 +8,8 @@
     "test:rust": "bash scripts/test-rust.sh",
     "generate:legal": "bash scripts/generate-legal.sh",
     "test:all": "npm run test:rust && npm test",
-    "test:batch": "node --test --test-concurrency=1 tests/batch-*.test.mjs"
+    "test:batch": "node --test --test-concurrency=1 tests/batch-*.test.mjs",
+    "bench:hard-minimals": "node scripts/benchmark-hard-minimals.mjs"
   },
   "dependencies": {
     "tetris-fumen": "1.1.3"

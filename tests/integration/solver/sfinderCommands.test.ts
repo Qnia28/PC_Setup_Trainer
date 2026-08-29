@@ -20,10 +20,29 @@ describe("public SFinder command runtimes", () => {
 
     const minimals = await runWorkerRequest({
       kind: "minimals",
-      input: { sourceFumen: EMPTY_TWO_LINES, pattern: "OOOO,[O]!", wantedSave: "", clear: 2, targetLines: 2 },
-    }) as { minimalCount: number; fumen: string };
+      input: {
+        sourceFumen: EMPTY_TWO_LINES,
+        pattern: "OOOO,[O]!",
+        wantedSave: "",
+        clear: 2,
+        targetLines: 2,
+        useHiGHS: false,
+        exactHumanQuality: "Fast",
+      },
+    }) as {
+      minimalCount: number;
+      fumen: string;
+      cardinalityBackend: string;
+      humanQualityExact: boolean;
+      useHiGHSRequested: boolean | "auto";
+      useHiGHSResolved: boolean;
+    };
     expect(minimals.minimalCount).toBe(1);
     expect(decoder.decode(minimals.fumen)).toHaveLength(1);
+    expect(minimals.cardinalityBackend).toEqual(expect.any(String));
+    expect(minimals.humanQualityExact).toBe(true);
+    expect(minimals.useHiGHSRequested).toBe(false);
+    expect(minimals.useHiGHSResolved).toBe(false);
   });
 
   it("runs cover, congruent, and congruent cover through the browser batch runtime", async () => {

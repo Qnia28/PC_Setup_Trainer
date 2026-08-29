@@ -3,12 +3,13 @@ import { boardFromFumenPage } from "./board.mjs";
 import { encodePages } from "./fumen.mjs";
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
+import { minimumCoverAsync } from "./highs-min-cover.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
 import { expandPatternCases } from "./pattern.mjs";
 import { enumerateCasePath } from "./path-engine.mjs";
-import { compileSaveExpression, savedMask } from "./saves.mjs";
+import { compileSaveExpression, prepareSaveCase, prepareSolutionPieceCounts, savedMaskPrepared } from "./saves.mjs";
 
-export function calculateSaveMinimals({
+function collectSaveMinimals({
   sourceFumen,
   analysisPattern,
   wantedSave,
@@ -22,9 +23,11 @@ export function calculateSaveMinimals({
   const coverage = new Map();
   const qualityIndex = new Map();
   const table = compileSaveExpression(wantedSave);
-
   const byKey = new Map();
+  const saveCases = cases.map((entry) => prepareSaveCase(entry.queue, entry.lastBag));
+  const usageByKey = new Map();
   const path = enumerateCasePath({ board, cases, solver, useHold });
+
   if (path.mode === "pattern") {
     for (const solution of path.rows) {
       byKey.set(solution.key, solution);
@@ -34,7 +37,12 @@ export function calculateSaveMinimals({
         if (!entry.lastBag) {
           throw new Error(`save analysis branch ${entry.branchIndex + 1} does not end in a bag token`);
         }
-        if (!table[savedMask(entry.queue, solution, entry.lastBag)]) continue;
+        let usage = usageByKey.get(solution.key);
+        if (!usage) {
+          usage = prepareSolutionPieceCounts(solution);
+          usageByKey.set(solution.key, usage);
+        }
+        if (!table[savedMaskPrepared(saveCases[hit.caseIndex], usage)]) continue;
         let keys = coverage.get(entry.caseId);
         if (!keys) {
           keys = new Set();
@@ -56,7 +64,12 @@ export function calculateSaveMinimals({
       }
       for (const solution of solutions) {
         byKey.set(solution.key, solution);
-        if (!table[savedMask(entry.queue, solution, entry.lastBag)]) continue;
+        let usage = usageByKey.get(solution.key);
+        if (!usage) {
+          usage = prepareSolutionPieceCounts(solution);
+          usageByKey.set(solution.key, usage);
+        }
+        if (!table[savedMaskPrepared(saveCases[caseIndex], usage)]) continue;
         let keys = coverage.get(entry.caseId);
         if (!keys) {
           keys = new Set();
@@ -68,30 +81,65 @@ export function calculateSaveMinimals({
     }
   }
 
-  const saveSuccess = coverage.size;
-  const minimal = minimumCover(coverage, {
-    qualityFor: makeOrderCountQuality(qualityIndex),
-    solver,
-  });
+  return { board, height, cases, queues, coverage, qualityIndex, byKey };
+}
+
+function finishSaveMinimals(collected, minimal) {
   if (!Number.isFinite(minimal.count) || !minimal.keys.length) throw new Error("no minimal");
+  const { board, height, cases, queues, coverage, byKey } = collected;
   const ordered = orderMinimalKeysByCoverage(minimal.keys, coverage);
   const keys = ordered.keys;
-  const coverageCounts = ordered.coverageCounts;
-  const solutions = keys.map((key) => byKey.get(key));
   return {
     board,
     height,
     cases,
     queues,
     coverage,
-    saveSuccess,
+    saveSuccess: coverage.size,
     minimalCount: minimal.count,
     keys,
-    solutions,
-    coverageCounts,
+    solutions: keys.map((key) => byKey.get(key)),
+    coverageCounts: ordered.coverageCounts,
     humanQualityVector: minimal.qualityVector ?? [],
+    minimumCoverBackend: minimal.backend ?? "rust",
+    cardinalityBackend: minimal.cardinalityBackend ?? "rust",
+    qualityBackend: minimal.qualityBackend ?? "rust-legacy-exact",
+    useHiGHSRequested: minimal.useHiGHSRequested ?? "auto",
+    useHiGHSResolved: minimal.useHiGHSResolved ?? false,
+    minimumCoverKernelCases: minimal.minimumCoverKernelCases ?? null,
+    minimumCoverKernelSolutions: minimal.minimumCoverKernelSolutions ?? null,
+    minimumCoverKernelEntries: minimal.minimumCoverKernelEntries ?? null,
+    fastProbeBudget: minimal.fastProbeBudget ?? null,
+    fastProbeStates: minimal.fastProbeStates ?? null,
+    fastFallback: minimal.fastFallback ?? false,
+    fastDecision: minimal.fastDecision ?? null,
+    humanQualityExact: minimal.qualityExact ?? true,
   };
 }
+
+export function calculateLegacySaveMinimals(input) {
+  const collected = collectSaveMinimals(input);
+  const minimal = minimumCover(collected.coverage, {
+    qualityFor: makeOrderCountQuality(collected.qualityIndex),
+    solver: input.solver,
+  });
+  return finishSaveMinimals(collected, minimal);
+}
+
+export async function calculateSaveMinimals(input) {
+  const collected = collectSaveMinimals(input);
+  const minimal = await minimumCoverAsync(collected.coverage, {
+    qualityFor: makeOrderCountQuality(collected.qualityIndex),
+    solver: input.solver,
+    exactQuality: input.exactHumanQuality ?? "fast",
+    useHiGHS: input.useHiGHS ?? input.UseHiGHS ?? "auto",
+    fastStateBudget: input.fastStateBudget,
+  });
+  return finishSaveMinimals(collected, minimal);
+}
+
+export const calculateSaveMinimalsAsync = calculateSaveMinimals;
+export const calculateSaveMinimalsSync = calculateLegacySaveMinimals;
 
 export function encodeSaveMinimalFumen(calculation) {
   const comments = calculation.coverageCounts.map((count) =>

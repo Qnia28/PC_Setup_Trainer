@@ -33,5 +33,13 @@ export function recordOrderCount(index, caseId, solution) {
 }
 
 export function makeOrderCountQuality(index) {
-  return (key, caseId) => index.get(caseId)?.get(key) ?? 0;
+  let cachedCaseId;
+  let cachedByKey;
+  return (key, caseId) => {
+    if (caseId !== cachedCaseId) {
+      cachedCaseId = caseId;
+      cachedByKey = index.get(caseId);
+    }
+    return cachedByKey?.get(key) ?? 0;
+  };
 }

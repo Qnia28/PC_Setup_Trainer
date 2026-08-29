@@ -33,16 +33,16 @@ function coverageByCase(rows){
 test('5-line pattern batch reproduces the Java SFinder minimals oracle',async()=>{
   const solver=await createWasmSolver(5);
   try{
-    const normal=calculateMinimalsFeature({sourceFumen:F5,pattern:PATTERN,wantedSave:'',clear:5,solver,useHold:true});
+    const normal=await calculateMinimalsFeature({sourceFumen:F5,pattern:PATTERN,wantedSave:'',clear:5,solver,useHold:true});
     assert.equal(normal.total,5040);
     assert.equal(normal.saveSuccess,5004);
     assert.equal(normal.minimalCount,21);
 
-    const saveT=calculateMinimalsFeature({sourceFumen:F5,pattern:PATTERN,wantedSave:'T',clear:5,solver,useHold:true});
+    const saveT=await calculateMinimalsFeature({sourceFumen:F5,pattern:PATTERN,wantedSave:'T',clear:5,solver,useHold:true});
     assert.equal(saveT.saveSuccess,2800);
     assert.equal(saveT.minimalCount,13);
 
-    const perSave=calculatePerSaveMinimalsFeature({sourceFumen:F5,pattern:PATTERN,targetLines:5,solver,useHold:true});
+    const perSave=await calculatePerSaveMinimalsFeature({sourceFumen:F5,pattern:PATTERN,targetLines:5,solver,useHold:true});
     assert.equal(perSave.total,5040);
     assert.equal(perSave.pcSuccess,5004);
     for(const[piece,count]of Object.entries(EXPECTED_PER_SAVE)){
@@ -57,7 +57,7 @@ test('5-line pattern batch reproduces the Java SFinder minimals oracle',async()=
 test('5-line pattern batch preserves duplicate semicolon case multiplicity',async()=>{
   const solver=await createWasmSolver(5);
   try{
-    const result=calculateMinimalsFeature({sourceFumen:F5,pattern:`${PATTERN};${PATTERN}`,wantedSave:'',clear:5,solver,useHold:true});
+    const result=await calculateMinimalsFeature({sourceFumen:F5,pattern:`${PATTERN};${PATTERN}`,wantedSave:'',clear:5,solver,useHold:true});
     assert.equal(result.total,10080);
     assert.equal(result.saveSuccess,10008);
     assert.equal(result.minimalCount,21);
@@ -79,10 +79,10 @@ test('5-line pattern batch matches legacy concrete-queue enumeration on represen
 test('6-line pattern batch preserves the lifted 5-line oracle',async()=>{
   const fumen=liftWithFullRows(F5,1),solver=await createWasmSolver(6);
   try{
-    const normal=calculateMinimalsFeature({sourceFumen:fumen,pattern:PATTERN,wantedSave:'',clear:6,solver,useHold:true});
+    const normal=await calculateMinimalsFeature({sourceFumen:fumen,pattern:PATTERN,wantedSave:'',clear:6,solver,useHold:true});
     assert.equal(normal.saveSuccess,5004);
     assert.equal(normal.minimalCount,21);
-    const perSave=calculatePerSaveMinimalsFeature({sourceFumen:fumen,pattern:PATTERN,targetLines:6,solver,useHold:true});
+    const perSave=await calculatePerSaveMinimalsFeature({sourceFumen:fumen,pattern:PATTERN,targetLines:6,solver,useHold:true});
     assert.equal(perSave.pcSuccess,5004);
     for(const[piece,count]of Object.entries(EXPECTED_PER_SAVE))assert.equal(perSave.results[piece].minimalCount,count,piece);
   }finally{solver.close()}

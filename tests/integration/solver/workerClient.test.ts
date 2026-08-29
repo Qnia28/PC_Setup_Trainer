@@ -27,6 +27,12 @@ class FakeWorker {
     if (!request) throw new Error("No request to answer.");
     this.onmessage?.({ data: { id: request.id, ok: true, value, recycle } } as MessageEvent);
   }
+
+  fail(message: string, recycle = false): void {
+    const request = this.requests.at(-1);
+    if (!request) throw new Error("No request to answer.");
+    this.onmessage?.({ data: { id: request.id, ok: false, error: { name: "Error", message }, recycle } } as MessageEvent);
+  }
 }
 
 function clientHarness(): { client: SolverWorkerClient; workers: FakeWorker[] } {
@@ -86,6 +92,21 @@ describe("SolverWorkerClient lifecycle", () => {
     expect(workers).toHaveLength(2);
     workers[1]!.respond("next");
     await expect(second).resolves.toBe("next");
+    client.dispose();
+  });
+
+  it("recycles an adaptive Worker after returning an error and replaces it lazily", async () => {
+    const { client, workers } = clientHarness();
+    const firstWorker = workers[0]!;
+    const first = client.request("minimals", { pattern: "*p7" });
+    firstWorker.fail("HiGHS load failed", true);
+    await expect(first).rejects.toThrow("HiGHS load failed");
+    expect(firstWorker.terminated).toBe(true);
+
+    const second = client.request<string>("minimals", { pattern: "*p7" });
+    expect(workers).toHaveLength(2);
+    workers[1]!.respond("recovered");
+    await expect(second).resolves.toBe("recovered");
     client.dispose();
   });
 });

@@ -2929,7 +2929,7 @@ impl PcSolver {
         true
     }
 
-    // Pattern-level compatibility enumeration for 5..=6 lines. Geometry is
+    // Pattern-level compatibility enumeration for broad 4..=6-line queue sets. Geometry is
     // explored once per relevant piece multiset; concrete queues are applied
     // afterwards to the resulting piece orders. This removes the dominant
     // `N queues × enumerate_pc` repetition of the legacy compatibility path.
@@ -2940,7 +2940,7 @@ impl PcSolver {
         qlens: &[u8],
         use_hold: bool,
     ) -> Option<Vec<PatternSolutionCoverage>> {
-        if self.height <= 4 || qbits.len() != qlens.len() || qlens.iter().any(|&len| len > 21) {
+        if qbits.len() != qlens.len() || qlens.iter().any(|&len| len > 21) {
             return None;
         }
         self.trim_cache_between_requests();
@@ -3438,6 +3438,7 @@ impl PcSolver {
     // Return the save-piece set reachable from a DAG node.  Because every
     // edge advances `placed`, the graph is acyclic even when multiple paths
     // merge into the same structural state.
+    #[allow(dead_code)]
     fn reachable_save_mask(dag: &FlatDag, node: u32, memo: &mut [u8]) -> u8 {
         let cached = memo[node as usize];
         if cached != u8::MAX {
@@ -3458,6 +3459,7 @@ impl PcSolver {
     }
 
     #[inline]
+    #[allow(dead_code)]
     fn candidate_quota_full(mask: u8, limit: usize, out: &[Vec<CompactSolution>; 7]) -> bool {
         Piece::ALL
             .iter()
@@ -3468,6 +3470,7 @@ impl PcSolver {
     // distinct geometries for every reachable save piece.  This replaces the
     // older per-save repeated traversal while preserving bounded Top-K work.
     #[allow(clippy::too_many_arguments)]
+    #[allow(dead_code)]
     fn collect_save_candidates(
         height: u8,
         dag: &FlatDag,
@@ -3523,6 +3526,7 @@ impl PcSolver {
     // geometry.  This second pass only follows edges whose cells belong to the
     // candidate, so it avoids materializing unrelated PC solutions.
     #[allow(clippy::too_many_arguments)]
+    #[allow(dead_code)]
     fn collect_candidate_orders(
         height: u8,
         dag: &FlatDag,
@@ -3579,75 +3583,46 @@ impl PcSolver {
         initial: u64,
         queue: &[Piece],
         use_hold: bool,
-        candidate_limit: usize,
+        _candidate_limit: usize,
     ) -> Vec<(Piece, Solution)> {
-        let limit = candidate_limit.max(1);
-        let Some((dag, root, req, initial_cleared)) =
-            self.build_structural_dag(initial, queue, use_hold)
-        else {
-            return Vec::new();
-        };
-
-        // This fast path is intentionally defined for the per-save contract:
-        // the concrete queue contains exactly one more piece than the PC uses.
-        if queue.len() != req as usize + 1 {
-            return Vec::new();
-        }
-        let mut save_memo = vec![u8::MAX; dag.nodes.len()];
-        let reachable_mask = Self::reachable_save_mask(&dag, root, &mut save_memo);
-        if reachable_mask == 0 {
+        let compact = self.enumerate_compact(initial, queue, use_hold);
+        if compact.is_empty() {
             return Vec::new();
         }
 
-        let mut candidates: [Vec<CompactSolution>; 7] = core::array::from_fn(|_| Vec::new());
-        let mut seen: [FastSet<CompactSolution>; 7] = core::array::from_fn(|_| FastSet::default());
-        Self::collect_save_candidates(
-            self.height,
-            &dag,
-            root,
-            initial_cleared,
-            CompactSolution::default(),
-            reachable_mask,
-            limit,
-            &mut seen,
-            &mut candidates,
-        );
+        // Exact per-save ranking: maximize playable-order count for each saved
+        // piece, then apply the same stable solution-key tie as full enumeration.
+        // candidate_limit remains in the ABI for compatibility but no longer
+        // bounds or approximates production results.
+        let mut best: [Option<(CompactSolution, u32)>; 7] = [None; 7];
+        for (solution, orders) in compact {
+            let candidate = Solution {
+                masks: solution.masks(self.height),
+                order_count: orders.len().min(u32::MAX as usize) as u32,
+            };
+            let saved = Self::saved_piece_for_solution(queue, &candidate);
+            if saved >= 7 {
+                continue;
+            }
+            let slot = &mut best[saved as usize];
+            let replace = match *slot {
+                None => true,
+                Some((_current, current_count)) if candidate.order_count != current_count => {
+                    candidate.order_count > current_count
+                }
+                Some((current, _)) => {
+                    let current_masks = current.masks(self.height);
+                    Self::solution_key_cmp(&candidate.masks, &current_masks).is_lt()
+                }
+            };
+            if replace {
+                *slot = Some((solution, candidate.order_count));
+            }
+        }
 
         let mut out = Vec::new();
         for saved_piece in Piece::ALL {
-            let candidate_list = &candidates[saved_piece as usize];
-            if candidate_list.is_empty() {
-                continue;
-            }
-            let mut best: Option<(CompactSolution, u32)> = None;
-            for &candidate in candidate_list {
-                let target_masks = candidate.masks(self.height);
-                let mut orders = FastSet::default();
-                Self::collect_candidate_orders(
-                    self.height,
-                    &dag,
-                    root,
-                    0,
-                    initial_cleared,
-                    CompactSolution::default(),
-                    candidate,
-                    &target_masks,
-                    0,
-                    &mut orders,
-                );
-                let order_count = orders.len().min(u32::MAX as usize) as u32;
-                let replace = match best {
-                    None => true,
-                    Some((current, current_count)) => {
-                        order_count > current_count
-                            || (order_count == current_count && candidate < current)
-                    }
-                };
-                if replace {
-                    best = Some((candidate, order_count));
-                }
-            }
-            if let Some((solution, order_count)) = best {
+            if let Some((solution, order_count)) = best[saved_piece as usize] {
                 out.push((
                     saved_piece,
                     Solution {
@@ -3925,6 +3900,48 @@ mod tests {
         assert_eq!(best.len(), 1);
         assert_eq!(best[0].0, Piece::O);
         assert!(best[0].1.order_count >= 1);
+    }
+
+    #[test]
+    fn per_save_best_is_exact_beyond_legacy_candidate_limit() {
+        let board = 0x3c0f03c0fu64;
+        let queue = [
+            Piece::O,
+            Piece::Z,
+            Piece::I,
+            Piece::L,
+            Piece::J,
+            Piece::S,
+            Piece::T,
+        ];
+        let mut solver = PcSolver::new(4);
+        let all = solver.enumerate_pc(board, &queue, true);
+        let mut expected: [Option<Solution>; 7] = [None; 7];
+        for candidate in all {
+            let saved = PcSolver::saved_piece_for_solution(&queue, &candidate);
+            if saved >= 7 {
+                continue;
+            }
+            let slot = &mut expected[saved as usize];
+            let replace = match slot {
+                None => true,
+                Some(current) if candidate.order_count != current.order_count => {
+                    candidate.order_count > current.order_count
+                }
+                Some(current) => {
+                    PcSolver::solution_key_cmp(&candidate.masks, &current.masks).is_lt()
+                }
+            };
+            if replace {
+                *slot = Some(candidate);
+            }
+        }
+        let direct = solver.per_save_best(board, &queue, true, 16);
+        for (piece, actual) in direct {
+            let expected = expected[piece as usize].expect("expected save result");
+            assert_eq!(actual.order_count, expected.order_count);
+            assert_eq!(actual.masks, expected.masks);
+        }
     }
 
     #[test]

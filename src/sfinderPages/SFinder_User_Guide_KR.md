@@ -38,6 +38,18 @@ A;B            두 브랜치를 모두 분석
 `Use hold`를 켜면 일반적인 Hold 사용을 포함하여 계산합니다.
 의도적으로 Hold를 사용하지 않는 경우가 아니라면 켜 두는 것을 권장합니다.
 
+### Advanced 옵션
+Minimals와 Per-save minimals에는 다음 두 가지 추가 설정이 있습니다.
+이 항목들은 고급 설정입니다. `Advanced`를 열면 HiGHS와 Quality 설정이 표시되며, 패널을 닫아도 아래에 설명한 기본값은 그대로 적용됩니다. 두 백엔드와 품질 모드의 차이를 자세히 모르는 경우에는 기본값을 변경하지 않는 것을 권장합니다.
+
+- `HiGHS: Auto`는 축소된 행렬을 기준으로 exact-cardinality 백엔드를 자동 선택합니다. HiGHS가 유리한 어려운 행렬에서만 불러옵니다.
+- `HiGHS: On`은 축소 후 외부 exact-cardinality 증명이 필요한 경우 HiGHS를 사용하도록 허용합니다.
+- `HiGHS: Off`도 Release 2.2의 새로운 생산 알고리즘을 그대로 사용하며, 최소 개수는 Rust/WASM 백엔드로 정확히 증명합니다. 구형 legacy Minimals로 전환하는 옵션이 아닙니다.
+- `Quality: Fast`도 최소 해법 개수는 항상 정확합니다. 다만 같은 최소 개수의 집합 중 하나를 고르는 2차 품질 최적화에서 결정적인 고속 fallback을 사용할 수 있습니다.
+- `Quality: Exact`는 최소 해법 개수뿐 아니라 2차 human-quality 선택까지 정확히 계산합니다. 어려운 행렬에서는 시간이 훨씬 오래 걸릴 수 있습니다.
+
+HiGHS는 실제로 필요한 계산에서만 지연 다운로드됩니다. HiGHS를 사용한 계산이 끝나면 QniaPC는 다음 요청 전에 해당 솔버 Worker를 해제합니다.
+
 ---
 
 # PC Solver
@@ -114,6 +126,8 @@ Chance는 **PC 가능 여부**만 필요할 때 가장 적합합니다. 대표 �
 - 선택 사항: `Saves`
 - 선택 사항: Result title
 - Use hold
+- HiGHS: Auto / On / Off
+- Quality: Fast / Exact
 
 모든 PC 해법을 대상으로 Minimals를 찾으려면 `Saves`를 비워 두십시오.
 
@@ -144,6 +158,8 @@ Save 조건을 사용하려면 마지막 bag의 미노를 식별할 수 있도�
 Minimals는 단순히 개별 커버 수가 가장 높은 해법을 고르는 기능이 아닙니다.
 먼저 **성공한 모든 케이스를 커버하는 해법 집합의 크기를 전역적으로 최소화**한 뒤, 선택된 해법을 보기 쉽게 커버 수가 높은 순서로 정렬합니다.
 
+두 Quality 모드 모두 선택되는 해법 개수는 정확합니다. `Fast`와 `Exact`의 차이는 같은 최소 개수의 집합 중 어느 것을 선택할지에 대한 2차 품질 최적화뿐입니다. Minimals의 기본값은 `Quality: Fast`입니다.
+
 Saves와 마찬가지로 Save 조건을 적용할 때는 마지막 bag 정보를 제공하는 패턴을 사용하십시오.
 
 ---
@@ -159,6 +175,8 @@ Saves와 마찬가지로 Save 조건을 적용할 때는 마지막 bag 정보를
 - Lines
 - 선택 사항: Result title
 - Use hold
+- HiGHS: Auto / On / Off
+- Quality: Fast / Exact
 
 현재 필드에서 PC에 `P`개의 미노가 필요하다면 모든 입력 큐는 정확히 **P+1개**여야 합니다.
 
@@ -180,6 +198,8 @@ Saves와 마찬가지로 Save 조건을 적용할 때는 마지막 bag 정보를
 
 ### 패턴 입력
 큐 패턴 행렬을 입력하면, 각 Save 미노별로 **정확한 minimal cover 집합**을 계산합니다.
+
+Per-save minimals의 기본값은 `Quality: Exact`입니다. 작은 행렬에서는 생산 엔진 내부의 exact shortcut을 사용할 수 있으며, 이는 의도된 동작이고 공개 legacy Minimals 경로로 전환되는 것이 아닙니다.
 
 ### 결과
 Save T / I / L / J / O / S / Z별로 다음 항목을 표시합니다.

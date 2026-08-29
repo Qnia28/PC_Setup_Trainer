@@ -4,14 +4,34 @@ import { createEmptyCommandField } from "./commandCanvas";
 import {
   commandDisplayRows,
   commandTargetOptions,
+  defaultHumanQualityMode,
   defaultTargetLines,
   formatCalculationDuration,
   formatRatioPercentage,
   groupPerSavePages,
+  minimumCoverWorkerOptions,
   normalizeCommandSource,
 } from "./commandModel";
 
 describe("sfinder command line groups", () => {
+  it("maps adaptive minimum-cover controls without exposing the legacy path", () => {
+    expect(defaultHumanQualityMode("minimals")).toBe("Fast");
+    expect(defaultHumanQualityMode("per_save_minimals")).toBe("True");
+    expect(minimumCoverWorkerOptions("minimals", "auto", "Fast")).toEqual({
+      useHiGHS: "auto",
+      exactHumanQuality: "Fast",
+    });
+    expect(minimumCoverWorkerOptions("minimals", "off", "True")).toEqual({
+      useHiGHS: false,
+      exactHumanQuality: "True",
+    });
+    expect(minimumCoverWorkerOptions("per_save_minimals", "on", "True")).toEqual({
+      useHiGHS: true,
+      exactHumanQuality: "True",
+    });
+    expect(minimumCoverWorkerOptions("chance", "on", "True")).toEqual({});
+  });
+
   it("keeps fixed 4-row and 6-row boards with 4L and 5L defaults", () => {
     expect(commandDisplayRows("2-4")).toBe(4);
     expect(commandTargetOptions("2-4")).toEqual([2, 3, 4]);

@@ -40,16 +40,41 @@ This project depends on `tetris-fumen` for Fumen encoding and decoding.
 - License: MIT
 - License text: `third_party/tetris-fumen.LICENSE`
 
+
+### highs-js / HiGHS
+
+Hard global `minimals` requests can lazy-load the browser build of HiGHS through
+`highs-js` to prove the primary minimum-cardinality set-cover objective. The
+shipped runtime assets are `src/vendor/highs.mjs` and `wasm/highs.wasm`. Smaller
+minimum-cover problems continue to use the native Rust/WASM solver.
+
+- highs-js project: https://github.com/lovasoa/highs-js
+- highs-js version: 1.15.1
+- highs-js license: MIT
+- highs-js license text: `third_party/highs-js.LICENSE`
+- HiGHS project: https://github.com/ERGO-Code/HiGHS
+- HiGHS version: 1.15.1
+- HiGHS license: MIT
+- HiGHS license text: `third_party/HiGHS.LICENSE`
+
+The hard-matrix integration uses HiGHS only for the exact primary cardinality
+proof. Human-quality selection is performed by sfinder-wasm code after the
+cardinality optimum is known. The release also carries the upstream HiGHS
+1.15.1 source archive at `third_party/source/HiGHS-1.15.1.zip` for provenance
+and source-availability convenience.
+
 ## Acknowledgements and references
 
 ### eight04/sfinder-strict-minimal
 
 Earlier development versions used `eight04/sfinder-strict-minimal` as a direct
 reference for graph reduction/minimal-set behavior. The current release no
-longer contains that adaptation: `src/minimal.mjs` was removed and minimum
-cover is implemented independently in `rust/pc-core/src/min_cover.rs` using
-bitsets, MRV branching, bounds, and deterministic human-quality tie-breaking.
-`src/min-cover.mjs` is an independent JavaScript fallback with the same objective.
+longer contains that adaptation: `src/minimal.mjs` was removed. Small and
+medium minimum-cover problems are implemented independently in
+`rust/pc-core/src/min_cover.rs` using bitsets, MRV branching, bounds, and
+deterministic human-quality tie-breaking. `src/min-cover.mjs` is an independent
+JavaScript fallback. Hard global `minimals` may use the separately licensed
+HiGHS backend for the exact primary-cardinality proof.
 
 - Project: https://github.com/eight04/sfinder-strict-minimal
 - Upstream license: MIT

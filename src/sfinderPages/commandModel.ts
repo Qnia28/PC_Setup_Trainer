@@ -7,12 +7,34 @@ import {
 
 export type CommandTargetLines = 2 | 3 | 4 | 5 | 6;
 export type CommandLineGroup = "2-4" | "5-6";
+export type HiGHSMode = "auto" | "on" | "off";
+export type HumanQualityMode = "Fast" | "True";
 export const PER_SAVE_RESULT_ORDER = "TILJOSZ";
 
 export interface PerSavePageGroup {
   piece: string;
   label: string;
   pages: Page[];
+}
+
+export function isAdaptiveMinimalsCommand(commandId: string): boolean {
+  return commandId === "minimals" || commandId === "per_save_minimals";
+}
+
+export function defaultHumanQualityMode(commandId: string): HumanQualityMode {
+  return commandId === "per_save_minimals" ? "True" : "Fast";
+}
+
+export function minimumCoverWorkerOptions(
+  commandId: string,
+  useHiGHSMode: HiGHSMode,
+  exactHumanQuality: HumanQualityMode,
+): { useHiGHS?: boolean | "auto"; exactHumanQuality?: HumanQualityMode } {
+  if (!isAdaptiveMinimalsCommand(commandId)) return {};
+  return {
+    useHiGHS: useHiGHSMode === "auto" ? "auto" : useHiGHSMode === "on",
+    exactHumanQuality,
+  };
 }
 
 export function commandDisplayRows(group: CommandLineGroup): 4 | 6 {

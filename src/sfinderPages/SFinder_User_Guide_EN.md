@@ -38,6 +38,18 @@ Branches separated by a semicolon (`;`) are kept as separate analysis cases.
 When `Use hold` is enabled, the calculation includes normal Hold usage.
 Keeping it enabled is recommended unless you intentionally want a no-Hold calculation.
 
+### Advanced options
+Minimals and Per-save minimals provide two additional controls.
+These are advanced settings. Open `Advanced` to show the HiGHS and Quality controls; they remain at their documented defaults while the panel is closed. If you are not familiar with how the two backends and quality modes differ, keeping the defaults is recommended.
+
+- `HiGHS: Auto` selects the exact-cardinality backend from the reduced matrix. It loads HiGHS only for a hard matrix that benefits from it.
+- `HiGHS: On` allows HiGHS whenever the reduced matrix still needs an external exact-cardinality proof.
+- `HiGHS: Off` keeps the new Release 2.2 production algorithm but proves minimum cardinality with the Rust/WASM backend. It does **not** select the old legacy Minimals implementation.
+- `Quality: Fast` always keeps the minimum number of solutions exact, but may use a deterministic faster fallback when choosing among equally small sets.
+- `Quality: Exact` keeps both the minimum number of solutions and the secondary human-quality choice exact. Difficult matrices can take much longer.
+
+HiGHS is downloaded lazily only when a calculation actually uses it. After such a calculation, QniaPC releases that solver Worker before the next request.
+
 ---
 
 # PC Solver
@@ -114,6 +126,8 @@ Chance is the best choice when you only need **whether a PC is possible**. If yo
 - Optional: `Saves`
 - Optional: Result title
 - Use hold
+- HiGHS: Auto / On / Off
+- Quality: Fast / Exact
 
 Leave `Saves` empty to find minimals across all PC solutions.
 
@@ -144,6 +158,8 @@ For example, if three selected solutions cover 300, 200, and 120 queues respecti
 Minimals is not simply "pick the solutions with the highest individual coverage."
 It first finds a **globally smallest solution set that covers all successful cases**, then sorts the selected solutions by coverage for easier viewing.
 
+The number of selected solutions is exact in both Quality modes. `Fast` and `Exact` only change how QniaPC chooses between sets that have that same minimum size. Minimals defaults to `Quality: Fast`.
+
 As with Saves, use a pattern that provides final-bag information when applying a save condition.
 
 ---
@@ -159,6 +175,8 @@ As with Saves, use a pattern that provides final-bag information when applying a
 - Lines
 - Optional: Result title
 - Use hold
+- HiGHS: Auto / On / Off
+- Quality: Fast / Exact
 
 If the current field needs `P` pieces to complete the PC, every input queue must contain exactly **P+1 pieces**.
 
@@ -180,6 +198,8 @@ For one concrete queue, the tool quickly selects a preferred playable solution f
 
 ### Pattern input
 For a queue-pattern matrix, the tool computes an **exact minimal covering set for each saved piece**.
+
+Per-save minimals defaults to `Quality: Exact`. Small matrices may use the production engine's internal exact shortcut; this is intentional and does not switch the command to the public legacy Minimals path.
 
 ### Results
 For Save T / I / L / J / O / S / Z, the page shows:

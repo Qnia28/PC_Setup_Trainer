@@ -1,7 +1,7 @@
 import {decoder} from 'tetris-fumen';
 import {boardFromFumenPage,popcount} from './board.mjs';
 import {expandPatternCases} from './pattern.mjs';
-import {calculatePerSaveMinimalsFromBoard} from './per-save-minimals-core.mjs';
+import {calculatePerSaveMinimalsFromBoard,calculatePerSaveMinimalsFromBoardAsync} from './per-save-minimals-core.mjs';
 import {combineWithIntro,solutionPage} from './fumen.mjs';
 
 export class PerSaveMinimalsInputError extends Error{
@@ -74,4 +74,33 @@ export function encodePerSaveMinimals({sourceFumen,title='',calculation}){
     }
   }
   return{fumen:combineWithIntro(sourceFumen,title,pages),pageCounts};
+}
+
+export async function calculatePerSaveMinimalsAsync({
+  sourceFumen,pattern,solver,useHold=true,targetLines,clear,candidateLimit=16,
+  exactHumanQuality="true",useHiGHS="auto",UseHiGHS=undefined,fastStateBudget=undefined,
+  tinyExactMaxCandidates=48,includeCoverage=true,
+}){
+  const resolvedTargetLines=resolvePerSaveTargetLines({targetLines,clear});
+  const geometry=perSaveInputGeometry({sourceFumen,targetLines:resolvedTargetLines});
+  const queues=expandPatternCases(pattern);
+  if(queues.length===0)throw new PerSaveMinimalsInputError('pattern expands to no queues');
+  const badQueue=queues.find(entry=>entry.queue.length!==geometry.expectedQueueLength);
+  if(badQueue){
+    throw new PerSaveMinimalsInputError(
+      `queue length is incompatible with this board: expected see${geometry.expectedQueueLength} `+
+      `(${geometry.piecesNeeded} pieces needed + 1 save), got ${badQueue.queue.length}`,
+    );
+  }
+  return{
+    ...await calculatePerSaveMinimalsFromBoardAsync({
+      board:geometry.board,queues,solver,useHold,candidateLimit,
+      exactHumanQuality,useHiGHS:UseHiGHS??useHiGHS,fastStateBudget,tinyExactMaxCandidates,includeCoverage,
+    }),
+    targetLines:geometry.targetLines,
+    occupiedCells:geometry.occupiedCells,
+    remainingCells:geometry.remainingCells,
+    piecesNeeded:geometry.piecesNeeded,
+    expectedQueueLength:geometry.expectedQueueLength,
+  };
 }

@@ -1,6 +1,7 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { setupTestVitePlugin } from "./vite/setupTestVitePlugin";
+import { sfinderHighsEsmPlugin } from "./vite/sfinderHighsEsmPlugin";
 
 function sfinderRoutePlugin() {
   const installRewrite = (server: { middlewares: { use: (handler: (request: { url?: string }, response: unknown, next: () => void) => void) => void } }) => {
@@ -18,7 +19,7 @@ function sfinderRoutePlugin() {
 }
 
 export default defineConfig({
-  plugins: [sfinderRoutePlugin(), setupTestVitePlugin(), react()],
+  plugins: [sfinderHighsEsmPlugin(), sfinderRoutePlugin(), setupTestVitePlugin(), react()],
   // Limit dependency discovery to the declared HTML entry points.
   optimizeDeps: {
     entries: ["index.html", "replay.html", "licence.html", "solver.html", "sfinder.html", "setup_test.html"],

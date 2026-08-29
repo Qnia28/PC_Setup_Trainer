@@ -2,7 +2,7 @@ import test from'node:test';
 import assert from'node:assert/strict';
 import{createWasmSolver}from'../src/wasm-backend.mjs';
 import{calculateChance,calculateSaves}from'../src/features.mjs';
-import{calculateSaveMinimals}from'../src/minimals-feature.mjs';
+import{calculateLegacySaveMinimals}from'../src/minimals-feature.mjs';
 
 const FUMEN='v115@9gglIeglHewwhlzhBexwzhEewwJeAgH';
 
@@ -47,7 +47,7 @@ test('calculateSaves counts union branch cases separately and uses each last bag
 test('exact minimum-cover coverage preserves duplicate cases from separate branches',()=>{
   const sol=solutionUsing('TIJ');
   const fake={enumeratePc(){return[sol]}};
-  const r=calculateSaveMinimals({sourceFumen:'v115@vhAAgH',analysisPattern:'TI,[J];TI,[J]',wantedSave:'',solver:fake});
+  const r=calculateLegacySaveMinimals({sourceFumen:'v115@vhAAgH',analysisPattern:'TI,[J];TI,[J]',wantedSave:'',solver:fake});
   assert.equal(r.queues.length,2);
   assert.equal(r.coverage.size,2);
   assert.equal(r.saveSuccess,2);

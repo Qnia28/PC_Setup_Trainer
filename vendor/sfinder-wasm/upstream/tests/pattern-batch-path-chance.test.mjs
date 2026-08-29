@@ -74,3 +74,19 @@ test('5-line pattern chance preserves duplicate semicolon multiplicity',async()=
   assert.deepEqual([r.success,r.total,r.failed],[10008,10080,72]);
  }finally{solver.close()}
 });
+
+
+test('4-line broad pattern enumeration matches scalar queues on representative cases',async()=>{
+ const fumen='v115@Ehi0GeR4g0FeR4RpDezhRpJeAgH',queues=expandPattern('*!');
+ const board=boardFromFumenPage(decoder.decode(fumen)[0],4),solver=await createWasmSolver(4);
+ try{
+  const rows=solver.enumeratePcPattern(board,queues,true);
+  assert.ok(Array.isArray(rows));
+  const byCase=new Map();
+  for(const row of rows)for(const hit of row.coverage){let map=byCase.get(hit.caseIndex);if(!map){map=new Map();byCase.set(hit.caseIndex,map)}map.set(row.key,hit.orderCount)}
+  for(const index of [0,1,2,17,111,503,999,2026,4000,5039]){
+   const expected=new Map(solver.enumeratePc(board,queues[index],true).map(x=>[x.key,x.orderCount]));
+   assert.deepEqual([...byCase.get(index)?.entries()??[]].sort(),[...expected.entries()].sort(),`${index}:${queues[index]}`);
+  }
+ }finally{solver.close()}
+});
