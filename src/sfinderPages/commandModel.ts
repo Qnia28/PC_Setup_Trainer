@@ -107,7 +107,11 @@ export function fieldFromFumen(value: string, displayRows: 4 | 6): CommandField 
   return Array.from({ length: COMMAND_FIELD_MAX_HEIGHT }, (_, y) =>
     Array.from(
       { length: COMMAND_FIELD_WIDTH },
-      (_, x) => y < displayRows && displayField.at(x, y) !== "_",
+      (_, x) => {
+        if (y >= displayRows) return null;
+        const cell = displayField.at(x, y);
+        return cell === "_" ? null : cell;
+      },
     ));
 }
 
@@ -141,7 +145,8 @@ function fieldPage(field: CommandField, targetLines: CommandTargetLines) {
   const fumenField = Field.create();
   for (let y = 0; y < targetLines; y += 1) {
     for (let x = 0; x < COMMAND_FIELD_WIDTH; x += 1) {
-      if (field[y]?.[x]) fumenField.set(x, y, "X");
+      const cell = field[y]?.[x];
+      if (cell) fumenField.set(x, y, cell);
     }
   }
   return { field: fumenField, flags: { colorize: true } };

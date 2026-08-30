@@ -4,7 +4,7 @@ import { SiteHeader } from "../site/SiteHeader";
 import { createBatchWorkerClient } from "../solver/batchWorkerClient";
 import { SolverWorkerClient, viteWorkerFactory } from "../solver/workerClient";
 import { drawSolutionPage } from "../solverPage/canvas";
-import { COMMAND_FIELD_WIDTH, createEmptyCommandField, drawCommandField, type CommandField } from "./commandCanvas";
+import { COMMAND_FIELD_WIDTH, createEmptyCommandField, drawCommandField, type CommandCell, type CommandField } from "./commandCanvas";
 import {
   commandDisplayRows,
   commandTargetOptions,
@@ -36,6 +36,17 @@ type ResultView =
   | { status: "ready"; value: ResultRecord };
 
 const BATCH_COMMANDS = new Set(["cover", "congruent_cover", "congruent"]);
+const COLORED_DRAWING_COMMANDS = new Set(["cover", "congruent_cover", "congruent"]);
+const COMMAND_PAINT_OPTIONS: readonly { value: CommandCell; label: string }[] = [
+  { value: "X", label: "Gray" },
+  { value: "T", label: "T" },
+  { value: "O", label: "O" },
+  { value: "I", label: "I" },
+  { value: "L", label: "L" },
+  { value: "J", label: "J" },
+  { value: "S", label: "S" },
+  { value: "Z", label: "Z" },
+];
 function commandWorkerKind(commandId: string): string {
   if (commandId === "per_save_minimals") return "per-save-minimals";
   if (commandId === "congruent_cover") return "congruentcover";
@@ -194,6 +205,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const [lineGroup, setLineGroup] = useState<CommandLineGroup>("2-4");
   const [targetLines, setTargetLines] = useState<CommandTargetLines>(4);
   const [field, setField] = useState<CommandField>(createEmptyCommandField);
+  const [paintColor, setPaintColor] = useState<CommandCell>("X");
   const [fumen, setFumen] = useState("");
   const [pattern, setPattern] = useState("");
   const [wantedSave, setWantedSave] = useState(() => defaultWantedSave(command.id));
@@ -211,15 +223,17 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const workerRef = useRef<SolverWorkerClient | null>(null);
   const requestAbort = useRef<AbortController | null>(null);
   const drawing = useRef(false);
-  const paintValue = useRef(true);
+  const paintValue = useRef<CommandCell | null>("X");
   const displayRows = commandDisplayRows(lineGroup);
   const isBatch = BATCH_COMMANDS.has(command.id);
   const isAdaptiveMinimals = isAdaptiveMinimalsCommand(command.id);
+  const supportsColoredDrawing = COLORED_DRAWING_COMMANDS.has(command.id);
 
   useEffect(() => {
     setUseHiGHSMode("auto");
     setHumanQualityMode(defaultHumanQualityMode(command.id));
     setAdvancedOpen(false);
+    setPaintColor("X");
   }, [command.id]);
 
   useEffect(() => {
@@ -256,7 +270,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
     setFinishedDurationMs(null);
   }, [command.id, field, fumen, pattern, targetLines, wantedSave, title, useHold, useHiGHSMode, humanQualityMode, mirror, blueGarbage]);
 
-  const paintCell = useCallback((event: ReactPointerEvent<HTMLCanvasElement>, value: boolean) => {
+  const paintCell = useCallback((event: ReactPointerEvent<HTMLCanvasElement>, value: CommandCell | null) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = Math.floor((event.clientX - rect.left) / (rect.width / COMMAND_FIELD_WIDTH));
     const screenY = Math.floor((event.clientY - rect.top) / (rect.height / displayRows));
@@ -269,7 +283,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
       next[y]![x] = value;
       return next;
     });
-  }, [displayRows, fumen]);
+  }, [displayRows, fumen, paintColor]);
 
   function beginPaint(event: ReactPointerEvent<HTMLCanvasElement>): void {
     event.preventDefault();
@@ -279,7 +293,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
     const y = displayRows - 1 - screenY;
     if (x < 0 || x >= COMMAND_FIELD_WIDTH || y < 0 || y >= displayRows) return;
     drawing.current = true;
-    paintValue.current = event.button === 2 ? false : !(field[y]?.[x] ?? false);
+    paintValue.current = event.button === 2 || field[y]?.[x] === paintColor ? null : paintColor;
     event.currentTarget.setPointerCapture(event.pointerId);
     paintCell(event, paintValue.current);
   }
@@ -345,6 +359,15 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
       <section className="sfinder-command-workspace">
         <div className="sfinder-field-panel">
           <div className="sfinder-panel-heading"><button type="button" onClick={() => { setField(createEmptyCommandField()); setFumen(""); }}>Clear</button></div>
+          {supportsColoredDrawing ? <div className="sfinder-color-palette" role="toolbar" aria-label="Drawing color">
+            {COMMAND_PAINT_OPTIONS.map(({ value, label }) => <button
+              key={value}
+              type="button"
+              className={paintColor === value ? "selected" : undefined}
+              aria-pressed={paintColor === value}
+              onClick={() => setPaintColor(value)}
+            ><span className={`sfinder-color-swatch sfinder-color-${value.toLowerCase()}`} aria-hidden="true" />{label}</button>)}
+          </div> : null}
           <canvas ref={canvasRef} aria-label={`Editable 10-column by ${displayRows}-row field`} onContextMenu={(event) => event.preventDefault()} onPointerDown={beginPaint} onPointerMove={(event) => { if (drawing.current) paintCell(event, paintValue.current); }} onPointerUp={(event) => { drawing.current = false; if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId); }} onPointerCancel={() => { drawing.current = false; }} />
           <label className="sfinder-fumen-input"><span>Fumen</span><textarea value={fumen} placeholder="v115@… or Fumen URL" spellCheck={false} onChange={(event) => setFumen(event.target.value)} /></label>
           <button type="button" className="sfinder-apply-fumen" onClick={applyFumen}>Apply Fumen</button>

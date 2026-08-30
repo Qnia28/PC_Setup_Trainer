@@ -1,4 +1,3 @@
-import projectLicense from "../../LICENSE?raw";
 import { SiteHeader } from "../site/SiteHeader";
 import {
   SETUP_DATA_ACKNOWLEDGEMENTS,
@@ -26,21 +25,16 @@ export function LicenceApp() {
         <span>QNIAPC</span>
         <h1>Licences</h1>
         <p>
-          QniaPC and its bundled third-party software are distributed under the
-          licence terms listed below.
+          Licences for bundled third-party software and project acknowledgements
+          are listed below.
         </p>
       </header>
-
-      <section className="licence-section" aria-labelledby="project-licence-title">
-        <h2 id="project-licence-title">QniaPC — MIT License</h2>
-        <pre>{projectLicense}</pre>
-      </section>
 
       <section className="licence-section" aria-labelledby="third-party-title">
         <h2 id="third-party-title">Bundled third-party licences</h2>
         <p className="licence-note">
-          The MIT License terms above apply to the MIT-licensed entries together
-          with their respective copyright notices.
+          Each MIT-licensed entry is distributed under the MIT License together
+          with its respective copyright notice.
         </p>
         <ul className="licence-list">
           {THIRD_PARTY_LICENCES.map((entry) => <li key={entry.name}>

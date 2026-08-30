@@ -1,16 +1,19 @@
+import { PIECE_COLORS } from "../render/canvas";
+
 export const COMMAND_FIELD_WIDTH = 10;
 export const COMMAND_FIELD_MAX_HEIGHT = 6;
 
-export type CommandField = boolean[][];
+export type CommandCell = "I" | "L" | "O" | "Z" | "T" | "J" | "S" | "X";
+export type CommandField = Array<Array<CommandCell | null>>;
 
 export function createEmptyCommandField(): CommandField {
   return Array.from({ length: COMMAND_FIELD_MAX_HEIGHT }, () =>
-    Array<boolean>(COMMAND_FIELD_WIDTH).fill(false));
+    Array<CommandCell | null>(COMMAND_FIELD_WIDTH).fill(null));
 }
 
 export function drawCommandField(
   canvas: HTMLCanvasElement,
-  field: readonly (readonly boolean[])[],
+  field: readonly (readonly (CommandCell | null)[])[],
   visibleRows: number,
 ): void {
   const cellSize = 36;
@@ -43,9 +46,10 @@ export function drawCommandField(
 
   for (let y = 0; y < visibleRows; y += 1) {
     for (let x = 0; x < COMMAND_FIELD_WIDTH; x += 1) {
-      if (!field[y]?.[x]) continue;
+      const cell = field[y]?.[x];
+      if (!cell) continue;
       const screenY = visibleRows - 1 - y;
-      context.fillStyle = "#8a95a5";
+      context.fillStyle = PIECE_COLORS[cell];
       context.fillRect(x * cellSize + 1, screenY * cellSize + 1, cellSize - 2, cellSize - 2);
       context.fillStyle = "rgba(255,255,255,.18)";
       context.fillRect(x * cellSize + 2, screenY * cellSize + 2, cellSize - 4, 3);

@@ -9,8 +9,10 @@ import {
   formatCalculationDuration,
   formatRatioPercentage,
   groupPerSavePages,
+  fieldFromFumen,
   minimumCoverWorkerOptions,
   normalizeCommandSource,
+  occupiedCalculationCells,
 } from "./commandModel";
 
 describe("sfinder command line groups", () => {
@@ -76,9 +78,9 @@ describe("sfinder command line groups", () => {
 
   it("ignores the top displayed row when a 6-row board targets 5 lines", () => {
     const field = createEmptyCommandField();
-    field[0]![0] = true;
-    field[4]![1] = true;
-    field[5]![2] = true;
+    field[0]![0] = "X";
+    field[4]![1] = "X";
+    field[5]![2] = "X";
 
     const fumen = normalizeCommandSource({ fumen: "", field, targetLines: 5, displayRows: 6 });
     const page = decoder.decode(fumen)[0]!;
@@ -89,10 +91,10 @@ describe("sfinder command line groups", () => {
 
   it("ignores all displayed rows above a 2-line target without shifting the field", () => {
     const field = createEmptyCommandField();
-    field[0]![0] = true;
-    field[1]![1] = true;
-    field[2]![2] = true;
-    field[3]![3] = true;
+    field[0]![0] = "X";
+    field[1]![1] = "X";
+    field[2]![2] = "X";
+    field[3]![3] = "X";
 
     const fumen = normalizeCommandSource({ fumen: "", field, targetLines: 2, displayRows: 4 });
     const page = decoder.decode(fumen)[0]!;
@@ -119,5 +121,40 @@ describe("sfinder command line groups", () => {
     expect(page.field.at(0, 0)).toBe("T");
     expect(page.field.at(1, 4)).toBe("I");
     expect(page.field.at(2, 5)).toBe("_");
+  });
+
+  it("preserves drawn colors when encoding a command field", () => {
+    const field = createEmptyCommandField();
+    field[0]![0] = "T";
+    field[0]![1] = "O";
+    field[1]![2] = "I";
+    field[1]![3] = "X";
+
+    const page = decoder.decode(normalizeCommandSource({
+      fumen: "",
+      field,
+      targetLines: 4,
+      displayRows: 4,
+    }))[0]!;
+
+    expect(page.field.at(0, 0)).toBe("T");
+    expect(page.field.at(1, 0)).toBe("O");
+    expect(page.field.at(2, 1)).toBe("I");
+    expect(page.field.at(3, 1)).toBe("X");
+    expect(occupiedCalculationCells(field, 4)).toBe(4);
+  });
+
+  it("keeps colored Fumen cells in the editable command field", () => {
+    const sourceField = Field.create();
+    sourceField.set(0, 0, "T");
+    sourceField.set(1, 0, "O");
+    sourceField.set(2, 1, "J");
+    sourceField.set(3, 1, "X");
+    const source = encoder.encode([{ field: sourceField, flags: { colorize: true } }]);
+
+    const field = fieldFromFumen(source, 4);
+
+    expect(field[0]!.slice(0, 4)).toEqual(["T", "O", null, null]);
+    expect(field[1]!.slice(0, 4)).toEqual([null, null, "J", "X"]);
   });
 });

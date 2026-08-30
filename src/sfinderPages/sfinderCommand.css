@@ -29,6 +29,18 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-panel-heading { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 13px; }
 .sfinder-panel-heading span, .sfinder-command-form label > span, .sfinder-fumen-input > span { color: #7f90a4; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .sfinder-panel-heading button { padding: 6px 10px; font-size: 12px; }
+.sfinder-color-palette { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: -2px 0 13px; }
+.sfinder-color-palette button { display: inline-flex; min-width: 0; align-items: center; justify-content: center; gap: 6px; padding: 6px 7px; color: #aebaca; font-size: 11px; }
+.sfinder-color-palette button.selected { color: #eaf9ff; background: #1a3440; border-color: #52b7d2; }
+.sfinder-color-swatch { width: 13px; height: 13px; flex: 0 0 auto; border: 1px solid rgba(255,255,255,.25); border-radius: 2px; }
+.sfinder-color-x { background: #777f8c; }
+.sfinder-color-i { background: #35c8e6; }
+.sfinder-color-j { background: #4f6ee8; }
+.sfinder-color-l { background: #ff9f31; }
+.sfinder-color-o { background: #f5d547; }
+.sfinder-color-s { background: #55c96b; }
+.sfinder-color-t { background: #b562d8; }
+.sfinder-color-z { background: #ef5b65; }
 .sfinder-field-panel canvas { display: block; width: 360px; max-width: 100%; border: 1px solid #526174; cursor: crosshair; touch-action: none; user-select: none; }
 .sfinder-field-panel > p { margin: 9px 0 0; color: #75869a; font-size: 12px; }
 .sfinder-fumen-input { display: grid; gap: 6px; margin-top: 15px; }
