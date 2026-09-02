@@ -375,7 +375,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
         </div>
         <form className="sfinder-command-form" onSubmit={(event) => { event.preventDefault(); void runCommand(); }}>
           <div className="sfinder-form-grid">
-            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /><small>Bag order: <code>*!{"{O>T}"}</code> means O before T.</small></label>
+            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /></label>
             <label className="sfinder-target-input"><span>Lines</span><input
               type="number"
               inputMode="numeric"

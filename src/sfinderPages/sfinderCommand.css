@@ -56,8 +56,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { min-height: 42px; padding: 9px 11px; }
 .sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea, .sfinder-form-grid select { width: 100%; min-width: 0; max-width: 100%; }
 .sfinder-form-grid input:not([type="checkbox"]), .sfinder-form-grid textarea { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
-.sfinder-queue-input small { color: #718196; font-size: 11px; line-height: 1.4; }
-.sfinder-queue-input small code { color: #9ecde0; }
 .sfinder-queue-input { grid-column: 1; }
 .sfinder-target-input { grid-column: 2; }
 .sfinder-save-input { grid-column: 3; }
