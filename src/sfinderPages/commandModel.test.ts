@@ -12,6 +12,7 @@ import {
   fieldFromFumen,
   minimumCoverWorkerOptions,
   normalizeCommandSource,
+  normalizeSfinderQueuePattern,
   occupiedCalculationCells,
 } from "./commandModel";
 
@@ -55,6 +56,12 @@ describe("sfinder command line groups", () => {
     expect(formatRatioPercentage(0)).toBe("0%");
     expect(formatRatioPercentage(0.9523809524)).toBe("95.24%");
     expect(formatRatioPercentage(1)).toBe("100%");
+  });
+
+  it("normalizes SFinder bag-order constraints while preserving the visible expression", () => {
+    expect(normalizeSfinderQueuePattern(" *!{O>T} ")).toBe("*!{O<T}");
+    expect(normalizeSfinderQueuePattern("T,*p6{ O > T, L>S }")).toBe("T,*p6{O<T, L<S}");
+    expect(normalizeSfinderQueuePattern("[OT]!{O<T};[SZ]!{S>Z}")).toBe("[OT]!{O<T};[SZ]!{S<Z}");
   });
 
   it("groups per-save pages by saved piece in PC Solver display order", () => {

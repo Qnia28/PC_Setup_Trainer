@@ -16,6 +16,7 @@ import {
   groupPerSavePages,
   isAdaptiveMinimalsCommand,
   minimumCoverWorkerOptions,
+  normalizeSfinderQueuePattern,
   normalizeCommandSource,
   PER_SAVE_RESULT_ORDER,
   type CommandLineGroup,
@@ -328,7 +329,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
       const sourceFumen = normalizeCommandSource({ fumen, field, targetLines, displayRows });
       const value = await client.request<ResultRecord>(commandWorkerKind(command.id), {
         sourceFumen,
-        pattern: pattern.trim(),
+        pattern: normalizeSfinderQueuePattern(pattern),
         clear: targetLines,
         targetLines,
         wantedSave,
@@ -374,7 +375,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
         </div>
         <form className="sfinder-command-form" onSubmit={(event) => { event.preventDefault(); void runCommand(); }}>
           <div className="sfinder-form-grid">
-            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /></label>
+            <label className="sfinder-queue-input"><span>{command.patternLabel ?? "Queue"}</span><input value={pattern} placeholder={command.patternPlaceholder ?? "[TILJS]!"} spellCheck={false} onChange={(event) => setPattern(event.target.value)} /><small>Bag order: <code>*!{"{O>T}"}</code> means O before T.</small></label>
             <label className="sfinder-target-input"><span>Lines</span><input
               type="number"
               inputMode="numeric"

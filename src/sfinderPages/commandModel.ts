@@ -51,6 +51,16 @@ export function commandTargetOptions(group: CommandLineGroup): readonly CommandT
   return group === "2-4" ? [2, 3, 4] : [5, 6];
 }
 
+export function normalizeSfinderQueuePattern(pattern: string): string {
+  return pattern.trim().replace(/\{([^{}]*)\}/g, (_constraint, rules: string) => {
+    const normalizedRules = rules.trim().replace(
+      /([TILJSZO])\s*[<>]\s*([TILJSZO])/gi,
+      (_rule, earlier: string, later: string) => `${earlier.toUpperCase()}<${later.toUpperCase()}`,
+    );
+    return `{${normalizedRules}}`;
+  });
+}
+
 export function formatRatioPercentage(ratio: number): string {
   const percent = ratio * 100;
   return `${Number.isInteger(percent) ? percent : percent.toFixed(2)}%`;

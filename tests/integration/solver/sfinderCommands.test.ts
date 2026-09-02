@@ -2,11 +2,24 @@ import { decoder } from "tetris-fumen";
 import { describe, expect, it } from "vitest";
 import { runBatchWorkerRequest } from "../../../src/solver/batch-worker-runtime.mjs";
 import { runWorkerRequest } from "../../../src/solver/worker-runtime.mjs";
+import { normalizeSfinderQueuePattern } from "../../../src/sfinderPages/commandModel";
 
 const EMPTY_TWO_LINES = "v115@vhAAgH";
 const ZIS_SOLUTION = "v115@ThR4BeBtCeR4zhBtKeAgH";
 
 describe("public SFinder command runtimes", () => {
+  it("passes SFinder-style greater-than bag-order constraints to the WASM pattern engine", async () => {
+    await expect(runWorkerRequest({
+      kind: "chance",
+      input: {
+        sourceFumen: EMPTY_TWO_LINES,
+        pattern: normalizeSfinderQueuePattern("OOOO,[OT]!{O>T}"),
+        clear: 2,
+        targetLines: 2,
+      },
+    })).resolves.toMatchObject({ total: 1, success: 1, percent: 100 });
+  });
+
   it("runs chance, saves, and minimals through the shared PC Worker runtime", async () => {
     await expect(runWorkerRequest({
       kind: "chance",

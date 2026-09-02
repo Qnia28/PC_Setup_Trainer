@@ -28,11 +28,13 @@ TOILJSZ        one exact queue
 *!             alias of *p7; every permutation of seven pieces
 [TILJS]!       every permutation of the listed pieces
 T,*p7          fixed T followed by a seven-piece bag
+*!{O>T}        seven-piece bag restricted to queues where O appears before T
 I[JS]![TO]!,*p2
 A;B            analyze both branches
 ```
 
 Branches separated by a semicolon (`;`) are kept as separate analysis cases.
+Bag expressions can be followed by an order condition in braces. In `*!{O>T}`, the piece on the left must appear before the piece on the right. Separate multiple conditions with a comma or `&`, for example `*!{O>T,L>S}`.
 
 ### Hold
 When `Use hold` is enabled, the calculation includes normal Hold usage.
@@ -44,7 +46,7 @@ These are advanced settings. Open `Advanced` to show the HiGHS and Quality contr
 
 - `HiGHS: Auto` selects the exact-cardinality backend from the reduced matrix. It loads HiGHS only for a hard matrix that benefits from it.
 - `HiGHS: On` allows HiGHS whenever the reduced matrix still needs an external exact-cardinality proof.
-- `HiGHS: Off` keeps the new Release 2.2 production algorithm but proves minimum cardinality with the Rust/WASM backend. It does **not** select the old legacy Minimals implementation.
+- `HiGHS: Off` keeps the Release 2.6 production algorithm but proves minimum cardinality with the Rust/WASM backend. It does **not** select the old legacy Minimals implementation.
 - `Quality: Fast` always keeps the minimum number of solutions exact, but may use a deterministic faster fallback when choosing among equally small sets.
 - `Quality: Exact` keeps both the minimum number of solutions and the secondary human-quality choice exact. Difficult matrices can take much longer.
 
