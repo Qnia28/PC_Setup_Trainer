@@ -21,4 +21,5 @@ export function shouldRecycleSolverWorker(): boolean;
 export function resultUsedHiGHS(value: unknown): boolean;
 export function shouldRecycleSolverWorkerAfterResult(value: unknown): boolean;
 export function shouldRecycleSolverWorkerAfterError(requestKind: WorkerRuntimeRequest["kind"]): boolean;
+export function createRetryableSolverLoader<T>(factory: (height: number) => Promise<T> | T): (height: number) => Promise<T>;
 export function runWorkerRequest(request: WorkerRuntimeRequest): Promise<unknown>;

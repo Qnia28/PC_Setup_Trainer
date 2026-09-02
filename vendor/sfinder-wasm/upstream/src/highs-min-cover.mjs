@@ -1,5 +1,7 @@
 import Highs from "./vendor/highs.mjs";
 import { minimumCover } from "./min-cover.mjs";
+import { assertQualityProvider, requirePositiveQuality } from "./quality-contract.mjs";
+import { retryableLoader } from "./promise-utils.mjs";
 
 // Auto chooses only the *primary cardinality* backend.  Do not use the old
 // legacy exact-search timings here: those mixed cardinality proof with exact
@@ -27,8 +29,27 @@ const AUTO_PRIMARY_LARGE_MIN_ENTRIES = 6000;
 // BestSetSearch with a deterministic state budget. Fast falls back to 2x2 on
 // budget exhaustion; True falls back to the sequential-threshold exact prover.
 export const FAST_EXACT_STATE_BUDGET = 100000;
-
-let highsPromise;
+// Fast-only grace budget for the sequential-threshold exact prover after the
+// integrated fixed-K probe exhausts its budget. Keep this separate from the
+// exact=True integrated probe budget so improving Fast does not slow exact mode.
+export const FAST_THRESHOLD_GRACE_STATE_BUDGET = 5000;
+// Speculative candidate-dominance preview. A timeout is never used as an
+// incumbent because dominance changes the bounded DFS traversal; only a fully
+// proven Exact result can replace the historical Fast path.
+export const FAST_DOMINANCE_PREVIEW_STATE_BUDGET = 2500;
+// Dominance preprocessing is quadratic in the raw candidate set. Restrict the
+// speculative preview to already-compact primary kernels; larger non-hard
+// kernels keep the historical Fast path with zero preview overhead.
+export const FAST_DOMINANCE_PREVIEW_MAX_KERNEL_ENTRIES = 512;
+// Dominance compares candidate pairs, so raw candidate count matters even when
+// cardinality kernelization collapses the primary model aggressively. Keep the
+// speculative preview out of large-S matrices where O(S^2 * N) preprocessing
+// could cost more than the historical Fast search it is meant to accelerate.
+export const FAST_DOMINANCE_PREVIEW_MAX_CANDIDATES = 256;
+// Bound the temporary Rust quality matrix used by dominance (u32 per cell).
+// This keeps speculative memory/preprocessing cost predictable even when an
+// aggressively reduced primary kernel came from a very large raw matrix.
+export const FAST_DOMINANCE_PREVIEW_MAX_MATRIX_CELLS = 1500000;
 
 async function bytesFor(url) {
   if (typeof process !== "undefined" && process.versions?.node) {
@@ -41,13 +62,10 @@ async function bytesFor(url) {
   return new Uint8Array(await response.arrayBuffer());
 }
 
-export async function loadHighs() {
-  highsPromise ??= (async () => {
-    const wasmBinary = await bytesFor(new URL("../wasm/highs.wasm", import.meta.url));
-    return Highs({ wasmBinary, print: () => {}, printErr: () => {} });
-  })();
-  return highsPromise;
-}
+export const loadHighs = retryableLoader(async () => {
+  const wasmBinary = await bytesFor(new URL("../wasm/highs.wasm", import.meta.url));
+  return Highs({ wasmBinary, print: () => {}, printErr: () => {} });
+});
 
 function variableLines(names, maxLength = 100) {
   const lines = [];
@@ -64,6 +82,7 @@ function variableLines(names, maxLength = 100) {
 }
 
 export function prepareCoverageMatrix(coverage, qualityFor = null) {
+  assertQualityProvider(qualityFor);
   const rawCases = [];
   const keySet = new Set();
   for (const [caseId, solutions] of coverage) {
@@ -87,10 +106,9 @@ export function prepareCoverageMatrix(coverage, qualityFor = null) {
     let position = 0;
     for (const key of raw.row) {
       const id = keyIndex.get(key);
-      const value = qualityFor ? Number(qualityFor(key, raw.caseId)) : 0;
-      const quality = Number.isFinite(value)
-        ? Math.max(0, Math.min(0xffffffff, Math.floor(value)))
-        : 0;
+      const quality = qualityFor === null
+        ? 0
+        : requirePositiveQuality(qualityFor(key, raw.caseId), { key, caseId: raw.caseId });
       ids[position] = id;
       entries[position] = [id, quality];
       position += 1;
@@ -378,20 +396,32 @@ function compareHistograms(a, b) {
   return 0;
 }
 
-function selectedQualityHistogram(selected, dense, caseCount, maxQuality) {
-  const histogram = new Uint32Array(maxQuality + 1);
+function qualityRankTable(cases) {
+  const values = [0];
+  for (const row of cases) for (const [, quality] of row) values.push(quality >>> 0);
+  values.sort((a, b) => a - b);
+  let write = 1;
+  for (let read = 1; read < values.length; read += 1) {
+    if (values[read] !== values[write - 1]) values[write++] = values[read];
+  }
+  values.length = write;
+  return { values, rankOf: new Map(values.map((quality, rank) => [quality, rank])) };
+}
+
+function selectedQualityHistogram(selected, denseRanks, caseCount, rankCount) {
+  const histogram = new Uint32Array(rankCount);
   for (let ci = 0; ci < caseCount; ci += 1) {
-    let best = 0;
-    for (const id of selected) best = Math.max(best, dense[id * caseCount + ci]);
-    histogram[best] += 1;
+    let bestRank = 0;
+    for (const id of selected) bestRank = Math.max(bestRank, denseRanks[id * caseCount + ci]);
+    histogram[bestRank] += 1;
   }
   return histogram;
 }
 
-function histogramVector(histogram) {
+function histogramVector(histogram, qualityValues) {
   const out = [];
-  for (let q = 0; q < histogram.length; q += 1) {
-    for (let n = histogram[q]; n > 0; n -= 1) out.push(q);
+  for (let rank = 0; rank < histogram.length; rank += 1) {
+    for (let n = histogram[rank]; n > 0; n -= 1) out.push(qualityValues[rank]);
   }
   return out;
 }
@@ -401,33 +431,63 @@ function histogramVector(histogram) {
 // minimum-cardinality family. The pass is deliberately bounded to local moves
 // so hard matrices never re-enter an exponential exact quality enumeration.
 export function refineMinimumCoverQuality(prepared, initialSelected, { maxPasses = 16 } = {}) {
-  const { cases, keys, maxQuality } = prepared;
+  const { cases, keys } = prepared;
   const solutionCount = keys.length;
   const caseCount = cases.length;
-  if (initialSelected.length < 2 || !caseCount) {
-    const selected = [...initialSelected].sort((a, b) => a - b);
-    const dense = new Uint32Array(solutionCount * caseCount);
-    for (let ci = 0; ci < caseCount; ci += 1) for (const [id, q] of cases[ci]) dense[id * caseCount + ci] = q;
-    const histogram = selectedQualityHistogram(selected, dense, caseCount, maxQuality);
-    return { selected, qualityVector: histogramVector(histogram), passes: 0 };
-  }
-
+  const { values: qualityValues, rankOf: qualityRankOf } = qualityRankTable(cases);
   const dense = new Uint32Array(solutionCount * caseCount);
+  const covers = new Uint8Array(solutionCount * caseCount);
   const candidateCases = Array.from({ length: solutionCount }, () => []);
   for (let ci = 0; ci < caseCount; ci += 1) {
     for (const [id, q] of cases[ci]) {
-      dense[id * caseCount + ci] = q;
+      const index = id * caseCount + ci;
+      dense[index] = qualityRankOf.get(q >>> 0);
+      covers[index] = 1;
       candidateCases[id].push(ci);
     }
   }
 
+  if (initialSelected.length < 2 || !caseCount) {
+    const selected = [...initialSelected].sort((a, b) => a - b);
+    const histogram = selectedQualityHistogram(selected, dense, caseCount, qualityValues.length);
+    return { selected, qualityVector: histogramVector(histogram, qualityValues), passes: 0 };
+  }
+
   let selected = [...initialSelected].sort((a, b) => a - b);
-  let bestHistogram = selectedQualityHistogram(selected, dense, caseCount, maxQuality);
+  let bestHistogram = selectedQualityHistogram(selected, dense, caseCount, qualityValues.length);
   let passes = 0;
 
   for (; passes < maxPasses; passes += 1) {
     const coverCount = new Uint16Array(caseCount);
     for (const id of selected) for (const ci of candidateCases[id]) coverCount[ci] += 1;
+
+    // A 2-for-2 move removes exactly two selected candidates. Precompute the
+    // three highest selected qualities for every case once per pass; for any
+    // removal pair (a, b), the first top-3 entry owned by neither a nor b is
+    // exactly max quality over selected \ {a, b}. Coverage membership remains
+    // independent in `covers`; this table is quality-only.
+    const top3Id = new Int32Array(caseCount * 3).fill(-1);
+    const top3Q = new Uint32Array(caseCount * 3);
+    for (let ci = 0; ci < caseCount; ci += 1) {
+      let id0 = -1; let q0 = 0;
+      let id1 = -1; let q1 = 0;
+      let id2 = -1; let q2 = 0;
+      for (const id of selected) {
+        const q = dense[id * caseCount + ci];
+        if (id0 === -1 || q > q0) {
+          id2 = id1; q2 = q1; id1 = id0; q1 = q0; id0 = id; q0 = q;
+        } else if (id1 === -1 || q > q1) {
+          id2 = id1; q2 = q1; id1 = id; q1 = q;
+        } else if (id2 === -1 || q > q2) {
+          id2 = id; q2 = q;
+        }
+      }
+      const offset = ci * 3;
+      top3Id[offset] = id0; top3Q[offset] = q0;
+      top3Id[offset + 1] = id1; top3Q[offset + 1] = q1;
+      top3Id[offset + 2] = id2; top3Q[offset + 2] = q2;
+    }
+
     let bestMove = null;
     let passHistogram = bestHistogram;
     let passSelected = selected;
@@ -443,8 +503,8 @@ export function refineMinimumCoverQuality(prepared, initialSelected, { maxPasses
         const missing = [];
         for (let ci = 0; ci < caseCount; ci += 1) {
           const remaining = coverCount[ci]
-            - (dense[a * caseCount + ci] > 0 ? 1 : 0)
-            - (dense[b * caseCount + ci] > 0 ? 1 : 0);
+            - covers[a * caseCount + ci]
+            - covers[b * caseCount + ci];
           if (remaining === 0) missing.push(ci);
         }
         if (!missing.length) continue;
@@ -455,16 +515,21 @@ export function refineMinimumCoverQuality(prepared, initialSelected, { maxPasses
           let contributes = false;
           const offset = id * caseCount;
           for (const ci of missing) {
-            if (dense[offset + ci] > 0) { contributes = true; break; }
+            if (covers[offset + ci]) { contributes = true; break; }
           }
           if (contributes) candidates.push(id);
         }
 
         const baseQuality = new Uint32Array(caseCount);
-        for (const id of base) {
-          const offset = id * caseCount;
-          for (let ci = 0; ci < caseCount; ci += 1) {
-            if (dense[offset + ci] > baseQuality[ci]) baseQuality[ci] = dense[offset + ci];
+        for (let ci = 0; ci < caseCount; ci += 1) {
+          const offset = ci * 3;
+          for (let rank = 0; rank < 3; rank += 1) {
+            const id = top3Id[offset + rank];
+            if (id === -1) break;
+            if (id !== a && id !== b) {
+              baseQuality[ci] = top3Q[offset + rank];
+              break;
+            }
           }
         }
 
@@ -476,11 +541,11 @@ export function refineMinimumCoverQuality(prepared, initialSelected, { maxPasses
             const yo = y * caseCount;
             let coversMissing = true;
             for (const ci of missing) {
-              if (dense[xo + ci] === 0 && dense[yo + ci] === 0) { coversMissing = false; break; }
+              if (!covers[xo + ci] && !covers[yo + ci]) { coversMissing = false; break; }
             }
             if (!coversMissing) continue;
 
-            const histogram = new Uint32Array(maxQuality + 1);
+            const histogram = new Uint32Array(qualityValues.length);
             for (let ci = 0; ci < caseCount; ci += 1) {
               const q = Math.max(baseQuality[ci], dense[xo + ci], dense[yo + ci]);
               histogram[q] += 1;
@@ -502,7 +567,7 @@ export function refineMinimumCoverQuality(prepared, initialSelected, { maxPasses
     bestHistogram = passHistogram;
   }
 
-  return { selected, qualityVector: histogramVector(bestHistogram), passes };
+  return { selected, qualityVector: histogramVector(bestHistogram, qualityValues), passes };
 }
 
 export function normalizeUseHiGHS(value = "auto") {
@@ -559,16 +624,18 @@ export async function minimumCoverAdaptiveAsync(coverage, {
   fastStateBudget = FAST_EXACT_STATE_BUDGET,
   tinyExactMaxCandidates = 48,
 } = {}) {
+  assertQualityProvider(qualityFor);
   const qualityMode = normalizeExactHumanQuality(exactQuality);
   const requested = normalizeUseHiGHS(useHiGHS);
   const tinyLimit = Math.max(0, Math.floor(Number(tinyExactMaxCandidates) || 0));
   if (tinyLimit > 0 && candidateCountUpTo(coverage, tinyLimit) <= tinyLimit) {
     const legacy = minimumCover(coverage, { qualityFor, solver });
+    const hasQuality = qualityFor !== null;
     return {
       ...legacy,
       backend: "rust-legacy",
-      cardinalityBackend: "rust-legacy-integrated",
-      qualityBackend: "rust-legacy-exact",
+      cardinalityBackend: hasQuality ? "rust-legacy-integrated" : "rust-legacy-cardinality",
+      qualityBackend: hasQuality ? "rust-legacy-exact" : "none",
       qualityExact: true,
       useHiGHSRequested: requested,
       useHiGHSResolved: false,
@@ -576,12 +643,12 @@ export async function minimumCoverAdaptiveAsync(coverage, {
       minimumCoverKernelSolutions: null,
       minimumCoverKernelEntries: null,
       primarySearchedStates: legacy.searchedStates ?? 0,
-      qualitySearchedStates: legacy.searchedStates ?? 0,
-      fastProbeBudget: qualityMode === "fast" ? fastStateBudget : null,
+      qualitySearchedStates: hasQuality ? legacy.searchedStates ?? 0 : 0,
+      fastProbeBudget: hasQuality && qualityMode === "fast" ? fastStateBudget : null,
       fastProbeStates: 0,
       fastFallback: false,
-      fastDecision: "tiny-legacy-exact",
-      qualityDecision: "tiny-legacy-exact",
+      fastDecision: hasQuality ? "tiny-legacy-exact" : "cardinality-only",
+      qualityDecision: hasQuality ? "tiny-legacy-exact" : "cardinality-only",
     };
   }
   return minimumCoverAsync(coverage, {
@@ -600,6 +667,7 @@ export async function minimumCoverAsync(coverage, {
   useHiGHS = "auto",
   fastStateBudget = FAST_EXACT_STATE_BUDGET,
 } = {}) {
+  assertQualityProvider(qualityFor);
   const qualityMode = normalizeExactHumanQuality(exactQuality);
   const prepared = prepareCoverageMatrix(coverage, qualityFor);
   const requested = normalizeUseHiGHS(useHiGHS);
@@ -607,9 +675,9 @@ export async function minimumCoverAsync(coverage, {
     return {
       count: 0, keys: [], qualityVector: [], searchedStates: 0,
       backend: "kernel", cardinalityBackend: "kernel",
-      qualityBackend: qualityMode === "true" ? "rust-quality-bnb" : "fast-exact-probe",
+      qualityBackend: qualityFor === null ? "none" : qualityMode === "true" ? "rust-quality-bnb" : "fast-exact-probe",
       qualityExact: true, useHiGHSRequested: requested, useHiGHSResolved: false,
-      fastProbeBudget: qualityMode === "fast" ? fastStateBudget : null,
+      fastProbeBudget: qualityFor !== null && qualityMode === "fast" ? fastStateBudget : null,
       fastProbeStates: 0, fastFallback: false,
     };
   }
@@ -624,6 +692,31 @@ export async function minimumCoverAsync(coverage, {
     ? await solvePreparedCardinalityKernel(primaryKernel)
     : solvePreparedRustCardinalityKernel(prepared, primaryKernel, solver);
   const primaryKeys = primary.selected.map((id) => prepared.keys[id]);
+
+  if (qualityFor === null) {
+    return {
+      count: primary.count,
+      keys: primaryKeys,
+      qualityVector: [],
+      searchedStates: primary.searchedStates ?? 0,
+      backend: primary.backend,
+      cardinalityBackend: primary.backend,
+      qualityBackend: "none",
+      qualityExact: true,
+      useHiGHSRequested: requested,
+      useHiGHSResolved: primary.backend === "highs",
+      minimumCoverKernelCases: kernelStats.cases,
+      minimumCoverKernelSolutions: kernelStats.solutions,
+      minimumCoverKernelEntries: kernelStats.entries,
+      primarySearchedStates: primary.searchedStates ?? 0,
+      qualitySearchedStates: 0,
+      fastProbeBudget: null,
+      fastProbeStates: 0,
+      fastFallback: false,
+      fastDecision: "cardinality-only",
+      qualityDecision: "cardinality-only",
+    };
+  }
 
   if (qualityMode === "true") {
     // Ordinary fixed-K quality problems are much faster with the canonical
@@ -735,12 +828,62 @@ export async function minimumCoverAsync(coverage, {
   }
 
   const budget = Math.max(1, Math.floor(Number(fastStateBudget) || FAST_EXACT_STATE_BUDGET));
+
+  // Exact-only speculative preview. Candidate dominance is sound for the final
+  // fixed-K objective, but it changes bounded DFS traversal. Therefore only a
+  // completed proof is accepted; a timeout is discarded before restarting the
+  // historical integrated search from the original primary seed.
+  const dominancePreviewEligible = kernelStats.entries <= FAST_DOMINANCE_PREVIEW_MAX_KERNEL_ENTRIES
+    && prepared.keys.length <= FAST_DOMINANCE_PREVIEW_MAX_CANDIDATES
+    && prepared.keys.length * prepared.cases.length <= FAST_DOMINANCE_PREVIEW_MAX_MATRIX_CELLS;
+  const dominancePreviewBudget = dominancePreviewEligible
+    ? Math.max(1, Math.min(
+      FAST_DOMINANCE_PREVIEW_STATE_BUDGET,
+      Math.floor(budget / 20),
+    ))
+    : null;
+  const dominancePreview = dominancePreviewEligible
+    ? solver?.minimumCoverAtCount?.(coverage, primary.count, {
+      qualityFor,
+      seedKeys: primaryKeys,
+      stateBudget: dominancePreviewBudget,
+      integrated: true,
+      dominance: true,
+    })
+    : null;
+  if (dominancePreview?.completed
+      && Number.isFinite(dominancePreview.count)
+      && dominancePreview.count === primary.count) {
+    return {
+      ...dominancePreview,
+      searchedStates: (primary.searchedStates ?? 0) + (dominancePreview.searchedStates ?? 0),
+      backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
+      cardinalityBackend: primary.backend,
+      qualityBackend: "fast-dominance-exact",
+      qualityExact: true,
+      useHiGHSRequested: requested,
+      useHiGHSResolved: primary.backend === "highs",
+      minimumCoverKernelCases: kernelStats.cases,
+      minimumCoverKernelSolutions: kernelStats.solutions,
+      minimumCoverKernelEntries: kernelStats.entries,
+      primarySearchedStates: primary.searchedStates ?? 0,
+      qualitySearchedStates: dominancePreview.searchedStates ?? 0,
+      fastDominancePreviewBudget: dominancePreviewBudget,
+      fastDominancePreviewStates: dominancePreview.searchedStates ?? 0,
+      fastProbeBudget: budget,
+      fastProbeStates: 0,
+      fastFallback: false,
+      fastDecision: "dominance-preview-exact",
+    };
+  }
+
   const probe = solver?.minimumCoverAtCount?.(coverage, primary.count, {
     qualityFor, seedKeys: primaryKeys, stateBudget: budget, integrated: true,
   });
   if (probe?.completed && Number.isFinite(probe.count) && probe.count === primary.count) {
     return {
       ...probe,
+      searchedStates: (primary.searchedStates ?? 0) + (dominancePreview?.searchedStates ?? 0) + (probe.searchedStates ?? 0),
       backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
       cardinalityBackend: primary.backend,
       qualityBackend: "fast-integrated-exact",
@@ -751,7 +894,9 @@ export async function minimumCoverAsync(coverage, {
       minimumCoverKernelSolutions: kernelStats.solutions,
       minimumCoverKernelEntries: kernelStats.entries,
       primarySearchedStates: primary.searchedStates ?? 0,
-      qualitySearchedStates: probe.searchedStates ?? 0,
+      qualitySearchedStates: (dominancePreview?.searchedStates ?? 0) + (probe.searchedStates ?? 0),
+      fastDominancePreviewBudget: dominancePreviewBudget,
+      fastDominancePreviewStates: dominancePreview?.searchedStates ?? 0,
       fastProbeBudget: budget,
       fastProbeStates: probe.searchedStates ?? 0,
       fastFallback: false,
@@ -759,7 +904,53 @@ export async function minimumCoverAsync(coverage, {
     };
   }
 
-  const fallbackKeys = probe?.keys?.length === primary.count ? probe.keys : primaryKeys;
+  // The integrated search and the sequential-threshold prover have very
+  // different hard cases. A small bounded threshold pass can often finish
+  // exactly after the integrated probe times out, and is cheaper than spending
+  // the same extra states on the integrated tree. Scale the grace down when a
+  // caller deliberately requests a tiny Fast budget (tests/custom callers).
+  const thresholdGraceBudget = Math.max(1, Math.min(
+    FAST_THRESHOLD_GRACE_STATE_BUDGET,
+    Math.floor(budget / 10),
+  ));
+  const thresholdSeedKeys = probe?.keys?.length === primary.count ? probe.keys : primaryKeys;
+  const thresholdProbe = solver?.minimumCoverAtCount?.(coverage, primary.count, {
+    qualityFor,
+    seedKeys: thresholdSeedKeys,
+    stateBudget: thresholdGraceBudget,
+    integrated: false,
+  });
+  if (thresholdProbe?.completed
+      && Number.isFinite(thresholdProbe.count)
+      && thresholdProbe.count === primary.count) {
+    return {
+      ...thresholdProbe,
+      searchedStates: (primary.searchedStates ?? 0) + (dominancePreview?.searchedStates ?? 0) + (probe?.searchedStates ?? 0) + (thresholdProbe.searchedStates ?? 0),
+      backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
+      cardinalityBackend: primary.backend,
+      qualityBackend: "fast-threshold-exact",
+      qualityExact: true,
+      useHiGHSRequested: requested,
+      useHiGHSResolved: primary.backend === "highs",
+      minimumCoverKernelCases: kernelStats.cases,
+      minimumCoverKernelSolutions: kernelStats.solutions,
+      minimumCoverKernelEntries: kernelStats.entries,
+      primarySearchedStates: primary.searchedStates ?? 0,
+      qualitySearchedStates: (dominancePreview?.searchedStates ?? 0) + (probe?.searchedStates ?? 0) + (thresholdProbe.searchedStates ?? 0),
+      fastDominancePreviewBudget: dominancePreviewBudget,
+      fastDominancePreviewStates: dominancePreview?.searchedStates ?? 0,
+      fastProbeBudget: budget,
+      fastProbeStates: probe?.searchedStates ?? 0,
+      fastThresholdBudget: thresholdGraceBudget,
+      fastThresholdStates: thresholdProbe.searchedStates ?? 0,
+      fastFallback: false,
+      fastDecision: "threshold-exact-after-integrated-budget",
+    };
+  }
+
+  const fallbackKeys = thresholdProbe?.keys?.length === primary.count
+    ? thresholdProbe.keys
+    : thresholdSeedKeys;
   const idByKey = new Map(prepared.keys.map((key, id) => [key, id]));
   const fallbackIds = fallbackKeys.map((key) => idByKey.get(key));
   if (fallbackIds.some((id) => id === undefined)) {
@@ -770,7 +961,7 @@ export async function minimumCoverAsync(coverage, {
     count: primary.count,
     keys: refined.selected.map((id) => prepared.keys[id]),
     qualityVector: refined.qualityVector,
-    searchedStates: (primary.searchedStates ?? 0) + (probe?.searchedStates ?? 0),
+    searchedStates: (primary.searchedStates ?? 0) + (dominancePreview?.searchedStates ?? 0) + (probe?.searchedStates ?? 0) + (thresholdProbe?.searchedStates ?? 0),
     backend: primary.backend,
     cardinalityBackend: primary.backend,
     qualityBackend: "fast-2x2",
@@ -781,9 +972,13 @@ export async function minimumCoverAsync(coverage, {
     minimumCoverKernelSolutions: kernelStats.solutions,
     minimumCoverKernelEntries: kernelStats.entries,
     primarySearchedStates: primary.searchedStates ?? 0,
-    qualitySearchedStates: probe?.searchedStates ?? 0,
+    qualitySearchedStates: (dominancePreview?.searchedStates ?? 0) + (probe?.searchedStates ?? 0) + (thresholdProbe?.searchedStates ?? 0),
+    fastDominancePreviewBudget: dominancePreviewBudget,
+    fastDominancePreviewStates: dominancePreview?.searchedStates ?? 0,
     fastProbeBudget: budget,
     fastProbeStates: probe?.searchedStates ?? 0,
+    fastThresholdBudget: thresholdGraceBudget,
+    fastThresholdStates: thresholdProbe?.searchedStates ?? 0,
     fastFallback: true,
     fastDecision: "integrated-budget-exceeded",
     qualityRefinementPasses: refined.passes,

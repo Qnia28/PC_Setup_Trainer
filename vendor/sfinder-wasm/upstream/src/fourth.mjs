@@ -11,6 +11,38 @@ const DETAIL = [
   ["OS/OZ", "OS||OZ"], ["SZ", "SZ"],
 ];
 
+// `fourth` is a fixed 4-line feature: the board is decoded at height 4 and the
+// DETAIL save expressions assume a 4-line perfect clear. It is not a general
+// N-line API, so a request naming any other geometry is rejected here, at the
+// feature boundary, instead of being analyzed under a mismatched solver height
+// (#14).
+export const FOURTH_TARGET_LINES = 4;
+
+export class FourthValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "FourthValidationError";
+  }
+}
+
+/**
+ * `clear` and `height` are validated independently: each one, when present,
+ * must be exactly 4. A contradictory pair such as `{ clear: 4, height: 5 }` is
+ * therefore rejected on its non-4 member, and so is `{ clear: 5, height: 4 }`.
+ * Absent values are accepted and default to the fixed contract.
+ */
+export function validateFourthInput({ clear, height } = {}) {
+  for (const [name, value] of [["clear", clear], ["height", height]]) {
+    if (value === undefined || value === null) continue;
+    if (value !== FOURTH_TARGET_LINES) {
+      throw new FourthValidationError(
+        `fourth supports ${FOURTH_TARGET_LINES} lines only; received ${name}=${JSON.stringify(value)}`,
+      );
+    }
+  }
+  return FOURTH_TARGET_LINES;
+}
+
 export function fourthQueues(hold, nextPair) {
   const normalizedHold = hold.toUpperCase();
   const pair = nextPair.toUpperCase();
@@ -22,7 +54,8 @@ export function fourthQueues(hold, nextPair) {
   };
 }
 
-export function calculateFourthDistribution({ sourceFumen, hold, nextPair, solver, useHold = true }) {
+export function calculateFourthDistribution({ sourceFumen, hold, nextPair, solver, useHold = true, clear, height }) {
+  validateFourthInput({ clear, height });
   const { pathPattern, savePattern } = fourthQueues(hold, nextPair);
   const board = boardFromFumenPage(decoder.decode(sourceFumen)[0]);
   const queues = expandPattern(pathPattern);

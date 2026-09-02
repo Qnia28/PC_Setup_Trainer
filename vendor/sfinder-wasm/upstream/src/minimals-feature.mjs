@@ -7,7 +7,7 @@ import { minimumCoverAsync } from "./highs-min-cover.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
 import { expandPatternCases } from "./pattern.mjs";
 import { enumerateCasePath } from "./path-engine.mjs";
-import { compileSaveExpression, prepareSaveCase, prepareSolutionPieceCounts, savedMaskPrepared } from "./saves.mjs";
+import { compileExactSaveExpression, prepareSaveCase, prepareSolutionPieceCounts, savedMultiplicityCodePrepared } from "./saves.mjs";
 
 function collectSaveMinimals({
   sourceFumen,
@@ -22,7 +22,7 @@ function collectSaveMinimals({
   const queues = cases.map((entry) => entry.queue);
   const coverage = new Map();
   const qualityIndex = new Map();
-  const table = compileSaveExpression(wantedSave);
+  const saveMatches = compileExactSaveExpression(wantedSave);
   const byKey = new Map();
   const saveCases = cases.map((entry) => prepareSaveCase(entry.queue, entry.lastBag));
   const usageByKey = new Map();
@@ -42,7 +42,7 @@ function collectSaveMinimals({
           usage = prepareSolutionPieceCounts(solution);
           usageByKey.set(solution.key, usage);
         }
-        if (!table[savedMaskPrepared(saveCases[hit.caseIndex], usage)]) continue;
+        if (!saveMatches(savedMultiplicityCodePrepared(saveCases[hit.caseIndex], usage))) continue;
         let keys = coverage.get(entry.caseId);
         if (!keys) {
           keys = new Set();
@@ -51,7 +51,7 @@ function collectSaveMinimals({
         keys.add(solution.key);
         recordOrderCount(qualityIndex, entry.caseId, {
           key: solution.key,
-          orderCount: Number(hit.orderCount ?? 0),
+          orderCount: hit.orderCount,
         });
       }
     }
@@ -69,7 +69,7 @@ function collectSaveMinimals({
           usage = prepareSolutionPieceCounts(solution);
           usageByKey.set(solution.key, usage);
         }
-        if (!table[savedMaskPrepared(saveCases[caseIndex], usage)]) continue;
+        if (!saveMatches(savedMultiplicityCodePrepared(saveCases[caseIndex], usage))) continue;
         let keys = coverage.get(entry.caseId);
         if (!keys) {
           keys = new Set();
@@ -109,8 +109,12 @@ function finishSaveMinimals(collected, minimal) {
     minimumCoverKernelCases: minimal.minimumCoverKernelCases ?? null,
     minimumCoverKernelSolutions: minimal.minimumCoverKernelSolutions ?? null,
     minimumCoverKernelEntries: minimal.minimumCoverKernelEntries ?? null,
+    fastDominancePreviewBudget: minimal.fastDominancePreviewBudget ?? null,
+    fastDominancePreviewStates: minimal.fastDominancePreviewStates ?? null,
     fastProbeBudget: minimal.fastProbeBudget ?? null,
     fastProbeStates: minimal.fastProbeStates ?? null,
+    fastThresholdBudget: minimal.fastThresholdBudget ?? null,
+    fastThresholdStates: minimal.fastThresholdStates ?? null,
     fastFallback: minimal.fastFallback ?? false,
     fastDecision: minimal.fastDecision ?? null,
     humanQualityExact: minimal.qualityExact ?? true,

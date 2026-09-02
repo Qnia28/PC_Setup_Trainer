@@ -68,6 +68,118 @@ test('hard-cover quality refinement preserves coverage/cardinality and improves 
 });
 
 
+test('2x2 coverage membership remains independent from zero quality in synthetic prepared data', () => {
+  const prepared = {
+    keys: ['A', 'B', 'C'],
+    maxQuality: 3,
+    cases: [
+      [[0, 2], [2, 3]],
+      [[1, 0]],
+    ],
+  };
+  const refined = refineMinimumCoverQuality(prepared, [0, 1]);
+  assert.equal(refined.selected.length, 2);
+  const selected = new Set(refined.selected);
+  for (const row of prepared.cases) {
+    assert.ok(row.some(([id]) => selected.has(id)), `uncovered row: ${JSON.stringify(row)}`);
+  }
+});
+
+test('2x2 accepts a zero-quality replacement as a real coverage edge', () => {
+  const prepared = {
+    keys: ['A', 'B', 'C', 'D'],
+    maxQuality: 1,
+    cases: [
+      [[0, 1], [2, 1]],
+      [[1, 0], [3, 0]],
+    ],
+  };
+  const refined = refineMinimumCoverQuality(prepared, [2, 3]);
+  assert.deepEqual(refined.selected, [0, 1]);
+  assert.deepEqual(refined.qualityVector, [0, 1]);
+});
+
+
+test('2x2 preserves coverage and reported quality on zero-inclusive randomized matrices', () => {
+  let state = 0x6d2b79f5;
+  const next = () => {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    return state;
+  };
+  const choose = (n) => next() % n;
+  const combinations = (n, k) => {
+    const out = [];
+    const row = [];
+    const visit = (start) => {
+      if (row.length === k) { out.push([...row]); return; }
+      for (let id = start; id < n; id += 1) {
+        row.push(id); visit(id + 1); row.pop();
+      }
+    };
+    visit(0);
+    return out;
+  };
+  const covered = (cases, selected) => {
+    const chosen = new Set(selected);
+    return cases.every((row) => row.some(([id]) => chosen.has(id)));
+  };
+  const actualQuality = (cases, selected) => {
+    const chosen = new Set(selected);
+    return cases.map((row) => {
+      let best = 0;
+      for (const [id, quality] of row) if (chosen.has(id) && quality > best) best = quality;
+      return best;
+    }).sort((a, b) => a - b);
+  };
+
+  let checked = 0;
+  for (let attempt = 0; attempt < 20000 && checked < 3000; attempt += 1) {
+    const solutionCount = 4 + choose(5);
+    const caseCount = 2 + choose(7);
+    const exactCount = 2 + choose(Math.min(3, solutionCount - 1));
+    const cases = [];
+    let maxQuality = 0;
+    for (let ci = 0; ci < caseCount; ci += 1) {
+      const row = [];
+      for (let id = 0; id < solutionCount; id += 1) {
+        if (choose(100) < 45) {
+          const quality = choose(5); // zero is deliberately a valid synthetic quality.
+          row.push([id, quality]);
+          maxQuality = Math.max(maxQuality, quality);
+        }
+      }
+      if (!row.length) {
+        const quality = choose(5);
+        row.push([choose(solutionCount), quality]);
+        maxQuality = Math.max(maxQuality, quality);
+      }
+      cases.push(row);
+    }
+    const validInitial = combinations(solutionCount, exactCount).filter((selected) => covered(cases, selected));
+    if (!validInitial.length) continue;
+    const initial = validInitial[choose(validInitial.length)];
+    const refined = refineMinimumCoverQuality({
+      keys: Array.from({ length: solutionCount }, (_, id) => `S${id}`),
+      maxQuality,
+      cases,
+    }, initial, { maxPasses: 4 });
+    assert.equal(refined.selected.length, exactCount);
+    assert.ok(covered(cases, refined.selected));
+    assert.deepEqual(refined.qualityVector, actualQuality(cases, refined.selected));
+    checked += 1;
+  }
+  assert.equal(checked, 3000);
+});
+
+test('prepared production quality rejects zero, missing, non-finite, and non-integer covered quality', () => {
+  const coverage = new Map([['A', new Set(['X'])]]);
+  assert.throws(() => prepareCoverageMatrix(coverage, () => 0), /human quality must be an integer number in 1/);
+  assert.throws(() => prepareCoverageMatrix(coverage, () => undefined), /human quality must be an integer number in 1/);
+  assert.throws(() => prepareCoverageMatrix(coverage, () => NaN), /human quality must be an integer number in 1/);
+  assert.throws(() => prepareCoverageMatrix(coverage, () => 1.5), /human quality must be an integer number in 1/);
+  assert.equal(prepareCoverageMatrix(coverage, () => 1).cases[0][0][1], 1);
+});
+
 test('UseHiGHS accepts True/False/Auto and Auto uses exact primary-kernel hardness', () => {
   assert.equal(normalizeUseHiGHS(true), true);
   assert.equal(normalizeUseHiGHS(false), false);
@@ -123,8 +235,9 @@ test('forced Rust keeps primary independent while True/Fast choose secondary str
     });
     assert.equal(fast.count, 2);
     assert.equal(fast.cardinalityBackend, 'rust');
-    assert.equal(fast.qualityBackend, 'fast-integrated-exact');
+    assert.equal(fast.qualityBackend, 'fast-dominance-exact');
     assert.equal(fast.qualityExact, true);
+    assert.equal(fast.fastDecision, 'dominance-preview-exact');
     assert.equal(fast.fastFallback, false);
 
     const fallback = await minimumCoverAsync(coverage, {
@@ -194,7 +307,10 @@ test('forced HiGHS does not load/claim HiGHS when exact kernelization already pr
     const result = await minimumCoverAsync(coverage, { solver, useHiGHS: true, exactQuality: 'Fast' });
     assert.equal(result.count, 2);
     assert.equal(result.cardinalityBackend, 'kernel');
-    assert.equal(result.backend, 'kernel+rust');
+    assert.equal(result.backend, 'kernel');
+    assert.equal(result.qualityBackend, 'none');
+    assert.deepEqual(result.qualityVector, []);
+    assert.equal(result.fastDecision, 'cardinality-only');
     assert.equal(result.useHiGHSRequested, true);
     assert.equal(result.useHiGHSResolved, false);
   } finally { solver.close(); }
@@ -210,7 +326,10 @@ test('Auto takes kernel-only exact path before loading HiGHS when reductions ful
     const result = await minimumCoverAsync(coverage, { solver, useHiGHS: 'Auto', exactQuality: 'Fast' });
     assert.equal(result.count, 2);
     assert.equal(result.cardinalityBackend, 'kernel');
-    assert.equal(result.backend, 'kernel+rust');
+    assert.equal(result.backend, 'kernel');
+    assert.equal(result.qualityBackend, 'none');
+    assert.deepEqual(result.qualityVector, []);
+    assert.equal(result.fastDecision, 'cardinality-only');
     assert.equal(result.useHiGHSRequested, 'auto');
     assert.equal(result.useHiGHSResolved, false);
   } finally { solver.close(); }

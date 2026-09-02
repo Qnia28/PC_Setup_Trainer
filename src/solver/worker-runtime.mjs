@@ -6,12 +6,11 @@ import {
 } from "../../vendor/sfinder-wasm/upstream/src/features.mjs";
 import { solveSingleQueueFeature } from "../../vendor/sfinder-wasm/upstream/src/pc-solve.mjs";
 import { resolvePerSaveTargetLines } from "../../vendor/sfinder-wasm/upstream/src/per-save-minimals.mjs";
+import { keyedRetryableLoader } from "../../vendor/sfinder-wasm/upstream/src/promise-utils.mjs";
 import { loadWasmAssets, WasmPcSolver } from "./wasm-backend.mjs";
 
-let assetsPromise;
 let wasmMemory;
 let retainedAssetBytes = 0;
-const solvers = new Map();
 
 export const MAX_RETAINED_SOLVER_MEMORY_BYTES = 128 * 1024 * 1024;
 
@@ -46,22 +45,26 @@ export function shouldRecycleSolverWorkerAfterResult(value) {
 }
 
 export function shouldRecycleSolverWorkerAfterError(requestKind) {
-  return shouldRecycleSolverWorker()
-    || requestKind === "minimals"
-    || requestKind === "per-save-minimals";
+  void requestKind;
+  return shouldRecycleSolverWorker();
 }
 
-async function getSolver(height) {
-  let solver = solvers.get(height);
-  if (solver) return solver;
-  assetsPromise ??= loadWasmAssets();
-  const assets = await assetsPromise;
+export function createRetryableSolverLoader(factory) {
+  const solverByHeight = keyedRetryableLoader(factory);
+  return function loadSolver(height) {
+    if (!Number.isInteger(height) || height < 2 || height > 6) {
+      return Promise.reject(new Error(`unsupported height ${height}`));
+    }
+    return solverByHeight(height);
+  };
+}
+
+const getSolver = createRetryableSolverLoader(async (height) => {
+  const assets = await loadWasmAssets();
   wasmMemory = assets.exports.memory;
   retainedAssetBytes = assets.legal?.byteLength ?? 0;
-  solver = new WasmPcSolver(assets.exports, height, height === 4 ? assets.legal : null);
-  solvers.set(height, solver);
-  return solver;
-}
+  return new WasmPcSolver(assets.exports, height, height === 4 ? assets.legal : null);
+});
 
 function requestHeight(request) {
   if (request.kind === "per-save-minimals") return resolvePerSaveTargetLines(request.input);

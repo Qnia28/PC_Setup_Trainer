@@ -100,3 +100,17 @@ test("worker runtime exposes the same dedicated single-queue wrappers", async ()
   assert.equal(perSave.targetLines, 5);
   assert.equal(Object.values(perSave.pageCounts).reduce((a, b) => a + b, 0), perSave.solutionCount);
 });
+
+
+test("solve-one rejects a returned solution without positive playableOrderCount", () => {
+  const masks = Array(7).fill(0n);
+  const solver = {
+    bestPc() { return { key: "bad", masks, orderCount: 0 }; },
+  };
+  assert.throws(() => solveOnePc({
+    sourceFumen: FIVE_LINE,
+    pattern: "TOILJS",
+    targetLines: 5,
+    solver,
+  }), /playableOrderCount must be an integer number in 1/);
+});

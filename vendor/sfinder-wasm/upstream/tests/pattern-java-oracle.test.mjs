@@ -31,7 +31,7 @@ function solutionUsing(queue){
     masks[i]|=0xfn<<BigInt(i*4+n*32);
     counts.set(piece,n+1);
   }
-  return{key:queue,masks};
+  return{key:queue,masks,orderCount:1};
 }
 
 test('calculateSaves counts union branch cases separately and uses each last bag',()=>{

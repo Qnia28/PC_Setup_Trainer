@@ -13,7 +13,7 @@ function solution(key,usedPieces){
     masks[i]|=0xfn<<BigInt(offset);
     nextCell[i]++;
   }
-  return{key,masks};
+  return{key,masks,orderCount:1};
 }
 
 function fakeSolver(table){return{enumeratePc(_board,queue){return table.get(queue)??[]}}}
@@ -75,4 +75,18 @@ test('single queue uses exact direct per-save best API without JS full enumerati
   assert.equal(r.results.T.minimalCount,1);
   assert.deepEqual(r.results.T.humanQualityVector,[23]);
   assert.equal(r.results.T.solutions[0].key,'best-T');
+});
+
+
+test('single-queue direct per-save rejects missing or zero playableOrderCount',()=>{
+  const masks=Array(7).fill(0n);masks[0]=0xfn;
+  for(const orderCount of [undefined,0,'2']){
+    const solver={
+      perSaveBest(){return[{saved:5,key:'bad-T',masks,...(orderCount===undefined?{}:{orderCount})}]},
+    };
+    assert.throws(
+      ()=>calculatePerSaveMinimalsFromBoard({board:0n,queues:['T'],solver}),
+      /playableOrderCount must be an integer number in 1/,
+    );
+  }
 });

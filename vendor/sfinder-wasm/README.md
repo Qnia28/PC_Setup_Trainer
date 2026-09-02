@@ -3,9 +3,9 @@
 This directory isolates [`Qnia28/sfinder_wasm`](https://github.com/Qnia28/sfinder_wasm)
 from QniaPC's application code so frequent solver updates remain bounded.
 
-- `upstream/` is the curated Release 2.2 runtime/source snapshot imported from
-  `D:\AI\sfinder-wasm_2.2` on 2026-08-30, including its shared single-queue,
-  broad-pattern, adaptive minimum-cover, and cover engines.
+- `upstream/` is the curated Release 2.6 runtime/source snapshot imported from
+  `D:\AI\sfinder-wasm_20260901-release2.6` on 2026-09-02, including its shared
+  single-queue, broad-pattern, adaptive minimum-cover, and cover engines.
 - QniaPC integration instructions, release notes, changelogs, validation reports,
   README files, and end-user guide drafts from the source workspace are not part
   of the vendored snapshot.

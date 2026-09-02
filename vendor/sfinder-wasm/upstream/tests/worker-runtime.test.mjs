@@ -32,3 +32,25 @@ test('worker minimals is production adaptive and legacy-minimals preserves sync 
   assert.equal(typeof current.qualityBackend,'string');
   assert.equal(legacy.qualityBackend,undefined);
 });
+
+test('worker saves preserves legacy all-outcomes mode when wantedSave is omitted',async()=>{
+  const r=await runWorkerRequest({kind:'saves',input:{
+    sourceFumen:'v115@9gglIeglHewwhlzhBexwzhEewwJeAgH',
+    pattern:'T,[^TIL]!,*p2',
+  }});
+  assert.equal(r.total,1008);
+  assert.equal(r.success,1008);
+  assert.equal(r.saveResults.length,46);
+  assert.equal(r.saveResults.find(x=>x.save==='TTILSZ')?.success,20);
+});
+
+test('worker saves evaluates multiple requested save expressions in one call',async()=>{
+  const r=await runWorkerRequest({kind:'saves',input:{
+    sourceFumen:'v115@9gglIeglHewwhlzhBexwzhEewwJeAgH',
+    pattern:'T,[^TIL]!,*p2',
+    wantedSave:'^T,!T,S&&Z,TT#T>X',
+  }});
+  assert.deepEqual(r.wantedSaveResults.map(x=>[x.saveLabel,x.success]),[
+    ['^T',288],['!T',0],['S&&Z',1008],['T>X',152],
+  ]);
+});

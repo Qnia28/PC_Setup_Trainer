@@ -1,6 +1,10 @@
 import { preferredSolution } from "./human-ranking.mjs";
 import { PIECE_CODE } from "./piece-order.mjs";
+import { assertQualityProvider, requirePositiveQuality } from "./quality-contract.mjs";
+import { retryableLoader } from "./promise-utils.mjs";
 const DEFAULT_SOLUTION_WORD_STRIDE = 9;
+const U32_MAX = 0xffffffff;
+function wasmU32(value) { return Number(value) >>> 0; }
 
 function queueBits(queue) {
   if (queue.length > 21) throw new Error(`queue length ${queue.length} exceeds 21`);
@@ -24,17 +28,12 @@ async function bytesFor(url) {
   return new Uint8Array(await response.arrayBuffer());
 }
 
-let assetsPromise;
-
-export async function loadWasmAssets() {
-  assetsPromise ??= (async () => {
-    const wasm = await bytesFor(new URL("../wasm/pc_wasm.wasm", import.meta.url));
-    const legal = await bytesFor(new URL("../wasm/legal_boards_4.lgb", import.meta.url));
-    const { instance } = await WebAssembly.instantiate(wasm, {});
-    return { exports: instance.exports, legal };
-  })();
-  return assetsPromise;
-}
+export const loadWasmAssets = retryableLoader(async () => {
+  const wasm = await bytesFor(new URL("../wasm/pc_wasm.wasm", import.meta.url));
+  const legal = await bytesFor(new URL("../wasm/legal_boards_4.lgb", import.meta.url));
+  const { instance } = await WebAssembly.instantiate(wasm, {});
+  return { exports: instance.exports, legal };
+});
 
 function solutionKey(masks) {
   return masks.map((mask) => mask.toString(16)).join(":");
@@ -82,12 +81,12 @@ export class WasmPcSolver {
   _readSolutions(count) {
     if (count <= 0) return [];
     if (this.e.solver_copy_solution_words && this.e.wasm_alloc_u64 && this.e.wasm_dealloc_u64) {
-      const stride = Number(this.e.solver_solution_word_stride?.() ?? DEFAULT_SOLUTION_WORD_STRIDE);
+      const stride = wasmU32(this.e.solver_solution_word_stride?.() ?? DEFAULT_SOLUTION_WORD_STRIDE);
       if (stride < 9) throw new Error(`invalid solution word stride ${stride}`);
       const words = count * stride;
       const pointer = this.e.wasm_alloc_u64(words);
       try {
-        const copied = Number(this.e.solver_copy_solution_words(this.ptr, pointer, words));
+        const copied = wasmU32(this.e.solver_copy_solution_words(this.ptr, pointer, words));
         if (copied !== words) throw new Error(`WASM solution bulk copy failed: ${copied}/${words}`);
         const buffer = new BigUint64Array(this.e.memory.buffer, pointer, words);
         const output = [];
@@ -102,10 +101,14 @@ export class WasmPcSolver {
             buffer[base + 5],
             buffer[base + 6],
           ];
+          const key = solutionKey(masks);
           output.push({
             masks,
-            key: solutionKey(masks),
-            orderCount: Number(buffer[base + 7]),
+            key,
+            orderCount: requirePositiveQuality(Number(buffer[base + 7]), {
+              key,
+              label: "playableOrderCount",
+            }),
             saved: Number(buffer[base + 8]),
           });
         }
@@ -121,11 +124,18 @@ export class WasmPcSolver {
       for (let piece = 0; piece < 7; piece += 1) {
         masks.push(this.e.solver_solution_mask(this.ptr, index, piece));
       }
+      if (typeof this.e.solver_solution_order_count !== "function") {
+        throw new Error("WASM solution export is missing solver_solution_order_count");
+      }
+      const key = solutionKey(masks);
       output.push({
         masks,
-        key: solutionKey(masks),
-        orderCount: Number(this.e.solver_solution_order_count?.(this.ptr, index) ?? 0),
-        saved: Number(this.e.solver_solution_saved_piece?.(this.ptr, index) ?? 7),
+        key,
+        orderCount: requirePositiveQuality(wasmU32(this.e.solver_solution_order_count(this.ptr, index)), {
+          key,
+          label: "playableOrderCount",
+        }),
+        saved: wasmU32(this.e.solver_solution_saved_piece?.(this.ptr, index) ?? 7),
       });
     }
     return output;
@@ -199,7 +209,7 @@ export class WasmPcSolver {
   }
 
   enumeratePc(board, queue, useHold = true) {
-    const count = Number(this.e.solver_enumerate_pc(
+    const count = wasmU32(this.e.solver_enumerate_pc(
       this.ptr,
       board,
       queueBits(queue),
@@ -211,7 +221,7 @@ export class WasmPcSolver {
 
   bestPc(board, queue, useHold = true) {
     if (!this.e.solver_best_pc) return preferredSolution(this.enumeratePc(board, queue, useHold));
-    const count = Number(this.e.solver_best_pc(
+    const count = wasmU32(this.e.solver_best_pc(
       this.ptr,
       board,
       queueBits(queue),
@@ -227,7 +237,7 @@ export class WasmPcSolver {
     }
     if (queues.length === 0) return [];
     return this._withPackedQueues(queues, (queuePointer, lengthPointer) => {
-      const count = Number(this.e.solver_enumerate_pc_pattern(
+      const count = wasmU32(this.e.solver_enumerate_pc_pattern(
         this.ptr,
         board,
         queuePointer,
@@ -235,19 +245,23 @@ export class WasmPcSolver {
         queues.length,
         useHold ? 1 : 0,
       ));
-      if (count === 0xffffffff) throw new Error("WASM pattern enumeration failed");
+      if (count === U32_MAX) throw new Error("WASM pattern enumeration failed");
       const solutions = this._readSolutions(count);
       return solutions.map((solution, index) => {
-        const start = Number(this.e.solver_pattern_coverage_offset(this.ptr, index));
-        const end = Number(this.e.solver_pattern_coverage_offset(this.ptr, index + 1));
-        if (start === 0xffffffff || end === 0xffffffff || end < start) {
+        const start = wasmU32(this.e.solver_pattern_coverage_offset(this.ptr, index));
+        const end = wasmU32(this.e.solver_pattern_coverage_offset(this.ptr, index + 1));
+        if (start === U32_MAX || end === U32_MAX || end < start) {
           throw new Error("invalid WASM pattern coverage offsets");
         }
         const coverage = [];
         for (let coverageIndex = start; coverageIndex < end; coverageIndex += 1) {
+          const caseIndex = wasmU32(this.e.solver_pattern_coverage_case(this.ptr, coverageIndex));
           coverage.push({
-            caseIndex: Number(this.e.solver_pattern_coverage_case(this.ptr, coverageIndex)),
-            orderCount: Number(this.e.solver_pattern_coverage_order_count(this.ptr, coverageIndex)),
+            caseIndex,
+            orderCount: requirePositiveQuality(
+              wasmU32(this.e.solver_pattern_coverage_order_count(this.ptr, coverageIndex)),
+              { key: solution.key, caseId: caseIndex, label: "playableOrderCount" },
+            ),
           });
         }
         return { ...solution, coverage };
@@ -281,7 +295,7 @@ export class WasmPcSolver {
   perSaveBest(board, queue, useHold = true, { candidateLimit = 16 } = {}) {
     if (!this.e.solver_per_save_best) return null;
     const limit = Math.max(1, Math.min(65535, Number(candidateLimit) || 16));
-    const count = Number(this.e.solver_per_save_best(
+    const count = wasmU32(this.e.solver_per_save_best(
       this.ptr,
       board,
       queueBits(queue),
@@ -312,14 +326,14 @@ export class WasmPcSolver {
     try {
       new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
       if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
-      const status = Number(this.e.solver_primary_kernelize(
+      const status = wasmU32(this.e.solver_primary_kernelize(
         this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, Number(solutionCount),
       ));
-      if ((status >>> 0) === 0xffffffff) throw new Error('Rust primary kernelization failed');
-      const caseCount = Number(this.e.solver_primary_kernel_case_count(this.ptr));
-      const kernelEntryCount = Number(this.e.solver_primary_kernel_entry_count(this.ptr));
-      const kernelSolutionCount = Number(this.e.solver_primary_kernel_solution_count(this.ptr));
-      const forcedCount = Number(this.e.solver_primary_kernel_forced_count(this.ptr));
+      if (status === U32_MAX) throw new Error('Rust primary kernelization failed');
+      const caseCount = wasmU32(this.e.solver_primary_kernel_case_count(this.ptr));
+      const kernelEntryCount = wasmU32(this.e.solver_primary_kernel_entry_count(this.ptr));
+      const kernelSolutionCount = wasmU32(this.e.solver_primary_kernel_solution_count(this.ptr));
+      const forcedCount = wasmU32(this.e.solver_primary_kernel_forced_count(this.ptr));
       const memory = this.e.memory.buffer;
       const offsetsPtr = Number(this.e.solver_primary_kernel_offsets_ptr(this.ptr));
       const idsPtr = Number(this.e.solver_primary_kernel_ids_ptr(this.ptr));
@@ -366,15 +380,15 @@ export class WasmPcSolver {
     try {
       new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
       if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
-      const count = Number(this.e.solver_min_cover_cardinality(
+      const count = wasmU32(this.e.solver_min_cover_cardinality(
         this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, Number(solutionCount),
       ));
-      if ((count >>> 0) === 0xffffffff) {
+      if (count === U32_MAX) {
         return { count: Infinity, selectedIds: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n) };
       }
       const selectedIds = [];
       for (let index = 0; index < count; index += 1) {
-        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        const id = wasmU32(this.e.solver_min_cover_selected(this.ptr, index));
         if (id < 0 || id >= solutionCount) throw new Error('invalid WASM numeric cardinality-only result');
         selectedIds.push(id);
       }
@@ -413,13 +427,13 @@ export class WasmPcSolver {
     try {
       new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
       if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
-      const count = Number(this.e.solver_min_cover_cardinality(
+      const count = wasmU32(this.e.solver_min_cover_cardinality(
         this.ptr, offsetPointer, rawCases.length, idPointer, entryCount, keys.length,
       ));
-      if (count === 0xffffffff) return { count: Infinity, keys: [], qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n) };
+      if (count === U32_MAX) return { count: Infinity, keys: [], qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n) };
       const selected = [];
       for (let index = 0; index < count; index += 1) {
-        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        const id = wasmU32(this.e.solver_min_cover_selected(this.ptr, index));
         if (id >= keys.length) throw new Error('invalid WASM cardinality-only minimum-cover result');
         selected.push(keys[id]);
       }
@@ -444,14 +458,11 @@ export class WasmPcSolver {
       offsets[caseIndex] = position;
       for (const entry of cases[caseIndex]) {
         const id = Number(entry[0]);
-        const rawQuality = Number(entry[1] ?? 0);
         if (!Number.isInteger(id) || id < 0 || id >= solutionCount) {
           throw new Error(`invalid numeric minimum-cover candidate ${entry[0]}`);
         }
         ids[position] = id;
-        qualities[position] = Number.isFinite(rawQuality)
-          ? Math.max(0, Math.min(0xffffffff, Math.floor(rawQuality)))
-          : 0;
+        qualities[position] = requirePositiveQuality(entry[1], { key: id, caseId: caseIndex });
         position += 1;
       }
     }
@@ -463,10 +474,10 @@ export class WasmPcSolver {
       new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
       if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
       if (qualities.length) new Uint32Array(this.e.memory.buffer, qualityPointer, qualities.length).set(qualities);
-      const count = Number(this.e.solver_min_cover(
+      const count = wasmU32(this.e.solver_min_cover(
         this.ptr, offsetPointer, cases.length, idPointer, qualityPointer, entryCount, solutionCount,
       ));
-      if ((count >>> 0) === 0xffffffff) {
+      if (count === U32_MAX) {
         return {
           count: Infinity, selectedIds: [], qualityVector: [],
           searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n),
@@ -474,14 +485,14 @@ export class WasmPcSolver {
       }
       const selectedIds = [];
       for (let index = 0; index < count; index += 1) {
-        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        const id = wasmU32(this.e.solver_min_cover_selected(this.ptr, index));
         if (id >= solutionCount) throw new Error("invalid WASM numeric minimum-cover result");
         selectedIds.push(id);
       }
-      const qualityCount = Number(this.e.solver_min_cover_quality_len(this.ptr));
+      const qualityCount = wasmU32(this.e.solver_min_cover_quality_len(this.ptr));
       const qualityVector = [];
       for (let index = 0; index < qualityCount; index += 1) {
-        qualityVector.push(Number(this.e.solver_min_cover_quality(this.ptr, index)));
+        qualityVector.push(wasmU32(this.e.solver_min_cover_quality(this.ptr, index)));
       }
       return {
         count, selectedIds, qualityVector,
@@ -495,6 +506,8 @@ export class WasmPcSolver {
   }
 
   minimumCover(coverage, { qualityFor = null } = {}) {
+    assertQualityProvider(qualityFor);
+    if (qualityFor === null) return this.minimumCoverCardinality(coverage);
     if (!this.e.solver_min_cover || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
     const rawCases = [];
     const keySet = new Set();
@@ -519,10 +532,10 @@ export class WasmPcSolver {
       const row = rawCases[caseIndex];
       for (const key of row.row) {
         ids[position] = keyIndex.get(key);
-        const raw = qualityFor ? Number(qualityFor(key, row.caseId)) : 0;
-        qualities[position] = Number.isFinite(raw)
-          ? Math.max(0, Math.min(0xffffffff, Math.floor(raw)))
-          : 0;
+        qualities[position] = requirePositiveQuality(qualityFor(key, row.caseId), {
+          key,
+          caseId: row.caseId,
+        });
         position += 1;
       }
     }
@@ -535,7 +548,7 @@ export class WasmPcSolver {
       new Uint32Array(this.e.memory.buffer, offsetPointer, offsets.length).set(offsets);
       if (ids.length) new Uint32Array(this.e.memory.buffer, idPointer, ids.length).set(ids);
       if (qualities.length) new Uint32Array(this.e.memory.buffer, qualityPointer, qualities.length).set(qualities);
-      const count = Number(this.e.solver_min_cover(
+      const count = wasmU32(this.e.solver_min_cover(
         this.ptr,
         offsetPointer,
         rawCases.length,
@@ -544,7 +557,7 @@ export class WasmPcSolver {
         entryCount,
         keys.length,
       ));
-      if (count === 0xffffffff) {
+      if (count === U32_MAX) {
         return {
           count: Infinity,
           keys: [],
@@ -554,14 +567,14 @@ export class WasmPcSolver {
       }
       const selected = [];
       for (let index = 0; index < count; index += 1) {
-        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        const id = wasmU32(this.e.solver_min_cover_selected(this.ptr, index));
         if (id >= keys.length) throw new Error("invalid WASM minimum-cover result");
         selected.push(keys[id]);
       }
-      const qualityCount = Number(this.e.solver_min_cover_quality_len(this.ptr));
+      const qualityCount = wasmU32(this.e.solver_min_cover_quality_len(this.ptr));
       const qualityVector = [];
       for (let index = 0; index < qualityCount; index += 1) {
-        qualityVector.push(Number(this.e.solver_min_cover_quality(this.ptr, index)));
+        qualityVector.push(wasmU32(this.e.solver_min_cover_quality(this.ptr, index)));
       }
       return {
         count,
@@ -582,13 +595,19 @@ export class WasmPcSolver {
     lockedPrefix = [],
     stateBudget = null,
     integrated = false,
+    dominance = false,
   } = {}) {
+    assertQualityProvider(qualityFor);
+    if (qualityFor === null) throw new Error("minimumCoverAtCount requires a positive human-quality provider");
     const bounded = stateBudget != null;
     if (integrated && lockedPrefix.length) throw new Error('integrated fixed-K search does not accept lockedPrefix');
     if (bounded && lockedPrefix.length) throw new Error('bounded fixed-K probe does not accept lockedPrefix');
+    if (dominance && !integrated) throw new Error('candidate dominance preview requires integrated fixed-K search');
     const exactExport = this.e.solver_min_cover_at_count_locked;
     const boundedExport = integrated
-      ? this.e.solver_min_cover_at_count_integrated_bounded
+      ? (dominance
+        ? this.e.solver_min_cover_at_count_integrated_dominance_bounded
+        : this.e.solver_min_cover_at_count_integrated_bounded)
       : this.e.solver_min_cover_at_count_bounded;
     if ((integrated || bounded ? !boundedExport : !exactExport) || !this.e.wasm_alloc_u32 || !this.e.wasm_dealloc_u32) return null;
     const rawCases = [];
@@ -624,10 +643,10 @@ export class WasmPcSolver {
       const row = rawCases[caseIndex];
       for (const key of row.row) {
         ids[position] = keyIndex.get(key);
-        const raw = qualityFor ? Number(qualityFor(key, row.caseId)) : 0;
-        qualities[position] = Number.isFinite(raw)
-          ? Math.max(0, Math.min(0xffffffff, Math.floor(raw)))
-          : 0;
+        qualities[position] = requirePositiveQuality(qualityFor(key, row.caseId), {
+          key,
+          caseId: row.caseId,
+        });
         position += 1;
       }
     }
@@ -649,7 +668,7 @@ export class WasmPcSolver {
         const budget = bounded
           ? Math.max(1, Math.min(0xfffffffd, Math.floor(Number(stateBudget) || 0)))
           : 0;
-        status = Number(boundedExport(
+        status = wasmU32(boundedExport(
           this.ptr,
           offsetPointer,
           rawCases.length,
@@ -663,7 +682,7 @@ export class WasmPcSolver {
           budget,
         ));
       } else {
-        status = Number(exactExport(
+        status = wasmU32(exactExport(
           this.ptr,
           offsetPointer,
           rawCases.length,
@@ -679,20 +698,20 @@ export class WasmPcSolver {
         ));
       }
       const statusU32 = status >>> 0;
-      if (statusU32 === 0xffffffff) {
+      if (statusU32 === U32_MAX) {
         return { count: Infinity, keys: [], qualityVector: [], searchedStates: Number(this.e.solver_min_cover_searched_states?.(this.ptr) ?? 0n), completed: false, error: true };
       }
       const completed = statusU32 !== 0xfffffffe;
       const selectedCount = completed ? statusU32 : Number(exactCount);
       const selected = [];
       for (let index = 0; index < selectedCount; index += 1) {
-        const id = Number(this.e.solver_min_cover_selected(this.ptr, index));
+        const id = wasmU32(this.e.solver_min_cover_selected(this.ptr, index));
         if (id >= keys.length) throw new Error('invalid WASM fixed-count minimum-cover result');
         selected.push(keys[id]);
       }
-      const qualityCount = Number(this.e.solver_min_cover_quality_len(this.ptr));
+      const qualityCount = wasmU32(this.e.solver_min_cover_quality_len(this.ptr));
       const qualityVector = [];
-      for (let index = 0; index < qualityCount; index += 1) qualityVector.push(Number(this.e.solver_min_cover_quality(this.ptr, index)));
+      for (let index = 0; index < qualityCount; index += 1) qualityVector.push(wasmU32(this.e.solver_min_cover_quality(this.ptr, index)));
       return {
         count: completed ? statusU32 : Number(exactCount),
         keys: selected,
@@ -709,11 +728,11 @@ export class WasmPcSolver {
     }
   }
 
-  legalCount(stage) { return Number(this.e.solver_legal_count(this.ptr, stage)); }
-  legalPackVersion() { return Number(this.e.solver_legal_pack_version?.(this.ptr) ?? 0); }
-  legalMemoryBytes() { return Number(this.e.solver_legal_memory_bytes?.(this.ptr) ?? 0); }
-  stage8OracleEntries() { return Number(this.e.solver_stage8_oracle_entries?.(this.ptr) ?? 0); }
-  stage9OracleEntries() { return Number(this.e.solver_stage9_oracle_entries?.(this.ptr) ?? 0); }
+  legalCount(stage) { return wasmU32(this.e.solver_legal_count(this.ptr, stage)); }
+  legalPackVersion() { return wasmU32(this.e.solver_legal_pack_version?.(this.ptr) ?? 0); }
+  legalMemoryBytes() { return wasmU32(this.e.solver_legal_memory_bytes?.(this.ptr) ?? 0); }
+  stage8OracleEntries() { return wasmU32(this.e.solver_stage8_oracle_entries?.(this.ptr) ?? 0); }
+  stage9OracleEntries() { return wasmU32(this.e.solver_stage9_oracle_entries?.(this.ptr) ?? 0); }
 
   stats() {
     return {
@@ -721,7 +740,7 @@ export class WasmPcSolver {
       cacheHits: Number(this.e.solver_cache_hits(this.ptr)),
       cacheMisses: Number(this.e.solver_cache_misses(this.ptr)),
       legalRejects: Number(this.e.solver_legal_rejects(this.ptr)),
-      cacheEntries: Number(this.e.solver_cache_entries?.(this.ptr) ?? 0),
+      cacheEntries: wasmU32(this.e.solver_cache_entries?.(this.ptr) ?? 0),
     };
   }
 

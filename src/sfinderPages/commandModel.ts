@@ -5,6 +5,8 @@ import {
   type CommandField,
 } from "./commandCanvas";
 
+export { formatCalculationDuration } from "../solver/formatDuration";
+
 export type CommandTargetLines = 2 | 3 | 4 | 5 | 6;
 export type CommandLineGroup = "2-4" | "5-6";
 export type HiGHSMode = "auto" | "on" | "off";
@@ -47,11 +49,6 @@ export function defaultTargetLines(group: CommandLineGroup): 4 | 5 {
 
 export function commandTargetOptions(group: CommandLineGroup): readonly CommandTargetLines[] {
   return group === "2-4" ? [2, 3, 4] : [5, 6];
-}
-
-export function formatCalculationDuration(elapsedMs: number): string {
-  const roundedMs = Math.max(0, Math.round(elapsedMs));
-  return roundedMs >= 10_000 ? `${(roundedMs / 1_000).toFixed(1)} s` : `${roundedMs} ms`;
 }
 
 export function formatRatioPercentage(ratio: number): string {

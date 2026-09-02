@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { decoder, encoder, Field } from "tetris-fumen";
+import { formatCalculationDuration } from "../solver/formatDuration";
 import { SolverWorkerClient, viteWorkerFactory } from "../solver/workerClient";
 import {
   drawEditableField,
@@ -129,6 +130,7 @@ export function SolverApp() {
   const [displayMode, setDisplayMode] = useState<StandaloneSolveDisplayMode>("all");
   const [warmupState, setWarmupState] = useState<WarmupState>("loading");
   const [view, setView] = useState<SolverView>({ status: "idle" });
+  const [finishedDurationMs, setFinishedDurationMs] = useState<number | null>(null);
   const fieldCanvas = useRef<HTMLCanvasElement>(null);
   const solver = useRef<SolverWorkerClient | null>(null);
   const calculationAbort = useRef<AbortController | null>(null);
@@ -167,6 +169,7 @@ export function SolverApp() {
     calculationAbort.current?.abort();
     calculationAbort.current = null;
     setView({ status: "idle" });
+    setFinishedDurationMs(null);
   }, [displayMode, field, fumenInput, lineMode, queue]);
 
   useEffect(() => {
@@ -238,6 +241,8 @@ export function SolverApp() {
       setField(parsedFumen.field);
     }
     setView({ status: "loading" });
+    setFinishedDurationMs(null);
+    const startedAt = performance.now();
     try {
       const payload = await client.request<SolverResultPayload>(preparation.analysis.kind, {
         sourceFumen: encodeField(calculationField, lineMode),
@@ -247,9 +252,11 @@ export function SolverApp() {
         title: "QniaPC Solver",
       }, { signal: controller.signal });
       if (generation.current !== requestGeneration) return;
+      const elapsedMs = performance.now() - startedAt;
       const entries = decodeSolutionEntries(payload);
       if (entries.length === 0) {
         setView({ status: "none" });
+        setFinishedDurationMs(elapsedMs);
         return;
       }
       const saves = new Set(entries.flatMap(({ label }) => {
@@ -258,6 +265,7 @@ export function SolverApp() {
       }));
       const availableSaves = [...SAVE_DISPLAY_ORDER].filter((piece) => saves.has(piece));
       setView({ status: "ready", entries, availableSaves });
+      setFinishedDurationMs(elapsedMs);
     } catch (reason) {
       if (generation.current !== requestGeneration || reason instanceof DOMException && reason.name === "AbortError") return;
       setView({ status: "error", message: reason instanceof Error ? reason.message : "Solver failed." });
@@ -345,12 +353,17 @@ export function SolverApp() {
           <small>{warmupState === "ready" ? "Solver ready" : warmupState === "loading" ? "Preparing WASM and legal boards…" : "Solver preparation failed"}</small>
         </div>
 
-        <button
-          type="button"
-          className="standalone-calculate"
-          disabled={!preparation.ready || warmupState !== "ready" || view.status === "loading"}
-          onClick={() => void calculate()}
-        >{warmupState === "loading" ? "Preparing…" : view.status === "loading" ? "Calculating…" : "Calculate"}</button>
+        <div className="standalone-command-action">
+          <button
+            type="button"
+            className="standalone-calculate"
+            disabled={!preparation.ready || warmupState !== "ready" || view.status === "loading"}
+            onClick={() => void calculate()}
+          >{warmupState === "loading" ? "Preparing…" : view.status === "loading" ? "Calculating…" : "Calculate"}</button>
+          {finishedDurationMs !== null
+            ? <small className="standalone-finished-time" role="status">finished. {formatCalculationDuration(finishedDurationMs)}.</small>
+            : null}
+        </div>
       </div>
     </section>
 

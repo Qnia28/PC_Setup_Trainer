@@ -2,6 +2,7 @@ import { combineWithIntro, solutionPage } from "./fumen.mjs";
 import { preferredSolution } from "./human-ranking.mjs";
 import { exactQueue, pcGeometry, validateTargetLines } from "./pc-input.mjs";
 import { pieceFromRustCode } from "./piece-order.mjs";
+import { requirePositiveQuality } from "./quality-contract.mjs";
 import { PER_SAVE_DISPLAY_ORDER, unusedPieceForSolution } from "./per-save-minimals-core.mjs";
 
 function resolvedTargetLines(input) {
@@ -52,7 +53,10 @@ export function solveOnePc({
     piecesNeeded: current.piecesNeeded,
     solutionCount: 1,
     solutionKey: solution.key,
-    playableOrderCount: Number(solution.orderCount ?? 0),
+    playableOrderCount: requirePositiveQuality(solution.orderCount, {
+      key: solution.key,
+      label: "playableOrderCount",
+    }),
     fumen: combineWithIntro(sourceFumen, title, [page]),
   };
 }

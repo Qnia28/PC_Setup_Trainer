@@ -12,3 +12,12 @@ test('blue-garbage matches wrapper converter semantics',async()=>{
  assert.equal(normal.count,1);assert.equal(normal.solutions[0].operations.length,1);assert.equal(normal.solutions[0].comment,'O');
  assert.equal(blue.count,1);assert.equal(blue.solutions[0].operations.length,2);assert.equal(blue.solutions[0].comment,'OO');
 });
+
+test('legacy congruent-cover TSM oracle with mirror: 3924/5040',async()=>{
+ const f='v115@+gR4GeR4BtCeRpg0ilBtAewwRpg0glzhywh0JeAgH';
+ const r=await calculateCongruentCover({sourceFumen:f,pattern:'*p7',mode:'tsm',mirror:'yes',blueGarbage:false});
+ assert.equal(r.count,6);
+ assert.equal(r.covered,3924);
+ assert.equal(r.total,5040);
+ assert.equal(r.failed,1116);
+});

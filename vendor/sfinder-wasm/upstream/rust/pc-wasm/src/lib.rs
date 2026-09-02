@@ -5,6 +5,7 @@ use pc_core::{
         BoundedQualityResult, exact_minimum_cardinality_cover, exact_minimum_cover,
         exact_primary_cardinality_kernel, exact_quality_cover_at_count_bounded,
         exact_quality_cover_at_count_integrated_bounded,
+        exact_quality_cover_at_count_integrated_dominance_bounded,
         exact_quality_cover_at_count_with_locked_prefix,
     },
 };
@@ -809,8 +810,8 @@ pub unsafe extern "C" fn solver_min_cover_at_count_bounded(
     }
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn solver_min_cover_at_count_integrated_bounded(
+#[allow(clippy::too_many_arguments)]
+unsafe fn solver_min_cover_at_count_integrated_bounded_impl(
     ptr: *mut WasmSolver,
     offsets_ptr: *const u32,
     case_count: u32,
@@ -822,6 +823,7 @@ pub unsafe extern "C" fn solver_min_cover_at_count_integrated_bounded(
     seed_ptr: *const u32,
     seed_count: u32,
     state_budget: u32,
+    candidate_dominance: bool,
 ) -> u32 {
     if ptr.is_null()
         || offsets_ptr.is_null()
@@ -862,13 +864,24 @@ pub unsafe extern "C" fn solver_min_cover_at_count_integrated_bounded(
     solver.min_cover_quality.clear();
     solver.min_cover_searched_states = 0;
     let budget = (state_budget != 0).then_some(state_budget as u64);
-    let Some(result) = exact_quality_cover_at_count_integrated_bounded(
-        &cases,
-        solution_count as usize,
-        exact_count as usize,
-        seed,
-        budget,
-    ) else {
+    let result = if candidate_dominance {
+        exact_quality_cover_at_count_integrated_dominance_bounded(
+            &cases,
+            solution_count as usize,
+            exact_count as usize,
+            seed,
+            budget,
+        )
+    } else {
+        exact_quality_cover_at_count_integrated_bounded(
+            &cases,
+            solution_count as usize,
+            exact_count as usize,
+            seed,
+            budget,
+        )
+    };
+    let Some(result) = result else {
         return MIN_COVER_ERROR;
     };
     let (completed, result) = match result {
@@ -882,6 +895,70 @@ pub unsafe extern "C" fn solver_min_cover_at_count_integrated_bounded(
         solver.min_cover_selected.len() as u32
     } else {
         MIN_COVER_BUDGET_EXCEEDED
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn solver_min_cover_at_count_integrated_bounded(
+    ptr: *mut WasmSolver,
+    offsets_ptr: *const u32,
+    case_count: u32,
+    ids_ptr: *const u32,
+    quality_ptr: *const u32,
+    entry_count: u32,
+    solution_count: u32,
+    exact_count: u32,
+    seed_ptr: *const u32,
+    seed_count: u32,
+    state_budget: u32,
+) -> u32 {
+    unsafe {
+        solver_min_cover_at_count_integrated_bounded_impl(
+            ptr,
+            offsets_ptr,
+            case_count,
+            ids_ptr,
+            quality_ptr,
+            entry_count,
+            solution_count,
+            exact_count,
+            seed_ptr,
+            seed_count,
+            state_budget,
+            false,
+        )
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn solver_min_cover_at_count_integrated_dominance_bounded(
+    ptr: *mut WasmSolver,
+    offsets_ptr: *const u32,
+    case_count: u32,
+    ids_ptr: *const u32,
+    quality_ptr: *const u32,
+    entry_count: u32,
+    solution_count: u32,
+    exact_count: u32,
+    seed_ptr: *const u32,
+    seed_count: u32,
+    state_budget: u32,
+) -> u32 {
+    unsafe {
+        solver_min_cover_at_count_integrated_bounded_impl(
+            ptr,
+            offsets_ptr,
+            case_count,
+            ids_ptr,
+            quality_ptr,
+            entry_count,
+            solution_count,
+            exact_count,
+            seed_ptr,
+            seed_count,
+            state_budget,
+            true,
+        )
     }
 }
 

@@ -95,7 +95,7 @@ describe("SolverWorkerClient lifecycle", () => {
     client.dispose();
   });
 
-  it("recycles an adaptive Worker after returning an error and replaces it lazily", async () => {
+  it("recycles a Worker when the runtime explicitly requests it after an error", async () => {
     const { client, workers } = clientHarness();
     const firstWorker = workers[0]!;
     const first = client.request("minimals", { pattern: "*p7" });

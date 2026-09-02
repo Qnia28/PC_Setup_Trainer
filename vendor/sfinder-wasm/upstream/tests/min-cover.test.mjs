@@ -170,3 +170,28 @@ test('Rust/WASM integrated fixed-K matches legacy exact and reports budget exhau
     assert.equal(bounded.keys.length,legacy.count);
   }finally{solver.close();}
 });
+
+
+test('qualityFor null is explicitly cardinality-only in JS and WASM paths',async()=>{
+  const c=coverage([['A',['X','Y']],['B',['X','Z']],['C',['Y','Z']]]);
+  const js=exactMinimumCover(c);
+  assert.equal(js.count,2);
+  assert.deepEqual(js.qualityVector,[]);
+  const solver=await createWasmSolver(4);
+  try{
+    const wasm=solver.minimumCover(c);
+    assert.equal(wasm.count,2);
+    assert.deepEqual(wasm.qualityVector,[]);
+    assert.throws(()=>solver.minimumCoverAtCount(c,2,{seedKeys:wasm.keys}),/requires a positive human-quality provider/);
+  }finally{solver.close()}
+});
+
+test('zero quality is rejected for covered edges by JS and WASM quality APIs',async()=>{
+  const c=coverage([['A',['X']],['B',['X','Y']]]);
+  assert.throws(()=>exactMinimumCover(c,{qualityFor:()=>0}),/human quality must be an integer number in 1/);
+  const solver=await createWasmSolver(4);
+  try{
+    assert.throws(()=>solver.minimumCover(c,{qualityFor:()=>0}),/human quality must be an integer number in 1/);
+    assert.throws(()=>solver.minimumCoverAtCount(c,1,{qualityFor:()=>0,seedKeys:['X']}),/human quality must be an integer number in 1/);
+  }finally{solver.close()}
+});

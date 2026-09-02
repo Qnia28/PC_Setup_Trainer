@@ -1,7 +1,17 @@
 import { TETRIS_DISPLAY_ORDER } from "./piece-order.mjs";
 
 const ALL = TETRIS_DISPLAY_ORDER;
+export const MAX_PATTERN_CASES = 1000000;
 export const PIECE_ORDER=ALL;
+
+
+export class PatternExpansionError extends RangeError {
+  constructor(limit) {
+    super(`pattern expansion exceeds ${limit} cases`);
+    this.name = 'PatternExpansionError';
+    this.limit = limit;
+  }
+}
 
 export class PatternSyntaxError extends Error{
   constructor(message,{branchIndex=null,position=null}={}){
@@ -183,13 +193,25 @@ function optionsForElement(element){
   return options;
 }
 
-export function expandPatternCases(pattern){
+export function expandPatternCases(pattern,{maxCases=MAX_PATTERN_CASES}={}){
+  if(!Number.isInteger(maxCases)||maxCases<1)throw new RangeError(`invalid pattern expansion limit ${maxCases}`);
   const parsed=parsePattern(pattern),cases=[];
+  let totalCases=0;
   for(const branch of parsed.branches){
+    const optionGroups=branch.elements.map(optionsForElement);
+    let branchCases=1;
+    for(const opts of optionGroups){
+      if(opts.length===0){branchCases=0;break}
+      if(branchCases>Math.floor((maxCases-totalCases)/opts.length))throw new PatternExpansionError(maxCases);
+      branchCases*=opts.length;
+    }
+    totalCases+=branchCases;
+    if(totalCases>maxCases)throw new PatternExpansionError(maxCases);
     let queues=[''];
-    for(const element of branch.elements){
-      const opts=optionsForElement(element),next=[];
-      for(const prefix of queues)for(const option of opts)next.push(prefix+option);
+    for(const opts of optionGroups){
+      const next=new Array(queues.length*opts.length);
+      let write=0;
+      for(const prefix of queues)for(const option of opts)next[write++]=prefix+option;
       queues=next;
     }
     for(let i=0;i<queues.length;i++){
@@ -206,8 +228,8 @@ export function expandPatternCases(pattern){
   return cases;
 }
 
-export function expandPattern(pattern){
-  return expandPatternCases(pattern).map(x=>x.queue);
+export function expandPattern(pattern,options){
+  return expandPatternCases(pattern,options).map(x=>x.queue);
 }
 
 export function lastBagInfo(pattern){

@@ -6,22 +6,22 @@ import {
   calculatePerSaveMinimalsFeature,
   calculateSaves,
 } from "./features.mjs";
-import { calculateFourthDistribution } from "./fourth.mjs";
+import { calculateFourthDistribution, validateFourthInput } from "./fourth.mjs";
 import { solveSingleQueueFeature } from "./pc-solve.mjs";
 import { resolvePerSaveTargetLines } from "./per-save-minimals.mjs";
+import { keyedRetryableLoader } from "./promise-utils.mjs";
 import { loadWasmAssets, WasmPcSolver } from "./wasm-backend.mjs";
 
-let assetsPromise;
-const solvers = new Map();
+const solverByHeight = keyedRetryableLoader(async (height) => {
+  const assets = await loadWasmAssets();
+  return new WasmPcSolver(assets.exports, height, height === 4 ? assets.legal : null);
+});
 
-async function getSolver(height) {
-  let solver = solvers.get(height);
-  if (solver) return solver;
-  assetsPromise ??= loadWasmAssets();
-  const assets = await assetsPromise;
-  solver = new WasmPcSolver(assets.exports, height, height === 4 ? assets.legal : null);
-  solvers.set(height, solver);
-  return solver;
+export function getSolver(height) {
+  if (!Number.isInteger(height) || height < 2 || height > 6) {
+    return Promise.reject(new Error(`unsupported height ${height}`));
+  }
+  return solverByHeight(height);
 }
 
 function requestHeight(request) {
@@ -33,6 +33,7 @@ function requestHeight(request) {
 }
 
 export async function runWorkerRequest(request) {
+  if (request.kind === "fourth") validateFourthInput(request.input ?? {});
   const clear = requestHeight(request);
   const solver = await getSolver(clear);
   const input = { ...request.input, solver };

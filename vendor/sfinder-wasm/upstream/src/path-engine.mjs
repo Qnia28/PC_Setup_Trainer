@@ -72,7 +72,7 @@ export function visitCaseSolutions({
         const entry = cases[caseIndex];
         if (!entry) throw new Error(`invalid pattern coverage case ${caseIndex}`);
         if (caseHasSolution) caseHasSolution[caseIndex] = 1;
-        if (visit) visit(entry, caseIndex, solution, Number(hit.orderCount ?? 0));
+        if (visit) visit(entry, caseIndex, solution, hit.orderCount);
       }
     }
   } else {
@@ -82,7 +82,7 @@ export function visitCaseSolutions({
       if (caseHasSolution && solutions.length > 0) caseHasSolution[caseIndex] = 1;
       for (const solution of solutions) {
         if (byKey) byKey.set(solution.key, solution);
-        if (visit) visit(entry, caseIndex, solution, Number(solution.orderCount ?? 0));
+        if (visit) visit(entry, caseIndex, solution, solution.orderCount);
       }
     }
   }

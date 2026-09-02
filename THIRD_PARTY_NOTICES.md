@@ -13,8 +13,8 @@ source's stated terms.
 - Project: [sfinder_wasm](https://github.com/Qnia28/sfinder_wasm)
 - Author: Qnia ([@Qnia28](https://github.com/Qnia28))
 - Use in QniaPC: browser-native Rust/WASM Perfect Clear solver under
-  `vendor/sfinder-wasm/upstream`; the current Release 2.2 snapshot was imported
-  from the author's `sfinder-wasm_2.2` workspace on 2026-08-30.
+  `vendor/sfinder-wasm/upstream`; the current Release 2.6 snapshot was imported
+  from the author's `sfinder-wasm_20260901-release2.6` workspace on 2026-09-02.
 - Upstream public license: GPL-3.0-only.
 - Upstream license text: [GNU GPL version 3](https://github.com/Qnia28/sfinder_wasm/blob/main/LICENSE).
 - QniaPC license grant: the copyright holder has separately authorized their
@@ -32,7 +32,7 @@ source's stated terms.
 - Projects: [highs-js](https://github.com/lovasoa/highs-js) and
   [HiGHS](https://github.com/ERGO-Code/HiGHS)
 - Versions: 1.15.1.
-- Use in QniaPC: sfinder-wasm Release 2.2 lazily loads the browser HiGHS build
+- Use in QniaPC: sfinder-wasm Release 2.6 lazily loads the browser HiGHS build
   for exact minimum-cardinality proofs on difficult minimum-cover matrices.
   Secondary human-quality selection remains in sfinder-wasm.
 - License: MIT License.

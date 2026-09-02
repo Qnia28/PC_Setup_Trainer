@@ -1,3 +1,5 @@
+import { assertQualityProvider, requirePositiveQuality } from "./quality-contract.mjs";
+
 // Independent exact minimum set-cover solver.
 // Primary objective: minimum number of solutions.
 // Secondary objective (optional): maximize the lexicographically sorted
@@ -31,11 +33,12 @@ function stableSetKey(indices,keys){
 
 /**
  * coverage: Map<caseId, Set<solutionKey>>
- * qualityFor: optional (solutionKey, caseId) => finite number. Larger is better.
+ * qualityFor: optional (solutionKey, caseId) => positive integer playableOrderCount. Larger is better.
  *
  * Returns one deterministic optimal minimum set rather than all tied sets.
  */
 export function exactMinimumCover(coverage,{qualityFor=null}={}){
+  assertQualityProvider(qualityFor);
   const rawCases=[];
   const keySet=new Set();
   for(const[caseId,solutions]of coverage){
@@ -124,6 +127,7 @@ export function exactMinimumCover(coverage,{qualityFor=null}={}){
   const greedySet=greedy();
   if(!greedySet)return{count:Infinity,keys:[],qualityVector:[],searchedStates:0};
   let bestCount=greedySet.length;
+  let bestCardinalitySelected=[...greedySet].sort((a,b)=>a-b);
   let searchedStates=0;
   const bestDepthByCovered=new Map();
 
@@ -146,9 +150,16 @@ export function exactMinimumCover(coverage,{qualityFor=null}={}){
     return best;
   }
 
-  function searchCardinality(covered,depth){
+  function searchCardinality(covered,selected){
     searchedStates++;
-    if(covered===fullMask){if(depth<bestCount)bestCount=depth;return}
+    const depth=selected.length;
+    if(covered===fullMask){
+      if(depth<bestCount){
+        bestCount=depth;
+        bestCardinalitySelected=[...selected].sort((a,b)=>a-b);
+      }
+      return;
+    }
     if(depth>=bestCount)return;
     const prev=bestDepthByCovered.get(covered);
     if(prev!==undefined&&prev<=depth)return;
@@ -159,17 +170,29 @@ export function exactMinimumCover(coverage,{qualityFor=null}={}){
     if(ci<0)return;
     const branches=caseCandidates[ci].map(si=>({si,gain:popcountBigInt(activeCoverage[si]&uncovered)}));
     branches.sort((a,b)=>b.gain-a.gain||a.si-b.si);
-    for(const{si}of branches)searchCardinality(covered|activeCoverage[si],depth+1);
+    for(const{si}of branches){
+      selected.push(si);
+      searchCardinality(covered|activeCoverage[si],selected);
+      selected.pop();
+    }
   }
-  searchCardinality(0n,0);
+  searchCardinality(0n,[]);
+
+  if(!qualityFor){
+    return{
+      count:bestCount,
+      keys:bestCardinalitySelected.map(i=>keys[i]),
+      qualityVector:[],
+      searchedStates,
+    };
+  }
 
   const qualityCache=new Map();
   function q(si,oi){
-    if(!qualityFor)return 0;
     const ck=`${si}|${oi}`;
     if(qualityCache.has(ck))return qualityCache.get(ck);
-    const value=Number(qualityFor(keys[si],rawCases[oi].caseId));
-    const normalized=Number.isFinite(value)?value:0;
+    const key=keys[si],caseId=rawCases[oi].caseId;
+    const normalized=requirePositiveQuality(qualityFor(key,caseId),{key,caseId});
     qualityCache.set(ck,normalized);
     return normalized;
   }
@@ -250,7 +273,10 @@ export function stableSolutionOrder(solutions){
 // The independent JavaScript implementation remains as a deterministic
 // fallback for unit tests, mocks, and older WASM binaries.
 export function minimumCover(coverage,{qualityFor=null,solver=null}={}){
-  const direct=solver?.minimumCover?.(coverage,{qualityFor});
+  assertQualityProvider(qualityFor);
+  const direct=qualityFor===null
+    ? solver?.minimumCoverCardinality?.(coverage)
+    : solver?.minimumCover?.(coverage,{qualityFor});
   if(direct!==null&&direct!==undefined)return direct;
   return exactMinimumCover(coverage,{qualityFor});
 }

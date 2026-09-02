@@ -50,6 +50,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, canvas:focus-vi
 .standalone-input-status small { display: block; margin-top: 4px; color: #75a5b7; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 .standalone-calculate { min-height: 48px; color: #061016; background: #67d4f5; border-color: #67d4f5; font-weight: 800; }
 .standalone-calculate:hover:not(:disabled) { background: #8be1fa; border-color: #8be1fa; }
+.standalone-command-action { display: grid; gap: 6px; }
+.standalone-finished-time { color: #718196; font-size: 11px; line-height: 1.4; text-align: center; }
 
 .standalone-results { min-height: 220px; margin-top: 20px; }
 .standalone-placeholder { margin: 70px 0; color: #718196; text-align: center; }

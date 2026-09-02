@@ -4,6 +4,7 @@ import { minimumCoverAdaptiveAsync } from "./highs-min-cover.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
 import { canUsePatternPath, enumerateCasePath, visitCaseSolutions } from "./path-engine.mjs";
 import { pieceFromRustCode, TETRIS_DISPLAY_ORDER } from "./piece-order.mjs";
+import { requirePositiveQuality } from "./quality-contract.mjs";
 import {
   prepareQueuePieceCounts,
   prepareSolutionPieceCounts,
@@ -43,6 +44,11 @@ function directSingleQueueResult({ board, cases, direct, displayOrder }) {
     const guaranteed = pcSuccess > 0 && success === pcSuccess;
     const coverage = new Map();
     if (solution) coverage.set(entry.caseId, new Set([solution.key]));
+    const playableOrderCount = solution ? requirePositiveQuality(solution.orderCount, {
+      key: solution.key,
+      caseId: entry.caseId,
+      label: "playableOrderCount",
+    }) : null;
     const data = {
       piece,
       success,
@@ -55,8 +61,8 @@ function directSingleQueueResult({ board, cases, direct, displayOrder }) {
       solutions: solution ? [solution] : [],
       coverageCounts: solution ? [1] : [],
       coverage,
-      humanQualityVector: solution ? [solution.orderCount ?? 0] : [],
-      playableOrderCount: solution ? Number(solution.orderCount ?? 0) : null,
+      humanQualityVector: solution ? [playableOrderCount] : [],
+      playableOrderCount,
       minimumCoverBackend: "direct",
       cardinalityBackend: "direct",
       qualityBackend: "direct-exact",
@@ -143,7 +149,12 @@ function finishPieceResult({
     coverageCounts,
     coverage: coverage ?? new Map(),
     humanQualityVector,
-    playableOrderCount: total === 1 && solutions.length ? humanQualityVector[0] ?? 0 : null,
+    playableOrderCount: total === 1 && solutions.length
+      ? requirePositiveQuality(humanQualityVector[0], {
+        key: keys[0] ?? null,
+        label: "playableOrderCount",
+      })
+      : null,
     minimumCoverBackend: minimal?.backend ?? (success > 0 ? "rust-legacy" : null),
     cardinalityBackend: minimal?.cardinalityBackend ?? null,
     qualityBackend: minimal?.qualityBackend ?? null,
@@ -190,7 +201,11 @@ function collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOr
       if (pi === undefined) throw new Error(`invalid saved piece ${String(saved)}`);
       let row = rowsByPiece[pi][caseIndex];
       if (!row) rowsByPiece[pi][caseIndex] = row = [];
-      row.push([id, Number(hit.orderCount ?? 0)]);
+      row.push([id, requirePositiveQuality(hit.orderCount, {
+        key: solution.key,
+        caseId: cases[caseIndex]?.caseId ?? caseIndex,
+        label: "playableOrderCount",
+      })]);
       coverageCountsByPiece[pi][id] += 1;
       if (!candidateSeenByPiece[pi][id]) {
         candidateSeenByPiece[pi][id] = 1;

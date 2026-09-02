@@ -419,6 +419,150 @@ fn quality_better(candidate: &[u32], current: Option<&[u32]>) -> bool {
     false
 }
 
+// Keep the common small-search path as cheap as the historical implementation.
+// Once enough distinct complete K-covers have been evaluated, repeated
+// quality-vector reconstruction becomes dominant and an incremental histogram
+// pays for its push/pop maintenance.
+const QUALITY_HISTOGRAM_SWITCH_COMPLETE_COVERS: u64 = 64;
+
+#[inline]
+fn histogram_better(candidate: &[usize], current: &[usize]) -> bool {
+    for (a, b) in candidate.iter().zip(current) {
+        if a != b {
+            // Sorted quality vectors are lexicographically larger exactly when
+            // the first differing low-quality bucket contains fewer cases.
+            return a < b;
+        }
+    }
+    false
+}
+
+#[derive(Clone, Debug)]
+struct QualityRowClass {
+    multiplicity: usize,
+}
+
+#[derive(Clone, Debug)]
+struct QualityHistogramState {
+    quality_values: Vec<u32>,
+    row_classes: Vec<QualityRowClass>,
+    sol_to_classes: Vec<Vec<(usize, u32)>>,
+    class_active_qualities: Vec<Vec<u32>>,
+    histogram: Vec<usize>,
+}
+
+impl QualityHistogramState {
+    fn build(raw_cases: &[Vec<(u32, u32)>], solution_count: usize, selected: &[u32]) -> Self {
+        // Rank-compress sparse u32 qualities. This avoids allocating by
+        // maxQuality and therefore remains safe for values such as u32::MAX.
+        let mut quality_values = vec![0u32];
+        for case in raw_cases {
+            for &(_, quality) in case {
+                quality_values.push(quality);
+            }
+        }
+        quality_values.sort_unstable();
+        quality_values.dedup();
+        let quality_to_rank: HashMap<u32, u32> = quality_values
+            .iter()
+            .enumerate()
+            .map(|(rank, &quality)| (quality, rank as u32))
+            .collect();
+
+        // Cases with exactly the same candidate->quality-rank mapping evolve
+        // identically under every selected set. Collapse them and retain their
+        // multiplicity so histogram updates touch each equivalence class once.
+        let mut class_map: HashMap<Vec<(u32, u32)>, usize> = HashMap::new();
+        let mut row_classes: Vec<QualityRowClass> = Vec::new();
+        let mut sol_to_classes = vec![Vec::<(usize, u32)>::new(); solution_count];
+        for case in raw_cases {
+            let key: Vec<(u32, u32)> = case
+                .iter()
+                .map(|&(solution, quality)| (solution, quality_to_rank[&quality]))
+                .collect();
+            if let Some(&class_id) = class_map.get(&key) {
+                row_classes[class_id].multiplicity += 1;
+            } else {
+                let class_id = row_classes.len();
+                for &(solution, rank) in &key {
+                    sol_to_classes[solution as usize].push((class_id, rank));
+                }
+                class_map.insert(key, class_id);
+                row_classes.push(QualityRowClass { multiplicity: 1 });
+            }
+        }
+
+        let mut state = Self {
+            quality_values,
+            class_active_qualities: vec![Vec::new(); row_classes.len()],
+            histogram: {
+                let mut histogram = vec![0usize; quality_to_rank.len()];
+                histogram[0] = raw_cases.len();
+                histogram
+            },
+            row_classes,
+            sol_to_classes,
+        };
+        for &solution in selected {
+            state.push(solution);
+        }
+        state
+    }
+
+    fn push(&mut self, solution: u32) {
+        for &(class_id, rank) in &self.sol_to_classes[solution as usize] {
+            let active = &mut self.class_active_qualities[class_id];
+            let old_max = active.last().copied().unwrap_or(0);
+            let pos = active.partition_point(|&value| value < rank);
+            active.insert(pos, rank);
+            let new_max = *active.last().expect("quality rank was inserted");
+            if old_max != new_max {
+                let multiplicity = self.row_classes[class_id].multiplicity;
+                self.histogram[old_max as usize] -= multiplicity;
+                self.histogram[new_max as usize] += multiplicity;
+            }
+        }
+    }
+
+    fn pop(&mut self, solution: u32) {
+        for &(class_id, rank) in &self.sol_to_classes[solution as usize] {
+            let active = &mut self.class_active_qualities[class_id];
+            let old_max = *active
+                .last()
+                .expect("selected solution quality must be active");
+            let pos = active.partition_point(|&value| value < rank);
+            debug_assert!(pos < active.len() && active[pos] == rank);
+            active.remove(pos);
+            let new_max = active.last().copied().unwrap_or(0);
+            if old_max != new_max {
+                let multiplicity = self.row_classes[class_id].multiplicity;
+                self.histogram[old_max as usize] -= multiplicity;
+                self.histogram[new_max as usize] += multiplicity;
+            }
+        }
+    }
+
+    fn histogram_for_quality_vector(&self, quality: &[u32]) -> Vec<usize> {
+        let mut histogram = vec![0usize; self.quality_values.len()];
+        for &value in quality {
+            let rank = self
+                .quality_values
+                .binary_search(&value)
+                .expect("quality vector value must exist in compressed ranks");
+            histogram[rank] += 1;
+        }
+        histogram
+    }
+
+    fn quality_vector(&self) -> Vec<u32> {
+        let mut quality = Vec::with_capacity(self.histogram.iter().sum());
+        for (rank, &count) in self.histogram.iter().enumerate() {
+            quality.extend(std::iter::repeat_n(self.quality_values[rank], count));
+        }
+        quality
+    }
+}
+
 struct BestSetSearch<'a> {
     full: &'a [u64],
     case_candidates: &'a [Vec<u32>],
@@ -429,18 +573,55 @@ struct BestSetSearch<'a> {
     completed: HashSet<Vec<u32>>,
     best_selected: Option<Vec<u32>>,
     best_quality: Option<Vec<u32>>,
+    best_histogram: Option<Vec<usize>>,
+    histogram_switch_after: u64,
+    quality_histogram: Option<QualityHistogramState>,
     searched_states: u64,
     state_budget: Option<u64>,
     budget_exceeded: bool,
 }
 
 impl BestSetSearch<'_> {
+    fn maybe_activate_histogram(&mut self, selected: &[u32]) {
+        if self.quality_histogram.is_some()
+            || (self.completed.len() as u64) < self.histogram_switch_after
+        {
+            return;
+        }
+        let state = QualityHistogramState::build(self.raw_cases, self.solution_count, selected);
+        self.best_histogram = self
+            .best_quality
+            .as_deref()
+            .map(|quality| state.histogram_for_quality_vector(quality));
+        self.quality_histogram = Some(state);
+    }
+
     fn consider(&mut self, selected: &[u32]) {
         let mut stable = selected.to_vec();
         stable.sort_unstable();
         if !self.completed.insert(stable.clone()) {
             return;
         }
+
+        self.maybe_activate_histogram(selected);
+        if let Some(state) = self.quality_histogram.as_ref() {
+            let replace = match self.best_histogram.as_deref() {
+                None => true,
+                Some(current) if histogram_better(&state.histogram, current) => true,
+                Some(current) if state.histogram.as_slice() == current => self
+                    .best_selected
+                    .as_deref()
+                    .is_none_or(|selected| stable.as_slice() < selected),
+                Some(_) => false,
+            };
+            if replace {
+                self.best_selected = Some(stable);
+                self.best_histogram = Some(state.histogram.clone());
+                self.best_quality = Some(state.quality_vector());
+            }
+            return;
+        }
+
         let quality = quality_vector(self.raw_cases, &stable, self.solution_count);
         let replace = quality_better(&quality, self.best_quality.as_deref())
             || (self.best_quality.as_deref() == Some(quality.as_slice())
@@ -502,7 +683,13 @@ impl BestSetSearch<'_> {
             let mut next = covered.clone();
             or_into(&mut next, &self.solution_coverage[solution as usize]);
             selected.push(solution);
+            if let Some(state) = self.quality_histogram.as_mut() {
+                state.push(solution);
+            }
             self.run(next, selected);
+            if let Some(state) = self.quality_histogram.as_mut() {
+                state.pop(solution);
+            }
             selected.pop();
         }
     }
@@ -604,9 +791,10 @@ pub fn exact_minimum_cardinality_cover(
 /// Among equal-cardinality covers, each case receives the best quality offered
 /// by the selected solutions; these per-case scores are sorted ascending and
 /// maximized lexicographically, so the worst-covered case improves first.
-pub fn exact_minimum_cover(
+fn exact_minimum_cover_with_histogram_switch(
     raw_cases: &[Vec<(u32, u32)>],
     solution_count: usize,
+    histogram_switch_after: u64,
 ) -> Option<MinimumCoverResult> {
     if raw_cases.is_empty() {
         return Some(MinimumCoverResult {
@@ -705,6 +893,9 @@ pub fn exact_minimum_cover(
         completed: HashSet::new(),
         best_selected: None,
         best_quality: None,
+        best_histogram: None,
+        histogram_switch_after,
+        quality_histogram: None,
         searched_states: 0,
         state_budget: None,
         budget_exceeded: false,
@@ -731,17 +922,30 @@ pub fn exact_minimum_cover(
     })
 }
 
+pub fn exact_minimum_cover(
+    raw_cases: &[Vec<(u32, u32)>],
+    solution_count: usize,
+) -> Option<MinimumCoverResult> {
+    exact_minimum_cover_with_histogram_switch(
+        raw_cases,
+        solution_count,
+        QUALITY_HISTOGRAM_SWITCH_COMPLETE_COVERS,
+    )
+}
+
 /// Optimize the legacy human-quality objective at an already-proven exact
 /// cardinality using the same integrated BestSetSearch as `exact_minimum_cover`.
 /// This deliberately skips the cardinality B&B; for ordinary workloads its
 /// search tree therefore matches the canonical secondary search while starting
 /// with K already known.
-pub fn exact_quality_cover_at_count_integrated_bounded(
+fn exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
     raw_cases: &[Vec<(u32, u32)>],
     solution_count: usize,
     exact_count: usize,
     seed_selected: &[u32],
     state_budget: Option<u64>,
+    histogram_switch_after: u64,
+    candidate_dominance: bool,
 ) -> Option<BoundedQualityResult> {
     if raw_cases.is_empty() {
         let result = MinimumCoverResult {
@@ -800,6 +1004,22 @@ pub fn exact_quality_cover_at_count_integrated_bounded(
         case_candidates.push(ids);
     }
 
+    // Speculative Fast preview only: remove candidates that are provably no
+    // better than a lower stable-ID candidate in coverage and every quality
+    // row.  This changes DFS traversal, so callers must only trust the result
+    // when the bounded search completes exactly; a timed-out preview is
+    // discarded and the historical search is restarted from the original seed.
+    let dominated = candidate_dominance
+        .then(|| quality_candidate_dominance_mask(&normalized, solution_count, &solution_coverage));
+    if let Some(dominated) = dominated.as_deref() {
+        for row in &mut case_candidates {
+            row.retain(|&solution| !dominated[solution as usize]);
+            if row.is_empty() {
+                return None;
+            }
+        }
+    }
+
     // The supplied seed must prove that this K is feasible on the full primary
     // problem.  K optimality itself is the caller's responsibility (the primary
     // backend has already proven it).
@@ -809,6 +1029,18 @@ pub fn exact_quality_cover_at_count_integrated_bounded(
     }
     if !is_full(&seed_covered, &full) {
         return None;
+    }
+
+    // After seed validation, remove dominated solutions from the gain/lower-bound
+    // universe as well as from branch candidate lists. Keeping their coverage
+    // here would make lower_bound artificially weak and can turn a tiny exact
+    // preview into an unnecessary timeout.
+    if let Some(dominated) = dominated.as_deref() {
+        for (solution, &is_dominated) in dominated.iter().enumerate() {
+            if is_dominated {
+                solution_coverage[solution].fill(0);
+            }
+        }
     }
 
     let seed_quality = quality_vector(&normalized, &seed, solution_count);
@@ -824,6 +1056,9 @@ pub fn exact_quality_cover_at_count_integrated_bounded(
         completed,
         best_selected: Some(seed.clone()),
         best_quality: Some(seed_quality.clone()),
+        best_histogram: None,
+        histogram_switch_after,
+        quality_histogram: None,
         searched_states: 0,
         state_budget,
         budget_exceeded: false,
@@ -844,6 +1079,48 @@ pub fn exact_quality_cover_at_count_integrated_bounded(
     } else {
         BoundedQualityResult::Exact(result)
     })
+}
+
+pub fn exact_quality_cover_at_count_integrated_bounded(
+    raw_cases: &[Vec<(u32, u32)>],
+    solution_count: usize,
+    exact_count: usize,
+    seed_selected: &[u32],
+    state_budget: Option<u64>,
+) -> Option<BoundedQualityResult> {
+    exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+        raw_cases,
+        solution_count,
+        exact_count,
+        seed_selected,
+        state_budget,
+        QUALITY_HISTOGRAM_SWITCH_COMPLETE_COVERS,
+        false,
+    )
+}
+
+/// Speculative exact fixed-K search with sound candidate dominance.
+///
+/// Candidate dominance changes the DFS tree, so a bounded timeout must not be
+/// used as a production incumbent.  The Fast JS caller uses this only as a
+/// small preview: an `Exact` result is accepted, while `BudgetExceeded` is
+/// discarded before restarting the historical integrated search.
+pub fn exact_quality_cover_at_count_integrated_dominance_bounded(
+    raw_cases: &[Vec<(u32, u32)>],
+    solution_count: usize,
+    exact_count: usize,
+    seed_selected: &[u32],
+    state_budget: Option<u64>,
+) -> Option<BoundedQualityResult> {
+    exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+        raw_cases,
+        solution_count,
+        exact_count,
+        seed_selected,
+        state_budget,
+        QUALITY_HISTOGRAM_SWITCH_COMPLETE_COVERS,
+        true,
+    )
 }
 
 pub fn exact_quality_cover_at_count_integrated(
@@ -1007,6 +1284,47 @@ impl QualityThresholdState {
 #[inline]
 fn words_subset(a: &[u64], b: &[u64]) -> bool {
     a.iter().zip(b).all(|(a, b)| a & !b == 0)
+}
+
+fn quality_candidate_dominance_mask(
+    normalized: &[Vec<(u32, u32)>],
+    solution_count: usize,
+    solution_coverage: &[Vec<u64>],
+) -> Vec<bool> {
+    let case_count = normalized.len();
+    let mut quality = vec![0u32; solution_count.saturating_mul(case_count)];
+    for (case, row) in normalized.iter().enumerate() {
+        for &(solution, score) in row {
+            quality[solution as usize * case_count + case] = score;
+        }
+    }
+
+    let mut dominated = vec![false; solution_count];
+    // Only a lower stable ID may dominate a higher one.  Coverage is compared
+    // on the active primary rows; quality is compared on every normalized row
+    // with absence represented as zero.  These three conditions preserve the
+    // exact fixed-K quality objective and its final stable-ID tie-break.
+    for y in 0..solution_count {
+        for x in 0..y {
+            if dominated[x] {
+                continue;
+            }
+            let coverage_superset = solution_coverage[x]
+                .iter()
+                .zip(&solution_coverage[y])
+                .all(|(&cx, &cy)| cx & cy == cy);
+            if !coverage_superset {
+                continue;
+            }
+            let xq = &quality[x * case_count..(x + 1) * case_count];
+            let yq = &quality[y * case_count..(y + 1) * case_count];
+            if xq.iter().zip(yq).all(|(qx, qy)| qx >= qy) {
+                dominated[y] = true;
+                break;
+            }
+        }
+    }
+    dominated
 }
 
 fn normalize_quality_cases(
@@ -1721,14 +2039,13 @@ fn fixed_quality_internal(
         .collect();
     levels.sort_unstable();
     levels.dedup();
-    if levels.len() <= 1 {
-        return Some(BoundedQualityResult::Exact(MinimumCoverResult {
-            selected: seed.clone(),
-            quality: quality_vector(&normalized, &seed, solution_count),
-            searched_states: 0,
-        }));
+    // The lowest quality threshold is normally vacuous for an exact cover, so
+    // discard it only when another threshold remains. With one distinct level,
+    // removing it would skip the sequential search entirely and therefore skip
+    // the final stable candidate-ID tie-break, returning the caller's seed.
+    if levels.len() > 1 {
+        levels.remove(0);
     }
-    levels.remove(0);
     let threshold_data: Vec<QualityThresholdData> = levels
         .iter()
         .map(|&threshold| QualityThresholdData::build(&normalized, solution_count, threshold))
@@ -2277,6 +2594,271 @@ mod tests {
     }
 
     #[test]
+    fn integrated_dominance_exact_matches_historical_on_random_small_matrices() {
+        let mut state = 0x9a31_74d2u32;
+        let mut next = || {
+            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
+            state
+        };
+        for sample in 0..160 {
+            let solution_count = 4 + (next() as usize % 5);
+            let case_count = 3 + (next() as usize % 7);
+            let mut cases = Vec::with_capacity(case_count);
+            for _ in 0..case_count {
+                let mut row = Vec::new();
+                for solution in 0..solution_count {
+                    if next() % 100 < 52 {
+                        // Include zero and duplicate quality values so membership
+                        // remains independent from quality during dominance.
+                        row.push((solution as u32, next() % 8));
+                    }
+                }
+                if row.is_empty() {
+                    row.push(((next() as usize % solution_count) as u32, next() % 8));
+                }
+                cases.push(row);
+            }
+            let Some(legacy) = exact_minimum_cover(&cases, solution_count) else {
+                continue;
+            };
+            let historical = exact_quality_cover_at_count_integrated_bounded(
+                &cases,
+                solution_count,
+                legacy.selected.len(),
+                &legacy.selected,
+                None,
+            )
+            .unwrap_or_else(|| panic!("historical integrated failed on sample {sample}"));
+            let dominance = exact_quality_cover_at_count_integrated_dominance_bounded(
+                &cases,
+                solution_count,
+                legacy.selected.len(),
+                &legacy.selected,
+                None,
+            )
+            .unwrap_or_else(|| panic!("dominance integrated failed on sample {sample}"));
+            let BoundedQualityResult::Exact(historical) = historical else {
+                unreachable!();
+            };
+            let BoundedQualityResult::Exact(dominance) = dominance else {
+                unreachable!();
+            };
+            assert_eq!(
+                dominance.selected, historical.selected,
+                "selected sample {sample}"
+            );
+            assert_eq!(
+                dominance.quality, historical.quality,
+                "quality sample {sample}"
+            );
+        }
+    }
+
+    #[test]
+    fn integrated_dominance_timeout_incumbent_is_not_a_parity_contract() {
+        // Candidate dominance is exact when the search finishes, but it changes
+        // choose_case/branch traversal.  At a tiny common budget the incumbent
+        // may differ, which is why production discards a timed-out preview.
+        let cases = vec![
+            vec![(0, 33), (1, 7), (4, 17)],
+            vec![(0, 5), (2, 33), (4, 9)],
+            vec![(1, 20), (2, 12), (3, 33)],
+            vec![(0, 11), (3, 18), (4, 17)],
+        ];
+        let exact = exact_minimum_cover(&cases, 5).unwrap();
+        let historical = exact_quality_cover_at_count_integrated_bounded(
+            &cases,
+            5,
+            exact.selected.len(),
+            &exact.selected,
+            Some(4),
+        )
+        .unwrap();
+        let dominance = exact_quality_cover_at_count_integrated_dominance_bounded(
+            &cases,
+            5,
+            exact.selected.len(),
+            &exact.selected,
+            Some(4),
+        )
+        .unwrap();
+        assert!(matches!(
+            historical,
+            BoundedQualityResult::BudgetExceeded(_)
+        ));
+        assert!(matches!(dominance, BoundedQualityResult::BudgetExceeded(_)));
+        // No equality assertion by design: only completed dominance previews
+        // are a valid replacement for the historical Fast path.
+    }
+
+    /// Regression for #5: a single distinct quality level must still resolve the
+    /// final stable candidate-ID objective instead of returning the seed.
+    #[test]
+    fn fixed_count_zero_quality_resolves_stable_id_tie() {
+        // One case, two interchangeable candidates, all-zero quality.
+        let cases = vec![vec![(0, 0), (1, 0)]];
+        let result = exact_quality_cover_at_count(&cases, 2, 1, &[1]).unwrap();
+        assert_eq!(result.selected, vec![0]);
+        assert_eq!(result.quality, vec![0]);
+    }
+
+    /// Regression for #5: positive constant quality reaches the same early
+    /// return as all-zero quality, so it must be corrected as well.
+    #[test]
+    fn fixed_count_positive_constant_quality_resolves_stable_id_tie() {
+        let cases = vec![vec![(0, 1), (1, 1)]];
+        let result = exact_quality_cover_at_count(&cases, 2, 1, &[1]).unwrap();
+        assert_eq!(result.selected, vec![0]);
+        assert_eq!(result.quality, vec![1]);
+    }
+
+    /// Regression for #5 where the stable-ID objective is not reachable by any
+    /// greedy lowest-ID rule: the two minimum 2-covers are [0, 3] and [1, 2],
+    /// no candidate primary-dominates another, and [0, 1] is not a cover.
+    #[test]
+    fn fixed_count_constant_quality_picks_lex_smallest_of_several_k_covers() {
+        let cases = vec![
+            vec![(0, 5), (1, 5)],
+            vec![(0, 5), (2, 5)],
+            vec![(1, 5), (3, 5)],
+            vec![(2, 5), (3, 5)],
+        ];
+        // The noncanonical seed is the other minimum 2-cover.
+        let result = exact_quality_cover_at_count(&cases, 4, 2, &[1, 2]).unwrap();
+        assert_eq!(result.selected, vec![0, 3]);
+        assert_eq!(result.quality, vec![5, 5, 5, 5]);
+
+        // Independent of the seed, and equal to the integrated search, which
+        // already resolved this tie before the correction.
+        let from_canonical_seed = exact_quality_cover_at_count(&cases, 4, 2, &[0, 3]).unwrap();
+        assert_eq!(from_canonical_seed.selected, result.selected);
+        assert_eq!(from_canonical_seed.quality, result.quality);
+        let integrated = exact_quality_cover_at_count_integrated(&cases, 4, 2, &[1, 2]).unwrap();
+        assert_eq!(integrated.selected, result.selected);
+        assert_eq!(integrated.quality, result.quality);
+    }
+
+    /// Single-level fixed-K must equal a brute-force lexicographically smallest
+    /// K-cover on random small matrices, for zero and positive constant quality.
+    #[test]
+    fn single_level_fixed_count_matches_brute_force_lex_minimum() {
+        let mut state = 0x5f37_59dfu32;
+        let mut next = || {
+            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
+            state
+        };
+        let mut checked = 0;
+        for sample in 0..200 {
+            let solution_count = 3 + (next() % 4) as usize;
+            let case_count = 2 + (next() % 4) as usize;
+            let quality = if sample % 2 == 0 { 0 } else { 7 };
+            let mut cases: Vec<Vec<(u32, u32)>> = Vec::with_capacity(case_count);
+            let mut usable = true;
+            for _ in 0..case_count {
+                let mut ids: Vec<u32> = (0..solution_count as u32)
+                    .filter(|_| next() % 2 == 0)
+                    .collect();
+                ids.sort_unstable();
+                ids.dedup();
+                if ids.is_empty() {
+                    usable = false;
+                    break;
+                }
+                cases.push(ids.into_iter().map(|id| (id, quality)).collect());
+            }
+            if !usable {
+                continue;
+            }
+            let Some(primary) = exact_minimum_cardinality_cover(&cases, solution_count) else {
+                continue;
+            };
+            let exact_count = primary.selected.len();
+            if exact_count == 0 || exact_count > 3 {
+                continue;
+            }
+
+            // Brute force every exactly-K cover; keep the lex-smallest as the
+            // expected answer and the lex-largest as a deliberately
+            // noncanonical seed.
+            let mut covers: Vec<Vec<u32>> = Vec::new();
+            let mut combo = vec![0usize; exact_count];
+            fn enumerate(
+                start: usize,
+                depth: usize,
+                combo: &mut Vec<usize>,
+                solution_count: usize,
+                cases: &[Vec<(u32, u32)>],
+                covers: &mut Vec<Vec<u32>>,
+            ) {
+                if depth == combo.len() {
+                    let selected: Vec<u32> = combo.iter().map(|&id| id as u32).collect();
+                    if cases
+                        .iter()
+                        .all(|case| case.iter().any(|&(id, _)| selected.contains(&id)))
+                    {
+                        covers.push(selected);
+                    }
+                    return;
+                }
+                for id in start..solution_count {
+                    combo[depth] = id;
+                    enumerate(id + 1, depth + 1, combo, solution_count, cases, covers);
+                }
+            }
+            enumerate(0, 0, &mut combo, solution_count, &cases, &mut covers);
+            covers.sort_unstable();
+            let expected = covers.first().expect("a K-cover exists").clone();
+            let worst_seed = covers.last().expect("a K-cover exists").clone();
+
+            for seed in [&primary.selected, &worst_seed] {
+                let actual =
+                    exact_quality_cover_at_count(&cases, solution_count, exact_count, seed)
+                        .unwrap();
+                assert_eq!(actual.selected, expected, "sample {sample}");
+                assert_eq!(
+                    actual.quality,
+                    vec![quality; cases.len()],
+                    "sample {sample}"
+                );
+            }
+            if covers.len() > 1 {
+                checked += 1;
+            }
+        }
+        assert!(
+            checked > 20,
+            "expected many multi-cover samples, got {checked}"
+        );
+    }
+
+    /// Keeping the single level (#5) also makes a one-entry locked prefix
+    /// reachable, where it was previously ignored along with the whole search.
+    /// The only achievable target is "every case good", and the fully locked
+    /// branch must still return the lexicographically smallest K-cover.
+    #[test]
+    fn single_level_fully_locked_prefix_resolves_stable_id_tie() {
+        let cases = vec![
+            vec![(0, 3), (1, 3)],
+            vec![(0, 3), (2, 3)],
+            vec![(1, 3), (3, 3)],
+            vec![(2, 3), (3, 3)],
+        ];
+        let all_good = cases.len() as u32;
+        let result =
+            exact_quality_cover_at_count_with_locked_prefix(&cases, 4, 2, &[1, 2], &[all_good])
+                .unwrap();
+        assert_eq!(result.selected, vec![0, 3]);
+        assert_eq!(result.quality, vec![3, 3, 3, 3]);
+
+        // An unreachable locked target is still rejected rather than silently
+        // returning the seed.
+        assert!(
+            exact_quality_cover_at_count_with_locked_prefix(&cases, 4, 2, &[1, 2], &[all_good - 1])
+                .is_none()
+        );
+    }
+
+    #[test]
     fn fully_locked_prefix_still_resolves_stable_id_tie() {
         // Candidate 1 strictly primary-dominates candidate 0, but when the
         // quality vector is already locked, [0,2] is the stable-ID winner.
@@ -2289,5 +2871,185 @@ mod tests {
             exact_quality_cover_at_count_with_locked_prefix(&cases, 4, 2, &[1, 2], &[1]).unwrap();
         assert_eq!(result.selected, vec![0, 2]);
         assert_eq!(result.quality, vec![1, 1, 2]);
+    }
+
+    #[test]
+    fn histogram_rank_compression_handles_sparse_u32_qualities() {
+        let cases = vec![
+            vec![(0, 0), (1, u32::MAX)],
+            vec![(0, 1_000_000), (1, u32::MAX - 1)],
+        ];
+        let mut state = QualityHistogramState::build(&cases, 2, &[0]);
+        assert_eq!(
+            state.quality_values,
+            vec![0, 1_000_000, u32::MAX - 1, u32::MAX]
+        );
+        assert_eq!(state.quality_vector(), vec![0, 1_000_000]);
+        let before = state.histogram.clone();
+        state.push(1);
+        assert_eq!(state.quality_vector(), vec![u32::MAX - 1, u32::MAX]);
+        state.pop(1);
+        assert_eq!(state.histogram, before);
+    }
+
+    #[test]
+    fn adaptive_histogram_matches_naive_fixed_k_on_random_matrices_and_budgets() {
+        let mut state = 0x8d12_3a77u32;
+        let mut next = || {
+            state = state.wrapping_mul(1_664_525).wrapping_add(1_013_904_223);
+            state
+        };
+        let quality_pool = [0u32, 1, 3, 5, 5, 17, 1_000_000, u32::MAX];
+        let mut checked = 0;
+        for sample in 0..180 {
+            let solution_count = 3 + (next() % 4) as usize;
+            let case_count = 2 + (next() % 5) as usize;
+            let mut cases = Vec::with_capacity(case_count);
+            let mut usable = true;
+            for _ in 0..case_count {
+                let mut ids: Vec<u32> = (0..solution_count as u32)
+                    .filter(|_| next() % 3 != 0)
+                    .collect();
+                ids.sort_unstable();
+                ids.dedup();
+                if ids.is_empty() {
+                    usable = false;
+                    break;
+                }
+                cases.push(
+                    ids.into_iter()
+                        .map(|id| (id, quality_pool[next() as usize % quality_pool.len()]))
+                        .collect::<Vec<_>>(),
+                );
+            }
+            if !usable {
+                continue;
+            }
+            let Some(primary) = exact_minimum_cardinality_cover(&cases, solution_count) else {
+                continue;
+            };
+            let exact_count = primary.selected.len();
+            if exact_count == 0 {
+                continue;
+            }
+            for budget in [Some(32), Some(64), Some(127), None] {
+                let histogram =
+                    exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+                        &cases,
+                        solution_count,
+                        exact_count,
+                        &primary.selected,
+                        budget,
+                        1,
+                        false,
+                    )
+                    .unwrap();
+                let naive = exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+                    &cases,
+                    solution_count,
+                    exact_count,
+                    &primary.selected,
+                    budget,
+                    u64::MAX,
+                    false,
+                )
+                .unwrap();
+                assert_eq!(histogram, naive, "sample={sample} budget={budget:?}");
+            }
+            checked += 1;
+        }
+        assert!(
+            checked > 100,
+            "expected broad randomized coverage, got {checked}"
+        );
+    }
+
+    #[test]
+    fn production_histogram_threshold_activates_after_many_complete_covers() {
+        // Every minimum cover chooses one solution from each side, yielding
+        // exactly 8 * 8 = 64 distinct K=2 covers. This exercises the production
+        // switch threshold rather than a test-only forced activation.
+        let mut left = Vec::new();
+        let mut right = Vec::new();
+        for id in 0..8u32 {
+            left.push((id, id + 1));
+        }
+        for id in 8..16u32 {
+            right.push((id, id - 7));
+        }
+        let cases = vec![left, right];
+        let seed = vec![0, 8];
+        let adaptive = exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+            &cases,
+            16,
+            2,
+            &seed,
+            None,
+            QUALITY_HISTOGRAM_SWITCH_COMPLETE_COVERS,
+            false,
+        )
+        .unwrap();
+        let naive = exact_quality_cover_at_count_integrated_bounded_with_histogram_switch(
+            &cases,
+            16,
+            2,
+            &seed,
+            None,
+            u64::MAX,
+            false,
+        )
+        .unwrap();
+        assert_eq!(adaptive, naive);
+        match adaptive {
+            BoundedQualityResult::Exact(result) => {
+                assert_eq!(result.selected, vec![7, 15]);
+                assert_eq!(result.quality, vec![8, 8]);
+            }
+            BoundedQualityResult::BudgetExceeded(_) => unreachable!(),
+        }
+    }
+
+    #[test]
+    fn adaptive_histogram_matches_naive_full_exact_search_on_random_matrices() {
+        let mut state = 0x4142_1356u32;
+        let mut next = || {
+            state = state.wrapping_mul(1_103_515_245).wrapping_add(12_345);
+            state
+        };
+        let quality_pool = [0u32, 1, 2, 7, 7, 99, 1_000_000, u32::MAX];
+        let mut checked = 0;
+        for sample in 0..140 {
+            let solution_count = 3 + (next() % 4) as usize;
+            let case_count = 1 + (next() % 5) as usize;
+            let mut cases = Vec::with_capacity(case_count);
+            let mut usable = true;
+            for _ in 0..case_count {
+                let mut ids: Vec<u32> = (0..solution_count as u32)
+                    .filter(|_| next() % 3 != 0)
+                    .collect();
+                ids.sort_unstable();
+                ids.dedup();
+                if ids.is_empty() {
+                    usable = false;
+                    break;
+                }
+                cases.push(
+                    ids.into_iter()
+                        .map(|id| (id, quality_pool[next() as usize % quality_pool.len()]))
+                        .collect::<Vec<_>>(),
+                );
+            }
+            if !usable {
+                continue;
+            }
+            let adaptive = exact_minimum_cover_with_histogram_switch(&cases, solution_count, 1);
+            let naive = exact_minimum_cover_with_histogram_switch(&cases, solution_count, u64::MAX);
+            assert_eq!(adaptive, naive, "sample={sample}");
+            checked += 1;
+        }
+        assert!(
+            checked > 80,
+            "expected broad randomized coverage, got {checked}"
+        );
     }
 }

@@ -1,3 +1,5 @@
+import { requirePositiveQuality } from "./quality-contract.mjs";
+
 // Human-friendliness v1 is produced by the structural Rust enumerator:
 // orderCount = number of distinct piece-type placement orders that actually
 // reach this solution under the concrete queue + Hold rules.
@@ -6,7 +8,15 @@
 // different queue cases, so quality is indexed by (caseId, solutionKey).
 
 export function comparePreferredSolutions(left, right) {
-  const orderDifference = Number(right?.orderCount ?? 0) - Number(left?.orderCount ?? 0);
+  const leftQuality = requirePositiveQuality(left?.orderCount, {
+    key: left?.key ?? null,
+    label: "playableOrderCount",
+  });
+  const rightQuality = requirePositiveQuality(right?.orderCount, {
+    key: right?.key ?? null,
+    label: "playableOrderCount",
+  });
+  const orderDifference = rightQuality - leftQuality;
   if (orderDifference !== 0) return orderDifference;
   const leftKey = left?.key ?? "";
   const rightKey = right?.key ?? "";
@@ -22,14 +32,22 @@ export function preferredSolution(solutions) {
 }
 
 export function recordOrderCount(index, caseId, solution) {
+  const key = solution?.key;
+  if (typeof key !== "string" || key.length === 0) {
+    throw new Error(`playableOrderCount record is missing a solution key for ${String(caseId)}`);
+  }
+  const value = requirePositiveQuality(solution?.orderCount, {
+    key,
+    caseId,
+    label: "playableOrderCount",
+  });
   let byKey = index.get(caseId);
   if (!byKey) {
     byKey = new Map();
     index.set(caseId, byKey);
   }
-  const value = Number(solution?.orderCount ?? 0);
-  const previous = byKey.get(solution.key) ?? 0;
-  if (value > previous) byKey.set(solution.key, value);
+  const previous = byKey.get(key);
+  if (previous === undefined || value > previous) byKey.set(key, value);
 }
 
 export function makeOrderCountQuality(index) {
@@ -40,6 +58,10 @@ export function makeOrderCountQuality(index) {
       cachedCaseId = caseId;
       cachedByKey = index.get(caseId);
     }
-    return cachedByKey?.get(key) ?? 0;
+    const value = cachedByKey?.get(key);
+    if (value === undefined) {
+      throw new Error(`missing playableOrderCount for covered edge ${String(caseId)} / ${String(key)}`);
+    }
+    return requirePositiveQuality(value, { key, caseId, label: "playableOrderCount" });
   };
 }
