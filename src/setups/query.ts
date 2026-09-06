@@ -26,11 +26,14 @@ import {
   selectCycle5AdvancedInitialDecision,
   type Cycle5AdvancedSetupRef,
   type Cycle5AdvancedQueuePattern,
+  type Cycle5AdvancedDirectRule,
 } from "./cycle5AdvancedPolicy";
 import { promotedCycle5AdvancedBundleForPair } from "./cycle5AdvancedCatalog";
 import { cycle6QueueContext, fitsCycle6BuildPool } from "./cycle6Context";
 import { cycle7Advanced4pGoodCycle8Rate, cycle7Advanced4pMatches, cycle7Advanced4pRuntimeBundle } from "./cycle7Advanced4pCatalog";
 import { cycle7QueueContext, fitsCycle7BuildPool } from "./cycle7Context";
+import { cycle7TwoPlusTwoLabel, cycle7TwoPlusTwoMatches, type Cycle7TwoPlusTwoBundle } from "./cycle7TwoPlusTwoPolicy";
+import { cycle7TwoPlusTwoRuntimeBundle } from "./cycle7TwoPlusTwoCatalog";
 import { cycle7QbCatalogForClass, cycle7QbClass, cycle7QbConditionRank, cycle7QbDisplayName, cycle7QbNextBag, cycle7QbPolicyEntryForSetup, cycle7QbRecommendationRank, cycle7QbRuntimeBundle, cycle7QbSourceOrder, type Cycle7QbPolicyEntry } from "./cycle7QbCatalog";
 import { conditionMatches, evaluateSelectionPolicy, type PolicyEvaluation, type SetupSelectionRule, type StructuredSetupPolicy } from "./policy";
 import { findBuildPlan, findBuildPlanCooperative, type BuildPlan, type CooperativeSearchControl, type ReachabilityCache } from "./reachability";
@@ -91,12 +94,18 @@ export interface SetupCandidate {
     preferred: boolean;
   };
   qbCondition?: string;
+  /** False keeps the candidate available for manual selection only. */
+  autoSelect?: boolean;
   /** Exact human-facing queue label. It bypasses unordered piece-name normalization. */
   recommendationLabel?: string;
   /** Final PC save targets attached to a Cycle-2 advanced QB recommendation. */
   qbSaveTargets?: Piece[];
+  /** Runtime-direction post-build HOLD/ACCESS availability, not initial HOLD eligibility. */
+  postBuildAvailability?: Cycle5AdvancedDirectRule["postBuildAvailability"];
   /** Source-defined chance of entering a good Cycle 8; this is not a PC solve rate. */
   goodCycle8EntryRate?: number;
+  /** Source-entry Good Save percentage; never an inferred PC solve rate. */
+  goodSavePercent?: number;
   /** Non-persisted identity of the selected diagnostic bundle that produced it. */
   recommendationSource?: RecommendationSourceIdentity;
 }
@@ -851,7 +860,7 @@ function cycle5AdvancedSelectedSearchPlan(
   const context = cycle5QueueContext(query);
   if (!context || context.classificationMode === "duplicate-pair-unsupported" || query.hold === null) return null;
   const executablePolicy = normalizeSelectedCycle5AdvancedPolicy(bundle.policy, bundle.bundleId);
-  const sourceState = bundle.runtimeMirror ? {
+  const observedSourceState = bundle.runtimeMirror ? {
     hold: mirrorPiece(query.hold),
     active: mirrorPiece(query.active),
     next: query.next.map(mirrorPiece),
@@ -860,6 +869,26 @@ function cycle5AdvancedSelectedSearchPlan(
     active: query.active,
     next: query.next,
   };
+  // Cycle 5's two-piece class is unordered. A visible-seven policy writes the
+  // canonical source class prefix (for example TO), not a required UI
+  // HOLD/ACTIVE orientation. Canonicalize only those first two class slots;
+  // the next-bag observation remains exact and ordered as authored.
+  const sourceClassPrefix = executablePolicy.entries.flatMap((entry) =>
+    (entry.kind === "direct" ? entry.alternatives.map(({ pattern }) => pattern) : entry.initialPatterns))
+    .filter((pattern) => pattern.scope === "visible-seven")
+    .map((pattern) => pattern.parts[0])
+    .find((part) => part?.kind === "ordered"
+      && part.symbols.length === 2
+      && part.symbols.every((symbol) => symbol !== "X")
+      && cycle5PiecePairKey(part.symbols as Piece[]) === cycle5PiecePairKey([
+        observedSourceState.hold,
+        observedSourceState.active,
+      ]));
+  const sourceState = sourceClassPrefix ? {
+    ...observedSourceState,
+    hold: sourceClassPrefix.symbols[0] as Piece,
+    active: sourceClassPrefix.symbols[1] as Piece,
+  } : observedSourceState;
   const matchingPatternLabel = (
     patterns: readonly Cycle5AdvancedQueuePattern[],
     kind: "QB" | "OQB",
@@ -886,28 +915,32 @@ function cycle5AdvancedSelectedSearchPlan(
   const targetIds = new Set(cycle5AdvancedInitialBfsSetupIds(actionableMatches));
   if (targetIds.size === 0) return null;
   const directRefs = actionableMatches.flatMap((match) => match.entry.kind === "direct" ? match.setupRefs : []);
-  const oqbIds = new Set(actionableMatches.flatMap((match) =>
+  const oqbRefs = actionableMatches.flatMap((match) =>
     match.entry.kind === "oqb" && match.entry.preconditionSetupId
-      ? [match.entry.preconditionSetupId]
-      : []));
-  const oqbPlacementCounts = new Map<string, Set<number>>();
-  for (const match of actionableMatches) {
-    if (match.entry.kind !== "oqb" || !match.entry.preconditionSetupId) continue;
-    const counts = oqbPlacementCounts.get(match.entry.preconditionSetupId) ?? new Set<number>();
-    counts.add(match.entry.checkpoint.placedCount);
-    oqbPlacementCounts.set(match.entry.preconditionSetupId, counts);
-  }
-  const runtimeCatalog = bundle.runtimeMirror ? bundle.catalog.map(mirrorSetup) : bundle.catalog;
+      ? [{ setupId: match.entry.preconditionSetupId, transform: match.entry.preconditionTransform,
+        placedCount: match.entry.checkpoint.placedCount }]
+      : []);
+  const defaultRuntimeCatalog = bundle.runtimeMirror ? bundle.catalog.map(mirrorSetup) : bundle.catalog;
+  // A self-mirroring Cycle 5 class (for example T/O) can bind one queue
+  // alternative to source geometry and another to its horizontal mirror.
+  // Materialize only the direct/precondition variants selected by matched refs;
+  // the promoted setup file remains the single source-basis geometry authority.
+  const referencedDirectCatalog = [...directRefs, ...oqbRefs].flatMap((ref) => bundle.catalog
+    .filter((setup) => canonicalSourceSetupId(setup) === ref.setupId)
+    .map((setup) => bundle.runtimeMirror !== ((ref.transform ?? "identity") === "mirror-x")
+      ? mirrorSetup(setup)
+      : setup));
+  const runtimeCatalog = [...new Map(
+    [...defaultRuntimeCatalog, ...referencedDirectCatalog].map((setup) => [setup.id, setup]),
+  ).values()];
   const catalog = runtimeCatalog.filter((setup) => {
     const canonicalId = canonicalSourceSetupId(setup);
     if (!targetIds.has(canonicalId)) return false;
     if (bundle.productionGated
       && (setup.reviewStatus !== "reviewed" || setup.runtimeEligible !== true)) return false;
-    if (oqbIds.has(canonicalId)) {
-      return isMirroredSetupVariant(setup) === (bundle.runtimeMirror === true)
-        && (oqbPlacementCounts.get(canonicalId)?.has(setup.placements.length) ?? false)
-        && setupPieceSignatureFitsPool(setup, context.buildPieces);
-    }
+    if (oqbRefs.some((ref) => setupMatchesCycle5AdvancedRef(setup, ref, bundle.runtimeMirror)
+      && ref.placedCount === setup.placements.length)
+      && setupPieceSignatureFitsPool(setup, context.buildPieces)) return true;
     if (!fitsCycle5BuildPool(setup, context.buildPieces)) return false;
     return directRefs.some((ref) => setupMatchesCycle5AdvancedRef(setup, ref, bundle.runtimeMirror));
   });
@@ -921,12 +954,20 @@ function cycle5AdvancedSelectedSearchPlan(
     } satisfies RecommendationCatalogSearch,
     finalize(buildable: SetupCandidate[]): SetupCandidate[] {
       const buildableIds = new Set(buildable.map(({ setup }) => canonicalSourceSetupId(setup)));
-      const decision = selectCycle5AdvancedInitialDecision(actionableMatches, buildableIds);
+      // Canonical IDs alone cannot prove the requested orientation reached BFS.
+      const reachableMatches = actionableMatches.filter((match) => match.entry.kind === "direct"
+        ? match.setupRefs.some((ref) => buildable.some(({ setup }) => setupMatchesCycle5AdvancedRef(setup, ref, bundle.runtimeMirror)))
+        : buildable.some(({ setup }) => setupMatchesCycle5AdvancedRef(setup, {
+          setupId: match.entry.kind === "oqb" ? match.entry.preconditionSetupId! : "",
+          transform: match.entry.kind === "oqb" ? match.entry.preconditionTransform : undefined,
+        }, bundle.runtimeMirror)));
+      const decision = selectCycle5AdvancedInitialDecision(reachableMatches, buildableIds);
       if (!decision || decision.kind === "two-line-pc") return [];
       if (decision.kind === "oqb") {
         const recommendationLabel = matchingPatternLabel(decision.plan.initialPatterns, "OQB");
         return buildable.filter(({ setup }) =>
-          canonicalSourceSetupId(setup) === decision.preconditionSetupId).map((candidate) => ({
+          setupMatchesCycle5AdvancedRef(setup, { setupId: decision.preconditionSetupId,
+            transform: decision.plan.preconditionTransform }, bundle.runtimeMirror)).map((candidate) => ({
           ...candidate,
           setup: typeof decision.bestsave === "boolean"
             ? { ...candidate.setup, bestsave: decision.bestsave }
@@ -970,6 +1011,10 @@ function cycle5AdvancedSelectedSearchPlan(
             preferred: true,
           },
           qbCondition: decision.ruleId,
+          ...(entry?.kind === "direct" && entry.postBuildAvailability ? { postBuildAvailability: {
+            ...entry.postBuildAvailability,
+            pieces: bundle.runtimeMirror ? entry.postBuildAvailability.pieces.map(mirrorPiece) : entry.postBuildAvailability.pieces,
+          } } : {}),
           ...(recommendationLabel ? { recommendationLabel } : {}),
         };
       });
@@ -1071,6 +1116,35 @@ function selectedCycle7Advanced4pMatches(
 }
 
 /** One orchestration program shared by the synchronous API and Worker API. */
+function* cycle7TwoPlusTwoProgram(
+  query: SetupQuery,
+  bundle: Cycle7TwoPlusTwoBundle,
+  source?: RecommendationSourceIdentity,
+): RecommendationProgram {
+  const match = cycle7TwoPlusTwoMatches(query, bundle);
+  if (!match || match.catalog.length === 0) return [];
+  const candidates = yield { type: "search", search: {
+    catalog: match.catalog, query, policy: bundle.policy, policyCatalog: bundle.catalog,
+    placeableNextCount: match.placeableNextCount, source,
+    scoreForSetup: setup => {
+      const entry = match.entryBySetupId.get(setup.id)!;
+      return [-(setup.priority ?? 0), -entry.goodSavePercent, entry.order, ...candidateScore(setup)];
+    },
+  } };
+  return candidates.map(candidate => {
+    const entry = match.entryBySetupId.get(candidate.setup.id)!;
+    const label = cycle7TwoPlusTwoLabel(entry);
+    return {
+      ...candidate, setup: { ...candidate.setup, displayName: label },
+      score: [Number.MAX_SAFE_INTEGER, ...candidate.score], qbCondition: entry.id,
+      autoSelect: false,
+      recommendationLabel: label, goodSavePercent: entry.goodSavePercent,
+      reasons: [label, "Cycle 7 QB: 2 prior pieces + 2 next-bag pieces; retain prior T.",
+        `Source-entry Good Save: ${entry.goodSavePercent}%.`, ...candidate.reasons],
+    };
+  }).sort(compareScores);
+}
+
 export function* recommendationProgram(
   query: SetupQuery,
   scope?: SelectedRecommendationScope,
@@ -1602,6 +1676,12 @@ export function* recommendationProgram(
       }
     }
 
+    const twoPlusTwo: SetupCandidate[] = [];
+    for (const bundle of selectedBundlesForCycle(scope, 7)) {
+      if (bundle.kind === "cycle7-2plus2-qb") {
+        twoPlusTwo.push(...(yield* cycle7TwoPlusTwoProgram(query, bundle, recommendationSourceForBundle(bundle))));
+      }
+    }
     const standard: SetupCandidate[] = [];
     for (const bundle of selectedBundlesForCycle(scope, 7)) {
       if (bundle.kind !== "structured") continue;
@@ -1619,8 +1699,8 @@ export function* recommendationProgram(
       }));
     }
     const primary = limitSetupCandidatesForCycle(
-      [...qb, ...standard].sort(compareScores), 7, query.maxCandidates);
-    const preferredCandidateId = primary[0]?.setup.id ?? null;
+      [...qb, ...standard.sort(compareScores), ...twoPlusTwo.sort(compareScores)], 7, query.maxCandidates);
+    const preferredCandidateId = primary.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null;
     yield {
       type: "stage",
       result: { stage: "primary", candidates: primary, preferredCandidateId, complete: false },
@@ -1673,10 +1753,12 @@ export function* recommendationProgram(
       }
     }
     const candidates = limitSetupCandidatesForCycle(
-      [...qb, ...standard, ...advanced].sort(compareScores), 7, query.maxCandidates);
+      [...qb, ...standard, ...advanced.sort(compareScores), ...twoPlusTwo], 7, query.maxCandidates);
     yield {
       type: "stage",
-      result: { stage: "secondary", candidates, preferredCandidateId, complete: true },
+      result: { stage: "secondary", candidates,
+        preferredCandidateId: preferredCandidateId ?? candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
+        complete: true },
     };
     return candidates;
   }
@@ -1730,6 +1812,8 @@ export function* recommendationProgram(
       }
     }
 
+    const twoPlusTwoBundle = cycle7TwoPlusTwoRuntimeBundle();
+    const twoPlusTwo = twoPlusTwoBundle ? yield* cycle7TwoPlusTwoProgram(query, twoPlusTwoBundle) : [];
     const policy = setupPolicyForCycle(7);
     const catalog = setupsForCycle(7);
     const standard = yield {
@@ -1742,8 +1826,8 @@ export function* recommendationProgram(
         placeableNextCount: context.placeableNextCount,
       },
     };
-    const primary = limitSetupCandidatesForCycle([...qb, ...standard], 7, query.maxCandidates);
-    const preferredCandidateId = primary[0]?.setup.id ?? null;
+    const primary = limitSetupCandidatesForCycle([...qb, ...standard, ...twoPlusTwo], 7, query.maxCandidates);
+    const preferredCandidateId = primary.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null;
     yield {
       type: "stage",
       result: { stage: "primary", candidates: primary, preferredCandidateId, complete: false },
@@ -1796,10 +1880,12 @@ export function* recommendationProgram(
         goodCycle8EntryRate,
       };
     }).sort(compareScores);
-    const candidates = limitSetupCandidatesForCycle([...qb, ...standard, ...advanced], 7, query.maxCandidates);
+    const candidates = limitSetupCandidatesForCycle([...qb, ...standard, ...advanced, ...twoPlusTwo], 7, query.maxCandidates);
     yield {
       type: "stage",
-      result: { stage: "secondary", candidates, preferredCandidateId, complete: true },
+      result: { stage: "secondary", candidates,
+        preferredCandidateId: preferredCandidateId ?? candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
+        complete: true },
     };
     return candidates;
   }

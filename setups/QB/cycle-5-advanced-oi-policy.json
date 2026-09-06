@@ -3672,7 +3672,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-oi-002-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }
@@ -3789,7 +3789,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-oi-004-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }

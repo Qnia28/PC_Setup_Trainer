@@ -1,4 +1,6 @@
 import type { Piece } from "../engine/types";
+import { mirrorPiece } from "./mirror";
+import { mirrorCycle5AdvancedDirect, mirrorCycle5AdvancedOqbInitial, mirrorCycle5AdvancedPattern, mirrorCycle5AdvancedRef } from "./cycle5AdvancedMirror";
 import type {
   Cycle5AdvancedOqbObservation,
   Cycle5AdvancedPostCheckpoint,
@@ -9,6 +11,7 @@ import type {
   Cycle5AdvancedQueuePattern,
   Cycle5AdvancedQueuePatternBody,
   Cycle5AdvancedSetupRef,
+  Cycle5AdvancedDirectRule,
 } from "./cycle5AdvancedPolicy";
 import { validateSetup } from "./schema";
 
@@ -116,6 +119,61 @@ function compileTexts(values: unknown[], sourceId: string): Cycle5AdvancedQueueP
   return unique(values.flatMap(notationCandidates)).map((expression) => parsePattern(expression, sourceId));
 }
 
+function patternKey(pattern: Cycle5AdvancedQueuePattern): string {
+  return JSON.stringify([pattern.scope, pattern.parts.map((part) => [part.kind,
+    part.kind === "permutation" ? [...part.symbols].sort() : part.symbols])]);
+}
+
+/** Only explicit arrows establish directional geometry, never a slash or similar silhouette. */
+function explicitMirrorKeys(values: unknown[], sourceId: string): Set<string> {
+  const text = values.filter((value): value is string => typeof value === "string").join(" ");
+  const all = compileTexts(values, sourceId);
+  const result = new Set<string>();
+  for (const match of text.matchAll(/(?:⇔|↔)\s*([^\n⇔↔]+)/g)) {
+    const notation = notationCandidates(match[1])[0];
+    if (!notation) throw new SelectedCycle5AdvancedPolicyError(sourceId, "mirror arrow lacks a queue condition.");
+    const key = patternKey(parsePattern(notation, sourceId));
+    if (!all.some((pattern) => patternKey(mirrorCycle5AdvancedPattern(pattern)) === key)) {
+      throw new SelectedCycle5AdvancedPolicyError(sourceId, `mirror arrow '${notation}' has no matching source condition.`);
+    }
+    result.add(key);
+  }
+  return result;
+}
+
+function postBuildAvailability(value: unknown, sourceId: string): Cycle5AdvancedDirectRule["postBuildAvailability"] {
+  if (value == null) return undefined;
+  if (!isRecord(value)) throw new SelectedCycle5AdvancedPolicyError(sourceId, "invalid postBuildAvailability.");
+  const checkpoint = isRecord(value.checkpoint) ? value.checkpoint.placedCount : value.checkpointPlacedCount;
+  const pieces = Array.isArray(value.pieces) ? value.pieces : value.piece ? [value.piece] : [];
+  const locations = value.acceptedLocations;
+  if (!Number.isInteger(checkpoint) || (checkpoint as number) <= 0 || !pieces.length
+    || !Array.isArray(locations) || !locations.length || locations.some((location) => location !== "HOLD" && location !== "ACCESS")) {
+    throw new SelectedCycle5AdvancedPolicyError(sourceId, "invalid post-build checkpoint/pieces/locations.");
+  }
+  return { checkpointPlacedCount: checkpoint as number,
+    pieces: pieces.map((piece) => asPiece(piece, sourceId, "postBuildAvailability.pieces")),
+    acceptedLocations: locations as Array<"HOLD" | "ACCESS">,
+    locationsInterchangeable: value.locationsInterchangeable === true,
+    canonicalEligibilityUnaffected: value.canonicalEligibilityUnaffected === true,
+  };
+}
+
+function hasTableMirror(table: JsonRecord, sourceId: string): boolean {
+  if (table.mirror == null) return false;
+  const mirror = table.mirror;
+  if (!isRecord(mirror) || mirror.transform !== "mirrorX" || !isRecord(mirror.pieceMap)
+    || [...PIECES].some((piece) => (mirror.pieceMap as JsonRecord)[piece] !== mirrorPiece(piece as Piece))) {
+    throw new SelectedCycle5AdvancedPolicyError(sourceId, "invalid selection-table mirror transform.");
+  }
+  const primary = compileTexts([mirror.primary], sourceId)[0];
+  const paired = compileTexts([mirror.paired], sourceId)[0];
+  if (!primary || !paired || patternKey(mirrorCycle5AdvancedPattern(primary)) !== patternKey(paired)) {
+    throw new SelectedCycle5AdvancedPolicyError(sourceId, "selection-table mirror headings disagree.");
+  }
+  return true;
+}
+
 function compileExclusions(values: unknown[], sourceId: string): Cycle5AdvancedQueuePattern[] {
   return unique(values.flatMap(exclusionNotationCandidates))
     .map((expression) => parsePattern(expression, sourceId));
@@ -147,7 +205,7 @@ function setupRefsFromDraftRule(
   if (!Array.isArray(rule.eligibleSetupIds)) return [];
   return rule.eligibleSetupIds.map((id, index) => ({
     setupId: asString(id, sourceId, `${String(rule.ruleId)}.eligibleSetupIds[${index}]`),
-    transform: "identity",
+    transform: rule.geometryTransform === "mirrorX" ? "mirror-x" : "identity",
   }));
 }
 
@@ -164,6 +222,8 @@ function draftDirectEntry(
   const patterns = compileTexts(texts, sourceId)
     .map((pattern) => copyPatternWithExclusions(pattern, exclusions));
   const refs = setupRefsFromDraftRule(rule, sourceId);
+  const mirrorKeys = Array.isArray(rule.geometryVariants) || rule.geometryTransform
+    ? new Set<string>() : explicitMirrorKeys(texts, sourceId);
   // Promotion records group fallbacks as non-executable presentation entries.
   // Preserve that runtime behavior without passing an unsupported entry kind.
   if (rule.selectionMode === "fallback") return null;
@@ -179,7 +239,7 @@ function draftDirectEntry(
     return {
       pattern,
       setupRefs: (matchingRefs.length > 0 ? matchingRefs : refs)
-        .map(({ conditionLabel: _conditionLabel, ...ref }) => ref),
+        .map(({ conditionLabel: _conditionLabel, ...ref }) => mirrorKeys.has(patternKey(pattern)) ? mirrorCycle5AdvancedRef(ref) : ref),
     };
   });
   return {
@@ -189,6 +249,7 @@ function draftDirectEntry(
     alternatives,
     bestsave: typeof rule.bestsave === "boolean" ? rule.bestsave : null,
     directTwoLinePc: rule.directTwoLinePc === true,
+    ...(rule.postBuildAvailability ? { postBuildAvailability: postBuildAvailability(rule.postBuildAvailability, sourceId) } : {}),
   };
 }
 
@@ -499,7 +560,9 @@ function flattenSelectionGroup(
       id: typeof decision.id === "string" ? decision.id : `${groupId}-${index + 1}`,
       kind: "direct" as const,
       sourceOrder: groupOrder + (index + 1) / 1_000,
-      alternatives: patterns.map((pattern) => ({ pattern, setupRefs: refs })),
+      alternatives: patterns.map((pattern) => ({ pattern, setupRefs:
+        Array.isArray(decision.mirrorPatternKeys) && decision.mirrorPatternKeys.includes(patternKey(pattern))
+          ? refs.map(mirrorCycle5AdvancedRef) : refs })),
       bestsave: decision.bestsave,
       directTwoLinePc: decision.directTwoLinePc === true,
     }];
@@ -547,6 +610,7 @@ function draftSelectionDecisions(
 }
 
 function draftTableGuardPatterns(table: JsonRecord): Cycle5AdvancedQueuePattern[] {
+  if (isRecord(table.mirror)) return compileTexts([table.mirror.primary], "selection-table-mirror-guard");
   const group = String(table.group ?? table.section ?? "");
   const tokens = group.split("/").map((token) => token.trim())
     .filter((token) => /^[TOILJSZ]{3,}$/.test(token));
@@ -648,6 +712,7 @@ function normalizePromotedEntry(
       alternatives,
       bestsave: typeof entry.bestsave === "boolean" ? entry.bestsave : null,
       directTwoLinePc: entry.directTwoLinePc === true,
+      ...(entry.postBuildAvailability ? { postBuildAvailability: postBuildAvailability(entry.postBuildAvailability, sourceId) } : {}),
     }];
   }
   if (entry.kind === "oqb") {
@@ -664,6 +729,9 @@ function normalizePromotedEntry(
       initialPatterns: asRecords(entry.initialPatterns, sourceId, `${id}.initialPatterns`)
         .map((pattern) => validatePattern(pattern, sourceId, `${id}.initialPatterns`)),
       preconditionSetupId: typeof entry.preconditionSetupId === "string" ? entry.preconditionSetupId : null,
+      ...(entry.preconditionTransform !== undefined ? {
+        preconditionTransform: validateSetupRef({ setupId: "precondition", transform: entry.preconditionTransform }, sourceId, id).transform,
+      } : {}),
       checkpoint: { placedCount },
       observation: normalizeObservation(entry.observation, sourceId, id),
       branches: asRecords(entry.branches, sourceId, `${id}.branches`).map((branch, branchIndex) => {
@@ -796,6 +864,7 @@ export function normalizeSelectedCycle5AdvancedPolicy(
             outcome: decision.oqbPlanId || decision.outcome === "no-bestsave-setup" ? "skip" : "setups",
             bestsave: typeof decision.bestsave === "boolean" ? decision.bestsave : null,
             directTwoLinePc: decision.outcome === "two-line-pc",
+            mirrorPatternKeys: [...explicitMirrorKeys([conditionText], sourceId)],
             ...(patterns.length > 0 ? { patterns } : {}),
             setupRefs: Array.isArray(decision.eligibleSetupIds)
               ? decision.eligibleSetupIds.map((setupId) => ({ setupId, transform: "identity" }))
@@ -803,7 +872,10 @@ export function normalizeSelectedCycle5AdvancedPolicy(
           };
         }),
       } satisfies JsonRecord;
-      return flattenSelectionGroup(promotedLike, sourceId);
+      const entries = flattenSelectionGroup(promotedLike, sourceId);
+      return hasTableMirror(table, sourceId)
+        ? entries.flatMap<Cycle5AdvancedPolicyEntry>((entry) => entry.kind === "direct" ? [entry, mirrorCycle5AdvancedDirect(entry)] : [entry])
+        : entries;
     })
     : [];
   const oqbBestsaveByPlan = new Map<string, boolean>();
@@ -835,10 +907,17 @@ export function normalizeSelectedCycle5AdvancedPolicy(
       rules.length + selectionGroups.length + index + 1,
       typeof plan.planId === "string" ? oqbBestsaveByPlan.get(plan.planId) : undefined,
     ));
+  const mirroredPlanIds = new Set(Array.isArray(value.selectionTables)
+    ? asRecords(value.selectionTables, sourceId, "selectionTables")
+      .filter((table) => hasTableMirror(table, sourceId))
+      .flatMap((table) => draftSelectionDecisions(table, classId, sourceId)
+        .flatMap((decision) => typeof decision.oqbPlanId === "string" ? [decision.oqbPlanId] : []))
+    : []);
   return {
     schemaVersion: 3,
     cycle: 5,
     classId,
-    entries: [...directEntries, ...selectionGroups, ...oqbEntries],
+    entries: [...directEntries, ...selectionGroups, ...oqbEntries.flatMap((entry) =>
+      entry.kind === "oqb" && mirroredPlanIds.has(entry.id) ? [entry, mirrorCycle5AdvancedOqbInitial(entry)] : [entry])],
   };
 }

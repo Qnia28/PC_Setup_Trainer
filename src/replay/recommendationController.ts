@@ -49,9 +49,10 @@ export function nextReplayRecommendationSelection(
   nextSegmentKey: string,
   candidateIds: readonly string[],
   preferredCandidateId?: string | null,
+  automaticCandidateIds: readonly string[] = candidateIds,
 ): string | null {
   if (previousSegmentKey === nextSegmentKey && previousId && candidateIds.includes(previousId)) return previousId;
-  return preferredCandidateId && candidateIds.includes(preferredCandidateId)
+  return preferredCandidateId && candidateIds.includes(preferredCandidateId) && automaticCandidateIds.includes(preferredCandidateId)
     ? preferredCandidateId
-    : candidateIds[0] ?? null;
+    : candidateIds.find(id => automaticCandidateIds.includes(id)) ?? null;
 }

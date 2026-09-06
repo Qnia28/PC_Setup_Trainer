@@ -70,7 +70,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-ti-001-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }
@@ -148,7 +148,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-ti-002-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }
@@ -226,7 +226,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-ti-003-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         },
@@ -282,7 +282,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-ti-003-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }
@@ -454,7 +454,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-ti-008-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }

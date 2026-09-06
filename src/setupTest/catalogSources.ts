@@ -61,6 +61,9 @@ export function setupTestRecommendationBundle(
     return { ...base, kind: "cycle5-advanced", cycle: 5, policy: requiredPolicy(bundle, descriptor) };
   }
   if (descriptor.cycle === 7 && descriptor.variant === "qb") {
+    if (path.includes("2plus2")) {
+      return { ...base, kind: "cycle7-2plus2-qb", cycle: 7, policy: requiredPolicy(bundle, descriptor) };
+    }
     return { ...base, kind: "cycle7-qb", cycle: 7, policy: requiredPolicy(bundle, descriptor) };
   }
   if (descriptor.cycle === 7 && /(?:^|[-/])4p(?:[-/]|$)/.test(path)) {
@@ -280,6 +283,10 @@ export async function loadSetupTestCatalog(
     ? await loadPromoted(descriptor)
     : await loadDraft(descriptor);
   const normalized = normalizeSetupTestCatalog(loaded.catalog, descriptor);
+  if (descriptor.cycle === 7 && descriptor.setupPath.includes("2plus2")) {
+    // This family already stores its approved mirror/congruent physical forms.
+    return { catalog: normalized, policy: loaded.policy };
+  }
   let withMetrics = normalized;
   if (loaded.policy && typeof loaded.policy === "object") {
     try { withMetrics = applyStructuredPolicyMetrics(normalized, loaded.policy as StructuredSetupPolicy); }

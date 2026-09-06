@@ -6,7 +6,8 @@ import rawOiSetups from "../../setups/QB/cycle-5-advanced-oi-setups.json";
 import rawTiPolicy from "../../setups/QB/cycle-5-advanced-ti-policy.json";
 import rawTiSetups from "../../setups/QB/cycle-5-advanced-ti-setups.json";
 import type { Cycle5AdvancedOqbPlan, Cycle5AdvancedPolicyBundle } from "./cycle5AdvancedPolicy";
-import { mirrorSetup } from "./mirror";
+import { mirrorCell, mirrorSetup } from "./mirror";
+import { mirrorCycle5AdvancedOqbInitial } from "./cycle5AdvancedMirror";
 import {
   oqbContinuationCandidates,
   resolveOqbProgress,
@@ -531,5 +532,54 @@ describe("shared OQB progress projection", () => {
     });
 
     expect(result).toMatchObject({ status: "no-follow-up", instruction: "" });
+  });
+});
+
+describe("conditional mirror policy basis", () => {
+  it("mirrors a chiral HOLD label and observed piece exactly once", () => {
+    const pre = setup("pre", [oPlacement()]);
+    const continuation = setup("continuation", [oPlacement(), iPlacement()]);
+    const plan = mirrorCycle5AdvancedOqbInitial(revealPlan());
+    plan.branches[0]!.continuationSetupRefs[0]!.displayHoldPiece = "S";
+    const mirrored = mirrorSetup(pre);
+    const result = resolveOqbProgress({ selectedCandidate: candidate(mirrored, plan.id),
+      query: query(boardForSetup(mirrored), ["T", "O", "I", "L", "J"]),
+      policyOverride: source(plan, [pre, continuation]),
+    });
+    expect(result).toMatchObject({ status: "continuation", observation: { piece: "J" },
+      continuations: [{ displayName: "continuation (Hold Z)", transform: "mirror-x" }] });
+  });
+
+  it("does not re-mirror nested predicates when the preceding branch flipped geometry", () => {
+    const pre = setup("pre", [oPlacement()]);
+    const three = setup("three-p", [oPlacement(), iPlacement(), tPlacement()]);
+    const solution = { ...setup("solution", [oPlacement()]), geometryKind: "solution-shadow" as const };
+    const plan = nestedPlan();
+    plan.branches[0]!.continuationSetupRefs[0]!.transform = "mirror-x";
+    const mirrored = mirrorSetup(three);
+    const result = resolveOqbProgress({ selectedCandidate: candidate(mirrored, plan.id, "first-s"),
+      query: query(boardForSetup(mirrored), ["T", "O", "I", "L", "Z"]),
+      policyOverride: source(plan, [pre, three, solution]),
+    });
+    expect(result).toMatchObject({ status: "continuation", branchId: "second-z", observation: { piece: "Z" },
+      continuations: [{ transform: "identity", setup: { id: "solution" } }] });
+  });
+
+  it("mirrors a nested fallback's S action to Z with all four cell coordinates", () => {
+    const three = setup("three-p", [oPlacement(), iPlacement(), tPlacement()]);
+    const plan = nestedPlan();
+    const action = plan.branches[0]!.postCheckpoint!.branches[1]!.action!;
+    action.piece = "S";
+    action.cells = [{ x: 0, y: 3 }, { x: 1, y: 3 }, { x: 1, y: 4 }, { x: 2, y: 4 }];
+    const mirrored = mirrorSetup(three);
+    const result = resolveOqbProgress({ selectedCandidate: candidate(mirrored, plan.id, "first-s"),
+      query: query(boardForSetup(mirrored), ["T", "O", "I", "J", "L"]),
+      policyOverride: source(plan, [three]),
+    });
+    expect(result).toMatchObject({ status: "continuation", branchId: "second-fallback" });
+    if (result.status !== "continuation") return;
+    const placement = result.continuations[0]!.setup.placements.at(-1)!;
+    expect(placement.piece).toBe("Z");
+    expect(placement.cells).toEqual(action.cells.map(mirrorCell).sort((a, b) => a.y - b.y || a.x - b.x));
   });
 });

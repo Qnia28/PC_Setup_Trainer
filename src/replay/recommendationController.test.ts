@@ -57,4 +57,12 @@ describe("replay recommendation controller", () => {
     expect(nextReplayRecommendationSelection("b", "pc-1", "pc-2", ["a", "priority"], "priority"))
       .toBe("priority");
   });
+
+  it("never auto-selects manual-only candidates but preserves an explicit selection", () => {
+    expect(nextReplayRecommendationSelection(null, null, "pc", ["manual"], null, [])).toBeNull();
+    expect(nextReplayRecommendationSelection(null, null, "pc", ["manual", "normal"], "manual", ["normal"]))
+      .toBe("normal");
+    expect(nextReplayRecommendationSelection("manual", "pc", "pc", ["manual"], null, [])).toBe("manual");
+    expect(nextReplayRecommendationSelection("manual", "pc", "next-pc", ["manual"], null, [])).toBeNull();
+  });
 });

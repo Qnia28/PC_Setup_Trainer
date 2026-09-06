@@ -3,6 +3,7 @@ import type { Cycle2AdvancedQbPolicy } from "./cycle2AdvancedQb";
 import type { Cycle5AdvancedPolicyBundle } from "./cycle5AdvancedPolicy";
 import type { Cycle7Advanced4pRuntimeBundle } from "./cycle7Advanced4pCatalog";
 import type { Cycle7QbRuntimeBundle } from "./cycle7QbCatalog";
+import type { Cycle7TwoPlusTwoPolicy } from "./cycle7TwoPlusTwoPolicy";
 import type { StructuredSetupPolicy } from "./policy";
 import type { SetupVariant } from "./schema";
 
@@ -11,6 +12,7 @@ export type RecommendationBundleKind =
   | "cycle2-qb"
   | "cycle5-advanced"
   | "cycle7-qb"
+  | "cycle7-2plus2-qb"
   | "cycle7-advanced-4p";
 
 export interface RecommendationSourceIdentity {
@@ -59,6 +61,11 @@ export type SelectedRecommendationBundle =
       kind: "cycle7-qb";
       cycle: 7;
       policy: Cycle7QbRuntimeBundle["policy"];
+    })
+  | (SelectedRecommendationBundleBase & {
+      kind: "cycle7-2plus2-qb";
+      cycle: 7;
+      policy: Cycle7TwoPlusTwoPolicy;
     })
   | (SelectedRecommendationBundleBase & {
       kind: "cycle7-advanced-4p";

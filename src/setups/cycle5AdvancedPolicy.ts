@@ -55,6 +55,14 @@ export interface Cycle5AdvancedDirectRule extends Cycle5AdvancedEntryBase {
   alternatives: Cycle5AdvancedRuleAlternative[];
   bestsave?: boolean | null;
   directTwoLinePc?: boolean;
+  /** Condition-basis post-build availability; HOLD/ACCESS are not initial HOLD requirements. */
+  postBuildAvailability?: {
+    checkpointPlacedCount: number;
+    pieces: Piece[];
+    acceptedLocations: Array<"HOLD" | "ACCESS">;
+    locationsInterchangeable: boolean;
+    canonicalEligibilityUnaffected: boolean;
+  };
 }
 
 export interface Cycle5AdvancedOqbBranch {
@@ -112,6 +120,8 @@ export interface Cycle5AdvancedOqbPlan extends Cycle5AdvancedEntryBase {
   bestsave?: boolean | null;
   initialPatterns: Cycle5AdvancedQueuePattern[];
   preconditionSetupId: string | null;
+  /** Initial geometry transform. Later predicates/outcomes retain the source-geometry basis. */
+  preconditionTransform?: "identity" | "mirror-x";
   checkpoint: {
     placedCount: 1 | 2 | 3;
   };

@@ -327,7 +327,6 @@ function resolveCycle5Progress(
   }
 
   const plan = selected.plan;
-  const mirrored = isMirroredSetup(selectedCandidate.setup);
   const selectedSourceId = canonicalSetupId(selectedCandidate.setup);
   const isInitialPrecondition = selectedSourceId === plan.preconditionSetupId;
   const cursorBranch = isInitialPrecondition ? undefined : plan.branches.find(({ id, continuationSetupRefs }) =>
@@ -339,6 +338,10 @@ function resolveCycle5Progress(
       && ((branch.continuationSetupRefs ?? []).some(({ setupId }) => setupId === selectedSourceId)
         || (branch.action !== undefined
           && selectedCandidate.setup.placements.length === branch.action.resultingPieceCount)));
+  // A continuation can itself be conditionally mirrored. Recover the original
+  // policy basis from its reference, not from the visible geometry alone.
+  const cursorRef = cursorBranch?.continuationSetupRefs.find(({ setupId }) => setupId === selectedSourceId);
+  const mirrored = isMirroredSetup(selectedCandidate.setup) !== (cursorRef?.transform === "mirror-x");
   if (!isInitialPrecondition && !cursorBranch && !nestedCursor) {
     return {
       status: "unresolved",

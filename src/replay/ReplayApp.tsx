@@ -303,6 +303,8 @@ export function ReplayApp() {
         selectedRecommendationSegment.current,
         recommendationSegmentKey,
         ids,
+        undefined,
+        cached.candidates.filter(candidate => candidate.autoSelect !== false).map(({ setup }) => setup.id),
       ));
       selectedRecommendationSegment.current = recommendationSegmentKey;
       setRecommendationView({ status: "ready", result: cached });
@@ -322,6 +324,7 @@ export function ReplayApp() {
           recommendationSegmentKey,
           ids,
           stage.preferredCandidateId,
+          result.candidates.filter(candidate => candidate.autoSelect !== false).map(({ setup }) => setup.id),
         ));
         selectedRecommendationSegment.current = recommendationSegmentKey;
         setRecommendationView({ status: "ready", result });

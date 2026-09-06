@@ -259,6 +259,28 @@ describe("5회차 2+7+2 일반 셋업 추천 context", () => {
     expect(tsOiIndex).toBeLessThan(tsOIndex);
   });
 
+  it("TO-[TIJ]!에서 고급 TO-[TIL]! 셋업의 좌우반전형을 추천한다", () => {
+    const candidates = querySetups(query({
+      hold: "O",
+      active: "T",
+      next: ["I", "J", "T", "S", "L"],
+    }));
+
+    expect(candidates.find(({ setup }) => setup.id === "cycle5-advanced-to-001-f000--mirror"))
+      .toMatchObject({
+        setup: {
+          displayName: "TO-[TIJ]! (⇔ TO-[TIL]!)",
+          derivedVariant: "mirror",
+        },
+        policy: {
+          ruleId: "to5-advanced-direct-006",
+          branchId: "initial",
+        },
+        qbCondition: "to5-advanced-direct-006",
+        recommendationLabel: "TO - [TIJ]! QB",
+      });
+  });
+
   it("정식 querySetups가 일반 후보와 활성 고급 QB 후보를 별도 분류로 함께 반환한다", () => {
     const candidates = querySetups(query());
     expect(candidates.some(({ qbCondition }) => qbCondition === undefined)).toBe(true);

@@ -59,14 +59,16 @@ describe("7회차 3+7 큐 경계", () => {
       next: ["L", "S", "I", "J", "Z"],
       holdAvailable: true,
     });
-    const advanced = candidates.filter(({ setup }) => setup.placements.length === 4);
+    const advanced = candidates.filter(({ setup, qbCondition }) =>
+      qbCondition === undefined && setup.placements.length === 4);
     expect(advanced[0]?.setup.id).toBe("cycle7-4p-006-f000");
     expect(advanced[0]?.goodCycle8EntryRate).toBe(63.77);
     expect(advanced[0]?.setup.solveRate).toBe(100);
     expect(advanced.some(({ setup }) => setup.id === "cycle7-4p-007-f000")).toBe(false);
     const normalIndex = candidates.findIndex(({ setup, qbCondition }) =>
       qbCondition === undefined && setup.placements.length <= 3);
-    const advanced4pIndex = candidates.findIndex(({ setup }) => setup.placements.length === 4);
+    const advanced4pIndex = candidates.findIndex(({ setup, qbCondition }) =>
+      qbCondition === undefined && setup.placements.length === 4);
     expect(normalIndex).toBeGreaterThanOrEqual(0);
     expect(advanced4pIndex).toBeGreaterThan(normalIndex);
 

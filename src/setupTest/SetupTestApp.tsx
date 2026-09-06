@@ -422,7 +422,7 @@ export function SetupTestApp() {
       const nextResult = buildReplaySetupRecommendationResult(parsed.input, displayedCandidates);
       setSelectedId((current) => current && displayedCandidates.some(({ setup }) => setup.id === current)
         ? current
-        : stage.preferredCandidateId ?? displayedCandidates[0]?.setup.id ?? null);
+        : stage.preferredCandidateId ?? displayedCandidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null);
       setState(stage.complete
         ? { status: "ready", result: nextResult }
         : { status: "loading", result: nextResult });

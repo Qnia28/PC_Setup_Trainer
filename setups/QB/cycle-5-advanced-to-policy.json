@@ -70,7 +70,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-to-001-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }
@@ -148,7 +148,7 @@
           "setupRefs": [
             {
               "setupId": "cycle5-advanced-to-002-f000",
-              "transform": "identity"
+              "transform": "mirror-x"
             }
           ]
         }

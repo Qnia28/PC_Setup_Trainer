@@ -416,7 +416,7 @@
             "logicalSetupCount": 53,
             "runtimeEnabled": true,
             "setupsSha256": "c06910e213566a5fa2a5bab4a03ca89c3816480dadb55558f78612db9e58cbbb",
-            "policySha256": "4557ad380d333e98079a2dd9569cc06bdee0bf91d5f1413a81da3a2e73a835fa",
+            "policySha256": "3746f58f2463a1cff37e23ae778fe5c739d75f63111755ffd5dc108de131defc",
             "conditionCompilerReady": true
           },
           "tltj": {
@@ -436,7 +436,7 @@
             "logicalSetupCount": 24,
             "runtimeEnabled": true,
             "setupsSha256": "92581e2d039e77620d476cff92ab075e98f002cef5b9d6b497499b9e8a6c508a",
-            "policySha256": "5b1ef6d8821f73aea7c275f8c4ad87b70802e0f89e1e61a4b2f842a70f73d166",
+            "policySha256": "65603fd14161f0ceea526ba0a6fe6c29b71244edbaa89e08be5e749b02c32e02",
             "conditionCompilerReady": true
           },
           "to": {
@@ -446,7 +446,7 @@
             "logicalSetupCount": 7,
             "runtimeEnabled": true,
             "setupsSha256": "4647280c0737bc7bf8dc743aeabebaeda2002f4817d7653f37115a7ee8dafec5",
-            "policySha256": "71c5b063f55176114482f8cce01005d8105df4594003b767ad47bdf790fe0fe0",
+            "policySha256": "8b322b0ed41bf9d9f1114f2d686a45c9c37344abfe962ab96e08b8bb05d7a052",
             "conditionCompilerReady": true
           },
           "tstz": {
@@ -476,7 +476,7 @@
             "logicalSetupCount": 58,
             "runtimeEnabled": true,
             "setupsSha256": "e223c067c345149ffa97bcfca4241bb725115b6b2780d0186f5a20040943e4e5",
-            "policySha256": "1f2c68dabceefec266e7dd14ce59d6586c8634935c36372385c8b6b397f2b98b",
+            "policySha256": "3fb6501df7c10b53ab32fe37e07c34ebc4e69b005b4ab0e1503057eb9c656de9",
             "conditionCompilerReady": true
           },
           "isiz": {
@@ -647,7 +647,19 @@
         "policySha256": "e2f6c2e590de27072365203d31afeb5337c5ccdc2d4e9aae29ae2e0438e7b6df"
       },
       "complete": false,
-      "note": "Normal Cycle 7, reviewed advanced 4P, and the reviewed LSZ/JSZ/ISZ/OSZ QB subset are active. OQB-gated advanced 4P branches remain staged; duplicate-pool QB remains unavailable."
+      "note": "Normal Cycle 7, advanced 3+1 4P, the existing 3P QB subset and exact T-class 2+2 QB are active. OQB-gated advanced 4P branches remain staged.",
+      "qb2plus2": {
+        "setups": "QB/cycle-7-2plus2-qb-setups.json",
+        "policy": "QB/cycle-7-2plus2-qb-policy.json",
+        "setupCount": 356,
+        "logicalSetupCount": 347,
+        "runtimeEnabled": true,
+        "conditionCompilerReady": true,
+        "setupsSha256": "3d21d8d97701af13261caea7381bf7b70e02931ce939d23b3381c6247e1dc69a",
+        "policySha256": "c8b52da795e6f8a96b323b6337d7a0ff6070c529e37cf462ad6d2aa8d331add1",
+        "queueSurveyPerformed": false,
+        "surveyDecision": "no-matching-immutable-2plus2-profile"
+      }
     },
     "8": {
       "setups": "cycle-8-tx-setups.json",
@@ -682,8 +694,8 @@
     "colored": true,
     "comments": false,
     "operations": false,
-    "fileCount": 60,
-    "setupCount": 2262,
+    "fileCount": 61,
+    "setupCount": 2618,
     "allRoundTripExact": true
   }
 }

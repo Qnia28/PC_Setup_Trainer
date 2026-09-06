@@ -1,0 +1,5930 @@
+{
+  "schemaVersion": 2,
+  "cycle": 7,
+  "reviewStatus": "reviewed",
+  "metrics": [],
+  "selectionRules": [],
+  "runtimePolicy": {
+    "catalogKind": "cycle7-2plus2-qb",
+    "integrationState": "active",
+    "executable": true,
+    "setupBuildSegments": [
+      2,
+      2
+    ],
+    "requiredUnplacedPriorPiece": "T",
+    "classSelector": "exact-prior-three-multiset",
+    "pairSelector": "unordered-next-bag-first-two",
+    "ranking": "good-save-desc-then-entry-order"
+  },
+  "entries": [
+    {
+      "id": "c7-2plus2-entry-002",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-002"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 63.57,
+      "order": 0
+    },
+    {
+      "id": "c7-2plus2-entry-003",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-003"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 47.98,
+      "order": 1
+    },
+    {
+      "id": "c7-2plus2-entry-004",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-004"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 78.33,
+      "order": 2
+    },
+    {
+      "id": "c7-2plus2-entry-005",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-005"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 64.29,
+      "order": 3
+    },
+    {
+      "id": "c7-2plus2-entry-006",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-006"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 54.05,
+      "order": 4
+    },
+    {
+      "id": "c7-2plus2-entry-007",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-007"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 54.17,
+      "order": 5
+    },
+    {
+      "id": "c7-2plus2-entry-008",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-008"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 52.62,
+      "order": 6
+    },
+    {
+      "id": "c7-2plus2-entry-009",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-009"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 45,
+      "order": 7
+    },
+    {
+      "id": "c7-2plus2-entry-010",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-010"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 51.55,
+      "order": 8
+    },
+    {
+      "id": "c7-2plus2-entry-011",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-011"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 72.14,
+      "order": 9
+    },
+    {
+      "id": "c7-2plus2-entry-012",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-012"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 62.62,
+      "order": 10
+    },
+    {
+      "id": "c7-2plus2-entry-013",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-013"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 62.26,
+      "order": 11
+    },
+    {
+      "id": "c7-2plus2-entry-014",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-014"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 67.98,
+      "order": 12
+    },
+    {
+      "id": "c7-2plus2-entry-015",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-015"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 66.79,
+      "order": 13
+    },
+    {
+      "id": "c7-2plus2-entry-016",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-016"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 61.43,
+      "order": 14
+    },
+    {
+      "id": "c7-2plus2-entry-017",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-017",
+        "c7-2plus2-qb-row-017--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 59.76,
+      "order": 15
+    },
+    {
+      "id": "c7-2plus2-entry-018",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-018"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 78.45,
+      "order": 16
+    },
+    {
+      "id": "c7-2plus2-entry-019",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-019"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 71.07,
+      "order": 17
+    },
+    {
+      "id": "c7-2plus2-entry-020",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-020"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 18
+    },
+    {
+      "id": "c7-2plus2-entry-021",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-021"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 19
+    },
+    {
+      "id": "c7-2plus2-entry-022",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-022"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 81.67,
+      "order": 20
+    },
+    {
+      "id": "c7-2plus2-entry-023",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-023"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 79.29,
+      "order": 21
+    },
+    {
+      "id": "c7-2plus2-entry-024",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-024"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 81.07,
+      "order": 22
+    },
+    {
+      "id": "c7-2plus2-entry-025",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-025"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 77.62,
+      "order": 23
+    },
+    {
+      "id": "c7-2plus2-entry-026",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-026"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 50,
+      "order": 24
+    },
+    {
+      "id": "c7-2plus2-entry-027",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-027"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 25
+    },
+    {
+      "id": "c7-2plus2-entry-028",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-028"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 53.1,
+      "order": 26
+    },
+    {
+      "id": "c7-2plus2-entry-029",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-029"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 50,
+      "order": 27
+    },
+    {
+      "id": "c7-2plus2-entry-030",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-030"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 77.14,
+      "order": 28
+    },
+    {
+      "id": "c7-2plus2-entry-031",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-031"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 70.71,
+      "order": 29
+    },
+    {
+      "id": "c7-2plus2-entry-032",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-032"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 30
+    },
+    {
+      "id": "c7-2plus2-entry-033",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-033"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 75.24,
+      "order": 31
+    },
+    {
+      "id": "c7-2plus2-entry-034",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-034"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 32
+    },
+    {
+      "id": "c7-2plus2-entry-035",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-035"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 62.86,
+      "order": 33
+    },
+    {
+      "id": "c7-2plus2-entry-036",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-036"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 74.88,
+      "order": 34
+    },
+    {
+      "id": "c7-2plus2-entry-037",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-037"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 71.43,
+      "order": 35
+    },
+    {
+      "id": "c7-2plus2-entry-038",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-038",
+        "c7-2plus2-qb-row-038--congruent-001"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 74.88,
+      "order": 36
+    },
+    {
+      "id": "c7-2plus2-entry-039",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-039"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 70.48,
+      "order": 37
+    },
+    {
+      "id": "c7-2plus2-entry-040",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-040"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 67.98,
+      "order": 38
+    },
+    {
+      "id": "c7-2plus2-entry-041",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-041"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 64.88,
+      "order": 39
+    },
+    {
+      "id": "c7-2plus2-entry-042",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-042"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 64.4,
+      "order": 40
+    },
+    {
+      "id": "c7-2plus2-entry-043",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-043"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 75.6,
+      "order": 41
+    },
+    {
+      "id": "c7-2plus2-entry-044",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-044",
+        "c7-2plus2-qb-row-044--congruent-001"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 70.48,
+      "order": 42
+    },
+    {
+      "id": "c7-2plus2-entry-045",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-045"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 75.71,
+      "order": 43
+    },
+    {
+      "id": "c7-2plus2-entry-046",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-046"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 74.05,
+      "order": 44
+    },
+    {
+      "id": "c7-2plus2-entry-047",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-047"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 46.9,
+      "order": 45
+    },
+    {
+      "id": "c7-2plus2-entry-048",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-048"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 76.19,
+      "order": 46
+    },
+    {
+      "id": "c7-2plus2-entry-049",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-049"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 64.64,
+      "order": 47
+    },
+    {
+      "id": "c7-2plus2-entry-050",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-050"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 76.19,
+      "order": 48
+    },
+    {
+      "id": "c7-2plus2-entry-051",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-051"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 71.31,
+      "order": 49
+    },
+    {
+      "id": "c7-2plus2-entry-052",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-052"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 67.38,
+      "order": 50
+    },
+    {
+      "id": "c7-2plus2-entry-053",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-053"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 54.64,
+      "order": 51
+    },
+    {
+      "id": "c7-2plus2-entry-054",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-054"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 50,
+      "order": 52
+    },
+    {
+      "id": "c7-2plus2-entry-055",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-055"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 53.57,
+      "order": 53
+    },
+    {
+      "id": "c7-2plus2-entry-056",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-056"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 46.67,
+      "order": 54
+    },
+    {
+      "id": "c7-2plus2-entry-057",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-057"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 46.19,
+      "order": 55
+    },
+    {
+      "id": "c7-2plus2-entry-058",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-058"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 46.07,
+      "order": 56
+    },
+    {
+      "id": "c7-2plus2-entry-059",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-059"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 74.29,
+      "order": 57
+    },
+    {
+      "id": "c7-2plus2-entry-060",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-060"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50,
+      "order": 58
+    },
+    {
+      "id": "c7-2plus2-entry-061",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-061"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 57.38,
+      "order": 59
+    },
+    {
+      "id": "c7-2plus2-entry-062",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-062"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 41.67,
+      "order": 60
+    },
+    {
+      "id": "c7-2plus2-entry-063",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-063"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 61.67,
+      "order": 61
+    },
+    {
+      "id": "c7-2plus2-entry-064",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-064"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 57.74,
+      "order": 62
+    },
+    {
+      "id": "c7-2plus2-entry-065",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-065"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 77.38,
+      "order": 63
+    },
+    {
+      "id": "c7-2plus2-entry-066",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-066"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 73.45,
+      "order": 64
+    },
+    {
+      "id": "c7-2plus2-entry-067",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-067"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 63.1,
+      "order": 65
+    },
+    {
+      "id": "c7-2plus2-entry-068",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-068"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 62.14,
+      "order": 66
+    },
+    {
+      "id": "c7-2plus2-entry-069",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-069"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 67.26,
+      "order": 67
+    },
+    {
+      "id": "c7-2plus2-entry-070",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-070"
+      ],
+      "previousBagPieces": [
+        "T",
+        "I",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 52.86,
+      "order": 68
+    },
+    {
+      "id": "c7-2plus2-entry-071",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-071",
+        "c7-2plus2-qb-row-071--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 73.57,
+      "order": 69
+    },
+    {
+      "id": "c7-2plus2-entry-072",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-072"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 72.38,
+      "order": 70
+    },
+    {
+      "id": "c7-2plus2-entry-073",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-073"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 78.33,
+      "order": 71
+    },
+    {
+      "id": "c7-2plus2-entry-074",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-074"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 78.1,
+      "order": 72
+    },
+    {
+      "id": "c7-2plus2-entry-075",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-075"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 74.64,
+      "order": 73
+    },
+    {
+      "id": "c7-2plus2-entry-076",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-076"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 72.74,
+      "order": 74
+    },
+    {
+      "id": "c7-2plus2-entry-077",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-077"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 75
+    },
+    {
+      "id": "c7-2plus2-entry-078",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-078"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 78.57,
+      "order": 76
+    },
+    {
+      "id": "c7-2plus2-entry-079",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-079"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50,
+      "order": 77
+    },
+    {
+      "id": "c7-2plus2-entry-080",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-080"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 72.5,
+      "order": 78
+    },
+    {
+      "id": "c7-2plus2-entry-081",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-081"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 54.76,
+      "order": 79
+    },
+    {
+      "id": "c7-2plus2-entry-082",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-082"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 80
+    },
+    {
+      "id": "c7-2plus2-entry-083",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-083"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 64.29,
+      "order": 81
+    },
+    {
+      "id": "c7-2plus2-entry-084",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-084"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 55.36,
+      "order": 82
+    },
+    {
+      "id": "c7-2plus2-entry-085",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-085"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "J"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 84.76,
+      "order": 83
+    },
+    {
+      "id": "c7-2plus2-entry-086",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-086"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 73.57,
+      "order": 84
+    },
+    {
+      "id": "c7-2plus2-entry-087",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-087"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 72.38,
+      "order": 85
+    },
+    {
+      "id": "c7-2plus2-entry-088",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-088"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 76.19,
+      "order": 86
+    },
+    {
+      "id": "c7-2plus2-entry-089",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-089"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 78.33,
+      "order": 87
+    },
+    {
+      "id": "c7-2plus2-entry-090",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-090"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 72.5,
+      "order": 88
+    },
+    {
+      "id": "c7-2plus2-entry-091",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-091"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 89
+    },
+    {
+      "id": "c7-2plus2-entry-092",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-092"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 65.36,
+      "order": 90
+    },
+    {
+      "id": "c7-2plus2-entry-093",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-093"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 78.1,
+      "order": 91
+    },
+    {
+      "id": "c7-2plus2-entry-094",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-094"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 73.21,
+      "order": 92
+    },
+    {
+      "id": "c7-2plus2-entry-095",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-095"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 54.17,
+      "order": 93
+    },
+    {
+      "id": "c7-2plus2-entry-096",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-096"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 54.17,
+      "order": 94
+    },
+    {
+      "id": "c7-2plus2-entry-097",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-097"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 65.95,
+      "order": 95
+    },
+    {
+      "id": "c7-2plus2-entry-098",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-098"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 59.4,
+      "order": 96
+    },
+    {
+      "id": "c7-2plus2-entry-099",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-099"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 80.48,
+      "order": 97
+    },
+    {
+      "id": "c7-2plus2-entry-100",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-100"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 28.57,
+      "order": 98
+    },
+    {
+      "id": "c7-2plus2-entry-101",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-101"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 72.5,
+      "order": 99
+    },
+    {
+      "id": "c7-2plus2-entry-102",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-102"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 53.81,
+      "order": 100
+    },
+    {
+      "id": "c7-2plus2-entry-103",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-103"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 69.64,
+      "order": 101
+    },
+    {
+      "id": "c7-2plus2-entry-104",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-104"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 53.81,
+      "order": 102
+    },
+    {
+      "id": "c7-2plus2-entry-105",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-105"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 77.74,
+      "order": 103
+    },
+    {
+      "id": "c7-2plus2-entry-106",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-106",
+        "c7-2plus2-qb-row-106--congruent-001"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 77.62,
+      "order": 104
+    },
+    {
+      "id": "c7-2plus2-entry-107",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-107"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 74.88,
+      "order": 105
+    },
+    {
+      "id": "c7-2plus2-entry-108",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-108"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 73.1,
+      "order": 106
+    },
+    {
+      "id": "c7-2plus2-entry-109",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-109"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 65.24,
+      "order": 107
+    },
+    {
+      "id": "c7-2plus2-entry-110",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-110"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 108
+    },
+    {
+      "id": "c7-2plus2-entry-111",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-111"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 54.4,
+      "order": 109
+    },
+    {
+      "id": "c7-2plus2-entry-112",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-112"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 70.71,
+      "order": 110
+    },
+    {
+      "id": "c7-2plus2-entry-113",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-113"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 66.19,
+      "order": 111
+    },
+    {
+      "id": "c7-2plus2-entry-114",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-114"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 55,
+      "order": 112
+    },
+    {
+      "id": "c7-2plus2-entry-115",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-115"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 68.81,
+      "order": 113
+    },
+    {
+      "id": "c7-2plus2-entry-116",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-116"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 69.52,
+      "order": 114
+    },
+    {
+      "id": "c7-2plus2-entry-117",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-117"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 69.52,
+      "order": 115
+    },
+    {
+      "id": "c7-2plus2-entry-118",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-118"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 65.36,
+      "order": 116
+    },
+    {
+      "id": "c7-2plus2-entry-119",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-119"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 117
+    },
+    {
+      "id": "c7-2plus2-entry-120",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-120"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 118
+    },
+    {
+      "id": "c7-2plus2-entry-121",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-121"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 119
+    },
+    {
+      "id": "c7-2plus2-entry-122",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-122"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 75.36,
+      "order": 120
+    },
+    {
+      "id": "c7-2plus2-entry-123",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-123"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50.71,
+      "order": 121
+    },
+    {
+      "id": "c7-2plus2-entry-124",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-124"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 53.1,
+      "order": 122
+    },
+    {
+      "id": "c7-2plus2-entry-125",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-125"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 69.52,
+      "order": 123
+    },
+    {
+      "id": "c7-2plus2-entry-126",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-126"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 68.45,
+      "order": 124
+    },
+    {
+      "id": "c7-2plus2-entry-127",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-127"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 68.93,
+      "order": 125
+    },
+    {
+      "id": "c7-2plus2-entry-128",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-128"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 55.48,
+      "order": 126
+    },
+    {
+      "id": "c7-2plus2-entry-129",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-129"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 80.36,
+      "order": 127
+    },
+    {
+      "id": "c7-2plus2-entry-130",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-130"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 54.05,
+      "order": 128
+    },
+    {
+      "id": "c7-2plus2-entry-131",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-131"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 78.45,
+      "order": 129
+    },
+    {
+      "id": "c7-2plus2-entry-132",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-132"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 62.26,
+      "order": 130
+    },
+    {
+      "id": "c7-2plus2-entry-133",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-133"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 45.6,
+      "order": 131
+    },
+    {
+      "id": "c7-2plus2-entry-134",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-134"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 66.19,
+      "order": 132
+    },
+    {
+      "id": "c7-2plus2-entry-135",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-135"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 70.71,
+      "order": 133
+    },
+    {
+      "id": "c7-2plus2-entry-136",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-136"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 80.95,
+      "order": 134
+    },
+    {
+      "id": "c7-2plus2-entry-137",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-137"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 73.81,
+      "order": 135
+    },
+    {
+      "id": "c7-2plus2-entry-138",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-138"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 68.81,
+      "order": 136
+    },
+    {
+      "id": "c7-2plus2-entry-139",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-139"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 62.14,
+      "order": 137
+    },
+    {
+      "id": "c7-2plus2-entry-140",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-140"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 47.14,
+      "order": 138
+    },
+    {
+      "id": "c7-2plus2-entry-141",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-141"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 41.67,
+      "order": 139
+    },
+    {
+      "id": "c7-2plus2-entry-142",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-142"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 39.29,
+      "order": 140
+    },
+    {
+      "id": "c7-2plus2-entry-143",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-143"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 141
+    },
+    {
+      "id": "c7-2plus2-entry-144",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-144"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 69.17,
+      "order": 142
+    },
+    {
+      "id": "c7-2plus2-entry-145",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-145"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 58.33,
+      "order": 143
+    },
+    {
+      "id": "c7-2plus2-entry-146",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-146"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 67.02,
+      "order": 144
+    },
+    {
+      "id": "c7-2plus2-entry-147",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-147"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 62.62,
+      "order": 145
+    },
+    {
+      "id": "c7-2plus2-entry-148",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-148"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50.36,
+      "order": 146
+    },
+    {
+      "id": "c7-2plus2-entry-149",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-149"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 59.4,
+      "order": 147
+    },
+    {
+      "id": "c7-2plus2-entry-150",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-150"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 64.29,
+      "order": 148
+    },
+    {
+      "id": "c7-2plus2-entry-151",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-151"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 56.67,
+      "order": 149
+    },
+    {
+      "id": "c7-2plus2-entry-152",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-152"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 69.17,
+      "order": 150
+    },
+    {
+      "id": "c7-2plus2-entry-153",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-153"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 65.12,
+      "order": 151
+    },
+    {
+      "id": "c7-2plus2-entry-154",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-154"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 68.33,
+      "order": 152
+    },
+    {
+      "id": "c7-2plus2-entry-155",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-155"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 67.98,
+      "order": 153
+    },
+    {
+      "id": "c7-2plus2-entry-156",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-156"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 80.83,
+      "order": 154
+    },
+    {
+      "id": "c7-2plus2-entry-157",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-157"
+      ],
+      "previousBagPieces": [
+        "T",
+        "L",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 67.98,
+      "order": 155
+    },
+    {
+      "id": "c7-2plus2-entry-158",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-158"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 73.57,
+      "order": 156
+    },
+    {
+      "id": "c7-2plus2-entry-159",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-159"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 72.38,
+      "order": 157
+    },
+    {
+      "id": "c7-2plus2-entry-160",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-160"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 76.19,
+      "order": 158
+    },
+    {
+      "id": "c7-2plus2-entry-161",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-161"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 74.05,
+      "order": 159
+    },
+    {
+      "id": "c7-2plus2-entry-162",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-162"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 71.9,
+      "order": 160
+    },
+    {
+      "id": "c7-2plus2-entry-163",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-163"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 161
+    },
+    {
+      "id": "c7-2plus2-entry-164",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-164"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 47.62,
+      "order": 162
+    },
+    {
+      "id": "c7-2plus2-entry-165",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-165"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 44.05,
+      "order": 163
+    },
+    {
+      "id": "c7-2plus2-entry-166",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-166"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 65.48,
+      "order": 164
+    },
+    {
+      "id": "c7-2plus2-entry-167",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-167"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 61.9,
+      "order": 165
+    },
+    {
+      "id": "c7-2plus2-entry-168",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-168"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 32.38,
+      "order": 166
+    },
+    {
+      "id": "c7-2plus2-entry-169",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-169"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 70.95,
+      "order": 167
+    },
+    {
+      "id": "c7-2plus2-entry-170",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-170"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 66.79,
+      "order": 168
+    },
+    {
+      "id": "c7-2plus2-entry-171",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-171"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 77.74,
+      "order": 169
+    },
+    {
+      "id": "c7-2plus2-entry-172",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-172"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 77.62,
+      "order": 170
+    },
+    {
+      "id": "c7-2plus2-entry-173",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-173",
+        "c7-2plus2-qb-row-173--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 66.9,
+      "order": 171
+    },
+    {
+      "id": "c7-2plus2-entry-174",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-174"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 63.81,
+      "order": 172
+    },
+    {
+      "id": "c7-2plus2-entry-175",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-175"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 78.45,
+      "order": 173
+    },
+    {
+      "id": "c7-2plus2-entry-176",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-176"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 66.43,
+      "order": 174
+    },
+    {
+      "id": "c7-2plus2-entry-177",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-177"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 175
+    },
+    {
+      "id": "c7-2plus2-entry-178",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-178"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 67.86,
+      "order": 176
+    },
+    {
+      "id": "c7-2plus2-entry-179",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-179"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 50.83,
+      "order": 177
+    },
+    {
+      "id": "c7-2plus2-entry-180",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-180"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 81.67,
+      "order": 178
+    },
+    {
+      "id": "c7-2plus2-entry-181",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-181"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 81.67,
+      "order": 179
+    },
+    {
+      "id": "c7-2plus2-entry-182",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-182"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 79.29,
+      "order": 180
+    },
+    {
+      "id": "c7-2plus2-entry-183",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-183"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 50,
+      "order": 181
+    },
+    {
+      "id": "c7-2plus2-entry-184",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-184"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 182
+    },
+    {
+      "id": "c7-2plus2-entry-185",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-185"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 49.4,
+      "order": 183
+    },
+    {
+      "id": "c7-2plus2-entry-186",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-186"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 77.14,
+      "order": 184
+    },
+    {
+      "id": "c7-2plus2-entry-187",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-187"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 76.9,
+      "order": 185
+    },
+    {
+      "id": "c7-2plus2-entry-188",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-188"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 74.76,
+      "order": 186
+    },
+    {
+      "id": "c7-2plus2-entry-189",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-189"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 66.67,
+      "order": 187
+    },
+    {
+      "id": "c7-2plus2-entry-190",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-190"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 47.02,
+      "order": 188
+    },
+    {
+      "id": "c7-2plus2-entry-191",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-191"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 46.43,
+      "order": 189
+    },
+    {
+      "id": "c7-2plus2-entry-192",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-192"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 72.98,
+      "order": 190
+    },
+    {
+      "id": "c7-2plus2-entry-193",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-193"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 62.38,
+      "order": 191
+    },
+    {
+      "id": "c7-2plus2-entry-194",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-194"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 72.98,
+      "order": 192
+    },
+    {
+      "id": "c7-2plus2-entry-195",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-195"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 59.76,
+      "order": 193
+    },
+    {
+      "id": "c7-2plus2-entry-196",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-196"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 73.21,
+      "order": 194
+    },
+    {
+      "id": "c7-2plus2-entry-197",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-197"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 73.21,
+      "order": 195
+    },
+    {
+      "id": "c7-2plus2-entry-198",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-198"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 60.95,
+      "order": 196
+    },
+    {
+      "id": "c7-2plus2-entry-199",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-199"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 75.48,
+      "order": 197
+    },
+    {
+      "id": "c7-2plus2-entry-200",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-200"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 47.98,
+      "order": 198
+    },
+    {
+      "id": "c7-2plus2-entry-201",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-201"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 28.1,
+      "order": 199
+    },
+    {
+      "id": "c7-2plus2-entry-202",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-202"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 60.36,
+      "order": 200
+    },
+    {
+      "id": "c7-2plus2-entry-203",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-203"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 58.1,
+      "order": 201
+    },
+    {
+      "id": "c7-2plus2-entry-204",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-204"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 54.17,
+      "order": 202
+    },
+    {
+      "id": "c7-2plus2-entry-205",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-205"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 47.5,
+      "order": 203
+    },
+    {
+      "id": "c7-2plus2-entry-206",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-206"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 54.17,
+      "order": 204
+    },
+    {
+      "id": "c7-2plus2-entry-207",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-207"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 52.62,
+      "order": 205
+    },
+    {
+      "id": "c7-2plus2-entry-208",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-208"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 53.81,
+      "order": 206
+    },
+    {
+      "id": "c7-2plus2-entry-209",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-209"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 66.79,
+      "order": 207
+    },
+    {
+      "id": "c7-2plus2-entry-210",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-210"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 61.43,
+      "order": 208
+    },
+    {
+      "id": "c7-2plus2-entry-211",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-211"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 52.14,
+      "order": 209
+    },
+    {
+      "id": "c7-2plus2-entry-212",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-212"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 44.29,
+      "order": 210
+    },
+    {
+      "id": "c7-2plus2-entry-213",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-213"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 61.9,
+      "order": 211
+    },
+    {
+      "id": "c7-2plus2-entry-214",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-214"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 55.48,
+      "order": 212
+    },
+    {
+      "id": "c7-2plus2-entry-215",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-215"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 61.43,
+      "order": 213
+    },
+    {
+      "id": "c7-2plus2-entry-216",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-216"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 71.31,
+      "order": 214
+    },
+    {
+      "id": "c7-2plus2-entry-217",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-217"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 71.07,
+      "order": 215
+    },
+    {
+      "id": "c7-2plus2-entry-218",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-218"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 74.52,
+      "order": 216
+    },
+    {
+      "id": "c7-2plus2-entry-219",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-219"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 68.93,
+      "order": 217
+    },
+    {
+      "id": "c7-2plus2-entry-220",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-220"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 49.29,
+      "order": 218
+    },
+    {
+      "id": "c7-2plus2-entry-221",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-221"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 39.29,
+      "order": 219
+    },
+    {
+      "id": "c7-2plus2-entry-222",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-222"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 53.57,
+      "order": 220
+    },
+    {
+      "id": "c7-2plus2-entry-223",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-223"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 49.29,
+      "order": 221
+    },
+    {
+      "id": "c7-2plus2-entry-224",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-224"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 59.29,
+      "order": 222
+    },
+    {
+      "id": "c7-2plus2-entry-225",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-225"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 43.45,
+      "order": 223
+    },
+    {
+      "id": "c7-2plus2-entry-226",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-226"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 55.6,
+      "order": 224
+    },
+    {
+      "id": "c7-2plus2-entry-227",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-227"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 54.52,
+      "order": 225
+    },
+    {
+      "id": "c7-2plus2-entry-228",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-228"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50,
+      "order": 226
+    },
+    {
+      "id": "c7-2plus2-entry-229",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-229"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 31.43,
+      "order": 227
+    },
+    {
+      "id": "c7-2plus2-entry-230",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-230"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 38.69,
+      "order": 228
+    },
+    {
+      "id": "c7-2plus2-entry-231",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-231"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 28.57,
+      "order": 229
+    },
+    {
+      "id": "c7-2plus2-entry-232",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-232"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 74.05,
+      "order": 230
+    },
+    {
+      "id": "c7-2plus2-entry-233",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-233"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 68.45,
+      "order": 231
+    },
+    {
+      "id": "c7-2plus2-entry-234",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-234"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 63.1,
+      "order": 232
+    },
+    {
+      "id": "c7-2plus2-entry-235",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-235"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 48.33,
+      "order": 233
+    },
+    {
+      "id": "c7-2plus2-entry-236",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-236"
+      ],
+      "previousBagPieces": [
+        "T",
+        "O",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 66.19,
+      "order": 234
+    },
+    {
+      "id": "c7-2plus2-entry-237",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-237"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 41.67,
+      "order": 235
+    },
+    {
+      "id": "c7-2plus2-entry-238",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-238"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 54.76,
+      "order": 236
+    },
+    {
+      "id": "c7-2plus2-entry-239",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-239"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 33.1,
+      "order": 237
+    },
+    {
+      "id": "c7-2plus2-entry-240",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-240"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 35.95,
+      "order": 238
+    },
+    {
+      "id": "c7-2plus2-entry-241",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-241"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 19.05,
+      "order": 239
+    },
+    {
+      "id": "c7-2plus2-entry-242",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-242"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 43.81,
+      "order": 240
+    },
+    {
+      "id": "c7-2plus2-entry-243",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-243"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 38.1,
+      "order": 241
+    },
+    {
+      "id": "c7-2plus2-entry-244",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-244"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 28.81,
+      "order": 242
+    },
+    {
+      "id": "c7-2plus2-entry-245",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-245"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 28.81,
+      "order": 243
+    },
+    {
+      "id": "c7-2plus2-entry-246",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-246"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 41.19,
+      "order": 244
+    },
+    {
+      "id": "c7-2plus2-entry-247",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-247"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 34.88,
+      "order": 245
+    },
+    {
+      "id": "c7-2plus2-entry-248",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-248"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 33.57,
+      "order": 246
+    },
+    {
+      "id": "c7-2plus2-entry-249",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-249"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 37.14,
+      "order": 247
+    },
+    {
+      "id": "c7-2plus2-entry-250",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-250"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 31.43,
+      "order": 248
+    },
+    {
+      "id": "c7-2plus2-entry-251",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-251"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 9.52,
+      "order": 249
+    },
+    {
+      "id": "c7-2plus2-entry-252",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-252"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 48.69,
+      "order": 250
+    },
+    {
+      "id": "c7-2plus2-entry-253",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-253"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 60.6,
+      "order": 251
+    },
+    {
+      "id": "c7-2plus2-entry-254",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-254"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 41.67,
+      "order": 252
+    },
+    {
+      "id": "c7-2plus2-entry-255",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-255"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 44.64,
+      "order": 253
+    },
+    {
+      "id": "c7-2plus2-entry-256",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-256"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 38.1,
+      "order": 254
+    },
+    {
+      "id": "c7-2plus2-entry-257",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-257"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 43.81,
+      "order": 255
+    },
+    {
+      "id": "c7-2plus2-entry-258",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-258",
+        "c7-2plus2-qb-row-258--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 33.45,
+      "order": 256
+    },
+    {
+      "id": "c7-2plus2-entry-259",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-259"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 48.81,
+      "order": 257
+    },
+    {
+      "id": "c7-2plus2-entry-260",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-260"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 46.31,
+      "order": 258
+    },
+    {
+      "id": "c7-2plus2-entry-261",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-261"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 31.67,
+      "order": 259
+    },
+    {
+      "id": "c7-2plus2-entry-262",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-262"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 39.05,
+      "order": 260
+    },
+    {
+      "id": "c7-2plus2-entry-263",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-263"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 35.24,
+      "order": 261
+    },
+    {
+      "id": "c7-2plus2-entry-264",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-264"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 43.21,
+      "order": 262
+    },
+    {
+      "id": "c7-2plus2-entry-265",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-265"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 29.76,
+      "order": 263
+    },
+    {
+      "id": "c7-2plus2-entry-266",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-266"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 23.81,
+      "order": 264
+    },
+    {
+      "id": "c7-2plus2-entry-267",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-267"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 56.19,
+      "order": 265
+    },
+    {
+      "id": "c7-2plus2-entry-268",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-268"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 52.62,
+      "order": 266
+    },
+    {
+      "id": "c7-2plus2-entry-269",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-269",
+        "c7-2plus2-qb-row-269--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 21.43,
+      "order": 267
+    },
+    {
+      "id": "c7-2plus2-entry-270",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-270"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 48.33,
+      "order": 268
+    },
+    {
+      "id": "c7-2plus2-entry-271",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-271"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 45.6,
+      "order": 269
+    },
+    {
+      "id": "c7-2plus2-entry-272",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-272"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 61.9,
+      "order": 270
+    },
+    {
+      "id": "c7-2plus2-entry-273",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-273"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 39.29,
+      "order": 271
+    },
+    {
+      "id": "c7-2plus2-entry-274",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-274",
+        "c7-2plus2-qb-row-274--mirror"
+      ],
+      "previousBagPieces": [
+        "T",
+        "S",
+        "Z"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 43.81,
+      "order": 272
+    },
+    {
+      "id": "c7-2plus2-entry-275",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-275"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 57.62,
+      "order": 273
+    },
+    {
+      "id": "c7-2plus2-entry-276",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-276"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 40.95,
+      "order": 274
+    },
+    {
+      "id": "c7-2plus2-entry-277",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-277"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 68.21,
+      "order": 275
+    },
+    {
+      "id": "c7-2plus2-entry-278",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-278"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 64.29,
+      "order": 276
+    },
+    {
+      "id": "c7-2plus2-entry-279",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-279"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 80.95,
+      "order": 277
+    },
+    {
+      "id": "c7-2plus2-entry-280",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-280"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 71.43,
+      "order": 278
+    },
+    {
+      "id": "c7-2plus2-entry-281",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-281"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 71.19,
+      "order": 279
+    },
+    {
+      "id": "c7-2plus2-entry-282",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-282"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 65.24,
+      "order": 280
+    },
+    {
+      "id": "c7-2plus2-entry-283",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-283"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 82.86,
+      "order": 281
+    },
+    {
+      "id": "c7-2plus2-entry-284",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-284"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 50.95,
+      "order": 282
+    },
+    {
+      "id": "c7-2plus2-entry-285",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-285"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 38.1,
+      "order": 283
+    },
+    {
+      "id": "c7-2plus2-entry-286",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-286"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 74.76,
+      "order": 284
+    },
+    {
+      "id": "c7-2plus2-entry-287",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-287"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 73.81,
+      "order": 285
+    },
+    {
+      "id": "c7-2plus2-entry-288",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-288"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 83.45,
+      "order": 286
+    },
+    {
+      "id": "c7-2plus2-entry-289",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-289"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 67.26,
+      "order": 287
+    },
+    {
+      "id": "c7-2plus2-entry-290",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-290"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "I"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 77.74,
+      "order": 288
+    },
+    {
+      "id": "c7-2plus2-entry-291",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-291"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 81.55,
+      "order": 289
+    },
+    {
+      "id": "c7-2plus2-entry-292",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-292"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 70.83,
+      "order": 290
+    },
+    {
+      "id": "c7-2plus2-entry-293",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-293"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 67.5,
+      "order": 291
+    },
+    {
+      "id": "c7-2plus2-entry-294",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-294"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 74.17,
+      "order": 292
+    },
+    {
+      "id": "c7-2plus2-entry-295",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-295"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 80.36,
+      "order": 293
+    },
+    {
+      "id": "c7-2plus2-entry-296",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-296"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 67.5,
+      "order": 294
+    },
+    {
+      "id": "c7-2plus2-entry-297",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-297"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 81.9,
+      "order": 295
+    },
+    {
+      "id": "c7-2plus2-entry-298",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-298"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 53.45,
+      "order": 296
+    },
+    {
+      "id": "c7-2plus2-entry-299",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-299"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 72.86,
+      "order": 297
+    },
+    {
+      "id": "c7-2plus2-entry-300",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-300"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 82.86,
+      "order": 298
+    },
+    {
+      "id": "c7-2plus2-entry-301",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-301"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 75.24,
+      "order": 299
+    },
+    {
+      "id": "c7-2plus2-entry-302",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-302"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 71.43,
+      "order": 300
+    },
+    {
+      "id": "c7-2plus2-entry-303",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-303"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 82.86,
+      "order": 301
+    },
+    {
+      "id": "c7-2plus2-entry-304",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-304"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 71.43,
+      "order": 302
+    },
+    {
+      "id": "c7-2plus2-entry-305",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-305"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 46.19,
+      "order": 303
+    },
+    {
+      "id": "c7-2plus2-entry-306",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-306"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 75.95,
+      "order": 304
+    },
+    {
+      "id": "c7-2plus2-entry-307",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-307"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 73.81,
+      "order": 305
+    },
+    {
+      "id": "c7-2plus2-entry-308",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-308"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 54.29,
+      "order": 306
+    },
+    {
+      "id": "c7-2plus2-entry-309",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-309"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 46.43,
+      "order": 307
+    },
+    {
+      "id": "c7-2plus2-entry-310",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-310"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 76.55,
+      "order": 308
+    },
+    {
+      "id": "c7-2plus2-entry-311",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-311"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 67.86,
+      "order": 309
+    },
+    {
+      "id": "c7-2plus2-entry-312",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-312"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 84.76,
+      "order": 310
+    },
+    {
+      "id": "c7-2plus2-entry-313",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-313"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 77.38,
+      "order": 311
+    },
+    {
+      "id": "c7-2plus2-entry-314",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-314"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "L"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 85,
+      "order": 312
+    },
+    {
+      "id": "c7-2plus2-entry-315",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-315"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 71.31,
+      "order": 313
+    },
+    {
+      "id": "c7-2plus2-entry-316",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-316"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 82.26,
+      "order": 314
+    },
+    {
+      "id": "c7-2plus2-entry-317",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-317"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 85.71,
+      "order": 315
+    },
+    {
+      "id": "c7-2plus2-entry-318",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-318"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 57.14,
+      "order": 316
+    },
+    {
+      "id": "c7-2plus2-entry-319",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-319"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 81.43,
+      "order": 317
+    },
+    {
+      "id": "c7-2plus2-entry-320",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-320"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 85.71,
+      "order": 318
+    },
+    {
+      "id": "c7-2plus2-entry-321",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-321"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 82.86,
+      "order": 319
+    },
+    {
+      "id": "c7-2plus2-entry-322",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-322"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 76.31,
+      "order": 320
+    },
+    {
+      "id": "c7-2plus2-entry-323",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-323"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "O"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 78.81,
+      "order": 321
+    },
+    {
+      "id": "c7-2plus2-entry-324",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-324"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 53.45,
+      "order": 322
+    },
+    {
+      "id": "c7-2plus2-entry-325",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-325"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 53.21,
+      "order": 323
+    },
+    {
+      "id": "c7-2plus2-entry-326",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-326"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "I"
+      ],
+      "goodSavePercent": 40.6,
+      "order": 324
+    },
+    {
+      "id": "c7-2plus2-entry-327",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-327"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 60.71,
+      "order": 325
+    },
+    {
+      "id": "c7-2plus2-entry-328",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-328"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "L"
+      ],
+      "goodSavePercent": 50.12,
+      "order": 326
+    },
+    {
+      "id": "c7-2plus2-entry-329",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-329"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 64.29,
+      "order": 327
+    },
+    {
+      "id": "c7-2plus2-entry-330",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-330"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 57.14,
+      "order": 328
+    },
+    {
+      "id": "c7-2plus2-entry-331",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-331"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "J"
+      ],
+      "goodSavePercent": 55.6,
+      "order": 329
+    },
+    {
+      "id": "c7-2plus2-entry-332",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-332"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "S"
+      ],
+      "goodSavePercent": 80.95,
+      "order": 330
+    },
+    {
+      "id": "c7-2plus2-entry-333",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-333"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "O",
+        "Z"
+      ],
+      "goodSavePercent": 80.95,
+      "order": 331
+    },
+    {
+      "id": "c7-2plus2-entry-334",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-334"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "L"
+      ],
+      "goodSavePercent": 53.81,
+      "order": 332
+    },
+    {
+      "id": "c7-2plus2-entry-335",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-335"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 53.45,
+      "order": 333
+    },
+    {
+      "id": "c7-2plus2-entry-336",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-336"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "J"
+      ],
+      "goodSavePercent": 52.38,
+      "order": 334
+    },
+    {
+      "id": "c7-2plus2-entry-337",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-337"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 74.4,
+      "order": 335
+    },
+    {
+      "id": "c7-2plus2-entry-338",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-338"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "S"
+      ],
+      "goodSavePercent": 56.19,
+      "order": 336
+    },
+    {
+      "id": "c7-2plus2-entry-339",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-339"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 71.31,
+      "order": 337
+    },
+    {
+      "id": "c7-2plus2-entry-340",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-340"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "I",
+        "Z"
+      ],
+      "goodSavePercent": 58.1,
+      "order": 338
+    },
+    {
+      "id": "c7-2plus2-entry-341",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-341"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "J"
+      ],
+      "goodSavePercent": 54.76,
+      "order": 339
+    },
+    {
+      "id": "c7-2plus2-entry-342",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-342"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "S"
+      ],
+      "goodSavePercent": 58.57,
+      "order": 340
+    },
+    {
+      "id": "c7-2plus2-entry-343",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-343"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "Z"
+      ],
+      "goodSavePercent": 82.86,
+      "order": 341
+    },
+    {
+      "id": "c7-2plus2-entry-344",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-344"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "L",
+        "Z"
+      ],
+      "goodSavePercent": 65,
+      "order": 342
+    },
+    {
+      "id": "c7-2plus2-entry-345",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-345"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 68.45,
+      "order": 343
+    },
+    {
+      "id": "c7-2plus2-entry-346",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-346"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "J",
+        "S"
+      ],
+      "goodSavePercent": 47.02,
+      "order": 344
+    },
+    {
+      "id": "c7-2plus2-entry-347",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-347"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 75.36,
+      "order": 345
+    },
+    {
+      "id": "c7-2plus2-entry-348",
+      "candidateSetupIds": [
+        "c7-2plus2-qb-row-348"
+      ],
+      "previousBagPieces": [
+        "T",
+        "T",
+        "S"
+      ],
+      "nextBagPrefixPieces": [
+        "S",
+        "Z"
+      ],
+      "goodSavePercent": 67.98,
+      "order": 346
+    }
+  ]
+}
