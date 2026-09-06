@@ -33,8 +33,9 @@ export function LicenceApp() {
       <section className="licence-section" aria-labelledby="third-party-title">
         <h2 id="third-party-title">Bundled third-party licences</h2>
         <p className="licence-note">
-          Each MIT-licensed entry is distributed under the MIT License together
-          with its respective copyright notice.
+          Each component retains its own licence and copyright notices.
+          {" "}<a href="/licences/sfinder.txt">SFinder and dependency licence texts</a>
+          {" · "}<a href="https://github.com/Qnia28/PC_Setup_Trainer/tree/main/vendor/sfinder-wasm/upstream/third_party/source/Eigen-3.4.0">Corresponding Eigen source</a>
         </p>
         <ul className="licence-list">
           {THIRD_PARTY_LICENCES.map((entry) => <li key={entry.name}>

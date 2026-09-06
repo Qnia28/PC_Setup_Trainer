@@ -14,6 +14,7 @@ import {
   normalizeCommandSource,
   normalizeSfinderQueuePattern,
   occupiedCalculationCells,
+  savesOutcomeGroup,
 } from "./commandModel";
 
 describe("sfinder command line groups", () => {
@@ -21,18 +22,18 @@ describe("sfinder command line groups", () => {
     expect(defaultHumanQualityMode("minimals")).toBe("Fast");
     expect(defaultHumanQualityMode("per_save_minimals")).toBe("True");
     expect(minimumCoverWorkerOptions("minimals", "auto", "Fast")).toEqual({
-      useHiGHS: "auto",
+      primary: "auto",
       exactHumanQuality: "Fast",
     });
-    expect(minimumCoverWorkerOptions("minimals", "off", "True")).toEqual({
-      useHiGHS: false,
+    expect(minimumCoverWorkerOptions("minimals", "rust", "True")).toEqual({
+      primary: "rust",
       exactHumanQuality: "True",
     });
-    expect(minimumCoverWorkerOptions("per_save_minimals", "on", "True")).toEqual({
-      useHiGHS: true,
+    expect(minimumCoverWorkerOptions("per_save_minimals", "ortools", "True")).toEqual({
+      primary: "ortools",
       exactHumanQuality: "True",
     });
-    expect(minimumCoverWorkerOptions("chance", "on", "True")).toEqual({});
+    expect(minimumCoverWorkerOptions("chance", "highs", "True")).toEqual({});
   });
 
   it("keeps fixed 4-row and 6-row boards with 4L and 5L defaults", () => {
@@ -56,6 +57,40 @@ describe("sfinder command line groups", () => {
     expect(formatRatioPercentage(0)).toBe("0%");
     expect(formatRatioPercentage(0.9523809524)).toBe("95.24%");
     expect(formatRatioPercentage(1)).toBe("100%");
+  });
+
+  it("maps Saves ALL output without collapsing exact save strings", () => {
+    expect(savesOutcomeGroup({
+      success: 1008,
+      total: 1008,
+      saveResults: [
+        { save: "TTILSZ", success: 20, total: 1008, percent: 1.984126984 },
+        { save: "TILJSZ", success: 288, total: 1008, percent: 28.571428571 },
+      ],
+    })).toEqual({
+      kind: "all",
+      title: "All save outcomes",
+      rows: [
+        expect.objectContaining({ label: "Save TTILSZ", success: 20, total: 1008, failed: 988 }),
+        expect.objectContaining({ label: "Save TILJSZ", success: 288, total: 1008, failed: 720 }),
+      ],
+    });
+  });
+
+  it("keeps Saves multi-expression order, aliases, and failed queues", () => {
+    const group = savesOutcomeGroup({
+      total: 1008,
+      wantedSaveResults: [
+        { saveExpression: "^T", saveLabel: "^T", success: 288, total: 1008, failed: 720, percent: 28.5714, failedQueues: ["A"] },
+        { saveExpression: "TT", saveAlias: "T>X", saveLabel: "T>X", success: 152, total: 1008, failed: 856, percent: 15.0793, failedQueues: ["B"] },
+      ],
+    });
+
+    expect(group?.kind).toBe("wanted");
+    expect(group?.rows.map(({ label, expression, success, failedQueues }) => ({ label, expression, success, failedQueues }))).toEqual([
+      { label: "^T", expression: "^T", success: 288, failedQueues: ["A"] },
+      { label: "T>X", expression: "TT", success: 152, failedQueues: ["B"] },
+    ]);
   });
 
   it("normalizes SFinder bag-order constraints while preserving the visible expression", () => {

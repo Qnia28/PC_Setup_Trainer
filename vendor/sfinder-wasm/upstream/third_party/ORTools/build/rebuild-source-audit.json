@@ -1,0 +1,27 @@
+{
+  "officialCommit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+  "portCommit": "a16c07886b1db846248a477ed5c06ba93c484493",
+  "coreDiff": [
+    "ortools/julia/ORTools.jl/src/moi_wrapper/CPSat_wrapper.jl",
+    "ortools/julia/ORToolsBinaries.jl/LICENSE",
+    "ortools/julia/ORToolsBinaries.jl/Project.toml",
+    "ortools/julia/ORToolsBinaries.jl/deps/build.jl",
+    "ortools/math_opt/solvers/gscip/gscip.cc",
+    "ortools/math_opt/solvers/pdlp_bridge.cc",
+    "ortools/pdlp/quadratic_program.cc",
+    "ortools/pdlp/quadratic_program.h",
+    "ortools/pdlp/quadratic_program_test.cc",
+    "ortools/pdlp/sharded_quadratic_program.cc",
+    "ortools/pdlp/sharded_quadratic_program.h",
+    "ortools/port/os.h"
+  ],
+  "satGlopDiff": "",
+  "optimizations": [
+    "Release -O3",
+    "-flto compile and link",
+    "-msimd128 (already enabled in old port)",
+    "-sASSERTIONS=0",
+    "-fwasm-exceptions compile and link (replace JavaScript EH)"
+  ],
+  "portSourceChanges": "diff --git a/ortools/port/os.h b/ortools/port/os.h\nindex c7e3859..ba04acf 100644\n--- a/ortools/port/os.h\n+++ b/ortools/port/os.h\n@@ -33,7 +33,7 @@\n \n #if defined(ORTOOLS_TARGET_OS_IS_ANDROID) || \\\n     defined(ORTOOLS_TARGET_OS_IS_IOS) ||     \\\n-    defined(ORTOOLS_TARGET_OS_IS_EMSCRIPTEN)\n+    (defined(ORTOOLS_TARGET_OS_IS_EMSCRIPTEN) && !defined(__EMSCRIPTEN_PTHREADS__))\n #define ORTOOLS_TARGET_OS_SUPPORTS_THREADS 0\n #else\n #define ORTOOLS_TARGET_OS_SUPPORTS_THREADS 1\n"
+}

@@ -67,7 +67,7 @@ export const SFINDER_COMMANDS: readonly SfinderCommandDefinition[] = [
   },
 ] as const;
 
-const HIDDEN_SFINDER_COMMANDS = new Set<SfinderCommandId>(["saves", "cover", "congruent_cover", "congruent"]);
+const HIDDEN_SFINDER_COMMANDS = new Set<SfinderCommandId>(["cover", "congruent_cover", "congruent"]);
 export const SFINDER_MENU_COMMANDS = SFINDER_COMMANDS.filter(({ id }) => !HIDDEN_SFINDER_COMMANDS.has(id));
 
 const COMMAND_BY_ID = new Map(SFINDER_COMMANDS.map((command) => [command.id, command]));
@@ -82,7 +82,7 @@ export function isSfinderGuideRoute(pathname: string, fallback?: string | null):
 }
 
 export function defaultWantedSave(command: SfinderCommandId): string {
-  return command === "minimals" ? "" : "T";
+  return command === "minimals" || command === "saves" ? "" : "T";
 }
 
 export function resolveSfinderCommand(pathname: string, fallback?: string | null): SfinderCommandDefinition {

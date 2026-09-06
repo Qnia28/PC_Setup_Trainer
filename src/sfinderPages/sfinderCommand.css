@@ -90,6 +90,17 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .sfinder-save-table div { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; padding: 10px 12px; background: #121b25; border: 1px solid #334152; border-radius: 6px; }
 .sfinder-save-table span { color: #91a0b3; font-size: 12px; }
 .sfinder-save-table small { grid-column: 1 / -1; color: #718196; font-size: 10px; }
+.sfinder-saves-outcomes { margin-top: 18px; }
+.sfinder-saves-outcomes > h3 { margin: 0 0 10px; color: #cbd6e1; font-size: 15px; }
+.sfinder-saves-outcome-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.sfinder-saves-outcome { display: grid; min-width: 0; gap: 6px; padding: 11px 12px; background: #121b25; border: 1px solid #334152; border-radius: 6px; }
+.sfinder-saves-outcome header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.sfinder-saves-outcome header strong { overflow-wrap: anywhere; }
+.sfinder-saves-outcome header b { color: #8bdbf3; font-size: 15px; white-space: nowrap; }
+.sfinder-saves-outcome > code { color: #9ecde0; font-size: 11px; overflow-wrap: anywhere; }
+.sfinder-saves-outcome > span { color: #91a0b3; font-size: 11px; }
+.sfinder-saves-outcome details { color: #aab8c8; font-size: 11px; }
+.sfinder-saves-outcome details code { display: block; max-height: 120px; margin-top: 7px; padding: 8px; overflow: auto; white-space: normal; background: #0d141c; border-radius: 5px; }
 .sfinder-failed-queues { margin-top: 16px; color: #aab8c8; }
 .sfinder-failed-queues code { display: block; max-height: 140px; margin-top: 8px; padding: 10px; overflow: auto; white-space: normal; background: #0d141c; border-radius: 5px; }
 .sfinder-result-groups { display: grid; gap: 24px; margin-top: 18px; }
@@ -131,6 +142,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .sfinder-command-results { margin-top: 14px; }
   .sfinder-result-metrics div { flex: 1 1 120px; min-width: 0; }
   .sfinder-save-table { grid-template-columns: minmax(0, 1fr); }
+  .sfinder-saves-outcome-grid { grid-template-columns: minmax(0, 1fr); }
   .sfinder-result-grid { grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); }
 }
 

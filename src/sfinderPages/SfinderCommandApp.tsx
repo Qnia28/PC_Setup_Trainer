@@ -19,9 +19,10 @@ import {
   normalizeSfinderQueuePattern,
   normalizeCommandSource,
   PER_SAVE_RESULT_ORDER,
+  savesOutcomeGroup,
   type CommandLineGroup,
   type CommandTargetLines,
-  type HiGHSMode,
+  type PrimaryMode,
   type HumanQualityMode,
 } from "./commandModel";
 import { defaultWantedSave, type SfinderCommandDefinition } from "./commands";
@@ -90,11 +91,9 @@ function minimalsMetadata(result: ResultRecord): [string, string][] {
   const metadata: [string, string][] = [];
   const cardinalityBackend = backendLabel(result.cardinalityBackend ?? result.minimumCoverBackend);
   const qualityBackend = backendLabel(result.qualityBackend);
-  const requested = result.useHiGHSRequested === true ? "On" : result.useHiGHSRequested === false ? "Off" : "Auto";
-  const resolved = result.useHiGHSResolved === true ? "Used" : "Not used";
-  if (cardinalityBackend) metadata.push(["Minimum set", `Exact · ${cardinalityBackend}`]);
+  const primary = backendLabel(result.primaryResolved) ?? cardinalityBackend;
+  if (primary) metadata.push(["Primary", `${primary} · requested ${String(result.primaryRequested ?? "auto")}`]);
   if (qualityBackend) metadata.push(["Quality", `${result.humanQualityExact === false ? "Fast" : "Exact"} · ${qualityBackend}`]);
-  if ("useHiGHSRequested" in result || "useHiGHSResolved" in result) metadata.push(["HiGHS", `${resolved} · ${requested}`]);
   return metadata;
 }
 
@@ -156,6 +155,7 @@ function ResultPanel({
   const saveResults = result.results && typeof result.results === "object"
     ? result.results as Record<string, Record<string, unknown>>
     : null;
+  const savesOutcomes = commandId === "saves" ? savesOutcomeGroup(result) : null;
   const shownPages = pages.slice(0, 200);
   const perSaveGroups = commandId === "per_save_minimals" ? groupPerSavePages(shownPages) : [];
   const metadata = commandId === "minimals" ? minimalsMetadata(result) : [];
@@ -176,11 +176,22 @@ function ResultPanel({
         return <div key={piece}>
           <strong>Save {piece}</strong>
           <span>{Number(row.minimalCount ?? 0)} minimals · {saveRate}</span>
-          {cardinalityBackend ? <small>Minimum set: Exact · {cardinalityBackend}</small> : null}
+          {cardinalityBackend ? <small>Primary: {String(row.primaryResolved ?? cardinalityBackend)}</small> : null}
           {qualityBackend ? <small>Quality: {row.humanQualityExact === false ? "Fast" : "Exact"} · {qualityBackend}</small> : null}
         </div>;
       })}
     </div> : null}
+    {savesOutcomes ? <section className="sfinder-saves-outcomes">
+      <h3>{savesOutcomes.title}</h3>
+      <div className="sfinder-saves-outcome-grid">
+        {savesOutcomes.rows.map((row) => <article key={row.key} className="sfinder-saves-outcome">
+          <header><strong>{row.label}</strong><b>{Number.isInteger(row.percent) ? row.percent : row.percent.toFixed(2)}%</b></header>
+          {row.expression && row.expression !== row.label ? <code>{row.expression}</code> : null}
+          <span>{row.success}/{row.total} queues · {row.failed} failed</span>
+          {row.failedQueues.length ? <details><summary>Failed queues</summary><code>{row.failedQueues.join(" ")}</code></details> : null}
+        </article>)}
+      </div>
+    </section> : null}
     {failedQueues.length ? <details className="sfinder-failed-queues"><summary>{failedQueues.length} failed queues</summary><code>{failedQueues.join(" ")}</code></details> : null}
     {perSaveGroups.length ? <>
       <div className="sfinder-result-groups">
@@ -212,7 +223,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const [wantedSave, setWantedSave] = useState(() => defaultWantedSave(command.id));
   const [title, setTitle] = useState("");
   const [useHold, setUseHold] = useState(true);
-  const [useHiGHSMode, setUseHiGHSMode] = useState<HiGHSMode>("auto");
+  const [primaryMode, setPrimaryMode] = useState<PrimaryMode>("auto");
   const [humanQualityMode, setHumanQualityMode] = useState<HumanQualityMode>(() => defaultHumanQualityMode(command.id));
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [mirror, setMirror] = useState(false);
@@ -231,7 +242,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
   const supportsColoredDrawing = COLORED_DRAWING_COMMANDS.has(command.id);
 
   useEffect(() => {
-    setUseHiGHSMode("auto");
+    setPrimaryMode("auto");
     setHumanQualityMode(defaultHumanQualityMode(command.id));
     setAdvancedOpen(false);
     setPaintColor("X");
@@ -269,7 +280,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
     requestAbort.current?.abort();
     setView({ status: "idle" });
     setFinishedDurationMs(null);
-  }, [command.id, field, fumen, pattern, targetLines, wantedSave, title, useHold, useHiGHSMode, humanQualityMode, mirror, blueGarbage]);
+  }, [command.id, field, fumen, pattern, targetLines, wantedSave, title, useHold, primaryMode, humanQualityMode, mirror, blueGarbage]);
 
   const paintCell = useCallback((event: ReactPointerEvent<HTMLCanvasElement>, value: CommandCell | null) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -335,7 +346,7 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
         wantedSave,
         title,
         useHold,
-        ...minimumCoverWorkerOptions(command.id, useHiGHSMode, humanQualityMode),
+        ...minimumCoverWorkerOptions(command.id, primaryMode, humanQualityMode),
         mode: "normal",
         mirror,
         blueGarbage,
@@ -401,10 +412,11 @@ export function SfinderCommandApp({ command }: { command: SfinderCommandDefiniti
               >Advanced <span aria-hidden="true">▾</span></button> : null}
             </div>
             {isAdaptiveMinimals && advancedOpen ? <div className="sfinder-advanced-panel" id="sfinder-advanced-settings" aria-label="Advanced minimum-cover settings">
-                <label className="sfinder-option-input"><span>HiGHS</span><select value={useHiGHSMode} onChange={(event) => setUseHiGHSMode(event.target.value as HiGHSMode)}>
+                <label className="sfinder-option-input"><span>Primary</span><select value={primaryMode} onChange={(event) => setPrimaryMode(event.target.value as PrimaryMode)}>
                   <option value="auto">Auto</option>
-                  <option value="on">On</option>
-                  <option value="off">Off</option>
+                  <option value="rust">Rust</option>
+                  <option value="ortools">ORTools</option>
+                  <option value="highs">HiGHS</option>
                 </select></label>
                 <label className="sfinder-option-input"><span>Quality</span><select value={humanQualityMode} onChange={(event) => setHumanQualityMode(event.target.value as HumanQualityMode)}>
                   <option value="Fast">Fast</option>

@@ -2,6 +2,7 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { setupTestVitePlugin } from "./vite/setupTestVitePlugin";
 import { sfinderHighsEsmPlugin } from "./vite/sfinderHighsEsmPlugin";
+import { sfinderNoticesPlugin } from "./vite/sfinderNoticesPlugin";
 
 function sfinderRoutePlugin() {
   const installRewrite = (server: { middlewares: { use: (handler: (request: { url?: string }, response: unknown, next: () => void) => void) => void } }) => {
@@ -19,7 +20,16 @@ function sfinderRoutePlugin() {
 }
 
 export default defineConfig({
-  plugins: [sfinderHighsEsmPlugin(), sfinderRoutePlugin(), setupTestVitePlugin(), react()],
+  worker: { format: "es" },
+  server: { headers: {
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Embedder-Policy": "require-corp",
+  } },
+  preview: { headers: {
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Embedder-Policy": "require-corp",
+  } },
+  plugins: [sfinderHighsEsmPlugin(), sfinderNoticesPlugin(), sfinderRoutePlugin(), setupTestVitePlugin(), react()],
   // Limit dependency discovery to the declared HTML entry points.
   optimizeDeps: {
     entries: ["index.html", "replay.html", "licence.html", "solver.html", "sfinder.html", "setup_test.html"],

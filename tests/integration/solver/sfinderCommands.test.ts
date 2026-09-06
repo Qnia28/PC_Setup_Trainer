@@ -26,10 +26,24 @@ describe("public SFinder command runtimes", () => {
       input: { sourceFumen: EMPTY_TWO_LINES, pattern: "OOOOO", clear: 2, targetLines: 2 },
     })).resolves.toMatchObject({ total: 1, success: 1, percent: 100 });
 
-    await expect(runWorkerRequest({
+    const allSaves = await runWorkerRequest({
       kind: "saves",
       input: { sourceFumen: EMPTY_TWO_LINES, pattern: "OOOO,[O]!", wantedSave: "", clear: 2, targetLines: 2 },
-    })).resolves.toMatchObject({ total: 1, success: 1, failed: 0 });
+    }) as { total: number; success: number; failed: number; saveResults: Array<Record<string, unknown>> };
+    expect(allSaves).toMatchObject({ total: 1, success: 1, failed: 0 });
+    expect(allSaves.saveResults).toEqual([
+      { save: "", success: 1, total: 1, percent: 100 },
+    ]);
+
+    const multipleSaves = await runWorkerRequest({
+      kind: "saves",
+      input: { sourceFumen: EMPTY_TWO_LINES, pattern: "OOOO,[O]!", wantedSave: "O,!O,/O{0,1}/", clear: 2, targetLines: 2 },
+    }) as { wantedSaveResults: Array<Record<string, unknown>> };
+    expect(multipleSaves.wantedSaveResults.map(({ saveExpression, success }) => ({ saveExpression, success }))).toEqual([
+      { saveExpression: "O", success: 0 },
+      { saveExpression: "!O", success: 1 },
+      { saveExpression: "/O{0,1}/", success: 1 },
+    ]);
 
     const minimals = await runWorkerRequest({
       kind: "minimals",

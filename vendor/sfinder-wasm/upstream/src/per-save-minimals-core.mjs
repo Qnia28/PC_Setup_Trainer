@@ -1,9 +1,11 @@
+import {primaryRequest} from "./primary-backend.mjs";
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
-import { minimumCoverAdaptiveAsync } from "./highs-min-cover.mjs";
+import { minimumCoverAdaptiveAsync } from "./min-cover-adaptive.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
-import { canUsePatternPath, enumerateCasePath, visitCaseSolutions } from "./path-engine.mjs";
-import { pieceFromRustCode, TETRIS_DISPLAY_ORDER } from "./piece-order.mjs";
+import { canUsePatternEnumeration, enumerateCases, visitCaseSolutions } from "./pc-enumeration-engine.mjs";
+import { pieceFromRustCode } from "./piece-order.mjs";
+import { PER_SAVE_DISPLAY_ORDER, unusedPieceForSolution } from "./save-piece.mjs";
 import { requirePositiveQuality } from "./quality-contract.mjs";
 import {
   prepareQueuePieceCounts,
@@ -11,15 +13,11 @@ import {
   unusedPiecePrepared,
 } from "./saves.mjs";
 
-export const PER_SAVE_DISPLAY_ORDER = TETRIS_DISPLAY_ORDER;
+export { PER_SAVE_DISPLAY_ORDER, unusedPieceForSolution } from "./save-piece.mjs";
 
 function normalizeCases(queues) {
   return queues.map((entry, index) =>
     typeof entry === "string" ? { caseId: `legacy:${index}`, queue: entry } : entry);
-}
-
-export function unusedPieceForSolution(queue, solution) {
-  return unusedPiecePrepared(prepareQueuePieceCounts(queue), prepareSolutionPieceCounts(solution));
 }
 
 export function perSaveLabel(piece, { pcSuccess, success, saveRate, guaranteed }) {
@@ -156,6 +154,8 @@ function finishPieceResult({
       })
       : null,
     minimumCoverBackend: minimal?.backend ?? (success > 0 ? "rust-legacy" : null),
+    primaryRequested: minimal?.primaryRequested ?? "auto",
+    primaryResolved: minimal?.primaryResolved ?? null,
     cardinalityBackend: minimal?.cardinalityBackend ?? null,
     qualityBackend: minimal?.qualityBackend ?? null,
     humanQualityExact: minimal?.qualityExact ?? true,
@@ -171,7 +171,7 @@ function maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrd
 }
 
 function collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOrder }) {
-  const path = enumerateCasePath({ board, cases, solver, useHold });
+  const path = enumerateCases({ board, cases, solver, useHold });
   if (path.mode !== "pattern") return null;
   const solutions = [...path.rows].sort((left, right) => left.key.localeCompare(right.key));
   const idByKey = new Map(solutions.map((solution, id) => [solution.key, id]));
@@ -286,18 +286,20 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
   displayOrder = PER_SAVE_DISPLAY_ORDER,
   candidateLimit = 16,
   exactHumanQuality = "true",
+  primary = undefined, Primary = undefined,
   useHiGHS = "auto",
   fastStateBudget = undefined,
   tinyExactMaxCandidates = 48,
   includeCoverage = true,
 }) {
   const cases = normalizeCases(queues);
-  const direct = maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrder });
+  const requestedPrimary = primaryRequest({primary, Primary, useHiGHS});
+  const direct = requestedPrimary === "auto" ? maybeDirect({ board, cases, solver, useHold, candidateLimit, displayOrder }) : null;
   if (direct) return direct;
 
   const tinyLimit = Math.max(0, Math.floor(Number(tinyExactMaxCandidates) || 0));
   const canUseNumericPattern = typeof solver?.minimumCoverIds === "function"
-    && canUsePatternPath({ cases, solver });
+    && canUsePatternEnumeration({ cases, solver });
   if (canUseNumericPattern) {
     const numeric = collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOrder });
     if (numeric) {
@@ -312,7 +314,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
         let minimal = null;
         let coverageCountForKey = null;
 
-        if (activeRows.length > 0 && tinyLimit > 0 && candidateCount <= tinyLimit) {
+        if (requestedPrimary === "auto" && activeRows.length > 0 && tinyLimit > 0 && candidateCount <= tinyLimit) {
           const exact = solver.minimumCoverIds(activeRows, numeric.solutions.length);
           if (exact && Number.isFinite(exact.count)) {
             minimal = {
@@ -320,6 +322,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
               keys: exact.selectedIds.map((id) => numeric.solutions[id].key),
               qualityVector: exact.qualityVector,
               searchedStates: exact.searchedStates ?? 0,
+              primaryRequested: requestedPrimary, primaryResolved: "rust",
               backend: "rust-legacy",
               cardinalityBackend: "rust-legacy-integrated",
               qualityBackend: "rust-legacy-exact",
@@ -339,6 +342,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
             qualityFor: converted.qualityFor,
             solver,
             exactQuality: exactHumanQuality,
+            primary: primary ?? Primary,
             useHiGHS,
             fastStateBudget,
             tinyExactMaxCandidates,
@@ -378,6 +382,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
         qualityFor: collected.qualityFor,
         solver,
         exactQuality: exactHumanQuality,
+        primary: primary ?? Primary,
         useHiGHS,
         fastStateBudget,
         tinyExactMaxCandidates,

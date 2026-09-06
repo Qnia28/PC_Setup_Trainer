@@ -17,7 +17,7 @@ SFinder 분석 페이지는 2줄부터 6줄까지 지원합니다. 별도의 PC 
 - `5-6L Mode`: 5줄 또는 6줄
 - 이 두 모드 그룹은 분석 페이지에서 사용합니다. PC Solver에는 별도의 4L, 5L, 6L 버튼이 있습니다.
 - 선택한 목표 높이보다 위에 블록이 있으면 계산할 수 없습니다.
-- Chance / Minimals / Per-save minimals는 일반적으로 첫 번째 Fumen 페이지를 분석합니다.
+- Chance / Saves / Minimals / Per-save minimals는 일반적으로 첫 번째 Fumen 페이지를 분석합니다.
 
 ### Queue
 SFinder 스타일의 큐 패턴을 사용할 수 있습니다.
@@ -41,16 +41,15 @@ bag 표현식 뒤에는 중괄호로 순서 조건을 붙일 수 있습니다. `
 의도적으로 Hold를 사용하지 않는 경우가 아니라면 켜 두는 것을 권장합니다.
 
 ### Advanced 옵션
-Minimals와 Per-save minimals에는 다음 두 가지 추가 설정이 있습니다.
-이 항목들은 고급 설정입니다. `Advanced`를 열면 HiGHS와 Quality 설정이 표시되며, 패널을 닫아도 아래에 설명한 기본값은 그대로 적용됩니다. 두 백엔드와 품질 모드의 차이를 자세히 모르는 경우에는 기본값을 변경하지 않는 것을 권장합니다.
+Minimals와 Per-save minimals에서 `Advanced`를 열면 Primary와 Quality를 선택할 수 있습니다. 패널을 닫아도 선택은 유지됩니다.
 
-- `HiGHS: Auto`는 축소된 행렬을 기준으로 exact-cardinality 백엔드를 자동 선택합니다. HiGHS가 유리한 어려운 행렬에서만 불러옵니다.
-- `HiGHS: On`은 축소 후 외부 exact-cardinality 증명이 필요한 경우 HiGHS를 사용하도록 허용합니다.
-- `HiGHS: Off`도 Release 2.6의 생산 알고리즘을 그대로 사용하며, 최소 개수는 Rust/WASM 백엔드로 정확히 증명합니다. 구형 legacy Minimals로 전환하는 옵션이 아닙니다.
-- `Quality: Fast`도 최소 해법 개수는 항상 정확합니다. 다만 같은 최소 개수의 집합 중 하나를 고르는 2차 품질 최적화에서 결정적인 고속 fallback을 사용할 수 있습니다.
-- `Quality: Exact`는 최소 해법 개수뿐 아니라 2차 human-quality 선택까지 정확히 계산합니다. 어려운 행렬에서는 시간이 훨씬 오래 걸릴 수 있습니다.
+- `Primary: Auto` (기본값)는 축소된 행렬이 작으면 Rust, 크면 ORTools를 사용합니다. 브라우저가 ORTools를 지원하지 않으면 큰 행렬에는 HiGHS를 사용합니다.
+- `Primary: Rust / ORTools / HiGHS`는 최소 해법 개수를 증명할 백엔드를 직접 선택합니다. 커널 단순화만으로 최소 개수가 증명되면 백엔드를 호출하지 않을 수 있습니다.
+- ORTools는 솔버 worker 2개를 사용하며 JSPI, SharedArrayBuffer와 cross-origin isolation이 필요합니다. 미지원 환경에서 ORTools를 직접 선택하면 오류가 표시됩니다. Auto의 전환은 환경 미지원에만 적용되며, 로딩·계산 오류는 그대로 표시됩니다.
+- `Quality: Fast`도 최소 해법 개수는 항상 정확하며 2차 품질 최적화에 한정된 예산을 사용합니다. Primary에 따라 같은 최소 개수의 다른 해법 집합이 선택될 수 있습니다.
+- `Quality: Exact`는 2차 품질 최적값까지 증명하므로 더 오래 걸릴 수 있습니다.
 
-HiGHS는 실제로 필요한 계산에서만 지연 다운로드됩니다. HiGHS를 사용한 계산이 끝나면 QniaPC는 다음 요청 전에 해당 솔버 Worker를 해제합니다.
+ORTools와 HiGHS는 필요할 때만 다운로드합니다. ORTools는 각 증명 후 전용 Worker와 스레드를 해제하고, QniaPC는 HiGHS 사용 후에도 솔버 Worker를 회수합니다.
 
 ---
 
@@ -116,6 +115,32 @@ Chance는 **PC 가능 여부**만 필요할 때 가장 적합합니다. 대표 �
 
 ---
 
+# Saves
+
+> **PC 후에 정확히 어떤 미노 또는 미노 조합을 남길 수 있는지 계산합니다.**
+
+### 입력
+- 필드 또는 Fumen
+- Queue
+- Lines
+- 선택 사항: `Saves`
+- Use hold
+
+`Saves`를 비워 두거나 `ALL`을 입력하면 가능한 모든 정확한 Save 결과를 나열합니다. 각 행에는 성공률과 성공한 큐 수가 표시됩니다. 미노 중복 개수도 보존하므로 `T`와 `TT`는 서로 다른 결과입니다.
+
+쉼표로 여러 조건식을 구분하면 한 번의 계산으로 여러 Wanted Save를 확인할 수 있습니다. 결과 순서는 입력 순서를 유지합니다.
+
+```text
+T,I,TT
+^T,!T,S&&Z
+TT#T>X
+/O{0,1}/,TT
+```
+
+`조건식#표시명`을 사용하면 계산 조건을 바꾸지 않고 표시 이름을 지정할 수 있습니다. 정규식 내부의 쉼표는 조건 구분자로 취급하지 않습니다. 각 Wanted Save 결과에는 개별 성공률, 성공/전체 수, 실패 수와 실패 큐 목록이 표시됩니다.
+
+---
+
 # Minimals
 
 > **큐 패턴을 커버하는 데 필요한 가장 작은 해법 집합을 찾습니다.**
@@ -128,7 +153,7 @@ Chance는 **PC 가능 여부**만 필요할 때 가장 적합합니다. 대표 �
 - 선택 사항: `Saves`
 - 선택 사항: Result title
 - Use hold
-- HiGHS: Auto / On / Off
+- Primary: Auto / Rust / ORTools / HiGHS
 - Quality: Fast / Exact
 
 모든 PC 해법을 대상으로 Minimals를 찾으려면 `Saves`를 비워 두십시오.
@@ -177,7 +202,7 @@ Saves와 마찬가지로 Save 조건을 적용할 때는 마지막 bag 정보를
 - Lines
 - 선택 사항: Result title
 - Use hold
-- HiGHS: Auto / On / Off
+- Primary: Auto / Rust / ORTools / HiGHS
 - Quality: Fast / Exact
 
 현재 필드에서 PC에 `P`개의 미노가 필요하다면 모든 입력 큐는 정확히 **P+1개**여야 합니다.

@@ -1,0 +1,616 @@
+{
+  "source": {
+    "officialCommit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+    "portCommit": "a16c07886b1db846248a477ed5c06ba93c484493",
+    "coreDiff": [
+      "ortools/julia/ORTools.jl/src/moi_wrapper/CPSat_wrapper.jl",
+      "ortools/julia/ORToolsBinaries.jl/LICENSE",
+      "ortools/julia/ORToolsBinaries.jl/Project.toml",
+      "ortools/julia/ORToolsBinaries.jl/deps/build.jl",
+      "ortools/math_opt/solvers/gscip/gscip.cc",
+      "ortools/math_opt/solvers/pdlp_bridge.cc",
+      "ortools/pdlp/quadratic_program.cc",
+      "ortools/pdlp/quadratic_program.h",
+      "ortools/pdlp/quadratic_program_test.cc",
+      "ortools/pdlp/sharded_quadratic_program.cc",
+      "ortools/pdlp/sharded_quadratic_program.h",
+      "ortools/port/os.h"
+    ],
+    "satGlopDiff": "",
+    "optimizations": [
+      "Release -O3",
+      "-flto compile and link",
+      "-msimd128 (already enabled in old port)",
+      "-sASSERTIONS=0",
+      "-fwasm-exceptions compile and link (replace JavaScript EH)"
+    ],
+    "portSourceChanges": "diff --git a/ortools/port/os.h b/ortools/port/os.h\nindex c7e3859..ba04acf 100644\n--- a/ortools/port/os.h\n+++ b/ortools/port/os.h\n@@ -33,7 +33,7 @@\n \n #if defined(ORTOOLS_TARGET_OS_IS_ANDROID) || \\\n     defined(ORTOOLS_TARGET_OS_IS_IOS) ||     \\\n-    defined(ORTOOLS_TARGET_OS_IS_EMSCRIPTEN)\n+    (defined(ORTOOLS_TARGET_OS_IS_EMSCRIPTEN) && !defined(__EMSCRIPTEN_PTHREADS__))\n #define ORTOOLS_TARGET_OS_SUPPORTS_THREADS 0\n #else\n #define ORTOOLS_TARGET_OS_SUPPORTS_THREADS 1\n"
+  },
+  "emscripten": "6.0.8",
+  "nodeBenchmark": "24.13.0",
+  "cmake": "3.31.10",
+  "compilerExamples": [
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DBZ2_STATICLIB -DEIGEN_MPL2_ONLY -DORTOOLS_WASM_ALLOWED_ORIGINS=\\\"\\\" -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/javascript -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-build -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/bzip2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/re2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/eigen3-src -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIE -pthread -msimd128 -fwasm-exceptions -fwrapv -o CMakeFiles\\cp_sat_runtime.dir\\javascript\\cp_sat_api.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "output": "CMakeFiles\\cp_sat_runtime.dir\\javascript\\cp_sat_api.cc.o"
+    },
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DBZ2_STATICLIB -DEIGEN_MPL2_ONLY -DORTOOLS_WASM_ALLOWED_ORIGINS=\\\"\\\" -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/javascript -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-build -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/bzip2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/re2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/eigen3-src -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIE -pthread -msimd128 -fwasm-exceptions -fwrapv -o CMakeFiles\\cp_sat_runtime_asyncify.dir\\javascript\\cp_sat_api.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "output": "CMakeFiles\\cp_sat_runtime_asyncify.dir\\javascript\\cp_sat_api.cc.o"
+    },
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DBZ2_STATICLIB -DEIGEN_MPL2_ONLY -DORTOOLS_WASM_ALLOWED_ORIGINS=\\\"\\\" -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/javascript -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-build -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/bzip2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/re2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/eigen3-src -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIE -pthread -msimd128 -fwasm-exceptions -fwrapv -o CMakeFiles\\cp_sat_runtime_node.dir\\javascript\\cp_sat_api.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "output": "CMakeFiles\\cp_sat_runtime_node.dir\\javascript\\cp_sat_api.cc.o"
+    },
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DBZ2_STATICLIB -DEIGEN_MPL2_ONLY -DORTOOLS_WASM_ALLOWED_ORIGINS=\\\"\\\" -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/javascript -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-build -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/zlib-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/bzip2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/re2-src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/eigen3-src -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIE -pthread -msimd128 -fwasm-exceptions -fwrapv -o CMakeFiles\\cp_sat_runtime_node_asyncify.dir\\javascript\\cp_sat_api.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\javascript\\cp_sat_api.cc",
+      "output": "CMakeFiles\\cp_sat_runtime_node_asyncify.dir\\javascript\\cp_sat_api.cc.o"
+    },
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIC -pthread -msimd128 -fwrapv -o ortools\\glop\\CMakeFiles\\ortools_glop.dir\\revised_simplex.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\ortools\\glop\\revised_simplex.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\ortools\\glop\\revised_simplex.cc",
+      "output": "ortools\\glop\\CMakeFiles\\ortools_glop.dir\\revised_simplex.cc.o"
+    },
+    {
+      "directory": "D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto",
+      "command": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\emsdk\\upstream\\emscripten\\em++.exe -DOR_PROTO_DLL=\"\" -DUSE_GLOP -DUSE_MATH_OPT -DUSE_PDLP -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/wasm-v915 -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/src -ID:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/protobuf-src/third_party/utf8_range -isystem D:/AI/sfinder-wasm/todo/ortools-benchmark-20260906/build-v915-lto/_deps/absl-src -O3 -DNDEBUG -flto -fwasm-exceptions -std=c++17 -fPIC -pthread -msimd128 -fwrapv -o ortools\\sat\\CMakeFiles\\ortools_sat.dir\\cp_model_solver.cc.o -c D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\ortools\\sat\\cp_model_solver.cc",
+      "file": "D:\\AI\\sfinder-wasm\\todo\\ortools-benchmark-20260906\\wasm-v915\\ortools\\sat\\cp_model_solver.cc",
+      "output": "ortools\\sat\\CMakeFiles\\ortools_sat.dir\\cp_model_solver.cc.o"
+    }
+  ],
+  "files": [
+    {
+      "file": "package.json",
+      "bytes": 32,
+      "sha256": "d218e29ec01186542b0d85bdc6691d12514e4cdd0ba3b9cd81f253250c8d1e34"
+    },
+    {
+      "file": "browser/cloud_executor.js",
+      "bytes": 4785,
+      "sha256": "fcce5404451b2d84c583ab799c46de4fee0f6840c559675aefbe3b1121efcc6c"
+    },
+    {
+      "file": "browser/cp-sat.js",
+      "bytes": 862043,
+      "sha256": "fda658f8f9dc90c76d1e80d702da8d22199faf9669e04a1ce6370ed75275ae8c"
+    },
+    {
+      "file": "browser/executor_configuration.js",
+      "bytes": 439,
+      "sha256": "95742178a7365f40f4bca402529d07304e73b407892d73ff03ae420a574c8496"
+    },
+    {
+      "file": "browser/index.js",
+      "bytes": 129,
+      "sha256": "0121baa7fffb5c1ae960f19658b954d5c4f7195eace8efdbc7677a7a7c7792e4"
+    },
+    {
+      "file": "browser/knapsack.js",
+      "bytes": 378677,
+      "sha256": "0ea89858514c97558a9680dd6b411c26d91a9f4382f81c630099330454a58219"
+    },
+    {
+      "file": "browser/mathopt.js",
+      "bytes": 812340,
+      "sha256": "96d599fcbda20f1192b9525c973d47d277d0855a650566b7b45552c128544418"
+    },
+    {
+      "file": "browser/mp-solver.js",
+      "bytes": 686641,
+      "sha256": "0adddcbe8efe29488bcb5bf30c8b78bff341177c1270c0f6ad5133418981fa5a"
+    },
+    {
+      "file": "browser/network-flow.js",
+      "bytes": 387237,
+      "sha256": "649d3d5ed6046caf32431cac8ffacd266bf30756b17841e6fc04dbff9aba65db"
+    },
+    {
+      "file": "browser/package_metadata.js",
+      "bytes": 93,
+      "sha256": "152d9a9ff7fed9d7ba5a1a0e3f54f4bb531331aed5a141baa0f89b349ce268a9"
+    },
+    {
+      "file": "browser/pdlp.js",
+      "bytes": 403403,
+      "sha256": "726ba6de1abf3c715c26830b06ecb733ce93d9b60244d22a245d6f1cf15d104d"
+    },
+    {
+      "file": "browser/protobufjs_helpers.js",
+      "bytes": 1339,
+      "sha256": "333db2dfa116b33fa22f395b48a433c303e386770965f3d993f12d31cecfb334"
+    },
+    {
+      "file": "browser/rcpsp.js",
+      "bytes": 867130,
+      "sha256": "7484a7df64c3af0b6ad54b183d9fcadfdc0f87f6a3f4794b810a96ed17a774c4"
+    },
+    {
+      "file": "browser/routing.js",
+      "bytes": 422703,
+      "sha256": "f613dad71b1a6e1f9a7b6f19507994bdd72d0ad2f6fceb077744e5e3ce4aaadd"
+    },
+    {
+      "file": "browser/runtime_loader.js",
+      "bytes": 5086,
+      "sha256": "3d93aea9d621bdd960e18516975f4d9a4d67f15b9127aea3c752471467c01d18"
+    },
+    {
+      "file": "browser/runtime_loader_core.js",
+      "bytes": 5193,
+      "sha256": "b34148e1548062068d7dead335d12bfc18ea03e95019590cead19d67dce60813"
+    },
+    {
+      "file": "browser/set-cover.js",
+      "bytes": 388722,
+      "sha256": "c075e846fbe6eeabd3b58d1b7e32de425886eb908c3d5a1565ae8398b4dd4a39"
+    },
+    {
+      "file": "browser/solver_bridge.js",
+      "bytes": 3224,
+      "sha256": "6a73529a7dad380bd370cccd51557194f00805ef035b99657a338ecf9b1bc60d"
+    },
+    {
+      "file": "browser/solver_executor.js",
+      "bytes": 1831,
+      "sha256": "395f88f74ba4568b58d04291b0b793f8c01ff22159a130e4b6c8f8a281a9f787"
+    },
+    {
+      "file": "browser/solver_server_executor.js",
+      "bytes": 11829,
+      "sha256": "6cfd251bf58aae1d5646f18ab37f783f909dae87899ce217468fcc5ac649f94d"
+    },
+    {
+      "file": "browser/solver_worker.js",
+      "bytes": 2982,
+      "sha256": "95599497028596587711affcb5bcef5afb4c83bc649c83331723e2b65277e94f"
+    },
+    {
+      "file": "browser/wasm_memory.js",
+      "bytes": 1083,
+      "sha256": "0383a38583838c2429b3d00b2b748e532497c1bf73ef48d685c613da7509e8f2"
+    },
+    {
+      "file": "browser/wasm_module_types.js",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "browser/worker_helpers.js",
+      "bytes": 10420,
+      "sha256": "c34131d1dacfcf11d15377f9f7202bd5f457527205fd9a2777714dd3343ec943"
+    },
+    {
+      "file": "node/cp-sat.js",
+      "bytes": 939103,
+      "sha256": "5c6fd643842273852017352a759d45d0db863616695e518247d5cb1800a26683"
+    },
+    {
+      "file": "node/index.js",
+      "bytes": 122,
+      "sha256": "6fe36aa915d669315ff1adf1f6353220983e3202c8430f73c4ed94554a7373f9"
+    },
+    {
+      "file": "node/knapsack.js",
+      "bytes": 398363,
+      "sha256": "02273cd24988158195ef9e7c2ebd5c534b600f34f72e40a578636b77a5619ec7"
+    },
+    {
+      "file": "node/mathopt.js",
+      "bytes": 861200,
+      "sha256": "97b2fbd67d9e40fd36275745e2752d9ad6a66285e644966f93445d375b8e4a38"
+    },
+    {
+      "file": "node/mp-solver.js",
+      "bytes": 734723,
+      "sha256": "2ee677c265b9444fa652b71302fd9e9f9f7b7043fc13bc398bd2924bb5b13133"
+    },
+    {
+      "file": "node/network-flow.js",
+      "bytes": 407222,
+      "sha256": "f7ce759e4cde1eb5d5912cbd0da85b172995fef9956dee9300e3f4310a9f01c3"
+    },
+    {
+      "file": "node/pdlp.js",
+      "bytes": 423832,
+      "sha256": "e525345ebd3253efaf5687a5b3cf87d08be5e4e59e6c6719e8a98c6de640f768"
+    },
+    {
+      "file": "node/rcpsp.js",
+      "bytes": 919532,
+      "sha256": "7b9db17588b3a8975b260db9f3308895677b5a7d5ca64a375cbc677ef8cc1dbe"
+    },
+    {
+      "file": "node/routing.js",
+      "bytes": 443723,
+      "sha256": "90a366fcd2208cabe3bd1ef037aa43acbb308d20f1da70c5169ed4abfb5d1334"
+    },
+    {
+      "file": "node/runtime_loader.js",
+      "bytes": 8613,
+      "sha256": "f1c0c4011528eacc3581741f212aa3e1cb934c16519910a2192bcaed905f77e3"
+    },
+    {
+      "file": "node/set-cover.js",
+      "bytes": 408746,
+      "sha256": "a6423292803fdbe56a21c2930be57a7e771c5ad28077ed92fa288d6459b1058e"
+    },
+    {
+      "file": "node-wasm/cp_sat_runtime_node.js",
+      "bytes": 96632,
+      "sha256": "ec4ad009220857ecab85eebca244e95bb02d4e54cbac739a1b79117947028fca"
+    },
+    {
+      "file": "node-wasm/cp_sat_runtime_node.wasm",
+      "bytes": 8038746,
+      "sha256": "7482593df2d8fde213d17abd14a47d0def30401ab96d3afa6e0b5d14042c0030"
+    },
+    {
+      "file": "wasm/cp_sat_runtime.js",
+      "bytes": 93903,
+      "sha256": "0c84e26ed6642523c9d61bebca9105cbbdb3ad932a960e921444879a87f58c5d"
+    },
+    {
+      "file": "wasm/cp_sat_runtime.wasm",
+      "bytes": 8038746,
+      "sha256": "7482593df2d8fde213d17abd14a47d0def30401ab96d3afa6e0b5d14042c0030"
+    },
+    {
+      "file": "node/cp_sat/worker.js",
+      "bytes": 653,
+      "sha256": "2e90ce065622c9eca572e78ff95811acf57511e06c1f8bca98b0f4e8a3952931"
+    },
+    {
+      "file": "node/cp_sat/worker_runtime.js",
+      "bytes": 375317,
+      "sha256": "2c3e78d133b1d7a2af64c4a4ebfdffc09a60fc186079e2beed075158581b35f5"
+    },
+    {
+      "file": "node/knapsack/worker.js",
+      "bytes": 655,
+      "sha256": "d84dfb863f5f0e632e7f0ca94df3245906548e89cc3dd2a5e56489136dd766a5"
+    },
+    {
+      "file": "node/knapsack/worker_runtime.js",
+      "bytes": 368919,
+      "sha256": "1dcfb31df00362787661ec93dc90803550371201e120df467bf746e208783a34"
+    },
+    {
+      "file": "node/mathopt/worker.js",
+      "bytes": 654,
+      "sha256": "37e8d7067d8fb419ba01378a35f7fd0095567e7289c51c4d657a82aeb47166d2"
+    },
+    {
+      "file": "node/mathopt/worker_runtime.js",
+      "bytes": 371176,
+      "sha256": "5390a6c772011f744f0dd9b51d243bd582b00779ce30e4ae00671ee50723746c"
+    },
+    {
+      "file": "node/mp_solver/worker.js",
+      "bytes": 656,
+      "sha256": "ce03de127425dc3ea621bccbed0438f5df8d0fd73e42282a436345de46f7090e"
+    },
+    {
+      "file": "node/mp_solver/worker_runtime.js",
+      "bytes": 369560,
+      "sha256": "3840b932f51bbd9a4ffda930d79f3c71417fb7814450c76e7fe391de22f9afb2"
+    },
+    {
+      "file": "node/network_flow/worker.js",
+      "bytes": 659,
+      "sha256": "6414a59956d73007f23f0fb9092040759fa0b96454d8eb7d8e07e1469efa3139"
+    },
+    {
+      "file": "node/network_flow/worker_runtime.js",
+      "bytes": 370098,
+      "sha256": "ef6af6fb60a0630c5650f2a2d97c0a8777e154ec8b0aa389d5425a40a63c9726"
+    },
+    {
+      "file": "node/pdlp/worker.js",
+      "bytes": 651,
+      "sha256": "819c670113fba4c8beec3bfbe2a788b429dd8d17bc4a792c67d931fd7552fff3"
+    },
+    {
+      "file": "node/pdlp/worker_runtime.js",
+      "bytes": 386155,
+      "sha256": "791844e666d546f936aa5a0ccd88fc43363020c9ea4d8e985bd31bde1975952b"
+    },
+    {
+      "file": "node/routing/worker.js",
+      "bytes": 654,
+      "sha256": "603fe65fef0966600144e78413deeb7ee9ce38907e96bb61c730d3f1184dd220"
+    },
+    {
+      "file": "node/routing/worker_runtime.js",
+      "bytes": 396008,
+      "sha256": "969977b5a5d62188d659879454aa1c2cfdbba1bf9c754c336bf30b356d9d2626"
+    },
+    {
+      "file": "node/set_cover/worker.js",
+      "bytes": 656,
+      "sha256": "0fcf06290c63451790da1c7b28f760d4bd80db0c42129f2e79585de38099953b"
+    },
+    {
+      "file": "node/set_cover/worker_runtime.js",
+      "bytes": 368287,
+      "sha256": "b747389796e965b9f878b0d4837d8147d9709744c63581222432185797d514b2"
+    },
+    {
+      "file": "browser/cp_sat/api.js",
+      "bytes": 8565,
+      "sha256": "ab7180760593710a3d6c05b8d866ef4ee138ee73a8a0aa717ceba6dd11adff90"
+    },
+    {
+      "file": "browser/cp_sat/direct_executor.js",
+      "bytes": 7612,
+      "sha256": "a6483a2926aca4b453855f5af931adeed4d48b151345f651475ae72dbd5e22b9"
+    },
+    {
+      "file": "browser/cp_sat/high_level_api.js",
+      "bytes": 72936,
+      "sha256": "fee1fc93448aee97f6603cb50dad3127248d3ab4fb8f044955079ecc08d6a3ae"
+    },
+    {
+      "file": "browser/cp_sat/protocol.js",
+      "bytes": 3804,
+      "sha256": "88cc4da408f83beda330232e3d11fca0fffc641be5a1b8b33671720064161b00"
+    },
+    {
+      "file": "browser/cp_sat/worker.js",
+      "bytes": 357135,
+      "sha256": "b33e9725e2eb1ed63e28329e2e40efd62fa2493fc51246cad5d3972d87857f4e"
+    },
+    {
+      "file": "browser/generated/cp_model.js",
+      "bytes": 2564,
+      "sha256": "80d4f0fcba2641c8ffedc0e65c44d1b103bbe3f0402d3c2c5e2dd81b7737c919"
+    },
+    {
+      "file": "browser/generated/cp_sat_schemas.js",
+      "bytes": 133144,
+      "sha256": "e07eea5dbedb52ad44e83f725d156e195aa0f520a33dcad2f554de90482e135c"
+    },
+    {
+      "file": "browser/generated/sat_parameters.js",
+      "bytes": 7381,
+      "sha256": "f8db2595ef481f26443ec4cfee6355eb288d003ad66161f4a6cb9863446a53f0"
+    },
+    {
+      "file": "browser/knapsack/api.js",
+      "bytes": 7226,
+      "sha256": "6bdb677caa8b3f10cd661354a636b1a64deb0922650e1ec6c0e716680e97b42b"
+    },
+    {
+      "file": "browser/knapsack/direct_executor.js",
+      "bytes": 3136,
+      "sha256": "8085743af1660d3d502355cb47f9f6cb80065e43fd8b99ed84e1df7c99df0ee5"
+    },
+    {
+      "file": "browser/knapsack/native_runtime.js",
+      "bytes": 2045,
+      "sha256": "17740a6576a0e224816809a3d069c6142ea395b7cb612dd04166545ba84fc00d"
+    },
+    {
+      "file": "browser/knapsack/protocol.js",
+      "bytes": 1619,
+      "sha256": "de8cf468503897ed665eafdd634107eb3884db9b5b8b12e35e851c657cc686da"
+    },
+    {
+      "file": "browser/knapsack/worker.js",
+      "bytes": 350990,
+      "sha256": "f7f9e7da927cef0ff36a54b39859658116ccb249f68579adb2dc670ce7664b3c"
+    },
+    {
+      "file": "browser/mathopt/api.js",
+      "bytes": 97665,
+      "sha256": "1333dd7185b78d90e0c680481e001d26860b0e65c3de928ec16a769fff92f479"
+    },
+    {
+      "file": "browser/mathopt/direct_executor.js",
+      "bytes": 5313,
+      "sha256": "c107d5d86fe042b543efbb72c61badeb047c789ec0afbc50123daccdfb889219"
+    },
+    {
+      "file": "browser/mathopt/protocol.js",
+      "bytes": 3268,
+      "sha256": "702e58a29dcb284af3ad5f6d5ec621483672ad9cd5229f28c8eb88bcb79ef250"
+    },
+    {
+      "file": "browser/mathopt/worker.js",
+      "bytes": 353351,
+      "sha256": "334f82404f3898139b2c4756da3c5e28dbbc8aca1946f30c5bf3300f16f4bd83"
+    },
+    {
+      "file": "browser/mp_solver/api.js",
+      "bytes": 47330,
+      "sha256": "1951584f068277d3276739811d49004449649c0f0f41b78061d42ca2f56031d3"
+    },
+    {
+      "file": "browser/mp_solver/direct_executor.js",
+      "bytes": 4146,
+      "sha256": "a865dcdb14c2ddc9928f867393d51a3c20f568a3546f0d84c81e23d3b7d9e1d3"
+    },
+    {
+      "file": "browser/mp_solver/protocol.js",
+      "bytes": 2471,
+      "sha256": "f7f764ef3d73fd319b6a11704f7575a673fed6ec941f870ea86841c04c17e8b4"
+    },
+    {
+      "file": "browser/mp_solver/worker.js",
+      "bytes": 351624,
+      "sha256": "3a003e6a1add3160360007b324243aef85dba99c50f74059386b72170cbafb75"
+    },
+    {
+      "file": "browser/network_flow/api.js",
+      "bytes": 14806,
+      "sha256": "de1ebab2b9faeaf39df9e362e251881e644e0dfa5f3fe7de599724e6c1e6e43f"
+    },
+    {
+      "file": "browser/network_flow/direct_executor.js",
+      "bytes": 5775,
+      "sha256": "4c7aa8d6f4e6d0148ae48775993c52a3da3786e8b3b77aee8810c847a9087096"
+    },
+    {
+      "file": "browser/network_flow/protocol.js",
+      "bytes": 2144,
+      "sha256": "65a07c21360d58223c0c2c930a04e5357b4aa0b95044cba073746b719ab82ddc"
+    },
+    {
+      "file": "browser/network_flow/worker.js",
+      "bytes": 352120,
+      "sha256": "188f3a521fb1d4c40ccb82c09fc272332c62ae004cd91b2816c2bd156dafd487"
+    },
+    {
+      "file": "browser/pdlp/api.js",
+      "bytes": 15053,
+      "sha256": "0f8979ffbc4f09a77e01d8bfdbcf866a9cacb80a7b6c8d4a6ec44d10927ee94c"
+    },
+    {
+      "file": "browser/pdlp/direct_executor.js",
+      "bytes": 13610,
+      "sha256": "7c956b2428d21bf477956e110ed57aa09f558b662494bfed635613b96734008f"
+    },
+    {
+      "file": "browser/pdlp/protocol.js",
+      "bytes": 5925,
+      "sha256": "75aa91baa7640c8f6482e03964f4abaca614f72718490544d85bdfb4b29c81ba"
+    },
+    {
+      "file": "browser/pdlp/worker.js",
+      "bytes": 367736,
+      "sha256": "86072eef208bdcf98f50204a67c2121250ebdcafdb721eef6401b1490059cadb"
+    },
+    {
+      "file": "browser/rcpsp/api.js",
+      "bytes": 16291,
+      "sha256": "f3b28d793909cce6790dbed985fb8e7cd6520e7294f6425ffa85d4673fedefb8"
+    },
+    {
+      "file": "browser/routing/api.js",
+      "bytes": 25641,
+      "sha256": "13a39f925c8de44435fc0afc1788971b865b4beea54919871d1fd874eb5b6e3a"
+    },
+    {
+      "file": "browser/routing/direct_executor.js",
+      "bytes": 2899,
+      "sha256": "c10f06b14c742da14e40c8ac70ada164bf713273e6fa2bde57261c26d405a924"
+    },
+    {
+      "file": "browser/routing/native_runtime.js",
+      "bytes": 12161,
+      "sha256": "d8c8747e0ba744cfd0f3dfb27bab72d74776d2c7855c1640bfcbc9878cbbf98d"
+    },
+    {
+      "file": "browser/routing/protocol.js",
+      "bytes": 12604,
+      "sha256": "a8bb428f676a699792d661be7dbb8844026447fc669c35a7d064d2fda8bdc5ca"
+    },
+    {
+      "file": "browser/routing/worker.js",
+      "bytes": 377598,
+      "sha256": "3e51d0e133cec8665fd716533b0eb99a266f60f6ba5dbf162033eb27e44d3f5c"
+    },
+    {
+      "file": "browser/set_cover/api.js",
+      "bytes": 18210,
+      "sha256": "eb306589ffa30e67daac4a088c99a57dc958602b12f99cdf88100a09308df7f5"
+    },
+    {
+      "file": "browser/set_cover/direct_executor.js",
+      "bytes": 4259,
+      "sha256": "ae5e9a1af0ae79435ef9b505ab203e571e5898fdc8fbbfc6ec9754e291d2cbf4"
+    },
+    {
+      "file": "browser/set_cover/protocol.js",
+      "bytes": 2490,
+      "sha256": "daeb459f840c4f1b5c5aaa906430272587005eeb60d44c1ec73615b6f46a6d0b"
+    },
+    {
+      "file": "browser/set_cover/worker.js",
+      "bytes": 350362,
+      "sha256": "e66491a7b236d2a122051073493d5370c46f7d69efa4a8ed1ea248a3861f5370"
+    },
+    {
+      "file": "browser/generated/bridge/cp_sat_pb.js",
+      "bytes": 2146,
+      "sha256": "4826d5b87b63f592ff197b978b4c67e700babec77b42f5f9b85a7512f3f436b4"
+    },
+    {
+      "file": "browser/generated/bridge/job_pb.js",
+      "bytes": 5604,
+      "sha256": "b535f92ed6c4cbed6ed53d5911653c2c0d56cfd140c5f9f4d99ecc9020ec71d1"
+    },
+    {
+      "file": "browser/generated/bridge/knapsack_pb.js",
+      "bytes": 991,
+      "sha256": "61353dedb596667944e1e4f7666d53bab160e02cfa3adf949c32dfc87e8b5659"
+    },
+    {
+      "file": "browser/generated/bridge/mathopt_pb.js",
+      "bytes": 2000,
+      "sha256": "64351efd5cc665c24b708a9d3291d665ed249f3b8952ef6fe46c32d823ac018e"
+    },
+    {
+      "file": "browser/generated/bridge/mp_solver_pb.js",
+      "bytes": 1437,
+      "sha256": "7e78970cd4754cb06b4e226873bcf2e1a8772932a974657887903307782f4ef6"
+    },
+    {
+      "file": "browser/generated/bridge/network_flow_pb.js",
+      "bytes": 1930,
+      "sha256": "df00ae12a4bc8c49af4382b8e035e43756c5884a86926ff0657a444acd99bea0"
+    },
+    {
+      "file": "browser/generated/bridge/pdlp_pb.js",
+      "bytes": 5785,
+      "sha256": "57419dc5b1b0bb489692c88ea788c8370d2a9b1746b208f2cd885dd6476bd320"
+    },
+    {
+      "file": "browser/generated/bridge/routing_pb.js",
+      "bytes": 7102,
+      "sha256": "722dc2cb4378d3403bc7b9d1cc34840c6e4daf8a4d0244beebbd4792666f7b2d"
+    },
+    {
+      "file": "browser/generated/bridge/set_cover_pb.js",
+      "bytes": 2364,
+      "sha256": "38c1f8f67e91e03748193a19e3b35484fee469d3b8519e3803c9f71f4e07d7f9"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependency": "absl-src",
+      "commit": "d38452e1ee03523a208362186fd42248ff2609f6"
+    },
+    {
+      "dependency": "bzip2-src",
+      "commit": "66c46b8c9436613fd81bc5d03f63a61933a4dcc3"
+    },
+    {
+      "dependency": "eigen3-src",
+      "commit": "3147391d946bb4b6c68edd901f2add6ac1f31f8c"
+    },
+    {
+      "dependency": "protobuf-src",
+      "commit": "a8d85ffbc7158660b4247f732371d1b07780510e"
+    },
+    {
+      "dependency": "re2-src",
+      "commit": "0f6c07eae69151e606acb3d9232750c3442dff23"
+    },
+    {
+      "dependency": "zlib-src",
+      "commit": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
+    }
+  ],
+  "gluePatch": "ASSERTIONS=0 JSPI: await __wasm_call_ctors and initRuntime before returning; no solver code changes",
+  "buildExitCode": 0,
+  "threadPool": "navigator.hardwareConcurrency (16 on test host)"
+}

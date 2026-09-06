@@ -14,3 +14,16 @@ test('batched canPc matches independent single-queue calls across *p7',async()=>
   assert.deepEqual(batched.canPcMany(board,noHold,false),noHold.map(q=>single.canPc(board,q,false)));
  }finally{batched.close();single.close()}
 });
+
+test('scalar canPcMany and enumeratePcMany preserve duplicate queue multiplicity',async()=>{
+ const page=decoder.decode('v115@9gRpHeRpHeilGeglzhOeAgH')[0],{base,fill}=fieldMasks(page,4),board=base|fill,solver=await createWasmSolver(4);
+ try{
+  const queues=['TILJS','TILJS','OOOOO','TILJS'];
+  const can=solver.canPcMany(board,queues,true);
+  assert.equal(can.length,queues.length);
+  assert.equal(can[0],can[1]);assert.equal(can[0],can[3]);
+  const rows=solver.enumeratePcMany(board,queues,true);
+  assert.equal(rows.length,queues.length);
+  assert.deepEqual(rows[0],rows[1]);assert.deepEqual(rows[0],rows[3]);
+ }finally{solver.close()}
+});

@@ -16,7 +16,9 @@ describe("SFinder use guide", () => {
     expect(html).toContain("PC Solver currently provides 4L, 5L, and 6L modes");
     expect(html).toContain("this is not a minimum-cover calculation");
     expect(html).not.toContain("<li>Coverage counts</li>");
-    expect(html).not.toContain("<h1>Saves</h1>");
+    expect(html).toContain("<h1>Saves</h1>");
+    expect(html).toContain("list every distinct exact save outcome");
+    expect(html).toContain("/O{0,1}/,TT");
     expect(html).not.toContain("<h1>Cover</h1>");
     expect(html).not.toContain("<h1>Congruent</h1>");
     expect(html).not.toContain("<h1>Congruent cover</h1>");
@@ -29,7 +31,9 @@ describe("SFinder use guide", () => {
     expect(html).toContain("<h1>PC Solver</h1>");
     expect(html).toContain("<code>*p7</code>");
     expect(html).toContain("<strong>하나의 구체적인 큐</strong>");
-    expect(html).not.toContain("<h1>Saves</h1>");
+    expect(html).toContain("<h1>Saves</h1>");
+    expect(html).toContain("가능한 모든 정확한 Save 결과");
+    expect(html).toContain("/O{0,1}/,TT");
     expect(html).not.toContain("<h1>Cover</h1>");
     expect(html).not.toContain("<h1>Congruent</h1>");
     expect(html).not.toContain("<h1>Congruent cover</h1>");

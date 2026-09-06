@@ -3,10 +3,11 @@ import { boardFromFumenPage } from "./board.mjs";
 import { encodePages } from "./fumen.mjs";
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
-import { minimumCoverAsync } from "./highs-min-cover.mjs";
+import { minimumCoverAsync } from "./min-cover-adaptive.mjs";
 import { orderMinimalKeysByCoverage } from "./minimal-order.mjs";
 import { expandPatternCases } from "./pattern.mjs";
-import { enumerateCasePath } from "./path-engine.mjs";
+import { collectCompactMinimals } from "./minimals-compact.mjs";
+import { enumerateCases, canUsePatternEnumeration } from "./pc-enumeration-engine.mjs";
 import { compileExactSaveExpression, prepareSaveCase, prepareSolutionPieceCounts, savedMultiplicityCodePrepared } from "./saves.mjs";
 
 function collectSaveMinimals({
@@ -20,13 +21,17 @@ function collectSaveMinimals({
   const board = boardFromFumenPage(decoder.decode(sourceFumen)[0], height);
   const cases = expandPatternCases(analysisPattern);
   const queues = cases.map((entry) => entry.queue);
+  if (canUsePatternEnumeration({ cases, solver }) && typeof solver.enumeratePcPatternCompact === 'function') {
+    const compact = solver.enumeratePcPatternCompact(board, queues, useHold);
+    if (compact) return { board, height, cases, queues, ...collectCompactMinimals(compact, cases, wantedSave) };
+  }
   const coverage = new Map();
   const qualityIndex = new Map();
   const saveMatches = compileExactSaveExpression(wantedSave);
   const byKey = new Map();
   const saveCases = cases.map((entry) => prepareSaveCase(entry.queue, entry.lastBag));
   const usageByKey = new Map();
-  const path = enumerateCasePath({ board, cases, solver, useHold });
+  const path = enumerateCases({ board, cases, solver, useHold });
 
   if (path.mode === "pattern") {
     for (const solution of path.rows) {
@@ -94,7 +99,7 @@ function finishSaveMinimals(collected, minimal) {
     height,
     cases,
     queues,
-    coverage,
+    get coverage() { return coverage.toMap ? coverage.toMap() : coverage; },
     saveSuccess: coverage.size,
     minimalCount: minimal.count,
     keys,
@@ -104,6 +109,8 @@ function finishSaveMinimals(collected, minimal) {
     minimumCoverBackend: minimal.backend ?? "rust",
     cardinalityBackend: minimal.cardinalityBackend ?? "rust",
     qualityBackend: minimal.qualityBackend ?? "rust-legacy-exact",
+    primaryRequested: minimal.primaryRequested ?? "auto",
+    primaryResolved: minimal.primaryResolved ?? "rust",
     useHiGHSRequested: minimal.useHiGHSRequested ?? "auto",
     useHiGHSResolved: minimal.useHiGHSResolved ?? false,
     minimumCoverKernelCases: minimal.minimumCoverKernelCases ?? null,
@@ -136,8 +143,10 @@ export async function calculateSaveMinimals(input) {
     qualityFor: makeOrderCountQuality(collected.qualityIndex),
     solver: input.solver,
     exactQuality: input.exactHumanQuality ?? "fast",
+    primary: input.primary ?? input.Primary,
     useHiGHS: input.useHiGHS ?? input.UseHiGHS ?? "auto",
     fastStateBudget: input.fastStateBudget,
+    primaryProof: input.primaryProof ?? "standard",
   });
   return finishSaveMinimals(collected, minimal);
 }

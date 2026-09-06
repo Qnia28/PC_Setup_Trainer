@@ -16,8 +16,56 @@ export const THIRD_PARTY_LICENCES: readonly ThirdPartyLicence[] = [
   {
     name: "sfinder-wasm",
     sourceUrl: "https://github.com/Qnia28/sfinder_wasm",
-    licence: "MIT License for distribution with QniaPC",
+    licence: "Apache License 2.0",
     copyright: "Qnia (@Qnia28)",
+  },
+  {
+    name: "OR-Tools",
+    sourceUrl: "https://github.com/google/or-tools",
+    licence: "Apache License 2.0",
+    copyright: "Google LLC",
+  },
+  {
+    name: "or-tools-wasm",
+    sourceUrl: "https://github.com/Axelwickm/or-tools-wasm",
+    licence: "Apache License 2.0",
+    copyright: "or-tools-wasm contributors",
+  },
+  {
+    name: "Eigen",
+    sourceUrl: "https://gitlab.com/libeigen/eigen",
+    licence: "MPL-2.0 and permissive portions; supplied source retains original notices",
+    copyright: "Eigen contributors",
+  },
+  {
+    name: "Abseil and long",
+    sourceUrl: "/licences/sfinder.txt",
+    licence: "Apache License 2.0; additional embedded notices retained",
+    copyright: "Abseil and long contributors; see bundled notices",
+  },
+  {
+    name: "protobuf, protobufjs, RE2 and protobuf-es",
+    sourceUrl: "/licences/sfinder.txt",
+    licence: "BSD-3-Clause; protobuf-es also includes Apache-2.0 portions",
+    copyright: "Google LLC and respective contributors; see bundled notices",
+  },
+  {
+    name: "utf8_range, zlib and bzip2",
+    sourceUrl: "/licences/sfinder.txt",
+    licence: "MIT, Zlib and bzip2-1.0.6 respectively",
+    copyright: "Respective copyright holders; see bundled notices",
+  },
+  {
+    name: "Emscripten and C/C++ runtimes",
+    sourceUrl: "/licences/sfinder.txt",
+    licence: "MIT/NCSA, BSD and Apache-2.0 WITH LLVM-exception; component-specific terms retained",
+    copyright: "Emscripten, musl, LLVM and runtime contributors; see bundled notices",
+  },
+  {
+    name: "Rust runtime",
+    sourceUrl: "/licences/sfinder.txt",
+    licence: "MIT OR Apache-2.0; embedded BSD and Unicode notices retained",
+    copyright: "The Rust Project Developers and embedded component authors; see bundled notices",
   },
   {
     name: "highs-js",
@@ -64,6 +112,12 @@ export const THIRD_PARTY_LICENCES: readonly ThirdPartyLicence[] = [
 ] as const;
 
 export const SFINDER_ACKNOWLEDGEMENTS: readonly Acknowledgement[] = [
+  {
+    name: "OR-Tools / or-tools-wasm",
+    sourceUrl: "https://github.com/Axelwickm/or-tools-wasm",
+    credit: "Google OR-Tools team and or-tools-wasm contributors",
+    summary: "The CP-SAT solver and its WebAssembly port prove the exact minimum number of solutions for large reduced cover matrices. SFinder runs this backend with two solver workers and then uses its Rust quality optimization to choose among minimum-size sets.",
+  },
   {
     name: "solution-finder (SFinder)",
     sourceUrl: "https://github.com/knewjade/solution-finder",

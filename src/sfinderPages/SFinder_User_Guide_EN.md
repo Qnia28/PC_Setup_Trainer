@@ -17,7 +17,7 @@ You can draw the field directly or paste a Fumen code or Fumen URL.
 - `5-6L Mode`: 5 or 6 lines
 - These two mode groups belong to the analysis pages. PC Solver instead provides separate 4L, 5L, and 6L buttons.
 - Blocks above the selected target height are not allowed.
-- Chance / Minimals / Per-save minimals normally analyze the first Fumen page.
+- Chance / Saves / Minimals / Per-save minimals normally analyze the first Fumen page.
 
 ### Queue
 SFinder-style queue patterns are supported.
@@ -41,16 +41,15 @@ When `Use hold` is enabled, the calculation includes normal Hold usage.
 Keeping it enabled is recommended unless you intentionally want a no-Hold calculation.
 
 ### Advanced options
-Minimals and Per-save minimals provide two additional controls.
-These are advanced settings. Open `Advanced` to show the HiGHS and Quality controls; they remain at their documented defaults while the panel is closed. If you are not familiar with how the two backends and quality modes differ, keeping the defaults is recommended.
+Open `Advanced` in Minimals or Per-save minimals to choose Primary and Quality. Closing the panel preserves your selection.
 
-- `HiGHS: Auto` selects the exact-cardinality backend from the reduced matrix. It loads HiGHS only for a hard matrix that benefits from it.
-- `HiGHS: On` allows HiGHS whenever the reduced matrix still needs an external exact-cardinality proof.
-- `HiGHS: Off` keeps the Release 2.6 production algorithm but proves minimum cardinality with the Rust/WASM backend. It does **not** select the old legacy Minimals implementation.
-- `Quality: Fast` always keeps the minimum number of solutions exact, but may use a deterministic faster fallback when choosing among equally small sets.
-- `Quality: Exact` keeps both the minimum number of solutions and the secondary human-quality choice exact. Difficult matrices can take much longer.
+- `Primary: Auto` (default) uses Rust for smaller reduced matrices and ORTools for large ones. If ORTools is unsupported by the browser, it uses HiGHS for those large matrices.
+- `Primary: Rust / ORTools / HiGHS` explicitly selects the minimum-cardinality backend. Kernel simplification may already prove the minimum without calling it.
+- ORTools uses two solver workers and requires JSPI, SharedArrayBuffer and cross-origin isolation. Forcing ORTools in an unsupported environment reports an error. Auto only falls back for missing capabilities; loading or calculation errors are reported.
+- `Quality: Fast` keeps the minimum number of solutions exact, with bounded secondary quality optimization. Different Primary backends can select different equally small sets.
+- `Quality: Exact` also proves the secondary quality optimum and can take longer.
 
-HiGHS is downloaded lazily only when a calculation actually uses it. After such a calculation, QniaPC releases that solver Worker before the next request.
+ORTools and HiGHS are downloaded only when needed. ORTools releases its dedicated Worker and threads after each proof. QniaPC also recycles its solver Worker after HiGHS use.
 
 ---
 
@@ -116,6 +115,32 @@ Chance is the best choice when you only need **whether a PC is possible**. If yo
 
 ---
 
+# Saves
+
+> **Measures which exact pieces or piece combinations can remain after a PC.**
+
+### Inputs
+- Field or Fumen
+- Queue
+- Lines
+- Optional: `Saves`
+- Use hold
+
+Leave `Saves` empty, or enter `ALL`, to list every distinct exact save outcome. Each row shows its success rate and successful queue count. Exact multiplicity is preserved, so `T` and `TT` are different outcomes.
+
+Enter comma-separated expressions to calculate several wanted-save conditions in one run. Results stay in input order.
+
+```text
+T,I,TT
+^T,!T,S&&Z
+TT#T>X
+/O{0,1}/,TT
+```
+
+`expression#label` assigns a display label without changing the calculation. Commas inside a regular expression are preserved. Each wanted-save result shows its own success rate, success/total count, failure count, and a collapsible failed-queue list when failures exist.
+
+---
+
 # Minimals
 
 > **Finds the smallest set of solutions needed to cover the queue pattern.**
@@ -128,7 +153,7 @@ Chance is the best choice when you only need **whether a PC is possible**. If yo
 - Optional: `Saves`
 - Optional: Result title
 - Use hold
-- HiGHS: Auto / On / Off
+- Primary: Auto / Rust / ORTools / HiGHS
 - Quality: Fast / Exact
 
 Leave `Saves` empty to find minimals across all PC solutions.
@@ -177,7 +202,7 @@ As with Saves, use a pattern that provides final-bag information when applying a
 - Lines
 - Optional: Result title
 - Use hold
-- HiGHS: Auto / On / Off
+- Primary: Auto / Rust / ORTools / HiGHS
 - Quality: Fast / Exact
 
 If the current field needs `P` pieces to complete the PC, every input queue must contain exactly **P+1 pieces**.

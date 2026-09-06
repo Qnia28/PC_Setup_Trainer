@@ -9,7 +9,7 @@ export { formatCalculationDuration } from "../solver/formatDuration";
 
 export type CommandTargetLines = 2 | 3 | 4 | 5 | 6;
 export type CommandLineGroup = "2-4" | "5-6";
-export type HiGHSMode = "auto" | "on" | "off";
+export type PrimaryMode = "auto" | "rust" | "ortools" | "highs";
 export type HumanQualityMode = "Fast" | "True";
 export const PER_SAVE_RESULT_ORDER = "TILJOSZ";
 
@@ -17,6 +17,23 @@ export interface PerSavePageGroup {
   piece: string;
   label: string;
   pages: Page[];
+}
+
+export interface SavesOutcomeRow {
+  key: string;
+  label: string;
+  expression: string | null;
+  success: number;
+  total: number;
+  failed: number;
+  percent: number;
+  failedQueues: string[];
+}
+
+export interface SavesOutcomeGroup {
+  kind: "all" | "wanted";
+  title: string;
+  rows: SavesOutcomeRow[];
 }
 
 export function isAdaptiveMinimalsCommand(commandId: string): boolean {
@@ -29,12 +46,12 @@ export function defaultHumanQualityMode(commandId: string): HumanQualityMode {
 
 export function minimumCoverWorkerOptions(
   commandId: string,
-  useHiGHSMode: HiGHSMode,
+  primary: PrimaryMode,
   exactHumanQuality: HumanQualityMode,
-): { useHiGHS?: boolean | "auto"; exactHumanQuality?: HumanQualityMode } {
+): { primary?: PrimaryMode; exactHumanQuality?: HumanQualityMode } {
   if (!isAdaptiveMinimalsCommand(commandId)) return {};
   return {
-    useHiGHS: useHiGHSMode === "auto" ? "auto" : useHiGHSMode === "on",
+    primary,
     exactHumanQuality,
   };
 }
@@ -64,6 +81,77 @@ export function normalizeSfinderQueuePattern(pattern: string): string {
 export function formatRatioPercentage(ratio: number): string {
   const percent = ratio * 100;
   return `${Number.isInteger(percent) ? percent : percent.toFixed(2)}%`;
+}
+
+function resultRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" ? value as Record<string, unknown> : null;
+}
+
+function resultNumber(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function resultStrings(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === "string") : [];
+}
+
+function wantedOutcomeRow(value: unknown, index: number): SavesOutcomeRow | null {
+  const record = resultRecord(value);
+  if (!record || typeof record.saveExpression !== "string") return null;
+  const success = resultNumber(record.success);
+  const total = resultNumber(record.total);
+  const percent = resultNumber(record.percent);
+  if (success === null || total === null || percent === null) return null;
+  const label = typeof record.saveLabel === "string" && record.saveLabel
+    ? record.saveLabel
+    : typeof record.saveAlias === "string" && record.saveAlias
+      ? record.saveAlias
+      : record.saveExpression;
+  return {
+    key: `wanted-${index}-${record.saveExpression}`,
+    label,
+    expression: record.saveExpression,
+    success,
+    total,
+    failed: resultNumber(record.failed) ?? Math.max(0, total - success),
+    percent,
+    failedQueues: resultStrings(record.failedQueues),
+  };
+}
+
+export function savesOutcomeGroup(result: Record<string, unknown>): SavesOutcomeGroup | null {
+  if (Array.isArray(result.wantedSaveResults)) {
+    const rows = result.wantedSaveResults.flatMap((value, index) => {
+      const row = wantedOutcomeRow(value, index);
+      return row ? [row] : [];
+    });
+    return rows.length ? { kind: "wanted", title: "Wanted save results", rows } : null;
+  }
+
+  if (Array.isArray(result.saveResults)) {
+    const rows = result.saveResults.flatMap((value, index): SavesOutcomeRow[] => {
+      const record = resultRecord(value);
+      if (!record || typeof record.save !== "string") return [];
+      const success = resultNumber(record.success);
+      const total = resultNumber(record.total);
+      const percent = resultNumber(record.percent);
+      if (success === null || total === null || percent === null) return [];
+      return [{
+        key: `save-${index}-${record.save || "none"}`,
+        label: record.save ? `Save ${record.save}` : "Save none",
+        expression: null,
+        success,
+        total,
+        failed: Math.max(0, total - success),
+        percent,
+        failedQueues: [],
+      }];
+    });
+    return rows.length ? { kind: "all", title: "All save outcomes", rows } : null;
+  }
+
+  const single = wantedOutcomeRow(result, 0);
+  return single ? { kind: "wanted", title: "Wanted save result", rows: [single] } : null;
 }
 
 export function groupPerSavePages(pages: readonly Page[]): PerSavePageGroup[] {

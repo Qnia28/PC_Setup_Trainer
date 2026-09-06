@@ -1,6 +1,17 @@
 import test from'node:test';import assert from'node:assert/strict';import{runWorkerRequest}from'../src/worker-runtime.mjs';
 test('worker runtime uses WASM backend',async()=>{const r=await runWorkerRequest({kind:'chance',input:{sourceFumen:'v115@vhAAgH',pattern:'OOOOO',clear:2}});assert.deepEqual([r.success,r.total],[1,1])});
 
+test('worker path returns coverage-sorted Fumen output',async()=>{
+  const r=await runWorkerRequest({kind:'path',input:{
+    sourceFumen:'v115@9gglIeglHewwhlzhBexwzhEewwJeAgH',
+    pattern:'*p7',
+    clear:4,
+  }});
+  assert.deepEqual([r.total,r.solutionCount],[5040,47]);
+  assert.equal(r.coverageCounts[0],1656);
+  assert.ok(r.fumen);
+});
+
 test('worker minimals forwards uppercase UseHiGHS to primary backend routing',async()=>{
   const sourceFumen='v115@9gglIeglHewwhlzhBexwzhEewwJeAgH';
   const pattern='T,[^TIL]!,*p2';

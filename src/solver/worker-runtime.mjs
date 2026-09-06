@@ -3,9 +3,9 @@ import {
   calculateMinimalsFeature,
   calculatePerSaveMinimalsFeature,
   calculateSaves,
+  resolvePerSaveTargetLines,
+  solveSingleQueueFeature,
 } from "../../vendor/sfinder-wasm/upstream/src/features.mjs";
-import { solveSingleQueueFeature } from "../../vendor/sfinder-wasm/upstream/src/pc-solve.mjs";
-import { resolvePerSaveTargetLines } from "../../vendor/sfinder-wasm/upstream/src/per-save-minimals.mjs";
 import { keyedRetryableLoader } from "../../vendor/sfinder-wasm/upstream/src/promise-utils.mjs";
 import { loadWasmAssets, WasmPcSolver } from "./wasm-backend.mjs";
 

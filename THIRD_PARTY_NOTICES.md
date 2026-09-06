@@ -13,26 +13,33 @@ source's stated terms.
 - Project: [sfinder_wasm](https://github.com/Qnia28/sfinder_wasm)
 - Author: Qnia ([@Qnia28](https://github.com/Qnia28))
 - Use in QniaPC: browser-native Rust/WASM Perfect Clear solver under
-  `vendor/sfinder-wasm/upstream`; the current Release 2.6 snapshot was imported
-  from the author's `sfinder-wasm_20260901-release2.6` workspace on 2026-09-02.
-- Upstream public license: GPL-3.0-only.
-- Upstream license text: [GNU GPL version 3](https://github.com/Qnia28/sfinder_wasm/blob/main/LICENSE).
-- QniaPC license grant: the copyright holder has separately authorized their
-  original sfinder-wasm contributions and shipped binaries for inclusion and
-  distribution in this project under the MIT License. That project-specific
-  grant is independent of the upstream repository's GPL-3.0-only release.
-- Third-party material listed by sfinder-wasm remains under its respective
-  license; the bundled runtime uses no non-permissive third-party source.
+  `vendor/sfinder-wasm/upstream`; Release 3.0 was imported from the author's
+  `sfinder-wasm/release3.0-20260906` workspace on 2026-09-06.
+- Project-owned source license: Apache-2.0; LICENSE and NOTICE are retained.
+- Third-party material remains under its respective license, including the
+  supplied Eigen MPL-2.0 source and runtime notices.
 - The full upstream public license and acknowledgements document are retained as
   `vendor/sfinder-wasm/upstream/LICENSE` and
   `vendor/sfinder-wasm/upstream/THIRD_PARTY_NOTICES.md`.
+
+### OR-Tools and or-tools-wasm
+
+- OR-Tools 9.15 and the or-tools-wasm port provide the lazy CP-SAT backend for
+  exact minimum-cardinality proofs. Both are Apache-2.0.
+- Dependency notices, build provenance and the supplied Eigen source are
+  retained under `vendor/sfinder-wasm/upstream/third_party/`.
+- The distribution includes Abseil, protobuf, RE2, zlib/bzip2, JS serialization
+  libraries, Emscripten/C++ runtime and Rust notices under their original terms.
+- The website ships the original licence texts and copyright notices at
+  `/licences/sfinder.txt`. The Licences page links to the corresponding Eigen
+  source retained in this repository under the original upstream file notices.
 
 ### highs-js and HiGHS
 
 - Projects: [highs-js](https://github.com/lovasoa/highs-js) and
   [HiGHS](https://github.com/ERGO-Code/HiGHS)
 - Versions: 1.15.1.
-- Use in QniaPC: sfinder-wasm Release 2.6 lazily loads the browser HiGHS build
+- Use in QniaPC: sfinder-wasm Release 3.0 lazily loads the browser HiGHS build
   for exact minimum-cardinality proofs on difficult minimum-cover matrices.
   Secondary human-quality selection remains in sfinder-wasm.
 - License: MIT License.

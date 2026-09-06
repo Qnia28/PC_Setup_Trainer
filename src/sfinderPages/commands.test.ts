@@ -33,9 +33,9 @@ describe("SFinder command routes", () => {
     expect(isSfinderGuideRoute("/sfinder/chance")).toBe(false);
   });
 
-  it("starts Minimals with an empty wanted-save expression", () => {
+  it("starts Saves and Minimals with an empty wanted-save expression", () => {
     expect(defaultWantedSave("minimals")).toBe("");
-    expect(defaultWantedSave("saves")).toBe("T");
+    expect(defaultWantedSave("saves")).toBe("");
   });
 
   it("shows the same pattern-expression example for Minimals and Per-save minimals", () => {
@@ -49,9 +49,10 @@ describe("SFinder command routes", () => {
       .toBe("Check which queues can build at least one supplied target.");
   });
 
-  it("keeps incomplete Saves and colored-field tools out of the public menu", () => {
+  it("publishes Saves while keeping colored-field tools out of the public menu", () => {
     expect(SFINDER_MENU_COMMANDS.map(({ id }) => id)).toEqual([
       "chance",
+      "saves",
       "minimals",
       "per_save_minimals",
     ]);

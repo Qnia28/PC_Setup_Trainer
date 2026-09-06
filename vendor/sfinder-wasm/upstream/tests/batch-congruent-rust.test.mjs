@@ -18,3 +18,16 @@ test('integrated Rust congruent search matches legacy 4P traversal',async()=>{
  const legacy={placeExact:fast.placeExact.bind(fast),tSpinKind:fast.tSpinKind.bind(fast)};
  assert.deepEqual(shape(findCongruentSolutions({base,fill,queues,height:4,reachability:fast,useHold:true})),shape(findCongruentSolutions({base,fill,queues,height:4,reachability:legacy,useHold:true})));
 });
+
+
+test('integrated Rust congruent search matches legacy real 7P traversal',async()=>{
+ const page=decoder.decode('v115@+gR4GeR4BtCeRpg0ilBtAewwRpg0glzhywh0JeAgH')[0],{base,fill}=fieldMasks(page,4),queues=expandPattern('*p7'),fast=new BatchReachability(await loadBatchWasm(),4,'tetrio');
+ const legacy={placeExact:fast.placeExact.bind(fast),tSpinKind:fast.tSpinKind.bind(fast)};
+ assert.deepEqual(shape(findCongruentSolutions({base,fill,queues,height:4,reachability:fast,useHold:true})),shape(findCongruentSolutions({base,fill,queues,height:4,reachability:legacy,useHold:true})));
+});
+
+test('integrated Rust congruent search supports 10-operation target',async()=>{
+ const page=decoder.decode('v115@9g3pJeAgH')[0],{base,fill}=fieldMasks(page,4),queues=['OOOOOOOOOO'],fast=new BatchReachability(await loadBatchWasm(),4,'tetrio');
+ const legacy={placeExact:fast.placeExact.bind(fast),tSpinKind:fast.tSpinKind.bind(fast)};
+ assert.deepEqual(shape(findCongruentSolutions({base,fill,queues,height:4,reachability:fast,useHold:true})),shape(findCongruentSolutions({base,fill,queues,height:4,reachability:legacy,useHold:true})));
+});

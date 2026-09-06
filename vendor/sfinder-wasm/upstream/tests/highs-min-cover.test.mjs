@@ -211,7 +211,7 @@ test('UseHiGHS accepts True/False/Auto and Auto uses exact primary-kernel hardne
   const fullySolved = fakeKernel(0, 0, 0);
   assert.equal(resolveUseHiGHS(dummy, 'Auto', fullySolved), false);
   assert.equal(resolveUseHiGHS(dummy, 'Auto', fakeKernel(10, 8, 20)), false);
-  assert.equal(resolveUseHiGHS(dummy, 'Auto', fakeKernel(239, 113, 2435)), true);
+  assert.equal(resolveUseHiGHS(dummy, 'Auto', fakeKernel(239, 113, 2435)), false);
   assert.deepEqual(primaryKernelStats(fakeKernel(2, 3, 5)), { cases: 2, solutions: 3, entries: 5, forced: 0 });
 });
 

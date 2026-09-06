@@ -3,9 +3,9 @@ import { boardFromFumenPage } from "./board.mjs";
 import { combineWithIntro, solutionPage } from "./fumen.mjs";
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
-import { minimumCoverAdaptiveAsync } from "./highs-min-cover.mjs";
+import { minimumCoverAdaptiveAsync } from "./min-cover-adaptive.mjs";
 import { expandPatternCases } from "./pattern.mjs";
-import { visitCaseSolutions } from "./path-engine.mjs";
+import { visitCaseSolutions } from "./pc-enumeration-engine.mjs";
 import {
   compileSaveExpression,
   prepareSaveCase,
@@ -44,7 +44,6 @@ function collectFifth({ sourceFumen, analysisPattern, solver, useHold }) {
     solver,
     useHold,
     trackCaseSolutions: false,
-    fourLinePatternMinCases: 2048,
     visit: (entry, caseIndex, solution, orderCount) => {
       let usage = usageByKey.get(solution.key);
       if (!usage) {
@@ -109,6 +108,8 @@ function finishFifthPiece(collected, piece, data, minimal) {
       solutions: keys.map((key) => collected.byKey.get(key)),
       humanQualityVector: minimal.qualityVector ?? [],
       minimumCoverBackend: minimal.backend ?? "rust-legacy",
+      primaryRequested: minimal.primaryRequested ?? "auto",
+      primaryResolved: minimal.primaryResolved ?? "rust",
       cardinalityBackend: minimal.cardinalityBackend ?? null,
       qualityBackend: minimal.qualityBackend ?? null,
       humanQualityExact: minimal.qualityExact ?? true,
@@ -140,6 +141,7 @@ export async function fifthMinimalsPerSavesAsync({
   solver,
   useHold = true,
   exactHumanQuality = "true",
+  primary = undefined, Primary = undefined,
   useHiGHS = "auto",
   fastStateBudget = undefined,
   tinyExactMaxCandidates = 48,
@@ -154,6 +156,7 @@ export async function fifthMinimalsPerSavesAsync({
         qualityFor: collected.qualityFor,
         solver,
         exactQuality: exactHumanQuality,
+        primary: primary ?? Primary,
         useHiGHS,
         fastStateBudget,
         tinyExactMaxCandidates,

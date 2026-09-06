@@ -1,118 +1,163 @@
-# Third-Party Notices and Acknowledgements
+# Third-Party Notices
 
-This file distinguishes software whose license notices are carried with this
-repository from projects that were used only as behavioral, historical, or
-architectural references.
+This file documents third-party software, adapted code, and compatibility
+references relevant to the current sfinder-wasm release.
 
 ## Project license
 
-`sfinder-wasm` is authored by **Qnia (@Qnia28)** and is distributed under
-the GNU General Public License, version 3 only (`GPL-3.0-only`). The full
-project license is provided in `LICENSE`.
+sfinder-wasm is distributed under **Apache-2.0**. See `LICENSE`.
+Third-party components retain their own licenses. Nothing in the project Apache license
+replaces or removes those notices.
 
-Third-party material identified below remains under its respective upstream
-license. Inclusion of permissively licensed material does not change the GPLv3
-license applied to Qnia's original sfinder-wasm code.
-
-## Licensed software and adapted code
+## Distributed or adapted components
 
 ### knewjade/solution-finder
 
-This project reimplements selected Perfect Clear analysis behavior and pattern
-semantics compatible with `knewjade/solution-finder` and used solution-finder
-as a compatibility reference during development.
+- Role: behavioral and format compatibility reference for SFinder-style PC analysis.
+- License: MIT.
+- Notice: `third_party/solution-finder.LICENSE`.
+- Upstream: https://github.com/knewjade/solution-finder
 
-- Project: https://github.com/knewjade/solution-finder
-- Copyright (c) 2020 knewjade
-- License: MIT
-- License text: `third_party/solution-finder.LICENSE`
+No Java `solution-finder` runtime is required by sfinder-wasm.
 
-The Rust/WASM solver in this repository is not a vendored copy of the Java
-solution-finder source. The upstream notice is retained because solution-finder
-is the principal behavioral and compatibility reference for the project.
+### knewjade/tetris-fumen 1.1.3
 
-### knewjade/tetris-fumen
+- Role: JavaScript Fumen encode/decode dependency.
+- License: MIT.
+- Notice: `third_party/tetris-fumen.LICENSE`.
+- Upstream: https://github.com/knewjade/tetris-fumen
 
-This project depends on `tetris-fumen` for Fumen encoding and decoding.
+The npm dependency is pinned to `1.1.3` in `package.json`/`package-lock.json`.
 
-- Project: https://github.com/knewjade/tetris-fumen
-- Copyright (c) 2019
-- License: MIT
-- License text: `third_party/tetris-fumen.LICENSE`
+### highs-js 1.15.1
 
+- Role: Emscripten JavaScript runtime wrapper around HiGHS.
+- License: MIT.
+- Notice: `third_party/highs-js.LICENSE`.
+- Adapted file: `src/vendor/highs.mjs`.
+- Upstream: https://github.com/lovasoa/highs-js
 
-### highs-js / HiGHS
+`src/vendor/highs.mjs` is an ESM/browser adaptation of the upstream highs-js
+runtime. It is not original sfinder-wasm code and remains covered by its MIT
+license.
 
-Hard global `minimals` requests can lazy-load the browser build of HiGHS through
-`highs-js` to prove the primary minimum-cardinality set-cover objective. The
-shipped runtime assets are `src/vendor/highs.mjs` and `wasm/highs.wasm`. Smaller
-minimum-cover problems continue to use the native Rust/WASM solver.
+### HiGHS 1.15.1
 
-- highs-js project: https://github.com/lovasoa/highs-js
-- highs-js version: 1.15.1
-- highs-js license: MIT
-- highs-js license text: `third_party/highs-js.LICENSE`
-- HiGHS project: https://github.com/ERGO-Code/HiGHS
-- HiGHS version: 1.15.1
-- HiGHS license: MIT
-- HiGHS license text: `third_party/HiGHS.LICENSE`
+- Role: exact MIP backend used lazily by hard global `minimals` primary-cardinality proofs.
+- License: MIT for the main HiGHS codebase.
+- Main notice: `third_party/HiGHS.LICENSE`.
+- Upstream third-party notice: `third_party/HiGHS-THIRD_PARTY_NOTICES.md`.
+- Preserved source archive: `third_party/source/HiGHS-1.15.1.zip`.
+- Bundled binary: `wasm/highs.wasm`.
+- Upstream: https://github.com/ERGO-Code/HiGHS
 
-The hard-matrix integration uses HiGHS only for the exact primary cardinality
-proof. Human-quality selection is performed by sfinder-wasm code after the
-cardinality optimum is known. The release also carries the upstream HiGHS
-1.15.1 source archive at `third_party/source/HiGHS-1.15.1.zip` for provenance
-and source-availability convenience.
+HiGHS itself contains or ships third-party source under additional licenses.
+For redistribution convenience, the corresponding upstream notices are exposed
+outside the source ZIP under `third_party/HiGHS-third-party/`:
 
-## Acknowledgements and references
+| Component | License / notice file | Current highs-js library build relevance |
+|---|---|---|
+| pdqsort | `pdqsort-zlib.txt` | Used by HiGHS library code; retain notice |
+| filereaderlp | `filereaderlp-MIT.txt` | Used by HiGHS model-reading library code; retain notice |
+| AMD | `amd-BSD-3.txt` | HIPO component; default `HIPO=OFF` |
+| METIS | `metis-Apache-2.0.txt` | HIPO component; default `HIPO=OFF` |
+| RCM | `rcm-MIT.txt` | HIPO component; default `HIPO=OFF` |
+| zstr | `zstr-MIT.txt` | highs-js 1.15.1 build uses `-DZLIB=OFF` |
+| CLI11 | `cli11-license-header.txt` | HiGHS command-line executable only; not required by the library interface |
 
-### eight04/sfinder-strict-minimal
+The complete upstream HiGHS notice is authoritative for the HiGHS source tree.
+The extracted files are provided to make binary/source redistribution easier,
+not to narrow the upstream notice.
 
-Earlier development versions used `eight04/sfinder-strict-minimal` as a direct
-reference for graph reduction/minimal-set behavior. The current release no
-longer contains that adaptation: `src/minimal.mjs` was removed. Small and
-medium minimum-cover problems are implemented independently in
-`rust/pc-core/src/min_cover.rs` using bitsets, MRV branching, bounds, and
-deterministic human-quality tie-breaking. `src/min-cover.mjs` is an independent
-JavaScript fallback. Hard global `minimals` may use the separately licensed
-HiGHS backend for the exact primary-cardinality proof.
+## ORTools and runtime dependencies added in 3.0
 
-- Project: https://github.com/eight04/sfinder-strict-minimal
-- Upstream license: MIT
+Project-owned code is Apache-2.0. Bundled components retain the licenses below.
 
-The projects below are not vendored, linked, or distributed as source
-components of this repository. Their license texts are therefore not presented
-as licenses governing this project.
+| Component | License | Notice location under third_party/ |
+|---|---|---|
+| OR-Tools 9.15, or-tools-wasm 0.9.1 | Apache-2.0 | ORTools/OR-Tools.LICENSE, or-tools-wasm.LICENSE |
+| Abseil | Apache-2.0 and preserved embedded notices | ORTools/Abseil.LICENSE |
+| protobuf C++, RE2 | BSD-3-Clause | ORTools/protobuf.LICENSE, RE2.LICENSE |
+| utf8_range | MIT | ORTools/utf8_range.LICENSE |
+| zlib, bzip2 | Zlib, bzip2 license | ORTools/zlib.LICENSE, bzip2.LICENSE |
+| Eigen 3.4.0 | MPL-2.0 with permissive portions | ORTools/Eigen/ |
+| protobufjs 8.8.0 | BSD-3-Clause | ORTools/protobufjs.LICENSE |
+| long 5.3.2 | Apache-2.0 | ORTools/long.LICENSE |
+| @bufbuild/protobuf 2.14.0 | Apache-2.0 AND BSD-3-Clause | ORTools/protobuf-es-*.LICENSE |
+| Emscripten 6.0.8 | MIT OR NCSA | ORTools/Emscripten.LICENSE |
+| musl and compiler/C/C++ runtimes | MIT/BSD and Apache-2.0 WITH LLVM-exception | ORTools/musl.COPYRIGHT, *lib*, compiler-rt.LICENSE |
+| Rust std/core/alloc and embedded components | Original Rust and third-party licenses | Rust/ |
+
+The CP-SAT bridge target defines EIGEN_MPL2_ONLY. The 166 Eigen headers recorded
+in build dependencies contain no GPL/LGPL notices. These exact source files are
+supplied under source/Eigen-3.4.0/ under their original licenses. This source set
+conservatively includes build dependencies beyond final LTO-linked CP-SAT code.
+The compiler-definition statement does not apply to every static-library
+translation unit. See ORTools/Eigen/SOURCE.md.
+
+Distinct original license/copyright headers from recorded build dependencies
+are preserved in ORTools/UPSTREAM_HEADER_NOTICES.txt. The inventory and build
+evidence are in ORTools/LICENSE_AUDIT.json and ORTools/build/.
+Toolchain notices are retained conservatively even where LTO may remove code.
+Vite/Playwright are development-only tools and are not runtime dependencies.
+
+Sources:
+- https://github.com/google/or-tools
+- https://github.com/Axelwickm/or-tools-wasm
+- https://www.mozilla.org/en-US/MPL/2.0/FAQ/
+
+When redistributing the complete 3.0 package, preserve NOTICE, the ORTools/Rust
+notices, and the supplied Eigen source in addition to the existing notices below.
+
+## Compatibility references and acknowledgements
+
+### eight04/sfinder-strict-minimal 0.2.0
+
+- Historical role: exact-minimal behavior/reference during early development.
+- License: MIT.
+- Notice retained at `third_party/sfinder-strict-minimal.LICENSE`.
+- Upstream: https://github.com/eight04/sfinder-strict-minimal
+
+The current production minimum-cover implementation is independently structured
+in `rust/pc-core/src/min_cover.rs`; `src/min-cover.mjs` is the current JavaScript
+fallback/reference implementation. The MIT notice is retained for provenance
+and for any historical/adapted portions that may remain relevant.
 
 ### Marfung37/PC-Saves-Get
 
-The save-analysis semantics and save-expression behavior were informed by
-`Marfung37/PC-Saves-Get` (`sfinder-saves.py` and related modules). The current
-JavaScript implementation is independently structured and this repository does
-not include PC-Saves-Get Python source.
+- Historical role: behavioral compatibility reference for save-expression results.
+- No upstream software license was identified in the supplied historical source.
+- No PC-Saves-Get source code is distributed in sfinder-wasm.
 
-- Project: https://github.com/Marfung37/PC-Saves-Get
-- No explicit software license was present in the repository when reviewed.
+The current save-expression implementation uses its own tokenizer, syntax tree,
+and evaluator. Historical Python code was used only as a black-box compatibility
+oracle during validation.
 
-### cringemoment/sfinder-man
+### cringemoment/sfinder-man and supplied legacy wrappers
 
-Earlier command workflows and wrapper behavior were informed in part by
-`cringemoment/sfinder-man`, a Discord-bot project built around solution-finder.
-No sfinder-man Python source is included in this repository.
-
-- Project: https://github.com/cringemoment/sfinder-man
-- No explicit software license was present in the repository when reviewed.
+- Historical role: behavior/interface reference during migration from Java+Python tooling.
+- No legacy wrapper source is distributed as part of sfinder-wasm runtime code.
+- No license grant is inferred from availability of the historical archive.
 
 ### wirelyre/tetra-tools
 
-The high-performance 4-line PC solver design was informed in part by techniques
-demonstrated in `wirelyre/tetra-tools`, particularly vectorized placement
-search and legal-board pruning. The implementation in this repository uses its
-own data structures, search code, WASM interface, and legal-board generator.
-No tetra-tools source code or crate is included or linked.
+- Role: algorithmic/architecture reference during development of selected search optimizations.
+- No tetra-tools crate or source code is included or linked.
+- Upstream tetra-tools is GPL-3.0-or-later; this acknowledgement does not claim that
+  its source is part of sfinder-wasm.
 
-- Project: https://github.com/wirelyre/tetra-tools
-- Upstream license: GPL-3.0-or-later
+## Redistribution checklist
 
-The GPL license of tetra-tools is listed here only to identify the upstream
-reference accurately; tetra-tools is not a distributed dependency of this
-repository.
+When redistributing the complete sfinder-wasm package, keep at minimum:
+
+- `LICENSE`
+- `THIRD_PARTY_NOTICES.md`
+- all license files under `third_party/`
+- `third_party/HiGHS-THIRD_PARTY_NOTICES.md`
+- the files under `third_party/HiGHS-third-party/`
+- the notices accompanying any copied/adapted `src/vendor/highs.mjs`
+
+If only selected binaries or source files are redistributed, preserve the notices
+that apply to those components. In particular, distributing `highs.wasm` should
+be accompanied by the HiGHS/highs-js notices and the relevant HiGHS third-party
+notices.
