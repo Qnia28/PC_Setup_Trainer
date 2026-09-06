@@ -49,7 +49,19 @@ try{
   assert.equal(r.primaryResolved,Primary==='Auto'?(f.id.startsWith('cycle')?'rust':isolated?'ortools':'highs'):Primary.toLowerCase());
   results.push({...r,Primary});console.log('PASS',f.id,Primary,r.primaryResolved,r.minimalCount,r.ms);
  };
- if(scope==='fallback'){
+ if(scope==='saves'){
+  const input={sourceFumen:'v115@9gglIeglHewwhlzhBexwzhEewwJeAgH',pattern:'T,[^TIL]!,*p2'};
+  for(const [wantedSave,success,K] of [['!O&&T',288,1],['T||I&&O',1008,6]]){
+   const r=await page.evaluate(input=>window.runCase(input),{...input,wantedSave});
+   assert.equal(r.saveSuccess,success);assert.equal(r.minimalCount,K);assert.equal(r.fumenPages,K);
+   results.push({wantedSave,success,K});
+  }
+  const one={sourceFumen:'v115@+gI8AeI8AeI8AeI8JeAgH',pattern:'IT,[T]!'};
+  const all=await page.evaluate(input=>window.runFeature('saves',input),one);
+  assert.deepEqual(all.saveResults,[{save:'TT',success:1,total:1,percent:100}]);
+  const spaced=await page.evaluate(input=>window.runFeature('saves',input),{...one,wantedSave:' TT || I '});
+  assert.equal(spaced.success,1);results.push({exactSave:'TT'},{spacedExpressionSuccess:1});
+ }else if(scope==='fallback'){
   assert.equal(caps.crossOriginIsolated,isolated);
   const small=fixtures.find(f=>f.id.startsWith('cycle'));
   const box7=fixtures.find(f=>f.id==='box3x4-7p');
@@ -86,6 +98,6 @@ try{
  await page.evaluate(()=>window.dispose());
  assert.deepEqual(errors,[]);
  const resultFile=scope==='fallback'?'../../RELEASE_3.0_FALLBACK_BROWSER_'+(isolated?'ISOLATED':'NONISOLATED')+'_RESULTS.json':scope==='features'?'../../RELEASE_3.0_BROWSER_FEATURE_RESULTS.json':'../../RELEASE_3.0_BROWSER_RESULTS.json';
- fs.writeFileSync(new URL(resultFile,import.meta.url),JSON.stringify({caps,results,errors,requests},null,2));
+ fs.writeFileSync(new URL(scope==='saves'?'../../review/SAVE_FIX_BROWSER.json':resultFile,import.meta.url),JSON.stringify({caps,results,errors,requests},null,2));
  console.log('ALL BROWSER CHECKS PASSED');
 }finally{await browser.close();await new Promise(r=>server.close(r));}
