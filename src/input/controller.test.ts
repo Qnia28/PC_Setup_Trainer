@@ -46,6 +46,7 @@ describe("InputController initial actions and DAS preservation", () => {
     frame = null;
     now = 0;
     vi.stubGlobal("window", fakeWindow);
+    vi.stubGlobal("document", fakeWindow);
     vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
       frame = callback;
       return 1;
@@ -250,6 +251,23 @@ describe("InputController initial actions and DAS preservation", () => {
     advanceTo(1000);
     expect(session.state.active.y).toBe(beforeY - 1);
 
+    controller.destroy();
+  });
+
+  it("touch IDs share charged movement and release independently", () => {
+    const session = new GameSession("touch-controls", 10);
+    const controller = createController(session, { das: 100, arr: 0 });
+    controller.press("touch:1", "moveLeft");
+    controller.press("touch:2", "rotateCW");
+    advanceTo(150);
+    const left = session.state.active.x;
+    expect(left).toBeLessThan(3);
+    controller.release("touch:1");
+    controller.release("touch:2");
+    controller.press("touch:3", "moveRight");
+    controller.release("touch:3");
+    advanceTo(500);
+    expect(session.state.active.x).toBe(left + 1);
     controller.destroy();
   });
 

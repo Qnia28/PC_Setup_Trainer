@@ -131,3 +131,39 @@ input { min-width: 0; color: #e9eef7; background: #0e131a; border: 1px solid #39
   .hold-column, .next-column { width: 88px; }
   .side-stats { width: 88px; }
 }
+
+.touch-controls { display: none; }
+@media (max-width: 1039px) {
+  body:has(.app-shell .touch-controls) { min-width: 0; }
+  .app-shell { width: calc(100% - 16px); max-width: 520px; padding-top: 8px; }
+  .app-shell .topbar { margin-bottom: 10px; padding-bottom: 8px; }
+  .app-shell .topbar h1 { font-size: 14px; }
+  .game-layout { grid-template-columns: minmax(40px, 1fr) minmax(0, 300px) minmax(40px, 1fr); gap: 8px 4px; }
+  .game-layout .hold-column { grid-column: 1; grid-row: 1; width: 100%; }
+  .game-layout .field-column { display: contents; }
+  .game-layout .next-column { grid-column: 3; grid-row: 1; width: 100%; min-height: 0; align-self: stretch; contain: size; }
+  .game-layout .board-canvas { grid-column: 2; grid-row: 1; width: 100% !important; height: auto !important; }
+  .game-layout .piece-preview canvas { width: 100% !important; height: auto !important; }
+  .game-layout .next-list { width: 100%; gap: 0; flex: 1; min-height: 0; }
+  .game-layout .next-list .piece-preview { flex: 1; min-height: 0; }
+  .game-layout .next-list .piece-preview canvas { height: 100% !important; object-fit: contain; }
+  .game-layout .piece-preview { width: 100%; }
+  .game-layout .side-stats { width: 100%; gap: 3px; margin-top: 5px; flex-shrink: 0; }
+  .game-layout .side-stats span { min-height: 0; padding: 2px; flex-direction: column; gap: 0; }
+  .game-layout .side-stats b { font-size: 11px; }
+  .game-layout .side-stats small { font-size: 7px; }
+  .game-layout .field-actions { grid-column: 1; grid-row: 1; align-self: end; flex-direction: column; gap: 5px; margin: 0; min-width: 0; }
+  .game-layout .field-actions button { padding: 5px 1px; font-size: 8px; min-height: 32px; width: 100%; }
+  .game-layout .field-actions button:nth-child(-n+2) { display: none; }
+  .touch-controls { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .touch-controls button { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 58px; padding: 4px 2px; touch-action: none; -webkit-touch-callout: none; background: #244456; border-color: #527b92; }
+  .touch-controls button:active { background: #3c708a; }
+  .touch-controls strong { font-size: 24px; line-height: 1.1; }
+  .touch-controls small { font-size: 9px; }
+  .touch-controls .touch-hardDrop { grid-column: span 2; }
+  .game-layout .guide-column { grid-column: 1 / -1; grid-row: 3; min-width: 0; min-height: 0; padding: 12px; margin-top: 4px; }
+  .game-layout .guide-heading, .game-layout .solve-heading { flex-wrap: wrap; }
+  .game-layout .candidate-sections { gap: 8px; }
+  .game-layout .candidate-group:nth-child(2) { padding-left: 8px; }
+  .game-layout input { font-size: 16px; }
+}

@@ -45,7 +45,7 @@ export function occupiedCells(active: ActivePiece): Cell[] {
 }
 
 export function spawnPiece(piece: Piece, boardHeight = BOARD_HEIGHT): ActivePiece {
-  const y = boardHeight === 8 ? (piece === "I" ? 6 : 5) : 18;
+  const y = boardHeight === 8 ? (piece === "I" ? 6 : 5) : boardHeight === 10 ? 8 : 18;
   return { piece, orientation: "N", x: 4, y };
 }
 

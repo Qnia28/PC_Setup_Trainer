@@ -3,7 +3,8 @@ import { cloneBoard } from "./engine/board";
 import { GameSession } from "./engine/game";
 import { normalizePieceNotationForDisplay } from "./engine/pieceDisplay";
 import { seedValidationError } from "./engine/seed";
-import { PIECES, type GameAction, type GameState, type Piece } from "./engine/types";
+import { BOARD_HEIGHT, MOBILE_BOARD_HEIGHT, PIECES, type GameAction, type GameState, type Piece } from "./engine/types";
+import { TouchControls } from "./input/TouchControls";
 import { InputController } from "./input/controller";
 import { releaseGameplayButtonFocus } from "./input/buttonFocus";
 import { createBinding, loadInputSettings, saveInputSettings } from "./input/settings";
@@ -119,7 +120,9 @@ function targetCompleted(state: GameState, setup: SetupVariant): boolean {
 }
 
 export default function App() {
-  const session = useLazyRef(() => new GameSession());
+  const session = useLazyRef(() => new GameSession(undefined,
+    window.matchMedia("(max-width: 1039px)").matches ? MOBILE_BOARD_HEIGHT : BOARD_HEIGHT));
+  const inputController = useRef<InputController | null>(null);
   const replayRecorder = useLazyRef(() => new ReplayRecorder(session.current.placementHistory));
   const canvas = useRef<HTMLCanvasElement>(null);
   const [revision, setRevision] = useState(0);
@@ -202,7 +205,8 @@ export default function App() {
   useEffect(() => {
     if (settingsOpen || replayExport) return;
     const controller = new InputController(dispatch, settings);
-    return () => controller.destroy();
+    inputController.current = controller;
+    return () => { controller.destroy(); inputController.current = null; };
   }, [dispatch, replayExport, settings, settingsOpen]);
 
   useEffect(() => { saveInputSettings(settings); }, [settings]);
@@ -504,7 +508,7 @@ export default function App() {
       </aside>
 
       <div className="field-column">
-        <canvas ref={canvas} className="board-canvas" aria-label="10-column 20-row Tetris field" />
+        <canvas ref={canvas} className="board-canvas" aria-label={`10-column ${Math.min(state.board.length, 20)}-row Tetris field`} />
         <div className="main-actions field-actions">
           <button type="button" onClick={() => dispatch("undo")}>Undo</button>
           <button type="button" onClick={() => dispatch("restart")}>Restart</button>
@@ -521,6 +525,8 @@ export default function App() {
           <span><small>PIECES</small><b>{state.run.piecesLockedSinceLastPc}/10</b></span>
         </div>
       </aside>
+
+      <TouchControls controller={inputController} disabled={settingsOpen || replayExport !== null} />
 
       <aside className="guide-column">
         <div className="guide-tabs" role="tablist" aria-label="Guide panel">

@@ -3,6 +3,7 @@ import { occupiedCells } from "../engine/pieces";
 import { MAX_SEED_UTF8_BYTES } from "../engine/seed";
 import {
   BOARD_HEIGHT,
+  MOBILE_BOARD_HEIGHT,
   BOARD_WIDTH,
   ORIENTATIONS,
   PIECES,
@@ -187,6 +188,8 @@ class ByteReader {
 }
 
 function writeStateCanonical(writer: ByteWriter, state: GameState): void {
+  // Preserve desktop checksum bytes; domain-separate the compact-board rules.
+  if (state.board.length === MOBILE_BOARD_HEIGHT) writer.u8(MOBILE_BOARD_HEIGHT);
   for (let y = 0; y < BOARD_HEIGHT; y += 1) for (let x = 0; x < BOARD_WIDTH; x += 1) writer.u8(encodeCell(state.board[y]?.[x] ?? null));
   writer.u8(PIECE_INDEX.get(state.active.piece)!);
   writer.u8(ORIENTATION_INDEX.get(state.active.orientation)!);
@@ -320,8 +323,11 @@ export function crc32c(bytes: Uint8Array): number {
 }
 
 function writeInitial(writer: ByteWriter, initial: ReplayInitialState): void {
-  if (initial.board.length !== BOARD_HEIGHT || initial.board.some((row) => row.length !== BOARD_WIDTH)) throw new Error("QPCR3 initial board dimensions are invalid.");
-  for (const row of initial.board) for (const cell of row) writer.u8(encodeCell(cell === "." ? null : cell as BoardCell));
+  if (![BOARD_HEIGHT, MOBILE_BOARD_HEIGHT].includes(initial.board.length) || initial.board.some((row) => row.length !== BOARD_WIDTH)) throw new Error("QPCR3 initial board dimensions are invalid.");
+  for (let y = 0; y < BOARD_HEIGHT; y += 1) for (let x = 0; x < BOARD_WIDTH; x += 1) {
+    const cell = initial.board[y]?.[x] ?? ".";
+    writer.u8(encodeCell(cell === "." ? null : cell as BoardCell));
+  }
   const piece = PIECE_INDEX.get(initial.active.piece); const orientation = ORIENTATION_INDEX.get(initial.active.orientation);
   if (piece === undefined || orientation === undefined) throw new Error("QPCR3 initial active piece is invalid.");
   writer.u8(piece); writer.u8(orientation); writer.i16(initial.active.x); writer.i16(initial.active.y);
@@ -335,12 +341,13 @@ function writeInitial(writer: ByteWriter, initial: ReplayInitialState): void {
   writer.u8(initial.run.status === "playing" ? 0 : 1);
 }
 
-function readInitial(reader: ByteReader): ReplayInitialState {
+function readInitial(reader: ByteReader, boardHeight: number): ReplayInitialState {
   const board: string[] = [];
   for (let y = 0; y < BOARD_HEIGHT; y += 1) {
     let row = "";
     for (let x = 0; x < BOARD_WIDTH; x += 1) row += decodeCell(reader.u8()) ?? ".";
-    board.push(row);
+    if (y < boardHeight) board.push(row);
+    else if (row !== ".".repeat(BOARD_WIDTH)) throw new Error("QPCR3 compact board padding must be empty.");
   }
   const piece = PIECES[reader.u8()]; if (!piece) throw new Error("QPCR3 initial active piece code is invalid.");
   const orientation = ORIENTATIONS[reader.u8()]; if (!orientation) throw new Error("QPCR3 initial orientation code is invalid.");
@@ -378,7 +385,7 @@ export function encodeQpcr3Container(replay: ReplayDataV3): Uint8Array {
   const totalLength = HEADER_SIZE + bodyBytes.length + CRC_SIZE;
   if (totalLength > QPCR3_MAX_BINARY_SIZE) throw new Error("QPCR3 binary container is too large.");
   const bytes = new Uint8Array(totalLength); const view = new DataView(bytes.buffer);
-  bytes.set(MAGIC, 0); bytes[4] = QPCR3_CONTAINER_VERSION; bytes[5] = QPCR3_REPLAY_SEMANTICS_VERSION; bytes[6] = QPCR3_CHECKPOINT_SCHEMA_VERSION; bytes[7] = 0;
+  bytes.set(MAGIC, 0); bytes[4] = QPCR3_CONTAINER_VERSION; bytes[5] = QPCR3_REPLAY_SEMANTICS_VERSION; bytes[6] = QPCR3_CHECKPOINT_SCHEMA_VERSION; bytes[7] = replay.initial.board.length === MOBILE_BOARD_HEIGHT ? 1 : 0;
   view.setUint32(8, replay.events.eventCount, true); view.setUint32(12, bodyBytes.length, true); bytes.set(bodyBytes, HEADER_SIZE);
   view.setUint32(totalLength - CRC_SIZE, crc32c(bytes.subarray(0, totalLength - CRC_SIZE)), true);
   return bytes;
@@ -392,7 +399,7 @@ export function decodeQpcr3Container(bytes: Uint8Array): ReplayDataV3 {
   if (containerVersion !== QPCR3_CONTAINER_VERSION) throw new Error(`Unsupported QPCR3 container version ${containerVersion}.`);
   if (semantics !== QPCR3_REPLAY_SEMANTICS_VERSION) throw new Error(`Unsupported QPCR3 replay semantics version ${semantics}.`);
   if (checkpointSchema !== QPCR3_CHECKPOINT_SCHEMA_VERSION) throw new Error(`Unsupported QPCR3 checkpoint schema version ${checkpointSchema}.`);
-  if (flags !== 0) throw new Error("Unsupported QPCR3 container flags.");
+  if (flags & ~1) throw new Error("Unsupported QPCR3 container flags.");
   const eventCount = view.getUint32(8, true); if (eventCount > QPCR3_MAX_EVENTS) throw new Error("QPCR3 event count is too large.");
   const bodyLength = view.getUint32(12, true); if (bodyLength !== bytes.length - HEADER_SIZE - CRC_SIZE) throw new Error("QPCR3 payload length is invalid.");
   const expectedCrc = view.getUint32(bytes.length - CRC_SIZE, true); const actualCrc = crc32c(bytes.subarray(0, bytes.length - CRC_SIZE));
@@ -400,7 +407,7 @@ export function decodeQpcr3Container(bytes: Uint8Array): ReplayDataV3 {
   const reader = new ByteReader(bytes.subarray(HEADER_SIZE, bytes.length - CRC_SIZE));
   const createdAt = reader.string(128, "QPCR3 createdAt"); if (Number.isNaN(Date.parse(createdAt))) throw new Error("QPCR3 createdAt is invalid.");
   const seed = reader.string(MAX_SEED_UTF8_BYTES, "QPCR3 seed");
-  const initial = readInitial(reader);
+  const initial = readInitial(reader, flags & 1 ? MOBILE_BOARD_HEIGHT : BOARD_HEIGHT);
   const eventBytes = reader.raw(eventCount * 2).slice(); const events = packedReplayEvents(eventBytes, eventCount);
   const checkpointCount = reader.u16(); if (checkpointCount > Math.floor(eventCount / 10) + 3) throw new Error("QPCR3 checkpoint count is invalid.");
   const checkpoints: ReplayCheckpoint[] = [];

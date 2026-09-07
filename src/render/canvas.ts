@@ -94,7 +94,7 @@ export function drawBoardViewport(
 }
 
 export function drawBoard(canvas: HTMLCanvasElement, state: GameState, setup: SetupVariant | null, showGuide: boolean): void {
-  drawBoardViewport(canvas, state, setup, showGuide, VISIBLE_HEIGHT, 30);
+  drawBoardViewport(canvas, state, setup, showGuide, Math.min(state.board.length, VISIBLE_HEIGHT), 30);
 }
 export function drawPiecePreview(canvas: HTMLCanvasElement, piece: Piece | null): void {
   const context = prepareCanvas(canvas, 96, 64);

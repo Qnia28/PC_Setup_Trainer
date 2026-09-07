@@ -61,7 +61,7 @@ function sameCells(active: ActivePiece, target: TargetPlacement): boolean {
 }
 
 export function canReachPlacement(board: Board, piece: Piece, target: TargetPlacement): boolean {
-  const start = spawnPiece(piece);
+  const start = spawnPiece(piece, board.length);
   if (collides(board, start)) return false;
   const pending: ActivePiece[] = [start];
   let pendingIndex = 0;
@@ -108,7 +108,7 @@ async function canReachPlacementCooperative(
   target: TargetPlacement,
   control: CooperativeSearchControl,
 ): Promise<boolean> {
-  const start = spawnPiece(piece);
+  const start = spawnPiece(piece, board.length);
   if (collides(board, start)) return false;
   const pending: ActivePiece[] = [start];
   let pendingIndex = 0;

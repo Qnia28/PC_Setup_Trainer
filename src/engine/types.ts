@@ -58,3 +58,4 @@ export type GameAction =
 export const BOARD_WIDTH = 10;
 export const VISIBLE_HEIGHT = 20;
 export const BOARD_HEIGHT = 24;
+export const MOBILE_BOARD_HEIGHT = 10;

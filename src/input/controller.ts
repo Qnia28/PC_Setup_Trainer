@@ -29,6 +29,7 @@ export class InputController {
     window.addEventListener("keydown", this.onKeyDown);
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("blur", this.clear);
+    document.addEventListener("visibilitychange", this.clear);
     this.frame = requestAnimationFrame(this.tick);
   }
 
@@ -39,6 +40,8 @@ export class InputController {
     window.removeEventListener("keydown", this.onKeyDown);
     window.removeEventListener("keyup", this.onKeyUp);
     window.removeEventListener("blur", this.clear);
+    document.removeEventListener("visibilitychange", this.clear);
+    this.clear();
   }
 
   private onKeyDown = (event: KeyboardEvent): void => {
@@ -52,10 +55,15 @@ export class InputController {
     event.preventDefault();
     if (event.repeat || this.pressed.has(event.code)) return;
 
+    this.press(event.code, action);
+  };
+
+  press(code: string, action: GameAction): void {
+    if (this.pressed.has(code)) return;
     const now = performance.now();
-    this.pressed.set(event.code, { action, order: ++this.pressOrder });
+    this.pressed.set(code, { action, order: ++this.pressOrder });
     if (HORIZONTAL_ACTIONS.has(action) || action === "softDrop") {
-      this.repeats.set(event.code, {
+      this.repeats.set(code, {
         action: action as RepeatState["action"],
         started: now,
         last: now,
@@ -74,14 +82,18 @@ export class InputController {
     } else if (changed && (ROTATION_ACTIONS.has(action) || action === "softDrop")) {
       this.reapplyChargedHorizontal(now);
     }
-  };
+  }
 
   private onKeyUp = (event: KeyboardEvent): void => {
-    const released = this.pressed.get(event.code);
-    this.pressed.delete(event.code);
-    this.repeats.delete(event.code);
-    if (released && HORIZONTAL_ACTIONS.has(released.action)) this.selectActiveHorizontal(performance.now());
+    this.release(event.code);
   };
+
+  release(code: string): void {
+    const released = this.pressed.get(code);
+    this.pressed.delete(code);
+    this.repeats.delete(code);
+    if (released && HORIZONTAL_ACTIONS.has(released.action)) this.selectActiveHorizontal(performance.now());
+  }
 
   private clear = (): void => {
     this.pressed.clear();

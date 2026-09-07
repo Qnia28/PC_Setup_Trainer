@@ -1,7 +1,7 @@
 import { collides, createBoard, hardDropY } from "./board";
 import { spawnPiece } from "./pieces";
 import { createBagState, drawPiece, ensureQueue } from "./randomizer";
-import type { ActivePiece, GameAction, GameState, Piece, RotationDirection } from "./types";
+import { BOARD_HEIGHT, type ActivePiece, type GameAction, type GameState, type Piece, type RotationDirection } from "./types";
 import { parseQueueJumpInput, type QueueJumpTarget } from "../rules/queueJump";
 import { tryRotate } from "../rules/rotation";
 import { applyUnlimitedHold, copyGameState, lockGameState, placementEventFromStates, type PlacementTransitionOptions } from "./placement";
@@ -12,11 +12,11 @@ function initialSeed(): string {
   return Math.random().toString(36).slice(2, 10);
 }
 
-export function createGameState(seed = initialSeed()): GameState {
+export function createGameState(seed = initialSeed(), boardHeight = BOARD_HEIGHT): GameState {
   const first = drawPiece(createBagState(seed));
   return {
-    board: createBoard(),
-    active: spawnPiece(first.piece),
+    board: createBoard(boardHeight),
+    active: spawnPiece(first.piece, boardHeight),
     hold: null,
     holdUsedThisTurn: false,
     bag: ensureQueue(first.bag, 7),
@@ -48,12 +48,12 @@ export class GameSession {
   private readonly fixedInitial: GameState | null;
   private readonly transitionOptions: PlacementTransitionOptions;
 
-  constructor(seedOrInitial?: string | GameState) {
+  constructor(seedOrInitial?: string | GameState, private readonly boardHeight = BOARD_HEIGHT) {
     this.fixedInitial = typeof seedOrInitial === "object" ? copyGameState(seedOrInitial) : null;
     this.transitionOptions = this.fixedInitial ? { refillBag: false, spawnAfterTerminal: false } : {};
     this.state = this.fixedInitial
       ? copyGameState(this.fixedInitial)
-      : createGameState(typeof seedOrInitial === "string" ? seedOrInitial : undefined);
+      : createGameState(typeof seedOrInitial === "string" ? seedOrInitial : undefined, boardHeight);
     this.placementHistory = new PlacementHistory(this.state);
   }
 
@@ -94,7 +94,7 @@ export class GameSession {
   }
 
   restart(seed = initialSeed()): void {
-    this.state = this.fixedInitial ? copyGameState(this.fixedInitial) : createGameState(seed);
+    this.state = this.fixedInitial ? copyGameState(this.fixedInitial) : createGameState(seed, this.boardHeight);
     this.placementHistory.reset(this.state);
   }
 
@@ -127,8 +127,8 @@ export class GameSession {
     }
 
     this.state = {
-      board: createBoard(),
-      active: spawnPiece(activePiece),
+      board: createBoard(this.boardHeight),
+      active: spawnPiece(activePiece, this.boardHeight),
       hold,
       holdUsedThisTurn: false,
       bag: { ...generated, queue: [...currentBagTail, ...generated.queue] },
