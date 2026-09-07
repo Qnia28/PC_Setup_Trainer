@@ -1,4 +1,5 @@
 import { SiteHeader } from "../site/SiteHeader";
+import projectLicenceUrl from "../../LICENSE?url";
 import {
   SETUP_DATA_ACKNOWLEDGEMENTS,
   SFINDER_ACKNOWLEDGEMENTS,
@@ -25,10 +26,41 @@ export function LicenceApp() {
         <span>QNIAPC</span>
         <h1>Licences</h1>
         <p>
-          Licences for bundled third-party software and project acknowledgements
-          are listed below.
+          The project licence, setup-data rights, bundled third-party licences,
+          and acknowledgements are listed below.
         </p>
       </header>
+
+      <section className="licence-section" aria-labelledby="project-licence-title">
+        <h2 id="project-licence-title">QniaPC project licence</h2>
+        <p>Copyright © 2026 Kyunia.</p>
+        <p>
+          QniaPC's project-owned software is licensed under the GNU General Public
+          License, version 3 or, at your option, any later version
+          {" "}(<strong>GPL-3.0-or-later</strong>), without warranty.
+          {" "}<a href={projectLicenceUrl}>Full project licence and scope</a>.
+        </p>
+        <p>
+          The integrated sfinder-wasm project's own source remains under
+          {" "}<strong>Apache License 2.0</strong>. Its dependencies and other
+          third-party software retain their respective licences and copyright notices.
+        </p>
+      </section>
+
+      <section className="licence-section" aria-labelledby="setup-rights-title">
+        <h2 id="setup-rights-title">Setup database copyright</h2>
+        <p>
+          Copyright in the setup database's underlying setup content and source
+          materials belongs to the respective original authors and rights holders,
+          not to QniaPC merely because it includes, transcribes, normalizes, or displays them.
+        </p>
+        <p>
+          The GPL licence for the software does not relicense this content or grant
+          permission beyond the rights granted by its original rights holders.
+          The setup-data acknowledgements below credit the sources; they are not
+          open-content licence grants.
+        </p>
+      </section>
 
       <section className="licence-section" aria-labelledby="third-party-title">
         <h2 id="third-party-title">Bundled third-party licences</h2>

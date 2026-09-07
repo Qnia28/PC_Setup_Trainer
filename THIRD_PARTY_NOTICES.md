@@ -6,6 +6,24 @@ formats. Acknowledging a reference source does not imply that its contents are
 openly licensed or that QniaPC received rights beyond those granted by the
 source's stated terms.
 
+## Project license and setup-data rights
+
+Copyright (c) 2026 Kyunia. QniaPC's project-owned software is licensed under
+GNU GPL version 3 or, at your option, any later version (`GPL-3.0-or-later`).
+See [LICENSE](LICENSE) for the grant, scope, and complete license text.
+
+The integrated sfinder-wasm project's own source under
+`vendor/sfinder-wasm/upstream` remains Apache-2.0. Its dependencies and all
+other third-party software retain their respective licenses and notices.
+
+Copyright in the setup database's underlying setup content and source materials
+belongs to the respective original authors and rights holders. Inclusion,
+transcription, normalization, or display in QniaPC does not transfer those rights
+to QniaPC. The project's GPL software license does not relicense that content
+or grant permission beyond the rights granted by its original rights holders.
+The setup-data acknowledgements below identify the credited sources; they are
+not permission grants.
+
 ## Open-source software and development tools
 
 ### sfinder-wasm
