@@ -1,0 +1,6659 @@
+[
+  {
+    "id": "geometry-cycle-8-ox-item-001-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 001",
+    "formLabel": "Item 1 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-001-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-001-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-001-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-001-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@EhAtRpFeBtRpFeAtglRpEeilRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-002-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 002",
+    "formLabel": "Item 2 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-002-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-002-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-002-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-002-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gilGeglAtHeBtR4DeRpAtR4EeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-003-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 003",
+    "formLabel": "Item 3 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-003-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-003-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-003-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-003-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpFeQ4AeRpDeBtR4RpEeBtQ4RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-004-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 004",
+    "formLabel": "Item 4 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-004-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-004-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-004-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-004-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gwhHeAtwhGeBtwhRpEeAtglwhRpDeilJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-005-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 005",
+    "formLabel": "Item 5 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-005-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-005-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-005-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-005-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@EhwhRpGewhRpFeglwhRpDeilwhRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-006-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 006",
+    "formLabel": "Item 6 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-006-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-006-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-006-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-006-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpglQ4FeRpglR4EeRphlQ4OeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-007-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 007",
+    "formLabel": "Item 7 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-007-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-007-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-007-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-007-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@GhwhEeQ4CewhCeBtR4RpwhDeBtQ4RpwhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-008-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 008",
+    "formLabel": "Item 8 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-008-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-008-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-008-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-008-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpGewhRpGewhRpBeR4CewhRpAeR4DewhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-009-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 009",
+    "formLabel": "Item 9 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-009-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-009-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-009-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-009-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@DhzhFeR4hlEeR4RpglGeRpglJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-010-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 010",
+    "formLabel": "Item 10 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-010-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-010-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-010-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-010-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpglFeg0RpglFeg0RphlDeh0JeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-011-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 011",
+    "formLabel": "Item 11 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-011-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-011-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-011-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-011-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gQ4GeRpR4FeRpg0Q4Gegli0DeilJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-012-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>T 4P · 012",
+    "formLabel": "Item 12 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-012-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-012-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-012-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-012-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@HhglIeglzhi0RphlEeg0RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-013-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 013",
+    "formLabel": "Item 13 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-013-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-013-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-013-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-013-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@EhAtRpFeBtRpFeAtglRpEeilRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-014-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 014",
+    "formLabel": "Item 14 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-014-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-014-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-014-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-014-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@DhhlRpGeglRpEeBtglRpFeBtRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-015-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 015",
+    "formLabel": "Item 15 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-015-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-015-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-015-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-015-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gilGeglAtHeBtR4DeRpAtR4EeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-016-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 016",
+    "formLabel": "Item 16 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-016-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-016-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-016-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-016-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpFeQ4AeRpDeBtR4RpEeBtQ4RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-017-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 017",
+    "formLabel": "Item 17 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-017-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-017-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-017-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-017-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpglQ4FeRpglR4EeRphlQ4OeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-018-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 018",
+    "formLabel": "Item 18 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-018-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-018-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-018-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-018-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpHeRpAeR4DeglRpR4CeilRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-019-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 019",
+    "formLabel": "Item 19 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-019-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-019-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-019-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-019-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@EhR4AtFeR4BtRpFeAtglRpEeilJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-020-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 020",
+    "formLabel": "Item 20 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-020-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-020-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-020-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-020-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpHeRpilBei0RpglFeg0JeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-021-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 021",
+    "formLabel": "Item 21 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-021-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-021-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-021-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-021-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@GhAtHeBtRpDeR4AtglRpCeR4ilJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-022-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>I 4P · 022",
+    "formLabel": "Item 22 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-022-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-022-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-022-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-022-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gQ4hlGeR4glGeg0Q4glRpEei0RpOeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-023-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 023",
+    "formLabel": "Item 23 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-023-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-023-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-023-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-023-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gQ4IeR4Heg0Q4BtDeRpi0BtCeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-024-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 024",
+    "formLabel": "Item 24 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-024-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-024-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-024-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-024-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gQ4GeRpR4FeRpg0Q4FeRpi0EeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-025-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 025",
+    "formLabel": "Item 25 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-025-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-025-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-025-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-025-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpGeg0RpGeg0RpFeh0RpDezhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-026-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 026",
+    "formLabel": "Item 26 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-026-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gwhGeRpwhGeRpwhg0FeRpwhi0DeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-026-f001",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 026",
+    "formLabel": "Item 26 · Frame 1",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-026-f001-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-026-f001-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gwhGeRpwhGeRpwhg0FeRpwhi0DeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-027-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 027",
+    "formLabel": "Item 27 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-027-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-027-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-027-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-027-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpGewhRpGewhRpCeBtBewhRpDeBtAewhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-028-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 028",
+    "formLabel": "Item 28 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-028-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-028-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-028-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-028-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpHeRpg0AeBtDeRpi0BtCeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-029-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 029",
+    "formLabel": "Item 29 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-029-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-029-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-029-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-029-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@Ehi0GeR4g0FeR4RpDezhRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-030-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 030",
+    "formLabel": "Item 30 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-030-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-030-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-030-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-030-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpGewhRpGewhRpBeR4CewhRpAeR4DewhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-031-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 031",
+    "formLabel": "Item 31 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "O",
+      "S"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-031-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-031-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-031-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-031-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gh0FeRpg0GeRpg0R4EeRpR4FeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-032-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 032",
+    "formLabel": "Item 32 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-032-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-032-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-032-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-032-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@Ehi0HeQ4g0RpDeBtR4RpEeBtQ4JeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-033-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 033",
+    "formLabel": "Item 33 · Frame 0",
+    "pieceSignature": [
+      "O",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-033-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-033-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-033-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-033-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpFeQ4AeRpDeBtR4RpEeBtQ4RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-034-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 034",
+    "formLabel": "Item 34 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-034-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-034-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-034-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-034-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@AhR4GeR4IeBtCeRpzhBtBeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-035-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 035",
+    "formLabel": "Item 35 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-035-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-035-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-035-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-035-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhAtg0GeBtg0RpEeAth0RpDezhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-036-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 036",
+    "formLabel": "Item 36 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "S",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-036-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-036-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-036-f000-s-1",
+        "piece": "S",
+        "cells": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-036-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@ChBtIeBtBeRpCeR4CeRpBeR4zhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-037-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 037",
+    "formLabel": "Item 37 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-037-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-037-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-037-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-037-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gzhFeh0AtGeg0BtEeRpg0AtFeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-038-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 038",
+    "formLabel": "Item 38 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-038-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-038-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-038-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-038-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gg0zhEei0AtFeRpBtFeRpAtQeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-039-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>L 4P · 039",
+    "formLabel": "Item 39 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-039-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-039-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-039-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-039-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@GhwhIewhg0AeBtCeRpwhi0BtBeRpwhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-040-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-two-line-pc",
+    "displayName": "2L",
+    "formLabel": "Item 40 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-040-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-040-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-040-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-040-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-040-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@RhRpg0zhglTpi0ilRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-041-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 041",
+    "formLabel": "Item 41 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-041-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-041-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-041-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-041-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpGeAtRpFeBtRpFeAtglRpEeilJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-042-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 042",
+    "formLabel": "Item 42 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-042-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-042-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-042-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-042-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@DhzhGeRpg0EeBtRpg0FeBth0JeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-043-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 043",
+    "formLabel": "Item 43 · Frame 0",
+    "pieceSignature": [
+      "L",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-043-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-043-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-043-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-043-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpFehlRpGeglRpEeBtglRpFeBtJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-044-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 044",
+    "formLabel": "Item 44 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-044-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-044-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-044-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-044-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gilGeglBtGeRpBtFeRpzhNeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-045-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 045",
+    "formLabel": "Item 45 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-045-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-045-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-045-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-045-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@EhwhRpGewhRpFeglwhRpDeilwhRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-046-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 046",
+    "formLabel": "Item 46 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-046-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-046-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-046-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-046-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpwhGeRpwhGeRpwhDeBtAeRpwhEeBtJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-047-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 047",
+    "formLabel": "Item 47 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-047-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-047-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-047-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-047-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpwhGeRpwhGeRpwhDei0RpwhFeg0JeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-048-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 048",
+    "formLabel": "Item 48 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-048-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-048-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-048-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-048-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpBtFeRpg0BtEeRpi0OeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-049-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 049",
+    "formLabel": "Item 49 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-049-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-049-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-049-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-049-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gBtHeg0BtGei0EeRpzhDeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-050-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 050",
+    "formLabel": "Item 50 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-050-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-050-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-050-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-050-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gzhFeBtHeg0BtEeRpi0EeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-051-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 051",
+    "formLabel": "Item 51 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "O",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-051-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-051-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-051-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-051-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gRpHeRpEei0RpEeBtg0RpFeBtJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-052-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 052",
+    "formLabel": "Item 52 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-052-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-052-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-052-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-052-f000-o-2",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@FhRpglGeRpglDei0RphlEeg0RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-053-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 053",
+    "formLabel": "Item 53 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-053-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-053-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-053-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-053-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gzhFeh0BtFeg0RpBtEeg0RpQeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-054-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 054",
+    "formLabel": "Item 54 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-054-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-054-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-054-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-054-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@Ehi0GeBtg0RpFeBtRpDezhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-055-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 055",
+    "formLabel": "Item 55 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-055-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-055-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-055-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-055-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@Ghg0EeBtBeg0DeRpBth0DeRpzhJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-056-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 056",
+    "formLabel": "Item 56 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-056-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gh0AtGeg0BtGeg0AtglEeRpilEeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-056-f001",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 056",
+    "formLabel": "Item 56 · Frame 1",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-056-f001-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f001-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f001-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-056-f001-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gilGeglAtg0GeBtg0EeRpAth0EeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-057-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 057",
+    "formLabel": "Item 57 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-057-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-057-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 1
+          },
+          {
+            "x": 7,
+            "y": 0
+          },
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-057-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-057-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@HhglIeglzhi0RphlEeg0RpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-058-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 058",
+    "formLabel": "Item 58 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-058-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-058-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-058-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-058-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@/ghlFeg0BeglFei0glDeRpzhDeRpJeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-059-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 059",
+    "formLabel": "Item 59 · Frame 0",
+    "pieceSignature": [
+      "I",
+      "J",
+      "L",
+      "O"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-059-f000-i-1",
+        "piece": "I",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-059-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-059-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-059-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@9gwhilFewhglRpFewhg0RpFewhi0PeAgH"
+  },
+  {
+    "id": "geometry-cycle-8-ox-item-060-f000",
+    "cycle": 8,
+    "family": "cycle-8-o-general-4p",
+    "displayName": "O>S 4P · 060",
+    "formLabel": "Item 60 · Frame 0",
+    "pieceSignature": [
+      "J",
+      "L",
+      "O",
+      "Z"
+    ],
+    "placements": [
+      {
+        "id": "geometry-cycle-8-ox-item-060-f000-j-1",
+        "piece": "J",
+        "cells": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-060-f000-l-1",
+        "piece": "L",
+        "cells": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-060-f000-o-1",
+        "piece": "O",
+        "cells": [
+          {
+            "x": 8,
+            "y": 0
+          },
+          {
+            "x": 8,
+            "y": 1
+          },
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          }
+        ]
+      },
+      {
+        "id": "geometry-cycle-8-ox-item-060-f000-z-1",
+        "piece": "Z",
+        "cells": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ],
+    "runtimeEligible": true,
+    "difficulty": 3,
+    "reviewStatus": "reviewed",
+    "fumen": "v115@HhBthlFeg0BtglDeRpi0glDeRpJeAgH"
+  }
+]

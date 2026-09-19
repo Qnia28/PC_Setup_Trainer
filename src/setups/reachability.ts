@@ -1,7 +1,7 @@
-import { boardHash, collides, isLockable, placeCells } from "../engine/board";
-import { occupiedCells, sortedCellKey, spawnPiece } from "../engine/pieces";
-import type { ActivePiece, Board, Orientation, Piece } from "../engine/types";
-import { tryRotate } from "../rules/rotation";
+import { boardHash, placeCells } from "../engine/board";
+import { sortedCellKey } from "../engine/pieces";
+import type { Board, Orientation, Piece } from "../engine/types";
+import { occupancyKey, sharedPlacementSearch } from "./placementSearch";
 import type { SetupVariant, TargetPlacement } from "./schema";
 
 export interface BuildStep {
@@ -52,88 +52,29 @@ interface SearchState {
   heldSincePlacement: boolean;
 }
 
-function activeKey(active: ActivePiece): string {
-  return `${active.x},${active.y},${active.orientation}`;
-}
-
-function sameCells(active: ActivePiece, target: TargetPlacement): boolean {
-  return sortedCellKey(occupiedCells(active)) === sortedCellKey(target.cells);
-}
-
 export function canReachPlacement(board: Board, piece: Piece, target: TargetPlacement): boolean {
-  const start = spawnPiece(piece, board.length);
-  if (collides(board, start)) return false;
-  const pending: ActivePiece[] = [start];
-  let pendingIndex = 0;
-  const visited = new Set<string>();
-  while (pendingIndex < pending.length) {
-    const current = pending[pendingIndex++]!;
-    const key = activeKey(current);
-    if (visited.has(key)) continue;
-    visited.add(key);
-    if (sameCells(current, target) && isLockable(board, current)) return true;
-    const candidates: ActivePiece[] = [
-      { ...current, x: current.x - 1 },
-      { ...current, x: current.x + 1 },
-      { ...current, y: current.y - 1 },
-      tryRotate(board, current, "CW"),
-      tryRotate(board, current, "CCW"),
-      tryRotate(board, current, "R180"),
-    ];
-    for (const candidate of candidates) {
-      if (!collides(board, candidate) && !visited.has(activeKey(candidate))) pending.push(candidate);
-    }
-  }
-  return false;
+  return searchPlacement(board, piece, target);
 }
 
-function canReachPlacementCached(
-  board: Board,
-  piece: Piece,
-  target: TargetPlacement,
-  cache?: ReachabilityCache,
+function searchPlacement(
+  board: Board, piece: Piece, target: TargetPlacement, cache?: ReachabilityCache,
 ): boolean {
-  if (!cache) return canReachPlacement(board, piece, target);
-  const key = `${boardHash(board)}|${piece}|${sortedCellKey(target.cells)}`;
-  const cached = cache.get(key);
+  const identity = `${occupancyKey(board)}|${piece}`;
+  const key = `${identity}|${sortedCellKey(target.cells)}`;
+  const cached = cache?.get(key);
   if (cached !== undefined) return cached;
-  const reachable = canReachPlacement(board, piece, target);
-  cache.set(key, reachable);
+  const search = sharedPlacementSearch(board, piece, cache, identity);
+  const targets = search.targets(target);
+  while (targets.length && !search.reached(targets) && !search.exhausted) search.step();
+  const reachable = search.reached(targets);
+  cache?.set(key, reachable);
   return reachable;
 }
 
-async function canReachPlacementCooperative(
-  board: Board,
-  piece: Piece,
-  target: TargetPlacement,
-  control: CooperativeSearchControl,
-): Promise<boolean> {
-  const start = spawnPiece(piece, board.length);
-  if (collides(board, start)) return false;
-  const pending: ActivePiece[] = [start];
-  let pendingIndex = 0;
-  const visited = new Set<string>();
-  while (pendingIndex < pending.length) {
-    const pause = control.onNode();
-    if (pause) await pause;
-    const current = pending[pendingIndex++]!;
-    const key = activeKey(current);
-    if (visited.has(key)) continue;
-    visited.add(key);
-    if (sameCells(current, target) && isLockable(board, current)) return true;
-    const candidates: ActivePiece[] = [
-      { ...current, x: current.x - 1 },
-      { ...current, x: current.x + 1 },
-      { ...current, y: current.y - 1 },
-      tryRotate(board, current, "CW"),
-      tryRotate(board, current, "CCW"),
-      tryRotate(board, current, "R180"),
-    ];
-    for (const candidate of candidates) {
-      if (!collides(board, candidate) && !visited.has(activeKey(candidate))) pending.push(candidate);
-    }
-  }
-  return false;
+function canReachPlacementCached(
+  board: Board, piece: Piece, target: TargetPlacement, cache?: ReachabilityCache,
+): boolean {
+  return searchPlacement(board, piece, target, cache);
 }
 
 async function canReachPlacementCachedCooperative(
@@ -143,12 +84,19 @@ async function canReachPlacementCachedCooperative(
   cache: ReachabilityCache | undefined,
   control: CooperativeSearchControl,
 ): Promise<boolean> {
-  if (!cache) return canReachPlacementCooperative(board, piece, target, control);
-  const key = `${boardHash(board)}|${piece}|${sortedCellKey(target.cells)}`;
-  const cached = cache.get(key);
+  const identity = `${occupancyKey(board)}|${piece}`;
+  const key = `${identity}|${sortedCellKey(target.cells)}`;
+  const cached = cache?.get(key);
   if (cached !== undefined) return cached;
-  const reachable = await canReachPlacementCooperative(board, piece, target, control);
-  cache.set(key, reachable);
+  const search = sharedPlacementSearch(board, piece, cache, identity);
+  const targets = search.targets(target);
+  while (targets.length && !search.reached(targets) && !search.exhausted) {
+    const pause = control.onNode();
+    if (pause) await pause;
+    search.step();
+  }
+  const reachable = search.reached(targets);
+  cache?.set(key, reachable);
   return reachable;
 }
 

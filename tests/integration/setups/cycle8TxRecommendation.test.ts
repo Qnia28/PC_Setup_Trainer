@@ -42,13 +42,13 @@ describe("Cycle 8 T>X recommendation integration", () => {
     }
   });
 
-  it("does not borrow Cycle 1 setups for an unsupported non-T/L/J replacement", () => {
+  it("does not borrow Cycle 1 setups for an unsupported S/Z replacement", () => {
     expect(querySetups({
       cycle: 1,
       board: createBoard(),
-      hold: "O",
-      active: "O",
-      next: ["T", "I", "J", "L", "S", "Z"],
+      hold: "S",
+      active: "S",
+      next: ["T", "I", "J", "L", "O", "Z"],
     })).toEqual([]);
   });
 });

@@ -49,6 +49,10 @@ export interface SetupVariant {
   /** source geometry를 좌우 반전했을 때의 퍼클률. I-spin 비대칭 때문에 solveRate와 다를 수 있다. */
   mirroredSolveRate?: number;
   saves?: number;
+  /** Computed chance that the next PC has a good save (T or exact No S/No Z). */
+  nextPcGPercent?: number;
+  /** Computed chance that the next PC saves T. */
+  nextPcTPercent?: number;
   /** 5회차 출처에서 조건 없는 세이브 최적화(Bestsave)로 확인된 셋업. */
   bestsave?: boolean;
   /** 승격된 source record 중 현재 런타임 탐색 형식으로 안전하게 실행 가능한지 여부다. */
@@ -124,6 +128,18 @@ export function validateSetup(setup: SetupVariant): string[] {
   if (setup.solveRate !== undefined && (setup.solveRate < 0 || setup.solveRate > 100)) errors.push("solveRate는 0~100이어야 합니다.");
   if (setup.mirroredSolveRate !== undefined && (setup.mirroredSolveRate < 0 || setup.mirroredSolveRate > 100)) errors.push("mirroredSolveRate는 0~100이어야 합니다.");
   if (setup.saves !== undefined && (setup.saves < 0 || setup.saves > 100)) errors.push("saves는 0~100이어야 합니다.");
+  if (setup.nextPcGPercent !== undefined
+    && (!Number.isFinite(setup.nextPcGPercent) || setup.nextPcGPercent < 0 || setup.nextPcGPercent > 100)) {
+    errors.push("nextPcGPercent는 0~100이어야 합니다.");
+  }
+  if (setup.nextPcTPercent !== undefined
+    && (!Number.isFinite(setup.nextPcTPercent) || setup.nextPcTPercent < 0 || setup.nextPcTPercent > 100)) {
+    errors.push("nextPcTPercent는 0~100이어야 합니다.");
+  }
+  if (setup.nextPcGPercent !== undefined && setup.nextPcTPercent !== undefined
+    && setup.nextPcTPercent > setup.nextPcGPercent) {
+    errors.push("nextPcTPercent는 nextPcGPercent를 넘을 수 없습니다.");
+  }
   if (setup.runtimeEligible !== undefined && typeof setup.runtimeEligible !== "boolean") {
     errors.push("runtimeEligible은 boolean이어야 합니다.");
   }

@@ -8,196 +8,252 @@
     {
       "setupId": "cycle3-extra-i-001-f000",
       "values": {
-        "solveRate": 90.48
+        "solveRate": 90.48,
+        "nextPcGPercent": 84.76190476190476,
+        "nextPcTPercent": 81.9047619047619
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-001-f001",
       "values": {
-        "solveRate": 90.48
+        "solveRate": 90.48,
+        "nextPcGPercent": 84.76190476190476,
+        "nextPcTPercent": 81.9047619047619
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-002-f000",
       "values": {
-        "solveRate": 90.48
+        "solveRate": 90.48,
+        "nextPcGPercent": 84.76190476190476,
+        "nextPcTPercent": 81.9047619047619
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-002-f001",
       "values": {
-        "solveRate": 90.48
+        "solveRate": 90.48,
+        "nextPcGPercent": 84.76190476190476,
+        "nextPcTPercent": 81.9047619047619
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-003-f000",
       "values": {
-        "solveRate": 100
+        "solveRate": 100,
+        "nextPcGPercent": 99.40065681444992,
+        "nextPcTPercent": 93.5823754789272
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-004-f000",
       "values": {
-        "solveRate": 100
+        "solveRate": 100,
+        "nextPcGPercent": 99.98015873015873,
+        "nextPcTPercent": 94.82142857142857
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-005-f000",
       "values": {
-        "solveRate": 100
+        "solveRate": 100,
+        "nextPcGPercent": 98.41269841269842,
+        "nextPcTPercent": 93.41269841269842
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-006-f000",
       "values": {
-        "solveRate": 99.96
+        "solveRate": 99.96,
+        "nextPcGPercent": 99.44444444444444,
+        "nextPcTPercent": 96.23015873015873
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-007-f000",
       "values": {
-        "solveRate": 99.8
+        "solveRate": 99.8,
+        "nextPcGPercent": 98.33333333333333,
+        "nextPcTPercent": 88.65079365079364
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-008-f000",
       "values": {
-        "solveRate": 99.76
+        "solveRate": 99.76,
+        "nextPcGPercent": 95.34391534391534,
+        "nextPcTPercent": 88.46560846560847
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-009-f000",
       "values": {
-        "solveRate": 99.72
+        "solveRate": 99.72,
+        "nextPcGPercent": 94.16666666666667,
+        "nextPcTPercent": 87.3015873015873
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-010-f000",
       "values": {
-        "solveRate": 99.68
+        "solveRate": 99.68,
+        "nextPcGPercent": 96.25,
+        "nextPcTPercent": 89.5436507936508
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-011-f000",
       "values": {
-        "solveRate": 99.52
+        "solveRate": 99.52,
+        "nextPcGPercent": 98.57142857142857,
+        "nextPcTPercent": 89.64285714285714
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-012-f000",
       "values": {
-        "solveRate": 99.48
+        "solveRate": 99.48,
+        "nextPcGPercent": 96.66666666666667,
+        "nextPcTPercent": 90.26455026455027
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-013-f000",
       "values": {
-        "solveRate": 98.73
+        "solveRate": 98.73,
+        "nextPcGPercent": 94.76190476190476,
+        "nextPcTPercent": 76.82539682539682
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-014-f000",
       "values": {
-        "solveRate": 98.02
+        "solveRate": 98.02,
+        "nextPcGPercent": 91.35194307608101,
+        "nextPcTPercent": 82.89545703338807
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-015-f000",
       "values": {
-        "solveRate": 97.3
+        "solveRate": 97.3,
+        "nextPcGPercent": 96.28571428571429,
+        "nextPcTPercent": 89.98941798941799
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-016-f000",
       "values": {
-        "solveRate": 96.15
+        "solveRate": 96.15,
+        "nextPcGPercent": 80.70987654320987,
+        "nextPcTPercent": 71.18606701940035
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-017-f000",
       "values": {
-        "solveRate": 99.96
+        "solveRate": 99.96,
+        "nextPcGPercent": 79.56349206349206,
+        "nextPcTPercent": 70.03968253968254
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-018-f000",
       "values": {
-        "solveRate": 99.96
+        "solveRate": 99.96,
+        "nextPcGPercent": 80.91269841269842,
+        "nextPcTPercent": 71.38888888888889
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-019-f000",
       "values": {
-        "solveRate": 99.76
+        "solveRate": 99.76,
+        "nextPcGPercent": 80.93033509700176,
+        "nextPcTPercent": 71.40652557319224
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-020-f000",
       "values": {
-        "solveRate": 99.13
+        "solveRate": 99.13,
+        "nextPcGPercent": 90.35714285714286,
+        "nextPcTPercent": 75.9920634920635
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-021-f000",
       "values": {
-        "solveRate": 98.93
+        "solveRate": 98.93,
+        "nextPcGPercent": 77.85714285714286,
+        "nextPcTPercent": 68.33333333333333
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-022-f000",
       "values": {
-        "solveRate": 98.61
+        "solveRate": 98.61,
+        "nextPcGPercent": 87.61904761904762,
+        "nextPcTPercent": 85.98639455782313
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-023-f000",
       "values": {
-        "solveRate": 96.91
+        "solveRate": 96.91,
+        "nextPcGPercent": 80.95238095238095,
+        "nextPcTPercent": 71.42857142857143
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-024-f000",
       "values": {
-        "solveRate": 95.71
+        "solveRate": 95.71,
+        "nextPcGPercent": 80.18077601410934,
+        "nextPcTPercent": 70.65696649029982
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-025-f000",
       "values": {
-        "solveRate": 90.16
+        "solveRate": 90.16,
+        "nextPcGPercent": 76.80952380952381,
+        "nextPcTPercent": 65.22222222222223
       },
       "direction": "source"
     },
     {
       "setupId": "cycle3-extra-i-026-f000",
       "values": {
-        "solveRate": 89.52
+        "solveRate": 89.52,
+        "nextPcGPercent": 61.111111111111114,
+        "nextPcTPercent": 50.95238095238095
       },
       "direction": "source"
     }

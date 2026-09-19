@@ -78,7 +78,7 @@
           "logicalSetupCount": 35,
           "runtimeEnabled": true,
           "setupsSha256": "f809e3591934aeae9d6490ab4305170cdec780d54778579b746aaccfc4f804b6",
-          "policySha256": "61fc873a18e92dd3b28467e21f19c61227e1d4cebdef83ca76c1bcd4792e7e3f"
+          "policySha256": "5a210d2b2361772b1147a67255dda595bd99320e7701876ccc65ab9c512474bf"
         },
         "t": {
           "setups": "cycle-3-extra-t-setups.json",
@@ -87,7 +87,7 @@
           "logicalSetupCount": 52,
           "runtimeEnabled": true,
           "setupsSha256": "1cd6f654d1e1ec2f75d5794892c8828a958024a67bf04c8501257fa677d35ac7",
-          "policySha256": "bf8815ce0d27f68890e9beb7171b26e3b27293ccf888d3b75e688c631e9cb54a",
+          "policySha256": "f2314b3c0cf9b6d92c2620fde4744bd42cd698bb2bdbe4c7846fc01f3acee7ad",
           "stagedOqbRuntimeEnabled": true
         },
         "i": {
@@ -97,7 +97,7 @@
           "logicalSetupCount": 26,
           "runtimeEnabled": true,
           "setupsSha256": "d5c8b9145e0431395a0b92898fa7ac4c385608698da96d96066789c68d30d6be",
-          "policySha256": "b42f7a38b9db56334c6f85e8edd46c13f1b13bc2bda24f0c86b7934aa7d0b385"
+          "policySha256": "097528a77820b2bb0a98a3179e7857830a8d553292fb7750911851e39f76bf42"
         },
         "lj": {
           "setups": "cycle-3-extra-lj-setups.json",
@@ -106,7 +106,7 @@
           "logicalSetupCount": 51,
           "runtimeEnabled": true,
           "setupsSha256": "b3ab0d3034bfdf68f22a2e0740c2a2ba7a4ffeac3096989ec87810fec2fa41f8",
-          "policySha256": "f232843fb0eb19f81ba7f9aa7dd8fa6ca3aba1b0ed93fb0c146165d724fa0c75"
+          "policySha256": "ecd669487e7220de48ad940620e0c8a3b5763aba76c2a2bd1619682006fbb436"
         },
         "sz": {
           "setups": "cycle-3-extra-sz-setups.json",
@@ -115,7 +115,7 @@
           "logicalSetupCount": 32,
           "runtimeEnabled": true,
           "setupsSha256": "dc259cef442744a48c03db511102df613477567ef2dffe3eae626c663b716d81",
-          "policySha256": "3bc6e7be1bbc0d38fe66434a7959bba9bb99fe4854f4d23a2858d665414f6977"
+          "policySha256": "202e2c56f9de6078afb547808e73d4deb4a8852bf40979f87bb8ca3c5b4bd902"
         }
       },
       "setupCount": 203,
@@ -664,14 +664,14 @@
     "8": {
       "setups": "cycle-8-tx-setups.json",
       "policy": "cycle-8-tx-policy.json",
-      "setupCount": 220,
-      "logicalSetupCount": 220,
+      "setupCount": 359,
+      "logicalSetupCount": 359,
       "runtimeEnabled": true,
       "conditionCompilerReady": true,
       "setupsSha256": "0f069d2f7f7d62701bae665ce39f30927910858df303d50c06b984038ef91eaa",
       "policySha256": "1191b091c35ae64863ded26601ae7e50df7625e5cc1e76e4a3dd949a92fa2617",
       "complete": false,
-      "note": "The reviewed T>X and L/J>X source scopes are active for their exact replacement classes. General 4P/3P and T-specific QB/OQB are routed without Cycle 1 or geometry-only fallback.",
+      "note": "The reviewed T>X, L/J>X, I>X, and O>X source scopes are active for their exact replacement classes. General families and T-specific QB/OQB are routed without Cycle 1 or geometry-only fallback; O>S/O>Z also preserve the typed 2L transition.",
       "additionalCatalogs": [
         {
           "setups": "cycle-8-ljx-setups.json",
@@ -682,6 +682,30 @@
           "conditionCompilerReady": true,
           "setupsSha256": "081d6067880da4767a4cdbaa1f8c9e8532c764b2fbb06ec9d5d5f19c8f5f5a95",
           "policySha256": "420f054f461a85c5b3bb48bdb00458f679d6e619f0588643d6e0d7484e2651f5"
+        },
+        {
+          "setups": "cycle-8-ix-setups.json",
+          "policy": "cycle-8-ix-policy.json",
+          "setupCount": 77,
+          "logicalSetupCount": 77,
+          "runtimeEnabled": true,
+          "conditionCompilerReady": true,
+          "setupsSha256": "8723ea08c08a4ae3024189cb1c834490c4eb925d6e751b274653bfaa6237f561",
+          "policySha256": "5cd3af90b2be652d0d6b20c9ab74f35b7f48280aee731ee3551f86b683146432",
+          "queueSurveyPerformed": false,
+          "surveyDecision": "no-matching-immutable-cycle8-replacement-profile"
+        },
+        {
+          "setups": "cycle-8-ox-setups.json",
+          "policy": "cycle-8-ox-policy.json",
+          "setupCount": 62,
+          "logicalSetupCount": 62,
+          "runtimeEnabled": true,
+          "conditionCompilerReady": true,
+          "setupsSha256": "739390e7d78b17bc07d6e68aff5c02cd948ab8c41ab4c80ea0f6b772d5e45cb0",
+          "policySha256": "2a6a16478f7b3b49f1d3889f8708863ae6108d82f0e206ee089837df7336fbd6",
+          "queueSurveyPerformed": false,
+          "surveyDecision": "no-matching-immutable-cycle8-replacement-profile"
         }
       ]
     }
@@ -694,8 +718,8 @@
     "colored": true,
     "comments": false,
     "operations": false,
-    "fileCount": 61,
-    "setupCount": 2618,
+    "fileCount": 63,
+    "setupCount": 2757,
     "allRoundTripExact": true
   }
 }

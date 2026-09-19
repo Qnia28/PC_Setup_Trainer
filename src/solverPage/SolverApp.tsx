@@ -14,6 +14,7 @@ import {
   type StandaloneSolvePreparation,
 } from "./model";
 import { parseSolverFumen, type SolverField } from "./fumenInput";
+import { FumenClipboardInput } from "./FumenClipboardInput";
 
 type FumenPage = ReturnType<typeof decoder.decode>[number];
 type SolverLineMode = 4 | 5 | 6;
@@ -134,7 +135,6 @@ export function SolverApp() {
   const fieldCanvas = useRef<HTMLCanvasElement>(null);
   const solver = useRef<SolverWorkerClient | null>(null);
   const calculationAbort = useRef<AbortController | null>(null);
-  const importingFumenField = useRef(false);
   const generation = useRef(0);
   const drawing = useRef(false);
   const paintValue = useRef(true);
@@ -161,16 +161,13 @@ export function SolverApp() {
   }, [field, lineMode]);
 
   useEffect(() => {
-    if (importingFumenField.current) {
-      importingFumenField.current = false;
-      return;
-    }
     generation.current += 1;
     calculationAbort.current?.abort();
     calculationAbort.current = null;
     setView({ status: "idle" });
     setFinishedDurationMs(null);
-  }, [displayMode, field, fumenInput, lineMode, queue]);
+  // Copying the parsed field into the editor is not a new calculation input.
+  }, [displayMode, calculationField, fumenInput, lineMode, queue]);
 
   useEffect(() => {
     const client = new SolverWorkerClient(viteWorkerFactory);
@@ -237,7 +234,6 @@ export function SolverApp() {
     calculationAbort.current?.abort();
     calculationAbort.current = controller;
     if (parsedFumen.status === "ready") {
-      importingFumenField.current = true;
       setField(parsedFumen.field);
     }
     setView({ status: "loading" });
@@ -314,16 +310,13 @@ export function SolverApp() {
           onPointerCancel={() => { drawing.current = false; }}
         />
         <p>Use the selected line format. Fill intentionally unused bottom rows completely. Right-drag erases.</p>
-        <label className="standalone-fumen-input">
-          <span>Fumen</span>
-          <input
-            value={fumenInput}
-            placeholder="v115@… or Fumen URL"
-            autoComplete="off"
-            spellCheck={false}
-            onChange={(event) => setFumenInput(event.target.value)}
-          />
-        </label>
+        <FumenClipboardInput value={fumenInput} onText={setFumenInput} onImport={result => {
+          setField(result.field);
+          setFumenInput("");
+          setQueue(result.queue);
+          const height = result.field.reduce((max, row, y) => row.some(Boolean) ? y + 1 : max, 0);
+          setLineMode(height > 5 ? 6 : height > 4 ? 5 : 4);
+        }} />
       </div>
 
       <div className="standalone-controls-panel">

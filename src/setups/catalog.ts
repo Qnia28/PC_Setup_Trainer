@@ -45,6 +45,7 @@ import { assertValidCatalog, type SetupVariant } from "./schema";
 import type { Piece } from "../engine/types";
 import { cycle8TxAllRuntimeCatalog, cycle8TxSourceCatalog } from "./cycle8TxCatalog";
 import { cycle8LjxAllRuntimeCatalog, cycle8LjxSourceCatalog } from "./cycle8LjxCatalog";
+import { cycle8IoxAllRuntimeCatalog, cycle8IoxSourceCatalog } from "./cycle8IoxCatalog";
 
 const cycle1Policy = rawCycle1Policy as unknown as StructuredSetupPolicy;
 const cycle1Catalog = applyStructuredPolicyMetrics(rawCycle1 as SetupVariant[], cycle1Policy);
@@ -168,6 +169,7 @@ export const sourceSetupCatalog = [
   ...cycle6T,
   ...cycle8TxSourceCatalog(),
   ...cycle8LjxSourceCatalog(),
+  ...cycle8IoxSourceCatalog(),
 ];
 assertValidCatalog(sourceSetupCatalog);
 
@@ -191,6 +193,7 @@ export const setupCatalog = [
   ...cycle6RuntimeByPiece.T,
   ...cycle8TxAllRuntimeCatalog(),
   ...cycle8LjxAllRuntimeCatalog(),
+  ...cycle8IoxAllRuntimeCatalog(),
 ];
 assertValidCatalog(setupCatalog);
 

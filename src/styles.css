@@ -70,7 +70,6 @@ input { min-width: 0; color: #e9eef7; background: #0e131a; border: 1px solid #39
 .solution-media { display: grid; gap: 10px; margin: 12px 0; }
 .solution-media p { margin: 0; color: #aeb9c8; }
 .solution-media img { width: min(100%, 480px); image-rendering: pixelated; border: 1px solid #3b4655; background: #20252d; }
-.warning { color: #ff9c65; font-size: 13px; }
 .empty-copy { color: #93a0b1; line-height: 1.55; }
 .candidate-list { margin: 14px 0; }
 .candidate-list h3 { font-size: 13px; color: #a8b4c2; }

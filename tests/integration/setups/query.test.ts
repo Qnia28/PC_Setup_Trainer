@@ -41,6 +41,21 @@ function stageHierarchyFixture() {
 }
 
 describe("setup catalog/query", () => {
+  it("3회차 T%·G% 정책은 source와 J/Z 대칭 런타임에 투영되며 비종단 2P는 비운다", () => {
+    for (const sourceId of ["cycle3-extra-lj-001-f000", "cycle3-extra-sz-001-f000"]) {
+      const source = sourceSetupCatalog.find(({ id }) => id === sourceId)!;
+      const mirrored = setupCatalog.find(({ id }) => id === `${sourceId}--mirror`)!;
+      expect(source.nextPcGPercent).toBeDefined();
+      expect(source.nextPcTPercent).toBeDefined();
+      expect(source.nextPcTPercent).toBeLessThanOrEqual(source.nextPcGPercent!);
+      expect(mirrored.nextPcGPercent).toBe(source.nextPcGPercent);
+      expect(mirrored.nextPcTPercent).toBe(source.nextPcTPercent);
+    }
+    const stagedPrecondition = sourceSetupCatalog.find(({ id }) => id === "cycle3-extra-t-044-f000")!;
+    expect(stagedPrecondition.nextPcGPercent).toBeUndefined();
+    expect(stagedPrecondition.nextPcTPercent).toBeUndefined();
+  });
+
   it("1회차와 5회차 3P 셋업에 회차별 난이도를 적용한다", () => {
     const cycle1ThreePiece = sourceSetupCatalog.filter(
       ({ cycle, placements }) => cycle === 1 && placements.length === 3,
@@ -63,7 +78,7 @@ describe("setup catalog/query", () => {
     }
   });
 
-  it("같은 ILOT 구축 풀에서 일반·고급 3P·QB 후보와 tier 순서를 함께 유지한다", () => {
+  it("같은 ILOT 구축 풀에서 일반·고급 3P·QB를 유지하고 구축 가능한 후보를 지표순으로 정렬한다", () => {
     const candidates = querySetups({
       cycle: 2,
       board: createBoard(),
@@ -81,8 +96,15 @@ describe("setup catalog/query", () => {
     const advanced3pIndex = candidates.findIndex(({ setup }) =>
       setup.id.startsWith("cycle2-advanced-") && !setup.id.includes("-qb-"));
     expect(generalIndex).toBeGreaterThanOrEqual(0);
-    expect(advanced3pIndex).toBeGreaterThan(generalIndex);
-    expect(qbIndex).toBeGreaterThan(advanced3pIndex);
+    expect(advanced3pIndex).toBeGreaterThanOrEqual(0);
+    expect(qbIndex).toBeGreaterThanOrEqual(0);
+    for (let index = 1; index < candidates.length; index += 1) {
+      const previous = candidates[index - 1]!.setup;
+      const current = candidates[index]!.setup;
+      if (previous.solveRate !== undefined && current.solveRate !== undefined) {
+        expect(previous.solveRate).toBeGreaterThanOrEqual(current.solveRate);
+      }
+    }
     expect(candidates[qbIndex]?.setup.solveRate).toBeUndefined();
   });
 
@@ -399,7 +421,7 @@ describe("setup catalog/query", () => {
     expect(new Set(simultaneous.map(({ setup }) => setup.solveRate))).toEqual(new Set([99.96]));
   });
 
-  it("스크린샷 큐에서 Hills 미러와 Elephant를 모두 반환하고 Hills를 먼저 추천한다", () => {
+  it("스크린샷 큐에서 Hills 미러와 Elephant를 유지하되 PC%가 높은 후보를 먼저 추천한다", () => {
     const candidates = querySetups({
       cycle: 1,
       board: createBoard(),
@@ -410,8 +432,8 @@ describe("setup catalog/query", () => {
     });
     expect(candidates.map(({ setup }) => setup.id)).toContain("cycle1-hills-a--mirror");
     expect(candidates.map(({ setup }) => setup.id)).toContain("cycle1-elephant-a");
-    expect(candidates[0]?.setup.id).toBe("cycle1-hills-a--mirror");
-    expect(candidates[0]?.setup.solveRate).toBe(98.45);
+    expect(candidates.find(({ setup }) => setup.id === "cycle1-hills-a--mirror")?.setup.solveRate).toBe(98.45);
+    expect(candidates[0]?.setup.solveRate).toBeGreaterThan(98.45);
   });
 
   it("L>O replacement 상태에는 Cycle 8 L/J>X 셋업만 추천한다", () => {
@@ -446,8 +468,8 @@ describe("setup catalog/query", () => {
 
   it("priority·난이도보다 퍼클 확률을 먼저 적용한다", () => {
     const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
-    const lowRate = { ...base, id: "low-rate", solveRate: 90, priority: 100, difficulty: 1 as const };
-    const highRate = { ...base, id: "high-rate", solveRate: 99, priority: -100, difficulty: 5 as const };
+    const lowRate = { ...base, id: "low-rate", solveRate: 90, priority: 100, nextPcGPercent: 100, nextPcTPercent: 100, difficulty: 1 as const };
+    const highRate = { ...base, id: "high-rate", solveRate: 99, priority: -100, nextPcGPercent: 0, nextPcTPercent: 0, difficulty: 5 as const };
     const pieces = [..."IOJS"] as Piece[];
     const result = queryCatalog([lowRate, highRate], {
       cycle: 1,
@@ -461,8 +483,8 @@ describe("setup catalog/query", () => {
 
   it("퍼클 확률이 같으면 priority가 높은 후보를 먼저 적용한다", () => {
     const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
-    const lowPriority = { ...base, id: "low-priority", solveRate: 99, priority: -10, difficulty: 1 as const, saves: 100 };
-    const highPriority = { ...base, id: "high-priority", solveRate: 99, priority: 10, difficulty: 5 as const, saves: 0 };
+    const lowPriority = { ...base, id: "low-priority", solveRate: 99, priority: -10, nextPcGPercent: 100, nextPcTPercent: 100, difficulty: 1 as const, saves: 100 };
+    const highPriority = { ...base, id: "high-priority", solveRate: 99, priority: 10, nextPcGPercent: 0, nextPcTPercent: 0, difficulty: 5 as const, saves: 0 };
     const pieces = [..."IOJS"] as Piece[];
     const result = queryCatalog([lowPriority, highPriority], {
       cycle: 1,
@@ -474,10 +496,40 @@ describe("setup catalog/query", () => {
     expect(result.map(({ setup }) => setup.id)).toEqual(["high-priority", "low-priority"]);
   });
 
-  it("퍼클 확률과 priority가 같으면 난이도가 낮은 후보를 먼저 적용한다", () => {
+  it("퍼클 확률과 priority가 같으면 G%가 높은 후보를 먼저 적용한다", () => {
     const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
-    const hard = { ...base, id: "hard", solveRate: 99, priority: 0, difficulty: 5 as const, saves: 100 };
-    const easy = { ...base, id: "easy", solveRate: 99, priority: 0, difficulty: 1 as const, saves: 0 };
+    const lowG = { ...base, id: "low-g", solveRate: 99, priority: 0, nextPcGPercent: 70, nextPcTPercent: 65, difficulty: 1 as const };
+    const highG = { ...base, id: "high-g", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 60, difficulty: 5 as const };
+    const pieces = [..."IOJS"] as Piece[];
+    const result = queryCatalog([lowG, highG], {
+      cycle: 1,
+      board: createBoard(),
+      active: pieces[0],
+      hold: null,
+      next: pieces.slice(1),
+    });
+    expect(result.map(({ setup }) => setup.id)).toEqual(["high-g", "low-g"]);
+  });
+
+  it("퍼클 확률·priority·G%가 같으면 T%가 높은 후보를 먼저 적용한다", () => {
+    const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
+    const lowT = { ...base, id: "low-t", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 70, difficulty: 1 as const };
+    const highT = { ...base, id: "high-t", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 80, difficulty: 5 as const };
+    const pieces = [..."IOJS"] as Piece[];
+    const result = queryCatalog([lowT, highT], {
+      cycle: 1,
+      board: createBoard(),
+      active: pieces[0],
+      hold: null,
+      next: pieces.slice(1),
+    });
+    expect(result.map(({ setup }) => setup.id)).toEqual(["high-t", "low-t"]);
+  });
+
+  it("퍼클 확률·priority·G%·T%가 같으면 난이도가 낮은 후보를 먼저 적용한다", () => {
+    const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
+    const hard = { ...base, id: "hard", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 80, difficulty: 5 as const };
+    const easy = { ...base, id: "easy", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 80, difficulty: 1 as const };
     const pieces = [..."IOJS"] as Piece[];
     const result = queryCatalog([hard, easy], {
       cycle: 1,
@@ -489,25 +541,10 @@ describe("setup catalog/query", () => {
     expect(result.map(({ setup }) => setup.id)).toEqual(["easy", "hard"]);
   });
 
-  it("퍼클 확률·priority·난이도가 같으면 Saves가 높은 후보를 먼저 적용한다", () => {
+  it("모든 추천 지표가 같으면 Saves와 무관하게 setup ID 사전순으로 정렬한다", () => {
     const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
-    const lowSaves = { ...base, id: "low-saves", solveRate: 99, priority: 0, saves: 90, difficulty: 3 as const };
-    const highSaves = { ...base, id: "high-saves", solveRate: 99, priority: 0, saves: 98, difficulty: 3 as const };
-    const pieces = [..."IOJS"] as Piece[];
-    const result = queryCatalog([lowSaves, highSaves], {
-      cycle: 1,
-      board: createBoard(),
-      active: pieces[0],
-      hold: null,
-      next: pieces.slice(1),
-    });
-    expect(result.map(({ setup }) => setup.id)).toEqual(["high-saves", "low-saves"]);
-  });
-
-  it("모든 추천 지표가 같으면 setup ID 사전순으로 정렬한다", () => {
-    const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
-    const z = { ...base, id: "z-setup", solveRate: 99, priority: 0, saves: 95, difficulty: 3 as const };
-    const a = { ...base, id: "a-setup", solveRate: 99, priority: 0, saves: 95, difficulty: 3 as const };
+    const z = { ...base, id: "z-setup", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 80, saves: 100, difficulty: 3 as const };
+    const a = { ...base, id: "a-setup", solveRate: 99, priority: 0, nextPcGPercent: 90, nextPcTPercent: 80, saves: 0, difficulty: 3 as const };
     const pieces = [..."IOJS"] as Piece[];
     const result = queryCatalog([z, a], {
       cycle: 1,
@@ -517,6 +554,21 @@ describe("setup catalog/query", () => {
       next: pieces.slice(1),
     });
     expect(result.map(({ setup }) => setup.id)).toEqual(["a-setup", "z-setup"]);
+  });
+
+  it("이전 family score 접두값은 구축 후의 지정된 후보 순서를 뒤집지 않는다", () => {
+    const base = sourceSetupCatalog.find(({ id }) => id === "cycle1-legs-a")!;
+    const candidate = (id: string, solveRate: number, score: number[]): SetupCandidate => ({
+      setup: { ...base, id, solveRate },
+      plan: { steps: [], holds: 0 },
+      score,
+      reasons: [],
+    });
+    const ranked = limitSetupCandidatesForCycle([
+      candidate("lower-pc", 90, [-100]),
+      candidate("higher-pc", 99, [100]),
+    ], 1, 2);
+    expect(ranked.map(({ setup }) => setup.id)).toEqual(["higher-pc", "lower-pc"]);
   });
 
   it("분리 표시 회차는 QB와 일반 P-count 한도를 서로 소비하지 않는다", () => {

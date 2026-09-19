@@ -14,11 +14,12 @@ import { ReplayExportDialog } from "./replay/ReplayExportDialog";
 import { ReplayRecorder } from "./replay/recorder";
 import type { ReplayData } from "./replay/format";
 import { SiteHeader } from "./site/SiteHeader";
+import { setupRateMetrics } from "./site/setupMetricDisplay";
 import { setupCoverageForCycle, type SetupCatalogCoverage } from "./setups/catalog";
 import { displayCycleForQuery } from "./setups/cycle1Context";
 import { cycle4ClassLabel } from "./setups/cycle4Catalog";
 import { GuideUndoHistory, guideSegmentIdentity, type GuideSnapshot } from "./setups/guideHistory";
-import { countSetupShadowWrongCells, shouldAutoHideSetupShadow } from "./setups/shadow";
+import { shouldAutoHideSetupShadow } from "./setups/shadow";
 import { splitsSetupCandidatesByPieceCount, type SetupCandidate } from "./setups/query";
 import { oqbContinuationCandidates, resolveOqbProgress, type OqbProgressResult } from "./setups/oqbProgress";
 import { recommendationSetupLabel } from "./setups/recommendationLabel";
@@ -495,8 +496,6 @@ export default function App() {
     }
   }
 
-  const wrongCells = selected && !guideDone ? countSetupShadowWrongCells(state.board, selected) : 0;
-
   return <><SiteHeader active="game" /><main className="app-shell" onPointerUpCapture={releaseGameplayButtonFocus}>
     <header className="topbar">
       <div><h1>GUIDED PC MODE</h1></div>
@@ -520,7 +519,7 @@ export default function App() {
       <aside className="next-column">
         <div className="next-list"><span>NEXT</span>{state.bag.queue.slice(0, 5).map((piece, index) => <PiecePreview key={`${index}-${piece}`} piece={piece} />)}</div>
         <div className="side-stats" aria-label="Run progress">
-          <span><small>CYCLE</small><b>{displayCycle}</b></span>
+          <span><small>PC#</small><b>{displayCycle}</b></span>
           <span><small>PC</small><b>{state.run.pcCount}</b></span>
           <span><small>PIECES</small><b>{state.run.piecesLockedSinceLastPc}/10</b></span>
         </div>
@@ -553,9 +552,8 @@ export default function App() {
         {recommendationError && <div className="recommendation-error" role="alert"><span>{candidates.length > 0 ? "Some additional recommendations could not be loaded." : "Setup recommendations could not be loaded."}</span><button type="button" onClick={() => setRecommendationRetryNonce((value) => value + 1)}>Retry</button></div>}
         {selected ? <>
           <SetupPreview setup={selected} />
-          <p className="setup-meta">{selected.solveRate !== undefined ? `PC Rate ${selected.solveRate}% · ` : ""}Priority {selected.priority ?? 0} · Difficulty {selected.difficulty}/5 · {selected.saves !== undefined ? `${selected.saveMetricKind === "project-priority" ? "Save Priority" : "Saves"} ${selected.saves}${selected.saveMetricKind === "project-priority" ? "" : "%"} · ` : ""}{selected.reviewStatus === "draft" ? "Unreviewed" : "Reviewed"}</p>
+          <p className="setup-meta">{setupRateMetrics(selected).map(({ label, value }) => `${label} ${value}`).join(" · ")}</p>
           {stagedInstruction && <p className="policy-note">{stagedInstruction}</p>}
-          {!guideDone && wrongCells > 0 && <p className="warning">{wrongCells} cell(s) differ from the target. Undo recommended.</p>}
         </> : <p className="empty-copy">{recommendationLoading
           ? "Reading the PC-start queue and finding buildable setups…"
           : recommendationError

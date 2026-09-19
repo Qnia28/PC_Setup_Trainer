@@ -1,0 +1,1518 @@
+{
+  "schemaVersion": 2,
+  "id": "cycle-8-i-policy",
+  "cycle": 8,
+  "classId": "ix-umbrella",
+  "reviewStatus": "reviewed",
+  "metrics": [
+    {
+      "setupId": "geometry-cycle-8-ix-item-001-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 97.78
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-002-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 95.95
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-003-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 95.63
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-004-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 93.17
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-005-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 90.87
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-006-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 88.85
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-007-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 88.81
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-008-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 87.1
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-009-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 86.67
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-010-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 86.39
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-011-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 83.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-012-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 81.9
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-013-f000",
+      "direction": "I>T",
+      "values": {
+        "solveRate": 55.6
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-013-f000",
+      "direction": "horizontalMirror",
+      "values": {
+        "solveRate": 56.43
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-014-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-015-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-016-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.96
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-017-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.96
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-018-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.92
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-019-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.92
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-020-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.88
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-021-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.68
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-022-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.48
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-023-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.48
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-024-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.37
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-025-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.25
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-026-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 99.09
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-027-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 98.93
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-028-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 98.65
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-029-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 97.78
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-030-f000",
+      "direction": "I>O",
+      "values": {
+        "solveRate": 91.9
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-031-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-032-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 99.64
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-033-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 97.14
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-033-f000",
+      "direction": "I>J",
+      "values": {
+        "solveRate": 96.03
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-034-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 97.02
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-035-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.98
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-036-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.87
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-037-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.55
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-038-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.47
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-038-f001",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.47
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-039-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-040-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 96.07
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-040-f000",
+      "direction": "I>J",
+      "values": {
+        "solveRate": 95.83
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-041-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 95.71
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-042-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 95.67
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-043-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 94.76
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-044-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 94.72
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-045-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 94.68
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-046-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 94.52
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-047-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 94.33
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-047-f000",
+      "direction": "I>J",
+      "values": {
+        "solveRate": 94.25
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-048-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 92.74
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-049-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-050-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 92.46
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-051-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 92.26
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-052-f000",
+      "direction": "I>L",
+      "values": {
+        "solveRate": 92.18
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-053-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-054-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-055-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-056-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-057-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-058-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 100
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-059-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.96
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-060-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.96
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-061-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.92
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-062-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.72
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-063-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.37
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-064-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.17
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-064-f001",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 99.17
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-065-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 98.93
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-065-f001",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 98.93
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-066-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 98.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-067-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 97.58
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-068-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 95.2
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-068-f001",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 95.2
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-069-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 94.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-070-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 94.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-071-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 94.29
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-072-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 93.57
+      }
+    },
+    {
+      "setupId": "geometry-cycle-8-ix-item-073-f000",
+      "direction": "I>S",
+      "values": {
+        "solveRate": 89.25
+      }
+    }
+  ],
+  "buildConstraints": [],
+  "selectionRules": [],
+  "rankingHints": {
+    "primary": "source-order",
+    "secondary": "family-order",
+    "missingDirectionMetric": "leave-undefined"
+  },
+  "symmetryPolicy": {
+    "exactClassPairs": [
+      {
+        "sourceClass": "I>L",
+        "mirrorClass": "I>J"
+      },
+      {
+        "sourceClass": "I>S",
+        "mirrorClass": "I>Z"
+      }
+    ]
+  },
+  "runtimePolicy": {
+    "schemaVersion": 1,
+    "catalogKind": "cycle8-i",
+    "integrationState": "active",
+    "classSelector": {
+      "gameCycle": 1,
+      "classificationMode": "replacement-cycle",
+      "allowedExtraPieces": [
+        "I"
+      ],
+      "exactMissingPiecesByExtra": {
+        "I": [
+          "T",
+          "O",
+          "L",
+          "J",
+          "S",
+          "Z"
+        ]
+      }
+    },
+    "familyOrder": [
+      "general-4p",
+      "general-3p"
+    ],
+    "entries": [
+      {
+        "setupId": "geometry-cycle-8-ix-item-001-f000",
+        "sourceOrder": 100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-002-f000",
+        "sourceOrder": 200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-003-f000",
+        "sourceOrder": 300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-004-f000",
+        "sourceOrder": 400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-005-f000",
+        "sourceOrder": 500,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-006-f000",
+        "sourceOrder": 600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-007-f000",
+        "sourceOrder": 700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-008-f000",
+        "sourceOrder": 800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-009-f000",
+        "sourceOrder": 900,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-010-f000",
+        "sourceOrder": 1000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-011-f000",
+        "sourceOrder": 1100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-012-f000",
+        "sourceOrder": 1200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-013-f000",
+        "sourceOrder": 1300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>T",
+        "exactClasses": [
+          "I>T"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-014-f000",
+        "sourceOrder": 1400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-015-f000",
+        "sourceOrder": 1500,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-016-f000",
+        "sourceOrder": 1600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-017-f000",
+        "sourceOrder": 1700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-018-f000",
+        "sourceOrder": 1800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-019-f000",
+        "sourceOrder": 1900,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-020-f000",
+        "sourceOrder": 2000,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-021-f000",
+        "sourceOrder": 2100,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-022-f000",
+        "sourceOrder": 2200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-023-f000",
+        "sourceOrder": 2300,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-024-f000",
+        "sourceOrder": 2400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-025-f000",
+        "sourceOrder": 2500,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-026-f000",
+        "sourceOrder": 2600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-027-f000",
+        "sourceOrder": 2700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-028-f000",
+        "sourceOrder": 2800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-029-f000",
+        "sourceOrder": 2900,
+        "familyKind": "general-3p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-030-f000",
+        "sourceOrder": 3000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>O",
+        "exactClasses": [
+          "I>O"
+        ],
+        "mirrorMode": "within-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-031-f000",
+        "sourceOrder": 3100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-032-f000",
+        "sourceOrder": 3200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-033-f000",
+        "sourceOrder": 3300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-034-f000",
+        "sourceOrder": 3400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-035-f000",
+        "sourceOrder": 3500,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-036-f000",
+        "sourceOrder": 3600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-037-f000",
+        "sourceOrder": 3700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-038-f000",
+        "sourceOrder": 3800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-038-f001",
+        "sourceOrder": 3801,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-039-f000",
+        "sourceOrder": 3900,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-040-f000",
+        "sourceOrder": 4000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-041-f000",
+        "sourceOrder": 4100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-042-f000",
+        "sourceOrder": 4200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-043-f000",
+        "sourceOrder": 4300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-044-f000",
+        "sourceOrder": 4400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-045-f000",
+        "sourceOrder": 4500,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-046-f000",
+        "sourceOrder": 4600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-047-f000",
+        "sourceOrder": 4700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-048-f000",
+        "sourceOrder": 4800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-049-f000",
+        "sourceOrder": 4900,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-050-f000",
+        "sourceOrder": 5000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-051-f000",
+        "sourceOrder": 5100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-052-f000",
+        "sourceOrder": 5200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>L",
+        "exactClasses": [
+          "I>L",
+          "I>J"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": false
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-053-f000",
+        "sourceOrder": 5300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-054-f000",
+        "sourceOrder": 5400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-055-f000",
+        "sourceOrder": 5500,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-056-f000",
+        "sourceOrder": 5600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-057-f000",
+        "sourceOrder": 5700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-058-f000",
+        "sourceOrder": 5800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-059-f000",
+        "sourceOrder": 5900,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-060-f000",
+        "sourceOrder": 6000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-061-f000",
+        "sourceOrder": 6100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-062-f000",
+        "sourceOrder": 6200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-063-f000",
+        "sourceOrder": 6300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-064-f000",
+        "sourceOrder": 6400,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-064-f001",
+        "sourceOrder": 6401,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-065-f000",
+        "sourceOrder": 6500,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-065-f001",
+        "sourceOrder": 6501,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-066-f000",
+        "sourceOrder": 6600,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-067-f000",
+        "sourceOrder": 6700,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-068-f000",
+        "sourceOrder": 6800,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-068-f001",
+        "sourceOrder": 6801,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-069-f000",
+        "sourceOrder": 6900,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-070-f000",
+        "sourceOrder": 7000,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-071-f000",
+        "sourceOrder": 7100,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-072-f000",
+        "sourceOrder": 7200,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      },
+      {
+        "setupId": "geometry-cycle-8-ix-item-073-f000",
+        "sourceOrder": 7300,
+        "familyKind": "general-4p",
+        "sourceClass": "I>S",
+        "exactClasses": [
+          "I>S",
+          "I>Z"
+        ],
+        "mirrorMode": "exact-class",
+        "sourceRecommended": true
+      }
+    ],
+    "fallback": "none"
+  }
+}

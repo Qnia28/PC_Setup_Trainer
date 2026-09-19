@@ -31,8 +31,8 @@ import {
   type SolveQueueAnalysis,
 } from "../solver/solveQueue";
 import { drawReplayFrame, drawReplaySnapshotGame } from "./canvas";
-import { deserializeBoard, encodeReplayCode, MAX_REPLAY_INPUT_SIZE, parseReplayInput, QPCR3_CODE_PREFIX, REPLAY_TRANSFER_STORAGE_KEY, type ReplayData } from "./format";
-import { decodeQpcr3Container, QPCR3_MAX_BINARY_SIZE } from "./qpcr3";
+import { deserializeBoard, encodeReplayCode, QPCR3_CODE_PREFIX, REPLAY_TRANSFER_STORAGE_KEY, type ReplayData } from "./format";
+import { ReplayImportController, readReplayFile, type ReplayImportSource } from "./importController";
 import { segmentForFrame } from "./navigation";
 import { splitReplayQueueByBag } from "./queueBag";
 import {
@@ -44,7 +44,6 @@ import { jstrisReplayUrlFromViewerPath } from "./replayRoute";
 import { replayShortcutForCode } from "./shortcuts";
 import { buildReplaySetupRecommendationResult, type ReplaySetupRecommendationResult } from "./setupRecommendations";
 import { createReplayTimeline, type ReplayTimeline } from "./timeline";
-import { importJstrisReplay } from "./jstris";
 import { snapshotGameStateAt } from "./snapshot";
 import { matchesSnapshotExitBinding } from "./snapshotShortcut";
 import { ReplayGifDialog } from "./ReplayGifDialog";
@@ -153,6 +152,12 @@ export function ReplayApp() {
   const selectedRecommendationSegment = useRef<string | null>(null);
   const snapshotEntryPosition = useRef<number | null>(null);
   const initialLoadStarted = useRef(false);
+  const initialLoadRequest = useRef<{ source: string; target: ReplayShareTarget | null } | null>(null);
+  const replayImport = useRef(new ReplayImportController());
+  useEffect(() => () => {
+    replayImport.current.cancel();
+    initialLoadStarted.current = false;
+  }, []);
   const replaySolver = useRef<LiveSolverClient | null>(null);
   const replaySolveGeneration = useRef(0);
   const replaySolveShortcutPending = useRef(false);
@@ -185,6 +190,9 @@ export function ReplayApp() {
   }
 
   function clearReplay() {
+    replayImport.current.cancel();
+    setLoading(false);
+    setError("");
     recommendationPool.current?.cancelAll();
     selectedRecommendationSegment.current = null;
     setSelectedRecommendationId(null);
@@ -193,24 +201,26 @@ export function ReplayApp() {
     setShareButtonLabel("Copy Link");
   }
 
-  async function loadReplay(raw: string, target: ReplayShareTarget | null = null) {
-    setLoading(true);
-    try {
-      const trimmed = raw.trim();
-      const data = trimmed.startsWith("QPCR") || trimmed.startsWith("{")
-        ? parseReplayInput(trimmed)
-        : await importJstrisReplay(trimmed);
-      installReplay(createReplayTimeline(data), data, target);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Could not load replay.");
-    } finally {
-      setLoading(false);
-    }
+  async function loadReplay(source: ReplayImportSource, target: ReplayShareTarget | null = null) {
+    await replayImport.current.load(source, {
+      loading: setLoading,
+      install: (data) => installReplay(createReplayTimeline(data), data, target),
+      error: (reason) => setError(reason instanceof Error ? reason.message : "Could not load replay."),
+    });
   }
 
   useEffect(() => {
     if (initialLoadStarted.current) return;
     initialLoadStarted.current = true;
+    // StrictMode may clean up and restart this effect after transfer storage was consumed.
+    if (initialLoadRequest.current) {
+      void loadReplay(initialLoadRequest.current.source, initialLoadRequest.current.target);
+      return;
+    }
+    function loadInitialReplay(source: string, target: ReplayShareTarget | null) {
+      initialLoadRequest.current = { source, target };
+      void loadReplay(source, target);
+    }
     let shareLaunch;
     try {
       shareLaunch = parseReplayShareLaunch(new URL(window.location.href));
@@ -220,20 +230,20 @@ export function ReplayApp() {
     }
     if (shareLaunch.replayCode) {
       setInput(shareLaunch.replayCode);
-      void loadReplay(shareLaunch.replayCode, shareLaunch.target);
+      loadInitialReplay(shareLaunch.replayCode, shareLaunch.target);
       return;
     }
     const routeReplayUrl = jstrisReplayUrlFromViewerPath(window.location.pathname);
     if (routeReplayUrl) {
       setInput(routeReplayUrl);
-      void loadReplay(routeReplayUrl, shareLaunch.target);
+      loadInitialReplay(routeReplayUrl, shareLaunch.target);
       return;
     }
     try {
       const transferred = localStorage.getItem(REPLAY_TRANSFER_STORAGE_KEY);
       if (transferred) {
         localStorage.removeItem(REPLAY_TRANSFER_STORAGE_KEY);
-        void loadReplay(transferred, shareLaunch.target);
+        loadInitialReplay(transferred, shareLaunch.target);
       }
     } catch {
       // Manual code and file loading remain available.
@@ -485,15 +495,15 @@ export function ReplayApp() {
   }, [exitSnapshot, settings.bindings.exitSnapshot, settingsOpen, snapshotSession]);
 
   useEffect(() => {
-    if (!snapshotSession) return;
+    if (!snapshotSession || settingsOpen) return;
     const controller = new InputController(dispatchSnapshot, settings);
     return () => controller.destroy();
-  }, [dispatchSnapshot, settings, snapshotSession]);
+  }, [dispatchSnapshot, settings, settingsOpen, snapshotSession]);
 
   useEffect(() => { saveInputSettings(settings); }, [settings]);
 
   function enterSnapshot() {
-    if (!availableSnapshotState) return;
+    if (!availableSnapshotState || loading) return;
     snapshotEntryPosition.current = position;
     setSnapshotSession(new GameSession(availableSnapshotState));
     setSnapshotRevision((revision) => revision + 1);
@@ -513,20 +523,8 @@ export function ReplayApp() {
   async function chooseFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
-    try {
-      if (file.name.toLowerCase().endsWith(".bin")) {
-        if (file.size > QPCR3_MAX_BINARY_SIZE) { setError("QPCR3 binary file is too large."); return; }
-        const data = decodeQpcr3Container(new Uint8Array(await file.arrayBuffer()));
-        installReplay(createReplayTimeline(data), data);
-        return;
-      }
-      if (file.size > MAX_REPLAY_INPUT_SIZE) { setError("Replay file is too large."); return; }
-      await loadReplay(await file.text());
-    } catch {
-      setError("Could not read the selected file.");
-    } finally {
-      event.target.value = "";
-    }
+    event.target.value = "";
+    await loadReplay(() => readReplayFile(file));
   }
 
   useEffect(() => { setShareButtonLabel("Copy Link"); }, [position, replay]);
@@ -575,7 +573,7 @@ export function ReplayApp() {
 
     {!replay && <section className="replay-loader" aria-labelledby="load-replay-title">
       <h2 id="load-replay-title">Load a Replay</h2>
-      <p>Paste a QPCR code, a raw Jstris replay code, or a Jstris replay link.</p>
+      <p>Paste a QPCR code, Jstris replay code or JSON, or a Jstris replay link.</p>
       <textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder={`${QPCR3_CODE_PREFIX}… or Jstris N4Ig…`} aria-label="Replay code" />
       <div><button type="button" className="primary-button" disabled={loading} onClick={() => void loadReplay(input)}>{loading ? "Loading…" : "Load Replay"}</button><label className="file-button">Choose File<input type="file" accept=".txt,.bin,text/plain,application/json,application/octet-stream" onChange={chooseFile} disabled={loading} /></label></div>
       {error && <p className="replay-error" role="alert">{error}</p>}
@@ -606,7 +604,7 @@ export function ReplayApp() {
               <button
                 type="button"
                 className={`replay-snapshot-button ${snapshotSession ? "active" : ""}`}
-                disabled={!snapshotSession && !availableSnapshotState}
+                disabled={!snapshotSession && (loading || !availableSnapshotState)}
                 title={snapshotSession ? "Exit Snapshot and return to the saved replay position." : availableSnapshotState ? "Play from this replay state." : "This replay does not contain enough exact queue data for Snapshot."}
                 onClick={snapshotSession ? exitSnapshot : enterSnapshot}
               >{snapshotSession ? "Exit Snapshot" : "Snapshot"}</button>

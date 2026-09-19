@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Piece } from "../engine/types";
 import type { SetupQuery } from "./query";
+import { cycle7TwoPlusTwoRuntimeBundle } from "./cycle7TwoPlusTwoCatalog";
 import { cycle7TwoPlusTwoLabel, cycle7TwoPlusTwoBundleValid, cycle7TwoPlusTwoMatches, cycle7TwoPlusTwoRuntimeReady, type Cycle7TwoPlusTwoBundle } from "./cycle7TwoPlusTwoPolicy";
 
 function fixture(prior: Piece[] = ["T", "I", "S"], pair: Piece[] = ["L", "S"]): Cycle7TwoPlusTwoBundle {
@@ -20,6 +21,15 @@ describe("Cycle 7 2+2 exact context",()=>{
   it("formats the visible name without QB permutation notation",()=>{
     expect(cycle7TwoPlusTwoLabel(fixture(["T","I","L"],["L","J"]).policy.entries[0]))
       .toBe("TIL - LJ 2+2");
+  });
+  it("projects the policy label onto every promoted physical setup",()=>{
+    const bundle=cycle7TwoPlusTwoRuntimeBundle();
+    expect(bundle).not.toBeNull();
+    const labelBySetupId=new Map(bundle!.policy.entries.flatMap(entry=>
+      entry.candidateSetupIds.map(id=>[id,cycle7TwoPlusTwoLabel(entry)] as const)));
+    expect(bundle!.catalog.every(setup=>setup.displayName===labelBySetupId.get(setup.id))).toBe(true);
+    expect(bundle!.catalog.every(setup=>setup.displayName.endsWith(" 2+2")
+      && !setup.displayName.includes("[") && !setup.displayName.includes("QB"))).toBe(true);
   });
   it("observes NEXT[1,2], not the previous bag's NEXT[0]",()=>{
     const bundle=fixture();

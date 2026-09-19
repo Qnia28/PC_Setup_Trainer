@@ -33,7 +33,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, canvas:focus-vi
 .standalone-field-canvas { display: block; width: 380px; height: 152px; border: 1px solid #526174; cursor: crosshair; touch-action: none; user-select: none; }
 .standalone-field-panel > p { margin: 10px 0 0; color: #75869a; font-size: 12px; }
 .standalone-fumen-input { display: grid; gap: 6px; margin-top: 16px; }
-.standalone-fumen-input span { color: #7f90a4; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.standalone-fumen-input > label { color: #7f90a4; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .standalone-fumen-input input { min-height: 40px; padding: 8px 10px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
 
 .standalone-controls-panel { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 14px; }
@@ -94,3 +94,12 @@ button:focus-visible, input:focus-visible, select:focus-visible, canvas:focus-vi
   .standalone-field-panel, .standalone-controls-panel, .standalone-results { padding: 14px; }
   .standalone-mode-selector { gap: 10px 14px; padding-inline: 11px; }
 }
+.fumen-clipboard-row { display: flex; min-width: 0; }
+.fumen-clipboard-row input { flex: 1; min-width: 0; width: 0; border-radius: 6px 0 0 6px; }
+.fumen-clipboard-button { display: flex; align-items: center; gap: 6px; flex-shrink: 0; border-radius: 0 6px 6px 0; padding: 8px 10px; background: #203d4a; border-color: #4b8498; font-size: 12px; }
+.fumen-clipboard-button:disabled { opacity: .65; cursor: wait; }
+.fumen-clipboard-hint, .clipboard-help { color: #8ba1b7; font-size: 11px; }
+.clipboard-status { margin: 0; color: #a8d7c8; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.clipboard-status:empty { display: none; }
+.clipboard-status.image-import-error { color: #ffb3a9; }
+.clipboard-help canvas { display: block; max-width: 100%; max-height: 360px; object-fit: contain; margin-top: 8px; }

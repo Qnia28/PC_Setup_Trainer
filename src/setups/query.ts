@@ -34,7 +34,7 @@ import { cycle7Advanced4pGoodCycle8Rate, cycle7Advanced4pMatches, cycle7Advanced
 import { cycle7QueueContext, fitsCycle7BuildPool } from "./cycle7Context";
 import { cycle7TwoPlusTwoLabel, cycle7TwoPlusTwoMatches, type Cycle7TwoPlusTwoBundle } from "./cycle7TwoPlusTwoPolicy";
 import { cycle7TwoPlusTwoRuntimeBundle } from "./cycle7TwoPlusTwoCatalog";
-import { cycle7QbCatalogForClass, cycle7QbClass, cycle7QbConditionRank, cycle7QbDisplayName, cycle7QbNextBag, cycle7QbPolicyEntryForSetup, cycle7QbRecommendationRank, cycle7QbRuntimeBundle, cycle7QbSourceOrder, type Cycle7QbPolicyEntry } from "./cycle7QbCatalog";
+import { cycle7QbCatalogForClass, cycle7QbClass, cycle7QbConditionRank, cycle7QbDisplayName, cycle7QbNextBag, cycle7QbPolicyEntryForSetup, cycle7QbRecommendationRank, cycle7QbRuntimeBundle, type Cycle7QbPolicyEntry } from "./cycle7QbCatalog";
 import { conditionMatches, evaluateSelectionPolicy, type PolicyEvaluation, type SetupSelectionRule, type StructuredSetupPolicy } from "./policy";
 import { findBuildPlan, findBuildPlanCooperative, type BuildPlan, type CooperativeSearchControl, type ReachabilityCache } from "./reachability";
 import { canonicalLabeledMirrorGeometryKey } from "./logicalGrouping";
@@ -70,6 +70,14 @@ import {
   cycle8LjxScoreForSetup,
   type Cycle8LjxFamilyKind,
 } from "./cycle8LjxCatalog";
+import {
+  cycle8IoxCatalogForClass,
+  cycle8IoxExactClass,
+  cycle8IoxRuntimeBundle,
+  cycle8IoxRuntimeEntryForSetup,
+  cycle8IoxScoreForSetup,
+  cycle8IoxTwoLinePcPlanForSetup,
+} from "./cycle8IoxCatalog";
 
 export interface SetupQuery {
   cycle: Cycle;
@@ -81,6 +89,10 @@ export interface SetupQuery {
   holdAvailable?: boolean;
   /** 전수조사 등에서 전체 반환 수를 명시적으로 제한한다. UI 기본 그룹 한도보다 우선한다. */
   maxCandidates?: number;
+  /** Dictionary search: retain buildable physical alternatives; eligibility rules are unchanged. */
+  includeAllForms?: boolean;
+  /** Dictionary preview may list a valid OQB precondition before future pieces are visible. */
+  includePendingOqb?: boolean;
 }
 
 export interface SetupCandidate {
@@ -124,13 +136,16 @@ export function candidateScore(setup: SetupVariant): readonly number[] {
   return [
     setup.solveRate === undefined ? Number.MAX_SAFE_INTEGER : -setup.solveRate,
     -(setup.priority ?? 0),
+    setup.nextPcGPercent === undefined ? Number.MAX_SAFE_INTEGER : -setup.nextPcGPercent,
+    setup.nextPcTPercent === undefined ? Number.MAX_SAFE_INTEGER : -setup.nextPcTPercent,
     setup.difficulty,
-    setup.saves === undefined ? Number.MAX_SAFE_INTEGER : -setup.saves,
   ];
 }
 
 export function compareScores(a: SetupCandidate, b: SetupCandidate): number {
-  const difference = compareScoreValues(a.score, b.score);
+  // Source/family/condition score prefixes remain diagnostic; after eligibility
+  // and buildability, the canonical metric order determines recommendations.
+  const difference = compareScoreValues(candidateScore(a.setup), candidateScore(b.setup));
   return difference || a.setup.id.localeCompare(b.setup.id);
 }
 
@@ -356,14 +371,15 @@ export function limitSetupCandidatesForCycle(
   cycle: Cycle,
   maxCandidates?: number,
 ): SetupCandidate[] {
-  if (maxCandidates !== undefined) return candidates.slice(0, maxCandidates);
-  if (!splitsSetupCandidatesByPieceCount(cycle)) return candidates;
+  const ranked = [...candidates].sort(compareScores);
+  if (maxCandidates !== undefined) return ranked.slice(0, maxCandidates);
+  if (!splitsSetupCandidatesByPieceCount(cycle)) return ranked;
 
   let fourPlusCount = 0;
   let threePCount = 0;
   let otherCount = 0;
   let qbCount = 0;
-  return candidates.filter(({ setup, qbCondition }) => {
+  return ranked.filter(({ setup, qbCondition }) => {
     // QB is rendered in its own section and must not consume the ordinary 3P
     // quota before the UI projection separates the sections.
     if (qbCondition !== undefined) {
@@ -533,7 +549,7 @@ function selectedStructuredPlan(
           if (seenIds.has(setup.id)) return false;
           if (setup.recommendationGroup
             && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)
-            && seenGroups.has(setup.recommendationGroup)) return false;
+            && !query.includeAllForms && seenGroups.has(setup.recommendationGroup)) return false;
           seenIds.add(setup.id);
           if (setup.recommendationGroup
             && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)) {
@@ -564,7 +580,7 @@ function selectedStructuredPlan(
         const seenGroups = new Set<string>();
         return limitSetupCandidatesForCycle(batches.flat().sort(compareScores).filter(({ setup }) => {
           if (seenIds.has(setup.id)) return false;
-          if (setup.recommendationGroup && seenGroups.has(setup.recommendationGroup)) return false;
+          if (setup.recommendationGroup && !query.includeAllForms && seenGroups.has(setup.recommendationGroup)) return false;
           seenIds.add(setup.id);
           if (setup.recommendationGroup) seenGroups.add(setup.recommendationGroup);
           return true;
@@ -686,7 +702,7 @@ export function singleStageRecommendationPlan(
           if (seenIds.has(setup.id)) return false;
           if (setup.recommendationGroup
             && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)
-            && seenGroups.has(setup.recommendationGroup)) return false;
+            && !query.includeAllForms && seenGroups.has(setup.recommendationGroup)) return false;
           seenIds.add(setup.id);
           if (setup.recommendationGroup
             && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)) {
@@ -732,7 +748,7 @@ export function singleStageRecommendationPlan(
         const seenGroups = new Set<string>();
         return limitSetupCandidatesForCycle(candidates.filter(({ setup }) => {
           if (seenIds.has(setup.id)) return false;
-          if (setup.recommendationGroup && seenGroups.has(setup.recommendationGroup)) return false;
+          if (setup.recommendationGroup && !query.includeAllForms && seenGroups.has(setup.recommendationGroup)) return false;
           seenIds.add(setup.id);
           if (setup.recommendationGroup) seenGroups.add(setup.recommendationGroup);
           return true;
@@ -762,7 +778,8 @@ function executeRecommendationSearchSync(search: RecommendationCatalogSearch): S
 }
 
 function limitCombined(candidates: SetupCandidate[], query: SetupQuery): SetupCandidate[] {
-  return query.maxCandidates === undefined ? candidates : candidates.slice(0, query.maxCandidates);
+  const ranked = [...candidates].sort(compareScores);
+  return query.maxCandidates === undefined ? ranked : ranked.slice(0, query.maxCandidates);
 }
 
 function cycle2QbSearchPlan(
@@ -1152,6 +1169,65 @@ export function* recommendationProgram(
   if (!scope && query.cycle === 1) {
     const context = cycle1QueueContext(query);
     if (context?.classificationMode === "replacement-cycle" && context.replacement) {
+      const ioxExactClass = cycle8IoxExactClass(
+        context.replacement.extraPiece,
+        context.replacement.replacedPiece,
+      );
+      if (ioxExactClass) {
+        const bundle = cycle8IoxRuntimeBundle(ioxExactClass.startsWith("I>") ? "I" : "O");
+        if (!bundle) {
+          const result = { stage: "primary" as const, candidates: [], preferredCandidateId: null, complete: true };
+          yield { type: "stage", result };
+          return [];
+        }
+        const raw = yield {
+          type: "search" as const,
+          search: {
+            catalog: cycle8IoxCatalogForClass(ioxExactClass),
+            query: { ...query, next: context.searchNext },
+            policyCatalog: bundle.setups,
+            placeableNextCount: context.placeableNextCount,
+            setupCycle: 8 as const,
+            scoreForSetup: (setup: SetupVariant) => [
+              ...cycle8IoxScoreForSetup(setup),
+              ...candidateScore(setup),
+            ],
+          },
+        };
+        const candidates = limitSetupCandidatesForCycle(raw.map((candidate) => {
+          const entry = cycle8IoxRuntimeEntryForSetup(candidate.setup);
+          const twoLine = cycle8IoxTwoLinePcPlanForSetup(candidate.setup, ioxExactClass);
+          const family = entry?.familyKind === "general-3p"
+            ? "General 3P"
+            : entry?.familyKind === "two-line-pc"
+              ? "2L"
+              : "General 4P";
+          return {
+            ...candidate,
+            reasons: [
+              `Classified as Cycle 8 ${ioxExactClass} from the exact seven-piece replacement window.`,
+              `${family} source family; ranked by source order.`,
+              ...(entry?.sourceRecommended === false
+                ? ["The source marks this exact class as non-recommended."]
+                : []),
+              ...(twoLine
+                ? [`2L occurs with ${twoLine.plan.probabilityPercent}% source probability and proceeds to Cycle ${twoLine.direction.nextCycle} ${twoLine.direction.nextClass}.`]
+                : []),
+              ...candidate.reasons,
+            ],
+          };
+        }), 1, query.maxCandidates);
+        yield {
+          type: "stage",
+          result: {
+            stage: "primary",
+            candidates,
+            preferredCandidateId: candidates[0]?.setup.id ?? null,
+            complete: true,
+          },
+        };
+        return candidates;
+      }
       const ljxExactClass = cycle8LjxExactClass(
         context.replacement.extraPiece,
         context.replacement.replacedPiece,
@@ -1295,16 +1371,18 @@ export function* recommendationProgram(
         const plan = oqbBySetup.get(canonicalCycle8TxSetupId(candidate.setup));
         if (!plan) return [];
         const branch = cycle8TxOqbBranch(plan, exactClass, state, candidate.plan);
-        if (!branch) return [];
+        if (!branch && !query.includePendingOqb) return [];
         return [{
           ...candidate,
           score: [familyRank.get("oqb")!, plan.checkpoint.placedCount, ...candidate.score],
           reasons: [
             `Cycle 8 ${exactClass} OQB precondition · exact staged queue policy.`,
-            `Observe the selected ${branch.id} branch after ${plan.checkpoint.placedCount} placement(s).`,
+            query.includePendingOqb
+              ? `Observe the continuation after ${plan.checkpoint.placedCount} placement(s).`
+              : `Observe the selected ${branch!.id} branch after ${plan.checkpoint.placedCount} placement(s).`,
             ...candidate.reasons,
           ],
-          policy: { ruleId: plan.id, branchId: branch.id, preferred: true },
+          policy: { ruleId: plan.id, branchId: query.includePendingOqb ? "precondition" : branch!.id, preferred: true },
           qbCondition: cycle8TxConditionLabel(plan, exactClass, "OQB"),
           recommendationLabel: cycle8TxConditionLabel(plan, exactClass, "OQB"),
         }];
@@ -1506,9 +1584,7 @@ export function* recommendationProgram(
       ...limitedAdvanced,
       ...priorityQb,
     ], query);
-    const preferredCandidateId = primary.find(({ setup }) => setup.priority === 100)?.setup.id
-      ?? primary[0]?.setup.id
-      ?? null;
+    const preferredCandidateId = primary[0]?.setup.id ?? null;
     yield {
       type: "stage",
       result: { stage: "primary", candidates: primary, preferredCandidateId, complete: false },
@@ -1528,7 +1604,7 @@ export function* recommendationProgram(
     const candidates = limitCombined([...limitedGeneral, ...limitedAdvanced, ...completedQb], query);
     yield {
       type: "stage",
-      result: { stage: "secondary", candidates, preferredCandidateId, complete: true },
+      result: { stage: "secondary", candidates, preferredCandidateId: candidates[0]?.setup.id ?? null, complete: true },
     };
     return candidates;
   }
@@ -1577,9 +1653,7 @@ export function* recommendationProgram(
       : [];
     const priorityQb = qbPlan?.finalize(priorityRaw) ?? [];
     const primary = limitCombined([...general, ...advanced, ...priorityQb], query);
-    const preferredCandidateId = primary.find(({ setup }) => setup.priority === 100)?.setup.id
-      ?? primary[0]?.setup.id
-      ?? null;
+    const preferredCandidateId = primary[0]?.setup.id ?? null;
     yield {
       type: "stage",
       result: { stage: "primary", candidates: primary, preferredCandidateId, complete: false },
@@ -1594,7 +1668,7 @@ export function* recommendationProgram(
     const candidates = limitCombined([...general, ...advanced, ...qb], query);
     yield {
       type: "stage",
-      result: { stage: "secondary", candidates, preferredCandidateId, complete: true },
+      result: { stage: "secondary", candidates, preferredCandidateId: candidates[0]?.setup.id ?? null, complete: true },
     };
     return candidates;
   }
@@ -1658,19 +1732,7 @@ export function* recommendationProgram(
           }));
         }
         if (buildableAtRank.length > 0) {
-          qb = buildableAtRank.sort((left, right) => {
-            const leftBundle = rankedByBundle.find(({ bundle }) =>
-              bundle.bundleId === left.recommendationSource?.bundleId)?.bundle;
-            const rightBundle = rankedByBundle.find(({ bundle }) =>
-              bundle.bundleId === right.recommendationSource?.bundleId)?.bundle;
-            const leftOrder = leftBundle
-              ? selectedCycle7QbEntryForSetup(leftBundle, left.setup)?.sourceOrder ?? Number.MAX_SAFE_INTEGER
-              : Number.MAX_SAFE_INTEGER;
-            const rightOrder = rightBundle
-              ? selectedCycle7QbEntryForSetup(rightBundle, right.setup)?.sourceOrder ?? Number.MAX_SAFE_INTEGER
-              : Number.MAX_SAFE_INTEGER;
-            return leftOrder - rightOrder || compareScores(left, right);
-          });
+          qb = buildableAtRank.sort(compareScores);
           break;
         }
       }
@@ -1757,7 +1819,7 @@ export function* recommendationProgram(
     yield {
       type: "stage",
       result: { stage: "secondary", candidates,
-        preferredCandidateId: preferredCandidateId ?? candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
+        preferredCandidateId: candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
         complete: true },
     };
     return candidates;
@@ -1805,9 +1867,7 @@ export function* recommendationProgram(
             ],
             qbCondition: entry?.conditionLabel,
           };
-        }).sort((left, right) =>
-          cycle7QbSourceOrder(left.setup) - cycle7QbSourceOrder(right.setup)
-          || compareScores(left, right));
+        }).sort(compareScores);
         break;
       }
     }
@@ -1884,7 +1944,7 @@ export function* recommendationProgram(
     yield {
       type: "stage",
       result: { stage: "secondary", candidates,
-        preferredCandidateId: preferredCandidateId ?? candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
+        preferredCandidateId: candidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null,
         complete: true },
     };
     return candidates;
@@ -1952,7 +2012,7 @@ export function queryCycle5ClassCatalog(
     if (seenIds.has(setup.id)) return false;
     if (setup.recommendationGroup
       && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)
-      && seenGroups.has(setup.recommendationGroup)) return false;
+      && !query.includeAllForms && seenGroups.has(setup.recommendationGroup)) return false;
     seenIds.add(setup.id);
     if (setup.recommendationGroup
       && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)) {
@@ -2001,7 +2061,7 @@ function queryCatalogInternal(
       };
     })
     .sort((left, right) =>
-      compareScoreValues(left.score, right.score)
+      compareScoreValues(candidateScore(left.effectiveSetup), candidateScore(right.effectiveSetup))
       || left.setup.id.localeCompare(right.setup.id));
 
   const ranked: SetupCandidate[] = [];
@@ -2014,7 +2074,7 @@ function queryCatalogInternal(
       // UI에서 어차피 제거되므로 비싼 도달성 BFS를 반복하지 않는다.
       if (setup.recommendationGroup
         && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)
-        && seenRecommendationGroups.has(setup.recommendationGroup)) continue;
+        && !query.includeAllForms && seenRecommendationGroups.has(setup.recommendationGroup)) continue;
       const plan = findBuildPlan(
         setup,
         query.board,
@@ -2027,7 +2087,7 @@ function queryCatalogInternal(
       );
       if (!plan) continue;
       const mirrorRecommendationKey = equalRateMirrorRecommendationKey(effectiveSetup, policyEvaluation);
-      if (mirrorRecommendationKey && seenEqualRateMirrorRecommendations.has(mirrorRecommendationKey)) continue;
+      if (!query.includeAllForms && mirrorRecommendationKey && seenEqualRateMirrorRecommendations.has(mirrorRecommendationKey)) continue;
       if (setup.recommendationGroup
         && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)) {
         seenRecommendationGroups.add(setup.recommendationGroup);
@@ -2039,6 +2099,12 @@ function queryCatalogInternal(
       reasons.push(plan.holds === 0 ? "Buildable without HOLD." : `Buildable with ${plan.holds} HOLD${plan.holds === 1 ? "" : "s"}.`);
       if (effectiveSetup.solveRate !== undefined) {
         reasons.push(`${policyEvaluation?.solveRate !== undefined ? "Conditional" : "Documented"} PC rate: ${effectiveSetup.solveRate}%.`);
+      }
+      if (effectiveSetup.nextPcGPercent !== undefined) {
+        reasons.push(`Computed next-PC G rate: ${effectiveSetup.nextPcGPercent}%.`);
+      }
+      if (effectiveSetup.nextPcTPercent !== undefined) {
+        reasons.push(`Computed next-PC T rate: ${effectiveSetup.nextPcTPercent}%.`);
       }
       if (effectiveSetup.saves !== undefined) {
         reasons.push(effectiveSetup.saveMetricKind === "project-priority"
@@ -2095,7 +2161,7 @@ export async function queryCatalogCooperative(
       };
     })
     .sort((left, right) =>
-      compareScoreValues(left.score, right.score)
+      compareScoreValues(candidateScore(left.effectiveSetup), candidateScore(right.effectiveSetup))
       || left.setup.id.localeCompare(right.setup.id));
 
   const ranked: SetupCandidate[] = [];
@@ -2106,7 +2172,7 @@ export async function queryCatalogCooperative(
   for (const { setup, effectiveSetup, policyEvaluation, score } of rankedSetups) {
     if (setup.recommendationGroup
       && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)
-      && seenRecommendationGroups.has(setup.recommendationGroup)) continue;
+      && !query.includeAllForms && seenRecommendationGroups.has(setup.recommendationGroup)) continue;
     const plan = await findBuildPlanCooperative(
       setup,
       query.board,
@@ -2120,7 +2186,7 @@ export async function queryCatalogCooperative(
     );
     if (!plan) continue;
     const mirrorRecommendationKey = equalRateMirrorRecommendationKey(effectiveSetup, policyEvaluation);
-    if (mirrorRecommendationKey && seenEqualRateMirrorRecommendations.has(mirrorRecommendationKey)) continue;
+    if (!query.includeAllForms && mirrorRecommendationKey && seenEqualRateMirrorRecommendations.has(mirrorRecommendationKey)) continue;
     if (setup.recommendationGroup
       && !isHighestBuildableStageRecommendationGroup(setup.recommendationGroup)) {
       seenRecommendationGroups.add(setup.recommendationGroup);
@@ -2132,6 +2198,12 @@ export async function queryCatalogCooperative(
     reasons.push(plan.holds === 0 ? "Buildable without HOLD." : `Buildable with ${plan.holds} HOLD${plan.holds === 1 ? "" : "s"}.`);
     if (effectiveSetup.solveRate !== undefined) {
       reasons.push(`${policyEvaluation?.solveRate !== undefined ? "Conditional" : "Documented"} PC rate: ${effectiveSetup.solveRate}%.`);
+    }
+    if (effectiveSetup.nextPcGPercent !== undefined) {
+      reasons.push(`Computed next-PC G rate: ${effectiveSetup.nextPcGPercent}%.`);
+    }
+    if (effectiveSetup.nextPcTPercent !== undefined) {
+      reasons.push(`Computed next-PC T rate: ${effectiveSetup.nextPcTPercent}%.`);
     }
     if (effectiveSetup.saves !== undefined) {
       reasons.push(effectiveSetup.saveMetricKind === "project-priority"

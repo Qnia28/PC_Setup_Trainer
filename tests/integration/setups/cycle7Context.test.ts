@@ -5,7 +5,7 @@ import { setupCatalog, setupPolicyForCycle, sourceSetupCatalog } from "../../../
 import { cycle7QueueContext, fitsCycle7BuildPool } from "../../../src/setups/cycle7Context";
 import { cycle7Advanced4pMatches, cycle7Advanced4pRuntimeBundle, cycle7Advanced4pRuntimeReady } from "../../../src/setups/cycle7Advanced4pCatalog";
 import { mirrorPiece } from "../../../src/setups/mirror";
-import { querySetups } from "../../../src/setups/query";
+import { compareScores, querySetups } from "../../../src/setups/query";
 import { findBuildPlan } from "../../../src/setups/reachability";
 import { cycle7QbCatalogForClass, cycle7QbClass, cycle7QbConditionRank, cycle7QbDisplayName, cycle7QbPolicyEntryForSetup, cycle7QbRecommendationRank, cycle7QbRuntimeBundle, cycle7QbRuntimeReady, cycle7QbSourceOrder } from "../../../src/setups/cycle7QbCatalog";
 import { validateSetup } from "../../../src/setups/schema";
@@ -61,9 +61,10 @@ describe("7회차 3+7 큐 경계", () => {
     });
     const advanced = candidates.filter(({ setup, qbCondition }) =>
       qbCondition === undefined && setup.placements.length === 4);
-    expect(advanced[0]?.setup.id).toBe("cycle7-4p-006-f000");
-    expect(advanced[0]?.goodCycle8EntryRate).toBe(63.77);
-    expect(advanced[0]?.setup.solveRate).toBe(100);
+    expect(advanced[0]?.setup.id).toBe("cycle7-4p-002-f000");
+    const advanced006 = advanced.find(({ setup }) => setup.id === "cycle7-4p-006-f000");
+    expect(advanced006?.goodCycle8EntryRate).toBe(63.77);
+    expect(advanced006?.setup.solveRate).toBe(100);
     expect(advanced.some(({ setup }) => setup.id === "cycle7-4p-007-f000")).toBe(false);
     const normalIndex = candidates.findIndex(({ setup, qbCondition }) =>
       qbCondition === undefined && setup.placements.length <= 3);
@@ -270,10 +271,10 @@ describe("7회차 3+7 큐 경계", () => {
         next: [order[2], ...prefix] as Piece[],
         holdAvailable: true,
       });
-      const top = candidates[0];
-      expect(top?.setup.id, `${order}/${prefix}`).toBe("cycle7-qb-lsz-ts-early-b");
-      expect(top?.setup.placements, `${order}/${prefix}`).toHaveLength(3);
-      expect((top as typeof top & { solutionMedia?: unknown })?.solutionMedia, `${order}/${prefix}`).toBeUndefined();
+      const formB = candidates.find(({ setup }) => setup.id === "cycle7-qb-lsz-ts-early-b");
+      expect(formB, `${order}/${prefix}`).toBeDefined();
+      expect(formB?.setup.placements, `${order}/${prefix}`).toHaveLength(3);
+      expect((formB as typeof formB & { solutionMedia?: unknown })?.solutionMedia, `${order}/${prefix}`).toBeUndefined();
     }
     const formA = querySetups({
       cycle: 7,
@@ -282,7 +283,7 @@ describe("7회차 3+7 큐 경계", () => {
       active: "S",
       next: ["Z", "S", "T", "L", "O"],
       holdAvailable: true,
-    })[0];
+    }).find(({ setup }) => setup.id === "cycle7-qb-lsz-ts-early-a");
     expect(formA?.setup.id).toBe("cycle7-qb-lsz-ts-early-a");
     expect(formA?.setup.placements).toHaveLength(3);
   });
@@ -317,7 +318,7 @@ describe("7회차 3+7 큐 경계", () => {
       active: "S",
       next: ["Z", ...prefix] as Piece[],
       holdAvailable: true,
-    })[0]?.setup.displayName;
+    }).find(({ qbCondition }) => qbCondition !== undefined)?.setup.displayName;
     expect(queryIsz("LIOT")).toBe("ISZ L QB");
     expect(queryIsz("JIOT")).toBe("ISZ J QB");
     expect(queryIsz("OIJL")).toBe("ISZ O QB");
@@ -422,7 +423,9 @@ describe("7회차 3+7 큐 경계", () => {
     const qbIndex = candidates.findIndex(({ qbCondition }) => qbCondition !== undefined);
     const normalIndex = candidates.findIndex(({ qbCondition }) => qbCondition === undefined);
     expect(qbIndex).toBeGreaterThanOrEqual(0);
-    expect(normalIndex).toBeGreaterThan(qbIndex);
+    expect(normalIndex).toBeGreaterThanOrEqual(0);
+    expect(candidates.every((candidate, index) => index === 0 ||
+      compareScores(candidates[index - 1]!, candidate) <= 0)).toBe(true);
   });
 
   it("가장 빠른 QB가 BFS에 실패하면 두 번째로 빠른 조건의 QB로 fallback한다", () => {

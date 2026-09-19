@@ -31,11 +31,11 @@ describe("Replay share links", () => {
 
   it("resolves an exact stop and rejects an untrustworthy 0P", () => {
     const frames = [sharedFrame, { ...sharedFrame, kind: "placement", pieceInPc: 1 } as ReplayFrame];
-    const replay = {
+    const replay: ReplayTimeline = {
       createdAt: "2026-08-24T00:00:00.000Z", seed: "share", length: 2,
       segments: [{ pcIndex: 4, cycle: 5, startFrame: 0, endFrame: 1, queue: [], hasTrustworthyStart: true }],
       frameAt: (position: number) => frames[position]!, nextQueueAt: () => null,
-    } satisfies ReplayTimeline;
+    };
     expect(resolveReplaySharePosition(replay, { pcNumber: 5, pieceInPc: 1 })).toBe(1);
     replay.segments[0]!.hasTrustworthyStart = false;
     expect(() => resolveReplaySharePosition(replay, { pcNumber: 5, pieceInPc: 0 })).toThrow("unavailable");
@@ -46,4 +46,3 @@ describe("Replay share links", () => {
     expect(() => parseReplayShareLaunch(new URL("https://example.test/replay?pc=0&p=-1"))).toThrow("invalid");
   });
 });
-

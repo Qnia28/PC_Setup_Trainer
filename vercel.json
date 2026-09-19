@@ -30,6 +30,7 @@
     }
   },
   "redirects": [
+    { "source": "/dictionary.html", "destination": "/dictionary", "permanent": true },
     {
       "source": "/",
       "destination": "/game",
@@ -72,6 +73,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/dictionary", "destination": "/dictionary.html" },
     {
       "source": "/game",
       "destination": "/index.html"

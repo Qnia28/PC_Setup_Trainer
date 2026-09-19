@@ -50,9 +50,9 @@ import {
 import { createSetupTestPracticeState, setupQueryFromPracticeState } from "./practice";
 
 type RecommendationState =
-  | { status: "idle" | "loading"; result?: ReplaySetupRecommendationResult }
+  | { status: "idle" | "loading"; result?: ReplaySetupRecommendationResult; inputKey?: string }
   | { status: "error"; message: string }
-  | { status: "ready"; result: ReplaySetupRecommendationResult };
+  | { status: "ready"; result: ReplaySetupRecommendationResult; inputKey: string };
 
 interface LoadedCatalogBundle {
   descriptor: SetupTestCatalogDescriptor;
@@ -140,9 +140,11 @@ export function SetupTestApp() {
     return cycleCatalogs.filter(({ id }) => ids.has(id));
   }, [catalogIds, cycleCatalogs]);
   const catalogSelectionKey = selectedCatalogs.map(({ id }) => id).join("\u0000");
+  const inputKey = JSON.stringify([cycle, groups, holdOccupied, catalogSelectionKey]);
   const practiceState = practiceSession?.state ?? null;
   const segments = setupTestBagSegments(cycle);
-  const result = state.status === "ready" || state.status === "loading" ? state.result : undefined;
+  const result = (state.status === "ready" || state.status === "loading") && state.inputKey === inputKey
+    ? state.result : undefined;
   const selected: SetupCandidate | null = useMemo(() =>
     result?.candidates.find(({ setup }) => setup.id === selectedId) ?? null,
   [result, selectedId]);
@@ -308,16 +310,21 @@ export function SetupTestApp() {
 
   useEffect(() => { saveInputSettings(settings); }, [settings]);
 
-  function resetCycleInput(nextCycle: Cycle) {
+  function invalidateRecommendation() {
     generation.current += 1;
     activeTask.current?.cancel();
+    setSelectedId(null);
+    setState({ status: "idle" });
+    setPracticeError("");
+  }
+
+  function resetCycleInput(nextCycle: Cycle) {
+    invalidateRecommendation();
     setCycle(nextCycle);
     const nextGroups = DEFAULT_SETUP_TEST_QUEUES[nextCycle];
     const nextHoldOccupied = nextCycle !== 1;
     setGroups(nextGroups);
     setHoldOccupied(nextHoldOccupied);
-    setSelectedId(null);
-    setState({ status: "idle" });
   }
 
   function changeCycle(value: string) {
@@ -327,14 +334,12 @@ export function SetupTestApp() {
   }
 
   function changeCatalog(catalogId: string, checked: boolean) {
-    generation.current += 1;
-    activeTask.current?.cancel();
+    invalidateRecommendation();
     setCatalogIds((current) => toggleCatalogSelection(current, catalogId, checked));
-    setSelectedId(null);
-    setState({ status: "idle" });
   }
 
   function updateGroup(index: number, value: string) {
+    invalidateRecommendation();
     setGroups((current) => current.map((group, groupIndex) =>
       groupIndex === index ? value.toUpperCase() : group));
   }
@@ -388,6 +393,7 @@ export function SetupTestApp() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
+    invalidateRecommendation();
     let parsed: ReturnType<typeof parseSetupTestQueue>;
     let scope: SelectedRecommendationScope;
     try {
@@ -424,8 +430,8 @@ export function SetupTestApp() {
         ? current
         : stage.preferredCandidateId ?? displayedCandidates.find(candidate => candidate.autoSelect !== false)?.setup.id ?? null);
       setState(stage.complete
-        ? { status: "ready", result: nextResult }
-        : { status: "loading", result: nextResult });
+        ? { status: "ready", result: nextResult, inputKey }
+        : { status: "loading", result: nextResult, inputKey });
     }, scope);
     activeTask.current = task;
     try {
@@ -513,7 +519,7 @@ export function SetupTestApp() {
           type="checkbox"
           checked={holdOccupied}
           disabled={practiceSession !== null}
-          onChange={(event) => setHoldOccupied(event.target.checked)}
+          onChange={(event) => { invalidateRecommendation(); setHoldOccupied(event.target.checked); }}
         />
         First piece is HOLD
       </label>

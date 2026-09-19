@@ -61,6 +61,8 @@ export interface StructuredSetupPolicy {
       mirroredSolveRate?: number;
       saves?: number;
       saveMetricKind?: "percentage" | "project-priority";
+      nextPcGPercent?: number;
+      nextPcTPercent?: number;
     };
   }>;
   buildConstraints?: Array<{
@@ -134,6 +136,8 @@ export function applyStructuredPolicyMetrics(
       solveRate: setupMetrics?.solveRate ?? setup.solveRate,
       mirroredSolveRate: setupMetrics?.mirroredSolveRate ?? setup.mirroredSolveRate,
       saves: setupMetrics?.saves ?? setup.saves ?? fallbackSavePriority,
+      nextPcGPercent: setupMetrics?.nextPcGPercent ?? setup.nextPcGPercent,
+      nextPcTPercent: setupMetrics?.nextPcTPercent ?? setup.nextPcTPercent,
       saveMetricKind: setupMetrics?.saveMetricKind
         ?? setup.saveMetricKind
         ?? (fallbackSavePriority !== undefined ? "project-priority" : undefined),

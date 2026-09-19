@@ -1,11 +1,12 @@
 import "./siteHeader.css";
 import { SFINDER_MENU_COMMANDS, sfinderCommandPath, type SfinderCommandId } from "../sfinderPages/commands";
 
-type SitePage = "game" | "replay" | "licence" | "sfinder";
+type SitePage = "game" | "replay" | "licence" | "sfinder" | "dictionary";
 
 const NAV_ITEMS: ReadonlyArray<{ page: SitePage; href: string; label: string }> = [
   { page: "game", href: "/game", label: "Game" },
   { page: "replay", href: "/replay", label: "Replay" },
+  { page: "dictionary", href: "/dictionary", label: "Setups" },
 ];
 
 interface SiteHeaderProps {

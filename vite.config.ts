@@ -9,6 +9,7 @@ function sfinderRoutePlugin() {
     server.middlewares.use((request, _response, next) => {
       const pathname = request.url?.split("?", 1)[0];
       if (pathname === "/sfinder" || pathname?.startsWith("/sfinder/")) request.url = "/sfinder.html";
+      if (pathname === "/dictionary") request.url = "/dictionary.html";
       next();
     });
   };
@@ -32,7 +33,7 @@ export default defineConfig({
   plugins: [sfinderHighsEsmPlugin(), sfinderNoticesPlugin(), sfinderRoutePlugin(), setupTestVitePlugin(), react()],
   // Limit dependency discovery to the declared HTML entry points.
   optimizeDeps: {
-    entries: ["index.html", "replay.html", "licence.html", "solver.html", "sfinder.html", "setup_test.html"],
+    entries: ["index.html", "replay.html", "licence.html", "solver.html", "sfinder.html", "setup_test.html", "dictionary.html"],
   },
   build: {
     rollupOptions: {
@@ -43,6 +44,7 @@ export default defineConfig({
         solver: "solver.html",
         sfinder: "sfinder.html",
         setupTest: "setup_test.html",
+        dictionary: "dictionary.html",
       },
     },
   },
