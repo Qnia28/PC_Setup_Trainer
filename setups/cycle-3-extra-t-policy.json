@@ -9,8 +9,8 @@
       "setupId": "cycle3-extra-t-000-f000",
       "values": {
         "solveRate": 97.14,
-        "nextPcGPercent": 96.95238095238095,
-        "nextPcTPercent": 96.38095238095238
+        "nextPcGPercent": 92.38095238095238,
+        "nextPcTPercent": 89.52380952380952
       },
       "direction": "source"
     },
@@ -18,8 +18,8 @@
       "setupId": "cycle3-extra-t-004-f000",
       "values": {
         "solveRate": 80,
-        "nextPcGPercent": 88.994708994709,
-        "nextPcTPercent": 70.15873015873017
+        "nextPcGPercent": 77.14285714285714,
+        "nextPcTPercent": 59.04761904761905
       },
       "direction": "source"
     },
@@ -27,8 +27,8 @@
       "setupId": "cycle3-extra-t-005-f000",
       "values": {
         "solveRate": 98.57,
-        "nextPcGPercent": 97.77777777777777,
-        "nextPcTPercent": 88.25396825396825
+        "nextPcGPercent": 96.66666666666667,
+        "nextPcTPercent": 84.76190476190476
       },
       "direction": "source"
     },
@@ -54,8 +54,8 @@
       "setupId": "cycle3-extra-t-051-f000",
       "values": {
         "solveRate": 99.05,
-        "nextPcGPercent": 98.47619047619048,
-        "nextPcTPercent": 95.61904761904762
+        "nextPcGPercent": 98.0952380952381,
+        "nextPcTPercent": 94.76190476190476
       },
       "direction": "source"
     },
@@ -81,8 +81,8 @@
       "setupId": "cycle3-extra-t-054-f000",
       "values": {
         "solveRate": 99.5,
-        "nextPcGPercent": 97.33333333333333,
-        "nextPcTPercent": 94.0952380952381
+        "nextPcGPercent": 97.14285714285714,
+        "nextPcTPercent": 93.80952380952381
       },
       "direction": "source"
     },
@@ -91,7 +91,7 @@
       "values": {
         "solveRate": 99.52,
         "nextPcGPercent": 99.04761904761905,
-        "nextPcTPercent": 98.0952380952381
+        "nextPcTPercent": 96.98412698412699
       },
       "direction": "source"
     },
@@ -108,8 +108,8 @@
       "setupId": "cycle3-extra-t-057-f000",
       "values": {
         "solveRate": 90.16,
-        "nextPcGPercent": 92.85714285714286,
-        "nextPcTPercent": 86.19047619047619
+        "nextPcGPercent": 88.84920634920636,
+        "nextPcTPercent": 84.72222222222223
       },
       "direction": "source"
     },
@@ -118,7 +118,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 99.59183673469387
+        "nextPcTPercent": 99.52380952380952
       },
       "direction": "source"
     },
@@ -136,7 +136,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 99.04761904761905
+        "nextPcTPercent": 89.04761904761905
       },
       "direction": "source"
     },
@@ -145,7 +145,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 90.47619047619048
+        "nextPcTPercent": 88.57142857142857
       },
       "direction": "source"
     },
@@ -153,8 +153,8 @@
       "setupId": "cycle3-extra-t-010-f000",
       "values": {
         "solveRate": 100,
-        "nextPcGPercent": 99.54648526077098,
-        "nextPcTPercent": 97.3015873015873
+        "nextPcGPercent": 99.44444444444444,
+        "nextPcTPercent": 96.74603174603175
       },
       "direction": "source"
     },
@@ -163,7 +163,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 99.52380952380952,
-        "nextPcTPercent": 90.81632653061224
+        "nextPcTPercent": 90
       },
       "direction": "source"
     },
@@ -190,7 +190,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 99.78494623655914
+        "nextPcTPercent": 99.76190476190476
       },
       "direction": "source"
     },
@@ -199,7 +199,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 99.11111111111111
+        "nextPcTPercent": 99.04761904761905
       },
       "direction": "source"
     },
@@ -208,7 +208,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 99.54144620811287
+        "nextPcTPercent": 97.93650793650794
       },
       "direction": "source"
     },
@@ -216,8 +216,8 @@
       "setupId": "cycle3-extra-t-017-f000",
       "values": {
         "solveRate": 100,
-        "nextPcGPercent": 97.41269841269842,
-        "nextPcTPercent": 95.19047619047619
+        "nextPcGPercent": 96.86507936507937,
+        "nextPcTPercent": 94.16666666666667
       },
       "direction": "source"
     },
@@ -253,7 +253,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 100
+        "nextPcTPercent": 98.80952380952381
       },
       "direction": "source"
     },
@@ -262,7 +262,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 100,
-        "nextPcTPercent": 98.47619047619048
+        "nextPcTPercent": 98.0952380952381
       },
       "direction": "source"
     },
@@ -315,8 +315,8 @@
       "setupId": "cycle3-extra-t-027-f000",
       "values": {
         "solveRate": 100,
-        "nextPcGPercent": 99.23809523809524,
-        "nextPcTPercent": 98.47619047619048
+        "nextPcGPercent": 99.04761904761905,
+        "nextPcTPercent": 98.0952380952381
       },
       "direction": "source"
     },
@@ -324,8 +324,8 @@
       "setupId": "cycle3-extra-t-028-f000",
       "values": {
         "solveRate": 100,
-        "nextPcGPercent": 99.10852713178295,
-        "nextPcTPercent": 97.32558139534883
+        "nextPcGPercent": 99.04761904761905,
+        "nextPcTPercent": 97.14285714285714
       },
       "direction": "source"
     },
@@ -333,8 +333,8 @@
       "setupId": "cycle3-extra-t-028-f001",
       "values": {
         "solveRate": 100,
-        "nextPcGPercent": 99.09415231890802,
-        "nextPcTPercent": 97.28245695672406
+        "nextPcGPercent": 99.04761904761905,
+        "nextPcTPercent": 97.14285714285714
       },
       "direction": "source"
     },
@@ -343,7 +343,7 @@
       "values": {
         "solveRate": 100,
         "nextPcGPercent": 97.14285714285714,
-        "nextPcTPercent": 95.10204081632654
+        "nextPcTPercent": 94.88095238095238
       },
       "direction": "source"
     },

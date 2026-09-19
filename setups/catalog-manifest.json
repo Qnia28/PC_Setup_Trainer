@@ -78,7 +78,7 @@
           "logicalSetupCount": 35,
           "runtimeEnabled": true,
           "setupsSha256": "f809e3591934aeae9d6490ab4305170cdec780d54778579b746aaccfc4f804b6",
-          "policySha256": "5a210d2b2361772b1147a67255dda595bd99320e7701876ccc65ab9c512474bf"
+          "policySha256": "5eebc554ac3bfe142ab858bfa13681e8643f2861e14791906d4974ffacbae9e0"
         },
         "t": {
           "setups": "cycle-3-extra-t-setups.json",
@@ -87,7 +87,7 @@
           "logicalSetupCount": 52,
           "runtimeEnabled": true,
           "setupsSha256": "1cd6f654d1e1ec2f75d5794892c8828a958024a67bf04c8501257fa677d35ac7",
-          "policySha256": "f2314b3c0cf9b6d92c2620fde4744bd42cd698bb2bdbe4c7846fc01f3acee7ad",
+          "policySha256": "396287dabdcad46be4c26760f06eebff0b1953b7132f3ae626d16f796f516a4d",
           "stagedOqbRuntimeEnabled": true
         },
         "i": {
@@ -97,7 +97,7 @@
           "logicalSetupCount": 26,
           "runtimeEnabled": true,
           "setupsSha256": "d5c8b9145e0431395a0b92898fa7ac4c385608698da96d96066789c68d30d6be",
-          "policySha256": "097528a77820b2bb0a98a3179e7857830a8d553292fb7750911851e39f76bf42"
+          "policySha256": "044d1dafc912863dc7fc27de9af56a29eddf6719f6cd8fb014b09525fe04ceb5"
         },
         "lj": {
           "setups": "cycle-3-extra-lj-setups.json",

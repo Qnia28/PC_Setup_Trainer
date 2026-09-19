@@ -41,6 +41,14 @@ function stageHierarchyFixture() {
 }
 
 describe("setup catalog/query", () => {
+  it("O–OSZ의 T%·G%는 좌우 형태의 OR이 아닌 원본 단측 결과를 사용한다", () => {
+    const setup = sourceSetupCatalog.find(({ id }) => id === "cycle3-extra-o-004-f000")!;
+    expect(setup.nextPcTPercent).toBeCloseTo(100 * 4_840 / 5_040, 10);
+    expect(setup.nextPcGPercent).toBeCloseTo(100 * 4_962 / 5_040, 10);
+    expect(setup.nextPcTPercent).toBeLessThan(100);
+    expect(setup.nextPcGPercent).toBeLessThan(100);
+  });
+
   it("3회차 T%·G% 정책은 source와 J/Z 대칭 런타임에 투영되며 비종단 2P는 비운다", () => {
     for (const sourceId of ["cycle3-extra-lj-001-f000", "cycle3-extra-sz-001-f000"]) {
       const source = sourceSetupCatalog.find(({ id }) => id === sourceId)!;
