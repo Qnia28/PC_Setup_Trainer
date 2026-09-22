@@ -21,17 +21,20 @@ function color(image: Raster, x: number, y: number): Color {
   const h = d === 0 ? 0 : ((v === r ? (g - b) / d : v === g ? (b - r) / d + 2 : (r - g) / d + 4) * 60 + 360) % 360;
   return { v, s: v ? d / v : 0, h };
 }
-const neutral = (c: Color) => c.v > .025 && c.s < .24;
 function hueDistance(a: number, b: number) { return Math.min(Math.abs(a - b), 360 - Math.abs(a - b)); }
 
-/** Find long neutral frame lines, then verify a 10x20 grid between them. */
+/** Find long contrasting frame lines, then verify both axes of a 10x20 grid. */
 export function locateImageBoard(image: Raster): ImageBoard {
   const lines: { x: number; top: number; bottom: number }[] = [];
   const gapLimit = Math.max(3, Math.round(image.height / 250));
   for (let x = 0; x < image.width; x++) {
     let top = 0, last = -1;
     for (let y = 0; y <= image.height + gapLimit; y++) {
-      if (y < image.height && neutral(color(image, x, y))) {
+      // A continuous neutral background is not a frame. Require local contrast.
+      // Only one side need be dark: HOLD borders and the meter can touch a frame.
+      if (y < image.height && color(image, x, y).v > Math.min(
+        color(image, x - 4, y).v, color(image, x + 4, y).v,
+      ) + .015) {
         if (y - last > gapLimit + 1) top = y;
         last = y;
       } else if (y - last === gapLimit + 1 && last - top > image.height * .35) {
@@ -54,10 +57,16 @@ export function locateImageBoard(image: Raster): ImageBoard {
       let edge = 0;
       for (let offset = -2; offset <= 2; offset++) {
         const c = color(image, cx + cell * .5, cy + offset);
-        if (neutral(c)) edge = Math.max(edge, c.v);
+        edge = Math.max(edge, c.v);
       }
       const middle = color(image, cx + cell * .5, cy + cell * .5);
       if (edge > middle.v + .009) hits++;
+      total++;
+      let verticalEdge = 0;
+      for (let offset = -2; offset <= 2; offset++) {
+        verticalEdge = Math.max(verticalEdge, color(image, cx + offset, cy + cell * .5).v);
+      }
+      if (verticalEdge > middle.v + .009) hits++;
       total++;
     }
     const score = hits / total;
@@ -86,22 +95,34 @@ function readPieces(image: Raster, rect: { x: number; y: number; width: number; 
   const stride = Math.max(1, Math.floor(cell / 12));
   const width = Math.ceil(rect.width / stride), height = Math.ceil(rect.height / stride);
   if (width < 1 || height < 1) return [];
+  // Bridge narrow bevel seams, but never the cell-sized gaps between previews.
+  const joinRadius = Math.max(1, Math.round(cell * .09 / stride));
   const mask = new Uint8Array(width * height);
+  const hues = new Float32Array(width * height);
+  const chroma = new Float32Array(width * height);
+  const seeds: number[] = [];
   for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
     const c = color(image, rect.x + x * stride, rect.y + y * stride);
     mask[y * width + x] = c.s > .3 && c.v > .40 ? 1 : 0;
+    hues[y * width + x] = c.h;
+    chroma[y * width + x] = c.s * c.v;
+    if (mask[y * width + x]) seeds.push(y * width + x);
   }
+  // Start with the strongest color, not the first background pixel in a scan.
+  // A same-hue sky must not flood into a brighter, more saturated tetromino.
+  seeds.sort((a, b) => chroma[b]! - chroma[a]!);
   const result: TilePiece[] = [];
-  for (let i = 0; i < mask.length; i++) {
+  for (const i of seeds) {
     if (!mask[i]) continue;
     const pending = [i]; mask[i] = 0;
     let minX = width, minY = height, maxX = 0, maxY = 0;
     for (let n = 0; n < pending.length; n++) {
       const index = pending[n]!, x = index % width, y = Math.floor(index / width);
       minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y);
-      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -joinRadius; dy <= joinRadius; dy++) for (let dx = -joinRadius; dx <= joinRadius; dx++) {
         const nx = x + dx, ny = y + dy, j = ny * width + nx;
-        if (nx < 0 || nx >= width || ny < 0 || ny >= height || !mask[j]) continue;
+        if (nx < 0 || nx >= width || ny < 0 || ny >= height || !mask[j]
+          || hueDistance(hues[j]!, hues[i]!) > 22 || chroma[j]! < chroma[i]! * .5) continue;
         mask[j] = 0; pending.push(j);
       }
     }
@@ -111,12 +132,20 @@ function readPieces(image: Raster, rect: { x: number; y: number; width: number; 
     const cells: { x: number; y: number }[] = [], colors: Color[] = [];
     for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
       const c = color(image, rect.x + minX * stride + (x + .5) * w / cols, rect.y + minY * stride + (y + .5) * h / rows);
-      if (c.s > .3 && c.v > .4) { cells.push({ x, y }); colors.push(c); }
+      if (c.s > .3 && c.v > .4 && hueDistance(c.h, hues[i]!) < 22
+        && c.s * c.v >= chroma[i]! * .5) {
+        cells.push({ x, y }); colors.push(c);
+      }
     }
     if (cells.length !== 4) continue;
     const match = shapes.find(shape => shape.key === shapeKey(cells));
     if (!match || colors.some(c => hueDistance(c.h, colors[0]!.h) > 22)) continue;
     const median = colors.sort((a,b) => a.v - b.v)[2]!;
+    // Bevel highlights and darker tile faces may form separate components.
+    // Merge only the same shape at the same position, not repeated NEXT pieces.
+    if (result.some(p => p.piece === match.piece
+      && Math.abs(p.x - (rect.x + minX * stride)) < cell * .3
+      && Math.abs(p.y - (rect.y + minY * stride)) < cell * .3)) continue;
     result.push({ piece: match.piece, x: rect.x + minX * stride, y: rect.y + minY * stride, width: w, height: h, color: median, cells });
   }
   return result.sort((a,b) => a.y - b.y);

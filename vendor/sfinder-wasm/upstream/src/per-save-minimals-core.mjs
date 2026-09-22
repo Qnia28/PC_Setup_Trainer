@@ -1,4 +1,8 @@
+import { WasmPcSolver } from './wasm-backend.mjs';
+import { withSecondaryPool } from "./exact-secondary-pool.mjs";
 import {primaryRequest} from "./primary-backend.mjs";
+import {compactGeometry} from "./compact-geometry.mjs";
+import {createNumericCoverage} from "./numeric-cover-data.mjs";
 import { makeOrderCountQuality, recordOrderCount } from "./human-ranking.mjs";
 import { minimumCover } from "./min-cover.mjs";
 import { minimumCoverAdaptiveAsync } from "./min-cover-adaptive.mjs";
@@ -106,7 +110,16 @@ function collectPerSaveData({ board, cases, solver, useHold, displayOrder }) {
   };
 }
 
-function finishPieceResult({
+function finishPieceResult(args) {
+  if (args.minimal?.secondaryPending) {
+    const pending = args.minimal.secondaryPending.then(minimal => finishPieceResultNow({ ...args, minimal }));
+    pending.catch(() => {});
+    return pending;
+  }
+  return finishPieceResultNow(args);
+}
+
+function finishPieceResultNow({
   piece, coverage, successOverride = null, coverageCountForKey = null,
   pcSuccess, total, minimal, byKey,
 }) {
@@ -239,6 +252,77 @@ function numericRowsToCoverage(rows, cases, solutions) {
   return { coverage, qualityFor: makeOrderCountQuality(qualityIndex) };
 }
 
+async function compactPerSaveResults({ board, cases, solver, useHold, displayOrder,
+  requestedPrimary, exactHumanQuality, primary, useHiGHS, fastStateBudget,
+  tinyExactMaxCandidates, includeCoverage, deferExactSecondary }) {
+  if (typeof solver.enumeratePcPatternCompact !== 'function') return null;
+  const compact = solver.enumeratePcPatternCompact(board, cases.map(entry => entry.queue), useHold);
+  if (!compact) return null;
+  const geometry = compactGeometry(compact);
+  const queueCounts = cases.map(entry => prepareQueuePieceCounts(entry.queue));
+  // Assign the legacy stable IDs once, before distributing edges to save groups.
+  const order = geometry.keys.map((_, id) => id).sort((a, b) => geometry.keys[a].localeCompare(geometry.keys[b]));
+  const keys = order.map(id => geometry.keys[id]), ids = new Uint32Array(order.length);
+  order.forEach((id, rank) => { ids[id] = rank; });
+  const idByKey = new Map(keys.map((key, id) => [key, id]));
+  const groups = new Map([...displayOrder].map(piece => [piece, {
+    rows: new Array(cases.length), counts: new Uint32Array(compact.count), candidates: 0,
+  }]));
+  const caseHasSolution = new Uint8Array(cases.length);
+  for (let si = 0; si < compact.count; si++) {
+    const usage = geometry.usage(si), id = ids[si];
+    for (let ei = compact.offsets[si]; ei < compact.offsets[si + 1]; ei++) {
+      const ci = compact.caseIds[ei];
+      if (!cases[ci]) throw new Error(`invalid compact case ${ci}`);
+      const piece = unusedPiecePrepared(queueCounts[ci], usage), group = groups.get(piece);
+      if (!group) throw new Error(`invalid saved piece ${String(piece)}`);
+      const q = requirePositiveQuality(compact.qualities[ei], { key: keys[id], caseId: cases[ci].caseId });
+      let row = group.rows[ci];
+      if (!row) group.rows[ci] = row = [];
+      row.push([id, q]);
+      if (group.counts[id]++ === 0) group.candidates++;
+      caseHasSolution[ci] = 1;
+    }
+  }
+  const pcSuccess = caseHasSolution.reduce((sum, value) => sum + value, 0), results = {};
+  const tinyLimit = Math.max(0, Math.floor(Number(tinyExactMaxCandidates) || 0));
+  for (const piece of displayOrder) {
+    const group = groups.get(piece), activeRows = group.rows.filter(Boolean);
+    let view = null, minimal = null;
+    if (activeRows.length && requestedPrimary === 'auto' && tinyLimit > 0 && group.candidates <= tinyLimit) {
+      const exact = solver.minimumCoverIds(activeRows, keys.length);
+      if (exact && Number.isFinite(exact.count)) minimal = {
+        count: exact.count, keys: exact.selectedIds.map(id => keys[id]),
+        qualityVector: exact.qualityVector, searchedStates: exact.searchedStates ?? 0,
+        primaryRequested: requestedPrimary, primaryResolved: 'rust', backend: 'rust-legacy',
+        cardinalityBackend: 'rust-legacy-integrated', qualityBackend: 'rust-legacy-exact', qualityExact: true,
+      };
+    }
+    if (activeRows.length && !minimal) {
+      const rows = new Map();
+      group.rows.forEach((row, ci) => { rows.set(ci, row); });
+      view = createNumericCoverage(keys, rows, cases);
+      minimal = await minimumCoverAdaptiveAsync(view.coverage, {
+        qualityFor: makeOrderCountQuality(view.qualityIndex), solver, exactQuality: exactHumanQuality,
+        primary, useHiGHS, fastStateBudget, tinyExactMaxCandidates, deferExactSecondary,
+      });
+    }
+    // Tiny integrated solves need no second numeric matrix or CSR packing.
+    let coverage = null;
+    if (includeCoverage) {
+      coverage = view?.coverage.toMap() ?? new Map();
+      if (!view) group.rows.forEach((row, ci) => {
+        coverage.set(cases[ci].caseId, new Set(row.map(([id]) => keys[id])));
+      });
+    }
+    results[piece] = finishPieceResult({ piece, coverage,
+      successOverride: activeRows.length, coverageCountForKey: key => group.counts[idByKey.get(key)] ?? 0,
+      pcSuccess, total: cases.length, minimal, byKey: geometry.byKey });
+  }
+  return { board, queues: cases.map(entry => entry.queue), total: cases.length, pcSuccess,
+    pcRate: cases.length ? pcSuccess / cases.length : null, results: await resolvePieceResults(results) };
+}
+
 // Legacy synchronous exact API retained for compatibility/reference.
 export function calculatePerSaveMinimalsFromBoard({
   board,
@@ -278,7 +362,7 @@ export function calculatePerSaveMinimalsFromBoard({
 }
 
 // Production adaptive API. Exact human-quality remains the default.
-export async function calculatePerSaveMinimalsFromBoardAsync({
+async function calculatePerSaveMinimalsFromBoardInternal({
   board,
   queues,
   solver,
@@ -291,6 +375,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
   fastStateBudget = undefined,
   tinyExactMaxCandidates = 48,
   includeCoverage = true,
+  deferExactSecondary = null,
 }) {
   const cases = normalizeCases(queues);
   const requestedPrimary = primaryRequest({primary, Primary, useHiGHS});
@@ -301,6 +386,10 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
   const canUseNumericPattern = typeof solver?.minimumCoverIds === "function"
     && canUsePatternEnumeration({ cases, solver });
   if (canUseNumericPattern) {
+    const compact = await compactPerSaveResults({ board, cases, solver, useHold, displayOrder,
+      requestedPrimary, exactHumanQuality, primary: primary ?? Primary, useHiGHS, fastStateBudget,
+      tinyExactMaxCandidates, includeCoverage, deferExactSecondary });
+    if (compact) return compact;
     const numeric = collectPatternPerSaveNumeric({ board, cases, solver, useHold, displayOrder });
     if (numeric) {
       const results = {};
@@ -345,7 +434,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
             primary: primary ?? Primary,
             useHiGHS,
             fastStateBudget,
-            tinyExactMaxCandidates,
+            tinyExactMaxCandidates, deferExactSecondary,
           });
         } else if (includeCoverage && activeRows.length > 0) {
           coverage = numericRowsToCoverage(rows, cases, numeric.solutions).coverage;
@@ -368,7 +457,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
         total: cases.length,
         pcSuccess: numeric.pcSuccess,
         pcRate: cases.length === 0 ? null : numeric.pcSuccess / cases.length,
-        results,
+        results: await resolvePieceResults(results),
       };
     }
   }
@@ -385,7 +474,7 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
         primary: primary ?? Primary,
         useHiGHS,
         fastStateBudget,
-        tinyExactMaxCandidates,
+        tinyExactMaxCandidates, deferExactSecondary,
       })
       : null;
     results[piece] = finishPieceResult({
@@ -403,6 +492,17 @@ export async function calculatePerSaveMinimalsFromBoardAsync({
     total: cases.length,
     pcSuccess: collected.pcSuccess,
     pcRate: cases.length === 0 ? null : collected.pcSuccess / cases.length,
-    results,
+    results: await resolvePieceResults(results),
   };
+}
+
+async function resolvePieceResults(results) {
+  if (!Object.values(results).some(value => value instanceof Promise)) return results;
+  const entries = await Promise.all(Object.entries(results).map(async ([piece, value]) => [piece, await value]));
+  return Object.fromEntries(entries);
+}
+
+export async function calculatePerSaveMinimalsFromBoardAsync(input) {
+  return withSecondaryPool(input.secondaryWorkers ?? 'auto', deferExactSecondary =>
+    calculatePerSaveMinimalsFromBoardInternal({ ...input, deferExactSecondary: input.solver instanceof WasmPcSolver ? deferExactSecondary : null }));
 }

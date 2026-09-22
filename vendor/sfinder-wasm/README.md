@@ -3,9 +3,10 @@
 This directory isolates [`Qnia28/sfinder_wasm`](https://github.com/Qnia28/sfinder_wasm)
 from QniaPC's application code so frequent solver updates remain bounded.
 
-- `upstream/` is the curated Release 3.0 runtime/source snapshot imported from
-  `D:\AI\sfinder-wasm\release3.0-20260906` on 2026-09-06, including its shared
-  single-queue, broad-pattern, adaptive minimum-cover, and cover engines.
+- `upstream/` is the curated Release 3.0 runtime/source snapshot refreshed from
+  `D:\AI\sfinder-wasm\release3.0-20260906` on 2026-09-20, including its shared
+  single-queue, broad-pattern, adaptive minimum-cover, cover, and exact
+  per-save secondary-worker engines.
 - QniaPC integration instructions, release notes, changelogs, validation reports,
   README files, and end-user guide drafts from the source workspace are not part
   of the vendored snapshot.
@@ -25,3 +26,10 @@ browser JSPI and COOP/COEP are required for that backend, but not the fallback.
 
 Do not add QniaPC-specific behavior inside `upstream/`. This separation allows a
 future upstream refresh to be reviewed as a bounded vendor diff.
+
+Per-save minimals defaults to `secondaryWorkers: "auto"`: expensive exact-quality
+follow-up searches use two request-scoped secondary module Workers. Small cases
+remain local. This pool is separate from ORTools' CP-SAT workers and needs no
+SharedArrayBuffer/JSPI support. Explicit `0..4` budgets remain available through
+the upstream API; `0` is serial. Workers are disposed when a request completes or
+fails; the application input adapter preserves the upstream default.

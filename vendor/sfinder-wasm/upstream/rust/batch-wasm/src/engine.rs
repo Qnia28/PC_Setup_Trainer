@@ -1,14 +1,16 @@
 use pc_core::queue_trie::{QueueTrie, QueueTrieScratch};
-use pc_core::{
-    CELLS, FULL_ROW, FastSet, Physics, Piece, normalize_after_placement, tspin_kind_exact,
-};
+use pc_core::{CELLS, FULL_ROW, FastSet, Physics, Piece, normalize_after_placement};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::common::{locked_next_board, physics};
+use crate::common::{cached_tspin_kind as tspin_kind_exact, locked_next_board, physics};
 
 const MAX_OPERATIONS: usize = 15;
 const MAX_QUEUE_LEN: usize = 21;
+
+#[cfg(test)]
+#[path = "optimization_tests.rs"]
+mod optimization_tests;
 
 #[derive(Clone, Copy)]
 struct BatchOperation {
@@ -41,7 +43,7 @@ struct StructuralKey {
     mode_state: u8,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct StructuralEdge {
     id: u8,
     next: usize,
@@ -51,9 +53,11 @@ struct StructuralEdge {
 }
 
 struct StructuralNode {
+    frontier: u32,
     terminal: bool,
     mode_state: u8,
-    edges: Vec<StructuralEdge>,
+    edge_start: usize,
+    edge_len: usize,
 }
 
 #[derive(Clone, Copy)]
@@ -381,6 +385,9 @@ fn run_variant_engine(
 }
 
 struct DagBuilder<'a> {
+    compressed: bool,
+    frontier_budget: usize,
+    exhausted: bool,
     queue_filter: Option<QueuePrefixCache>,
     operations: &'a [BatchOperation],
     maps: &'a [[u64; 64]],
@@ -390,6 +397,7 @@ struct DagBuilder<'a> {
     mode: u8,
     index: pc_core::FastMap<StructuralKey, usize>,
     nodes: Vec<StructuralNode>,
+    edges: Vec<StructuralEdge>,
 }
 
 impl DagBuilder<'_> {
@@ -400,15 +408,22 @@ impl DagBuilder<'_> {
         let id = self.nodes.len();
         self.index.insert(key, id);
         self.nodes.push(StructuralNode {
+            frontier: if self.compressed {
+                key.prefix as u32
+            } else {
+                0
+            },
             terminal: key.remaining == 0,
             mode_state: key.mode_state,
-            edges: Vec::new(),
+            edge_start: 0,
+            edge_len: 0,
         });
         if key.remaining == 0 {
             return id;
         }
 
-        let mut edges = Vec::new();
+        let mut edges = [StructuralEdge::default(); MAX_OPERATIONS];
+        let mut edge_len = 0;
         let mut remaining = key.remaining;
         while remaining != 0 {
             let op_id = remaining.trailing_zeros() as usize;
@@ -416,15 +431,26 @@ impl DagBuilder<'_> {
             let op = self.operations[op_id];
             let depth = self.operations.len() - key.remaining.count_ones() as usize;
             let next_prefix = if let Some(filter) = &mut self.queue_filter {
-                let prefix = key.prefix | ((op.piece as u64) << (depth * 3));
-                if filter
-                    .viable(prefix, depth as u8 + 1)
-                    .iter()
-                    .all(|&word| word == 0)
-                {
-                    continue;
+                if self.compressed {
+                    let Some(frontier) =
+                        filter.advance(key.prefix as u32, op.piece, self.frontier_budget)
+                    else {
+                        self.exhausted = true;
+                        return id;
+                    };
+                    if frontier == u32::MAX {
+                        crate::diagnostics::add(16, 1);
+                        continue;
+                    }
+                    frontier as u64
+                } else {
+                    let prefix = key.prefix | ((op.piece as u64) << (depth * 3));
+                    if !filter.any(prefix, depth as u8 + 1) {
+                        crate::diagnostics::add(16, 1);
+                        continue;
+                    }
+                    prefix
                 }
-                prefix
             } else {
                 0
             };
@@ -469,28 +495,43 @@ impl DagBuilder<'_> {
                 cleared_rows: next_cleared,
                 mode_state: next_mode_state,
             });
-            if !self.nodes[next].terminal && self.nodes[next].edges.is_empty() {
+            if self.exhausted {
+                return id;
+            }
+            if !self.nodes[next].terminal && self.nodes[next].edge_len == 0 {
                 continue;
             }
-            edges.push(StructuralEdge {
+            edges[edge_len] = StructuralEdge {
                 id: op_id as u8,
                 next,
                 clear_lines: new_lines,
                 spin,
                 pc_after,
-            });
+            };
+            edge_len += 1;
         }
-        self.nodes[id].edges = edges;
+        self.nodes[id].edge_start = self.edges.len();
+        self.nodes[id].edge_len = edge_len;
+        self.edges.extend_from_slice(&edges[..edge_len]);
         id
     }
 }
 
 struct QueuePrefixCache {
+    frontiers: Vec<Rc<[u32]>>,
+    frontier_index: pc_core::FastMap<Rc<[u32]>, u32>,
+    frontier_steps: pc_core::FastMap<(u32, u8), u32>,
+    frontier_bytes: usize,
     cache_bytes: usize,
+    existence: pc_core::FastMap<u64, bool>,
     trie: QueueTrie,
     scratch: QueueTrieScratch,
     use_hold: bool,
     cache: pc_core::FastMap<u64, Rc<[u64]>>,
+    queues: Vec<(u64, u8)>,
+    order_engine: u8,
+    order_budget: usize,
+    order_fallback: bool,
 }
 impl QueuePrefixCache {
     fn new(queues: &[(u64, u8)], use_hold: bool) -> Self {
@@ -498,13 +539,87 @@ impl QueuePrefixCache {
         let lens: Vec<_> = queues.iter().map(|q| q.1).collect();
         let trie = QueueTrie::new(&bits, &lens).expect("validated batch queues");
         let scratch = QueueTrieScratch::new(trie.node_count());
+        let initial: Rc<[u32]> = trie.initial_frontier().into();
+        let mut frontier_index = pc_core::FastMap::default();
+        frontier_index.insert(Rc::clone(&initial), 0);
         Self {
+            frontiers: vec![initial],
+            frontier_index,
+            frontier_steps: pc_core::FastMap::default(),
+            frontier_bytes: 80,
             cache_bytes: 0,
+            existence: pc_core::FastMap::default(),
             trie,
             scratch,
             use_hold,
             cache: pc_core::FastMap::default(),
+            queues: queues.to_vec(),
+            order_engine: 0,
+            order_budget: 200_000,
+            order_fallback: false,
         }
+    }
+    fn advance(&mut self, frontier: u32, piece: Piece, budget: usize) -> Option<u32> {
+        if budget == 0 {
+            return None;
+        }
+        let key = (frontier, piece as u8);
+        if let Some(&hit) = self.frontier_steps.get(&key) {
+            return Some(hit);
+        }
+        let next: Rc<[u32]> = self
+            .trie
+            .advance_frontier(
+                &self.frontiers[frontier as usize],
+                piece,
+                self.use_hold,
+                &mut self.scratch,
+            )
+            .into();
+        let id = if next.is_empty() {
+            u32::MAX
+        } else if let Some(&id) = self.frontier_index.get(&next) {
+            id
+        } else {
+            let bytes = next.len() * 4 + 80;
+            if self.frontiers.len() >= budget || self.frontier_bytes + bytes > 16 * 1024 * 1024 {
+                return None;
+            }
+            let id = self.frontiers.len() as u32;
+            self.frontier_index.insert(Rc::clone(&next), id);
+            self.frontiers.push(next);
+            crate::diagnostics::add(10, 1);
+            self.frontier_bytes += bytes;
+            id
+        };
+        if self.frontier_steps.len() < 200_000 {
+            self.frontier_steps.insert(key, id);
+        }
+        Some(id)
+    }
+    fn any(&mut self, order: u64, len: u8) -> bool {
+        if self.order_engine == 1 {
+            return self
+                .queues
+                .iter()
+                .any(|&(queue, qlen)| queue_buildable(queue, qlen, order, len, self.use_hold));
+        }
+        let key = order | ((len as u64) << 48);
+        if let Some(&result) = self.existence.get(&key) {
+            return result;
+        }
+        let mut encoded = 0u64;
+        for i in 0..len {
+            encoded |= (((order >> (i as u32 * 3)) & 7) + 1) << (i as u32 * 3);
+        }
+        let result = self
+            .trie
+            .accepts_order(encoded, len, self.use_hold, &mut self.scratch);
+        // Retention only: exceeding the budget keeps exact uncached evaluation.
+        if self.existence.len() < 200_000 {
+            self.existence.insert(key, result);
+        }
+        result
     }
     fn viable(&mut self, order: u64, len: u8) -> Rc<[u64]> {
         let key = order | ((len as u64) << 48);
@@ -536,6 +651,16 @@ struct BatchWorkspace {
     variants: Vec<BatchVariant>,
     covered: Vec<u8>,
     congruent: Vec<CongruentSolution>,
+    prepared_queues: Vec<(u64, u8)>,
+    prepared: Option<QueuePrefixCache>,
+    bulk: Vec<u32>,
+    frontier_budget: Option<usize>,
+    frontier_fallback: bool,
+    queue_generation: u64,
+    order_engine: u8,
+    order_budget: Option<usize>,
+    tiling_engine: u8,
+    order_fallback: bool,
 }
 
 thread_local! {
@@ -708,10 +833,12 @@ struct PathState {
 }
 
 struct PathCollector<'a> {
+    compressed: bool,
     product_seen: FastSet<(usize, u8, u8)>,
     coverage_only: bool,
     operations: &'a [BatchOperation],
     nodes: &'a [StructuralNode],
+    edges: &'a [StructuralEdge],
     mode: u8,
     terminal: FastSet<TerminalKey>,
     variants: Vec<BatchVariant>,
@@ -731,7 +858,14 @@ impl PathCollector<'_> {
                 return;
             }
             if st.queue_live && !self.covered_bits.is_empty() {
-                let bits = self.queue_cache.viable(st.order, st.depth);
+                let bits: Rc<[u64]> = if self.compressed {
+                    self.queue_cache
+                        .trie
+                        .coverage_for_frontier(&self.queue_cache.frontiers[node.frontier as usize])
+                        .into()
+                } else {
+                    self.queue_cache.viable(st.order, st.depth)
+                };
                 for (dst, src) in self.covered_bits.iter_mut().zip(bits.iter()) {
                     *dst |= src;
                 }
@@ -756,7 +890,7 @@ impl PathCollector<'_> {
             return;
         }
 
-        for edge in &node.edges {
+        for edge in &self.edges[node.edge_start..node.edge_start + node.edge_len] {
             let op = self.operations[edge.id as usize];
             let shift3 = st.depth as u32 * 3;
             let shift4 = st.depth as u32 * 4;
@@ -766,6 +900,9 @@ impl PathCollector<'_> {
             if self.prefix_prune && queue_live {
                 let bits = self.queue_cache.viable(next_order, st.depth + 1);
                 queue_live = bits.iter().any(|&x| x != 0);
+                if !queue_live {
+                    crate::diagnostics::add(16, 1);
+                }
             }
             self.recurse(
                 edge.next,
@@ -848,15 +985,14 @@ fn geometric_placements(piece: Piece, height: u8, fill: u64) -> Vec<BatchOperati
     out
 }
 
-fn valid_orders_for_tiling(
+fn valid_orders_boolean(
     base: u64,
     operations: &[BatchOperation],
-    queues: &[(u64, u8)],
+    queue_cache: &mut QueuePrefixCache,
     height: u8,
     physics: Physics,
-    use_hold: bool,
 ) -> Vec<u64> {
-    if operations.len() > MAX_OPERATIONS || queues.is_empty() {
+    if operations.len() > MAX_OPERATIONS || queue_cache.trie.perm.is_empty() {
         return Vec::new();
     }
     let (board, cleared_rows) = normalize_base(base, height);
@@ -879,8 +1015,7 @@ fn valid_orders_for_tiling(
         operations: &[BatchOperation],
         maps: &[[u64; 64]],
         infos: &[ClearInfo; 64],
-        queues: &[(u64, u8)],
-        use_hold: bool,
+        queue_cache: &mut QueuePrefixCache,
         height: u8,
         physics: Physics,
         board: u64,
@@ -892,10 +1027,7 @@ fn valid_orders_for_tiling(
         valid: &mut FastSet<u64>,
     ) {
         if remaining == 0 {
-            if queues
-                .iter()
-                .any(|&(queue, len)| queue_buildable(queue, len, order, depth, use_hold))
-            {
+            if queue_cache.any(order, depth) {
                 valid.insert(order);
             }
             return;
@@ -915,6 +1047,10 @@ fn valid_orders_for_tiling(
             let id = choices.trailing_zeros() as usize;
             choices &= choices - 1;
             let op = operations[id];
+            let next_order = order | ((op.piece as u64) << (depth as u32 * 3));
+            if !queue_cache.any(next_order, depth + 1) {
+                continue;
+            }
             let cells = maps[id][cleared_rows as usize];
             if cells == 0 {
                 continue;
@@ -924,13 +1060,11 @@ fn valid_orders_for_tiling(
                 continue;
             };
             let next_cleared = advance_cleared_fast(board, cells, cleared_rows, height, infos);
-            let next_order = order | ((op.piece as u64) << (depth as u32 * 3));
             walk(
                 operations,
                 maps,
                 infos,
-                queues,
-                use_hold,
+                queue_cache,
                 height,
                 physics,
                 next_board,
@@ -948,8 +1082,7 @@ fn valid_orders_for_tiling(
         operations,
         &maps,
         &infos,
-        queues,
-        use_hold,
+        queue_cache,
         height,
         physics,
         board,
@@ -969,89 +1102,407 @@ fn valid_orders_for_tiling(
     orders
 }
 
-struct CongruentSearch<'a> {
+// Root bitsets are indexed by (piece, required count). A branch intersects
+// only the threshold for its new piece instead of scanning every root.
+fn valid_orders_for_tiling(
+    base: u64,
+    operations: &[BatchOperation],
+    queue_cache: &mut QueuePrefixCache,
+    height: u8,
+    physics: Physics,
+) -> Vec<u64> {
+    crate::diagnostics::add(12, 1);
+    let engine = if queue_cache.order_engine == 0 {
+        if operations.len() >= 8 { 4 } else { 2 }
+    } else {
+        queue_cache.order_engine
+    };
+    if engine >= 3 {
+        if let Some(orders) =
+            valid_orders_frontier(base, operations, queue_cache, height, physics, engine == 4)
+        {
+            return orders;
+        }
+        queue_cache.order_fallback = true;
+        crate::diagnostics::add(11, 1);
+    }
+    valid_orders_boolean(base, operations, queue_cache, height, physics)
+}
+
+fn valid_orders_frontier(
+    base: u64,
+    operations: &[BatchOperation],
+    queues: &mut QueuePrefixCache,
+    height: u8,
+    physics: Physics,
+    suffix: bool,
+) -> Option<Vec<u64>> {
+    use pc_core::order_language::OrderLanguage;
+    type Key = (u64, u16, u8, u32);
+    struct Collector<'a> {
+        operations: &'a [BatchOperation],
+        maps: Vec<[u64; 64]>,
+        infos: [ClearInfo; 64],
+        queues: &'a mut QueuePrefixCache,
+        height: u8,
+        physics: Physics,
+        language: OrderLanguage,
+        memo: pc_core::FastMap<Key, u32>,
+        seen: FastSet<(Key, u64)>,
+        words: FastSet<u64>,
+        suffix: bool,
+    }
+    impl Collector<'_> {
+        fn visit(
+            &mut self,
+            board: u64,
+            remaining: u16,
+            cleared: u8,
+            frontier: u32,
+            depth: u32,
+            order: u64,
+        ) -> Option<u32> {
+            if frontier == u32::MAX || self.queues.frontiers[frontier as usize].is_empty() {
+                return Some(0);
+            }
+            if remaining == 0 {
+                if !self.suffix {
+                    self.words.insert(order);
+                }
+                return Some(1);
+            }
+            let key = (board, remaining, cleared, frontier);
+            if self.suffix {
+                if let Some(&id) = self.memo.get(&key) {
+                    return Some(id);
+                }
+            } else if !self.seen.insert((key, order)) {
+                return Some(0);
+            }
+            if self.memo.len() + self.seen.len() >= self.queues.order_budget {
+                return None;
+            }
+            let mut children = [0; 7];
+            let mut choices = remaining;
+            while choices != 0 {
+                let id = choices.trailing_zeros() as usize;
+                choices &= choices - 1;
+                let op = self.operations[id];
+                let next_frontier =
+                    self.queues
+                        .advance(frontier, op.piece, self.queues.order_budget)?;
+                if next_frontier == u32::MAX {
+                    continue;
+                }
+                let cells = self.maps[id][cleared as usize];
+                if cells == 0 {
+                    continue;
+                }
+                let Some(next_board) =
+                    locked_next_board(board, op.piece, cells, self.height, self.physics)
+                else {
+                    continue;
+                };
+                let next_cleared =
+                    advance_cleared_fast(board, cells, cleared, self.height, &self.infos);
+                let child = self.visit(
+                    next_board,
+                    remaining & !(1 << id),
+                    next_cleared,
+                    next_frontier,
+                    depth + 1,
+                    order | ((op.piece as u64) << (depth * 3)),
+                )?;
+                if self.suffix {
+                    children[op.piece as usize] =
+                        self.language.union(children[op.piece as usize], child)?;
+                }
+            }
+            if !self.suffix {
+                return Some(0);
+            }
+            let node = self.language.node(children)?;
+            self.memo.insert(key, node);
+            Some(node)
+        }
+    }
+    if operations.len() > MAX_OPERATIONS || queues.order_budget == 0 {
+        return None;
+    }
+    let budget = queues.order_budget;
+    let mut collector = Collector {
+        operations,
+        maps: mapped_masks(operations, height),
+        infos: clear_info_table(height),
+        queues,
+        height,
+        physics,
+        language: OrderLanguage::new(budget),
+        memo: pc_core::FastMap::default(),
+        seen: FastSet::default(),
+        words: FastSet::default(),
+        suffix,
+    };
+    let (board, cleared) = normalize_base(base, height);
+    let root = collector.visit(
+        board,
+        if operations.is_empty() {
+            0
+        } else {
+            (1 << operations.len()) - 1
+        },
+        cleared,
+        0,
+        0,
+        0,
+    )?;
+    crate::diagnostics::add(15, collector.language.children.len() as u64);
+    if suffix {
+        Some(collector.language.words(root))
+    } else {
+        let mut words: Vec<_> = collector.words.into_iter().collect();
+        words.sort_unstable();
+        Some(words)
+    }
+}
+
+struct MultisetIndex {
+    thresholds: Vec<Vec<u64>>,
+    active: Vec<u64>,
+    undo: Vec<(usize, u64)>,
+}
+impl MultisetIndex {
+    fn new(roots: &[u32]) -> Self {
+        let words = roots.len().div_ceil(64);
+        let mut thresholds = vec![vec![0; words]; 7 * 16];
+        for (id, &root) in roots.iter().enumerate() {
+            for piece in 0..7 {
+                for count in 0..=((root >> (piece * 4)) & 15) as usize {
+                    thresholds[piece * 16 + count][id >> 6] |= 1 << (id & 63);
+                }
+            }
+        }
+        let mut active = vec![u64::MAX; words];
+        if let Some(last) = active.last_mut()
+            && !roots.len().is_multiple_of(64)
+        {
+            *last = (1 << (roots.len() & 63)) - 1;
+        }
+        Self {
+            thresholds,
+            active,
+            undo: Vec::new(),
+        }
+    }
+    fn restrict(&mut self, piece: usize, count: u8) -> bool {
+        let threshold = &self.thresholds[piece * 16 + count as usize];
+        let mut live = false;
+        for (id, word) in self.active.iter_mut().enumerate() {
+            let next = *word & threshold[id];
+            if next != *word {
+                self.undo.push((id, *word));
+                *word = next;
+            }
+            live |= next != 0;
+        }
+        live
+    }
+    fn restore(&mut self, checkpoint: usize) {
+        while self.undo.len() > checkpoint {
+            let (id, old) = self.undo.pop().unwrap();
+            self.active[id] = old;
+        }
+    }
+}
+
+fn components_divisible_by_four(mut remaining: u64) -> bool {
+    const LEFT: u64 = 0x004010040100401;
+    const RIGHT: u64 = LEFT << 9;
+    while remaining != 0 {
+        let mut component = 1 << remaining.trailing_zeros();
+        loop {
+            let next = component
+                | (remaining
+                    & ((component << 10)
+                        | (component >> 10)
+                        | ((component & !RIGHT) << 1)
+                        | ((component & !LEFT) >> 1)));
+            if next == component {
+                break;
+            }
+            component = next;
+        }
+        if !component.count_ones().is_multiple_of(4) {
+            return false;
+        }
+        remaining &= !component;
+    }
+    true
+}
+
+struct CongruentSearch {
     base: u64,
     height: u8,
     physics: Physics,
-    queues: &'a [(u64, u8)],
-    use_hold: bool,
+    queue_cache: QueuePrefixCache,
+    roots: MultisetIndex,
     max_counts: [u8; 7],
-    by_cell: [Vec<BatchOperation>; 40],
+    placements: Vec<BatchOperation>,
+    by_cell: [Vec<usize>; 60],
+    by_piece: [Vec<usize>; 7],
+    active: Vec<u64>,
+    candidate_counts: [u16; 60],
+    undo: Vec<usize>,
+    negative: FastSet<(u64, u32)>,
     seen: FastSet<[u64; 7]>,
     out: Vec<CongruentSolution>,
     limit: usize,
     limit_hit: bool,
 }
 
-impl CongruentSearch<'_> {
-    fn recurse(&mut self, rem: u64, operations: &mut Vec<BatchOperation>, counts: &mut [u8; 7]) {
-        if self.out.len() >= self.limit {
-            self.limit_hit = true;
+impl CongruentSearch {
+    fn is_active(&self, id: usize) -> bool {
+        self.active[id >> 6] & (1 << (id & 63)) != 0
+    }
+    fn deactivate(&mut self, id: usize) {
+        if !self.is_active(id) {
             return;
         }
+        self.active[id >> 6] &= !(1 << (id & 63));
+        self.undo.push(id);
+        let mut mask = self.placements[id].mask;
+        while mask != 0 {
+            let cell = mask.trailing_zeros() as usize;
+            mask &= mask - 1;
+            self.candidate_counts[cell] -= 1;
+        }
+    }
+    fn restore(&mut self, checkpoint: usize) {
+        while self.undo.len() > checkpoint {
+            let id = self.undo.pop().unwrap();
+            self.active[id >> 6] |= 1 << (id & 63);
+            let mut mask = self.placements[id].mask;
+            while mask != 0 {
+                let cell = mask.trailing_zeros() as usize;
+                mask &= mask - 1;
+                self.candidate_counts[cell] += 1;
+            }
+        }
+    }
+    // Return geometric feasibility, independent of reachability and color.
+    // Only proven negative geometry may enter the shared negative memo.
+    fn recurse(
+        &mut self,
+        rem: u64,
+        operations: &mut Vec<BatchOperation>,
+        counts: &mut [u8; 7],
+        packed_counts: u32,
+    ) -> bool {
+        crate::diagnostics::add(0, 1);
         if rem == 0 {
             let mut key = [0u64; 7];
             for op in operations.iter() {
                 key[op.piece as usize] |= op.mask;
             }
             if !self.seen.insert(key) {
-                return;
+                return true;
             }
             let orders = valid_orders_for_tiling(
                 self.base,
                 operations,
-                self.queues,
+                &mut self.queue_cache,
                 self.height,
                 self.physics,
-                self.use_hold,
             );
             if !orders.is_empty() {
+                if self.out.len() == self.limit {
+                    self.limit_hit = true;
+                    return true;
+                }
                 self.out.push(CongruentSolution {
                     operations: operations.clone(),
                     orders,
                 });
             }
-            return;
+            return true;
         }
-
-        let mut best: Option<Vec<BatchOperation>> = None;
-        for idx in 0..self.height as usize * 10 {
-            let bit = 1u64 << idx;
-            if rem & bit == 0 {
-                continue;
+        let key = (rem, packed_counts);
+        if self.negative.contains(&key) {
+            crate::diagnostics::add(3, 1);
+            return false;
+        }
+        if !components_divisible_by_four(rem) {
+            crate::diagnostics::add(2, 1);
+            return false;
+        }
+        let mut best_cell = 0;
+        let mut best_len = u16::MAX;
+        let mut cells = rem;
+        while cells != 0 {
+            let cell = cells.trailing_zeros() as usize;
+            cells &= cells - 1;
+            let count = self.candidate_counts[cell];
+            if count == 0 {
+                return false;
             }
-            let mut candidates = Vec::new();
-            for &op in &self.by_cell[idx] {
-                if counts[op.piece as usize] < self.max_counts[op.piece as usize]
-                    && op.mask & rem == op.mask
-                {
-                    candidates.push(op);
-                }
-            }
-            if candidates.is_empty() {
-                return;
-            }
-            if best.as_ref().is_none_or(|x| candidates.len() < x.len()) {
-                let one = candidates.len() == 1;
-                best = Some(candidates);
-                if one {
+            if count < best_len {
+                best_cell = cell;
+                best_len = count;
+                if count == 1 {
                     break;
                 }
             }
         }
-        let Some(candidates) = best else {
-            return;
-        };
-        for op in candidates {
-            counts[op.piece as usize] += 1;
-            operations.push(op);
-            self.recurse(rem ^ op.mask, operations, counts);
-            operations.pop();
-            counts[op.piece as usize] -= 1;
+        // Placement IDs retain the previous per-cell insertion order.
+        let candidates: Vec<_> = self.by_cell[best_cell]
+            .iter()
+            .copied()
+            .filter(|&id| self.is_active(id))
+            .collect();
+        let mut feasible = false;
+        for id in candidates {
+            let op = self.placements[id];
+            let piece = op.piece as usize;
+            counts[piece] += 1;
+            let root_checkpoint = self.roots.undo.len();
+            if self.roots.restrict(piece, counts[piece]) {
+                let checkpoint = self.undo.len();
+                let mut mask = op.mask;
+                while mask != 0 {
+                    let cell = mask.trailing_zeros() as usize;
+                    mask &= mask - 1;
+                    for i in 0..self.by_cell[cell].len() {
+                        self.deactivate(self.by_cell[cell][i]);
+                    }
+                }
+                if counts[piece] == self.max_counts[piece] {
+                    for i in 0..self.by_piece[piece].len() {
+                        self.deactivate(self.by_piece[piece][i]);
+                    }
+                }
+                operations.push(op);
+                feasible |= self.recurse(
+                    rem ^ op.mask,
+                    operations,
+                    counts,
+                    packed_counts + (1 << (piece * 4)),
+                );
+                operations.pop();
+                self.restore(checkpoint);
+            }
+            if self.roots.active.iter().all(|&word| word == 0) {
+                crate::diagnostics::add(1, 1);
+            }
+            self.roots.restore(root_checkpoint);
+            counts[piece] -= 1;
             if self.limit_hit {
-                return;
+                return true;
             }
         }
+        if !feasible && self.negative.len() < 65_536 {
+            self.negative.insert(key);
+        }
+        feasible
     }
 }
 
@@ -1064,16 +1515,39 @@ fn run_congruent(
     use_hold: bool,
     max_solutions: usize,
 ) -> bool {
-    if !(2..=4).contains(&height) || max_solutions == 0 {
+    if !(2..=6).contains(&height) || max_solutions == 0 || !fill.count_ones().is_multiple_of(4) {
         return false;
     }
+    if ws.tiling_engine == 1 || (ws.tiling_engine == 0 && fill.count_ones() <= 16) {
+        return run_congruent_scalar(ws, base, fill, height, physics, use_hold, max_solutions);
+    }
     let max_counts = max_piece_counts(&ws.queues);
-    let mut by_cell: [Vec<BatchOperation>; 40] = std::array::from_fn(|_| Vec::new());
+    let roots: Vec<_> = pc_core::PcSolver::pattern_multiset_roots(
+        &ws.queues.iter().map(|q| q.0).collect::<Vec<_>>(),
+        &ws.queues.iter().map(|q| q.1).collect::<Vec<_>>(),
+        (fill.count_ones() / 4) as u8,
+        use_hold,
+    )
+    .into_iter()
+    .collect();
+    if roots.is_empty() {
+        ws.congruent.clear();
+        return true;
+    }
+    let mut placements = Vec::new();
+    let mut by_cell: [Vec<usize>; 60] = std::array::from_fn(|_| Vec::new());
+    let mut by_piece: [Vec<usize>; 7] = std::array::from_fn(|_| Vec::new());
     for piece in Piece::ALL {
+        if max_counts[piece as usize] == 0 {
+            continue;
+        }
         for op in geometric_placements(piece, height, fill) {
+            let id = placements.len();
+            placements.push(op);
+            by_piece[piece as usize].push(id);
             for (idx, bucket) in by_cell.iter_mut().enumerate().take(height as usize * 10) {
                 if op.mask & (1u64 << idx) != 0 {
-                    bucket.push(op);
+                    bucket.push(id);
                 }
             }
         }
@@ -1082,16 +1556,25 @@ fn run_congruent(
         base,
         height,
         physics,
-        queues: &ws.queues,
-        use_hold,
+        queue_cache: QueuePrefixCache::new(&ws.queues, use_hold),
+        roots: MultisetIndex::new(&roots),
         max_counts,
+        candidate_counts: std::array::from_fn(|i| by_cell[i].len() as u16),
+        active: vec![u64::MAX; placements.len().div_ceil(64)],
+        placements,
         by_cell,
+        by_piece,
+        undo: Vec::new(),
+        negative: FastSet::default(),
         seen: FastSet::default(),
         out: Vec::new(),
         limit: max_solutions,
         limit_hit: false,
     };
-    search.recurse(fill, &mut Vec::new(), &mut [0u8; 7]);
+    search.queue_cache.order_engine = ws.order_engine;
+    search.queue_cache.order_budget = ws.order_budget.unwrap_or(200_000);
+    search.recurse(fill, &mut Vec::new(), &mut [0u8; 7], 0);
+    ws.order_fallback = search.queue_cache.order_fallback;
     if search.limit_hit {
         return false;
     }
@@ -1101,6 +1584,30 @@ fn run_congruent(
 
 fn run_engine(
     coverage_only: bool,
+    ws: &mut BatchWorkspace,
+    base: u64,
+    height: u8,
+    physics: Physics,
+    mode: u8,
+    use_hold: bool,
+) -> bool {
+    ws.frontier_fallback = false;
+    run_engine_projection(
+        coverage_only,
+        coverage_only,
+        ws,
+        base,
+        height,
+        physics,
+        mode,
+        use_hold,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+fn run_engine_projection(
+    coverage_only: bool,
+    compressed: bool,
     ws: &mut BatchWorkspace,
     base: u64,
     height: u8,
@@ -1123,8 +1630,21 @@ fn run_engine(
     let maps = mapped_masks(&ws.operations, height);
     let infos = clear_info_table(height);
     let count = ws.operations.len();
+    let cached = ws
+        .prepared
+        .take()
+        .filter(|cache| cache.use_hold == use_hold && ws.prepared_queues == ws.queues);
+    let mut queue_cache =
+        Some(cached.unwrap_or_else(|| QueuePrefixCache::new(&ws.queues, use_hold)));
     let mut builder = DagBuilder {
-        queue_filter: coverage_only.then(|| QueuePrefixCache::new(&ws.queues, use_hold)),
+        compressed,
+        frontier_budget: ws.frontier_budget.unwrap_or(200_000),
+        exhausted: false,
+        queue_filter: if coverage_only {
+            queue_cache.take()
+        } else {
+            None
+        },
         operations: &ws.operations,
         maps: &maps,
         clear_infos: &infos,
@@ -1133,6 +1653,7 @@ fn run_engine(
         mode,
         index: pc_core::FastMap::default(),
         nodes: Vec::new(),
+        edges: Vec::new(),
     };
     let root = builder.build(StructuralKey {
         prefix: 0,
@@ -1141,21 +1662,41 @@ fn run_engine(
         cleared_rows,
         mode_state: 0,
     });
+    if builder.exhausted {
+        drop(builder);
+        // Discard the incomplete graph and retry the exact prefix engine.
+        ws.frontier_fallback = true;
+        crate::diagnostics::add(11, 1);
+        return run_engine_projection(
+            coverage_only,
+            false,
+            ws,
+            base,
+            height,
+            physics,
+            mode,
+            use_hold,
+        );
+    }
+    crate::diagnostics::add(8, builder.nodes.len() as u64);
+    crate::diagnostics::add(9, builder.edges.len() as u64);
     let covered_words = ws.queues.len().div_ceil(64);
     let mut collector = PathCollector {
+        compressed,
         product_seen: FastSet::default(),
         coverage_only,
         operations: &ws.operations,
         nodes: &builder.nodes,
+        edges: &builder.edges,
         mode,
         terminal: FastSet::default(),
         variants: Vec::new(),
         queue_cache: builder
             .queue_filter
             .take()
-            .unwrap_or_else(|| QueuePrefixCache::new(&ws.queues, use_hold)),
+            .unwrap_or_else(|| queue_cache.take().expect("queue projector")),
         covered_bits: vec![0u64; covered_words],
-        prefix_prune: ws.queues.len() <= 512,
+        prefix_prune: !coverage_only && ws.queues.len() <= 512,
     };
     collector.recurse(
         root,
@@ -1189,6 +1730,10 @@ fn run_engine(
             ws.covered[collector.queue_cache.trie.perm[qi] as usize] = 1;
         }
     }
+    if crate::common::in_session() {
+        ws.prepared_queues.clone_from(&ws.queues);
+        ws.prepared = Some(collector.queue_cache);
+    }
     true
 }
 
@@ -1198,9 +1743,15 @@ pub extern "C" fn batch_engine_reset() {
         let mut ws = cell.borrow_mut();
         ws.operations.clear();
         ws.queues.clear();
+        ws.queue_generation = ws.queue_generation.wrapping_add(1).max(1);
         ws.variants.clear();
         ws.covered.clear();
         ws.congruent.clear();
+        ws.bulk.clear();
+        if !crate::common::in_session() {
+            ws.prepared = None;
+            ws.prepared_queues.clear();
+        }
     });
 }
 
@@ -1225,7 +1776,10 @@ pub extern "C" fn batch_engine_add_queue(queue: u64, len: u32) -> u32 {
         return 0;
     }
     WORKSPACE.with(|cell| {
-        cell.borrow_mut().queues.push((queue, len as u8));
+        let mut ws = cell.borrow_mut();
+        ws.queue_generation = ws.queue_generation.wrapping_add(1).max(1);
+        ws.queues.push((queue, len as u8));
+        crate::diagnostics::add(13, 1);
         1
     })
 }
@@ -1267,6 +1821,7 @@ pub extern "C" fn batch_congruent_run(
     WORKSPACE.with(|cell| {
         let mut ws = cell.borrow_mut();
         ws.congruent.clear();
+        ws.order_fallback = false;
         if !run_congruent(
             &mut ws,
             base,
@@ -1422,4 +1977,319 @@ pub extern "C" fn batch_engine_run_coverage(
         }
         ws.covered.iter().map(|&x| x as u32).sum()
     })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_session_begin() {
+    crate::common::begin_session();
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_session_end() {
+    crate::common::end_session();
+    if !crate::common::in_session() {
+        WORKSPACE.with(|cell| {
+            let mut ws = cell.borrow_mut();
+            ws.prepared = None;
+            ws.prepared_queues.clear();
+            ws.queue_generation = ws.queue_generation.wrapping_add(1).max(1);
+        });
+    }
+}
+// Owned JS copies are made before any subsequent call can grow WASM memory.
+// Each variant occupies six u32 words: IDs lo/hi, clears lo/hi, spins, PC mask.
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_variants_ptr() -> *const u32 {
+    WORKSPACE.with(|cell| {
+        let mut ws = cell.borrow_mut();
+        let mut bulk = std::mem::take(&mut ws.bulk);
+        bulk.clear();
+        for v in &ws.variants {
+            bulk.extend_from_slice(&[
+                v.ids as u32,
+                (v.ids >> 32) as u32,
+                v.clears as u32,
+                (v.clears >> 32) as u32,
+                v.tspins,
+                v.pc_mask as u32,
+            ]);
+        }
+        crate::diagnostics::add(14, bulk.len() as u64);
+        ws.bulk = bulk;
+        ws.bulk.as_ptr()
+    })
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_covered_ptr() -> *const u8 {
+    WORKSPACE.with(|cell| cell.borrow().covered.as_ptr())
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_set_frontier_budget(nodes: u32) {
+    WORKSPACE.with(|cell| cell.borrow_mut().frontier_budget = Some((nodes as usize).min(200_000)));
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_frontier_fallback() -> u32 {
+    WORKSPACE.with(|cell| cell.borrow().frontier_fallback as u32)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_congruent_max_height() -> u32 {
+    6
+}
+
+// Handles are valid only inside the owning synchronous session. Any queue
+// mutation/reset or outer session exit advances the generation.
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_queue_handle() -> u64 {
+    if !crate::common::in_session() {
+        return 0;
+    }
+    WORKSPACE.with(|cell| cell.borrow().queue_generation)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_reset_with_queues(handle: u64) -> u32 {
+    if handle == 0 || !crate::common::in_session() {
+        return 0;
+    }
+    WORKSPACE.with(|cell| {
+        let mut ws = cell.borrow_mut();
+        if ws.queue_generation != handle {
+            return 0;
+        }
+        ws.operations.clear();
+        ws.variants.clear();
+        ws.covered.clear();
+        ws.congruent.clear();
+        ws.bulk.clear();
+        1
+    })
+}
+
+// Each solution is [operation count, order count], then operations (piece,
+// mask lo/hi) and orders (lo/hi). Consumers copy before another engine call.
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_congruent_words_ptr() -> *const u32 {
+    WORKSPACE.with(|cell| {
+        let mut ws = cell.borrow_mut();
+        let mut bulk = std::mem::take(&mut ws.bulk);
+        bulk.clear();
+        for solution in &ws.congruent {
+            bulk.extend_from_slice(&[
+                solution.operations.len() as u32,
+                solution.orders.len() as u32,
+            ]);
+            for op in &solution.operations {
+                bulk.extend_from_slice(&[op.piece as u32, op.mask as u32, (op.mask >> 32) as u32]);
+            }
+            for &order in &solution.orders {
+                bulk.extend_from_slice(&[order as u32, (order >> 32) as u32]);
+            }
+        }
+        crate::diagnostics::add(14, bulk.len() as u64);
+        ws.bulk = bulk;
+        ws.bulk.as_ptr()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_bulk_word_count() -> u32 {
+    WORKSPACE.with(|cell| cell.borrow().bulk.len() as u32)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_covered_count() -> u32 {
+    WORKSPACE.with(|cell| cell.borrow().covered.iter().filter(|&&x| x != 0).count() as u32)
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_engine_covered_indices_ptr() -> *const u32 {
+    WORKSPACE.with(|cell| {
+        let mut ws = cell.borrow_mut();
+        let mut bulk = std::mem::take(&mut ws.bulk);
+        bulk.clear();
+        for (index, &covered) in ws.covered.iter().enumerate() {
+            if covered != 0 {
+                bulk.push(index as u32);
+            }
+        }
+        crate::diagnostics::add(14, bulk.len() as u64);
+        ws.bulk = bulk;
+        ws.bulk.as_ptr()
+    })
+}
+
+struct ScalarCongruentSearch {
+    base: u64,
+    height: u8,
+    physics: Physics,
+    queue_cache: QueuePrefixCache,
+    multiset_roots: Vec<u32>,
+    max_counts: [u8; 7],
+    by_cell: [Vec<BatchOperation>; 60],
+    seen: FastSet<[u64; 7]>,
+    out: Vec<CongruentSolution>,
+    limit: usize,
+    limit_hit: bool,
+}
+
+impl ScalarCongruentSearch {
+    fn recurse(&mut self, rem: u64, operations: &mut Vec<BatchOperation>, counts: &mut [u8; 7]) {
+        crate::diagnostics::add(0, 1);
+        if !self.multiset_roots.iter().any(|&root| {
+            counts
+                .iter()
+                .enumerate()
+                .all(|(piece, &used)| used as u32 <= (root >> (piece * 4)) & 15)
+        }) {
+            return;
+        }
+        if rem == 0 {
+            let mut key = [0u64; 7];
+            for op in operations.iter() {
+                key[op.piece as usize] |= op.mask;
+            }
+            if !self.seen.insert(key) {
+                return;
+            }
+            let orders = valid_orders_for_tiling(
+                self.base,
+                operations,
+                &mut self.queue_cache,
+                self.height,
+                self.physics,
+            );
+            if !orders.is_empty() {
+                if self.out.len() == self.limit {
+                    self.limit_hit = true;
+                    return;
+                }
+                self.out.push(CongruentSolution {
+                    operations: operations.clone(),
+                    orders,
+                });
+            }
+            return;
+        }
+
+        let mut best_cell = None;
+        let mut best_len = usize::MAX;
+        for idx in 0..self.height as usize * 10 {
+            if rem & (1u64 << idx) == 0 {
+                continue;
+            }
+            let count = self.by_cell[idx]
+                .iter()
+                .filter(|op| {
+                    counts[op.piece as usize] < self.max_counts[op.piece as usize]
+                        && op.mask & rem == op.mask
+                })
+                .take(best_len)
+                .count();
+            if count == 0 {
+                return;
+            }
+            if count < best_len {
+                best_cell = Some(idx);
+                best_len = count;
+                if count == 1 {
+                    break;
+                }
+            }
+        }
+        let Some(idx) = best_cell else {
+            return;
+        };
+        // Allocate only the chosen cell's candidates, retaining legacy order.
+        let candidates: Vec<_> = self.by_cell[idx]
+            .iter()
+            .copied()
+            .filter(|op| {
+                counts[op.piece as usize] < self.max_counts[op.piece as usize]
+                    && op.mask & rem == op.mask
+            })
+            .collect();
+        for op in candidates {
+            counts[op.piece as usize] += 1;
+            operations.push(op);
+            self.recurse(rem ^ op.mask, operations, counts);
+            operations.pop();
+            counts[op.piece as usize] -= 1;
+            if self.limit_hit {
+                return;
+            }
+        }
+    }
+}
+
+fn run_congruent_scalar(
+    ws: &mut BatchWorkspace,
+    base: u64,
+    fill: u64,
+    height: u8,
+    physics: Physics,
+    use_hold: bool,
+    max_solutions: usize,
+) -> bool {
+    if !(2..=6).contains(&height) || max_solutions == 0 || !fill.count_ones().is_multiple_of(4) {
+        return false;
+    }
+    let max_counts = max_piece_counts(&ws.queues);
+    let mut by_cell: [Vec<BatchOperation>; 60] = std::array::from_fn(|_| Vec::new());
+    for piece in Piece::ALL {
+        for op in geometric_placements(piece, height, fill) {
+            for (idx, bucket) in by_cell.iter_mut().enumerate().take(height as usize * 10) {
+                if op.mask & (1u64 << idx) != 0 {
+                    bucket.push(op);
+                }
+            }
+        }
+    }
+    let mut search = ScalarCongruentSearch {
+        base,
+        height,
+        physics,
+        queue_cache: QueuePrefixCache::new(&ws.queues, use_hold),
+        multiset_roots: pc_core::PcSolver::pattern_multiset_roots(
+            &ws.queues.iter().map(|q| q.0).collect::<Vec<_>>(),
+            &ws.queues.iter().map(|q| q.1).collect::<Vec<_>>(),
+            (fill.count_ones() / 4) as u8,
+            use_hold,
+        )
+        .into_iter()
+        .collect(),
+        max_counts,
+        by_cell,
+        seen: FastSet::default(),
+        out: Vec::new(),
+        limit: max_solutions,
+        limit_hit: false,
+    };
+    search.queue_cache.order_engine = ws.order_engine;
+    search.queue_cache.order_budget = ws.order_budget.unwrap_or(200_000);
+    search.recurse(fill, &mut Vec::new(), &mut [0u8; 7]);
+    ws.order_fallback = search.queue_cache.order_fallback;
+    if search.limit_hit {
+        return false;
+    }
+    ws.congruent = search.out;
+    true
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_congruent_set_engines(tiling: u32, orders: u32, budget: u32) -> u32 {
+    if tiling > 2 || orders > 4 || budget > 200_000 {
+        return 0;
+    }
+    WORKSPACE.with(|cell| {
+        let mut ws = cell.borrow_mut();
+        ws.tiling_engine = tiling as u8;
+        ws.order_engine = orders as u8;
+        ws.order_budget = Some(budget as usize);
+    });
+    1
+}
+#[unsafe(no_mangle)]
+pub extern "C" fn batch_congruent_order_fallback() -> u32 {
+    WORKSPACE.with(|cell| cell.borrow().order_fallback as u32)
 }

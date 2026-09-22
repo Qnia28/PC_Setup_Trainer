@@ -198,7 +198,12 @@ impl QueueTrie {
         ((node_count + node) << 3) | hold as u32
     }
 
-    fn advance(&self, state: u32, wanted: u8, use_hold: bool) -> impl Iterator<Item = u32> {
+    pub(crate) fn advance(
+        &self,
+        state: u32,
+        wanted: u8,
+        use_hold: bool,
+    ) -> impl Iterator<Item = u32> {
         let mut out = [0u32; 9];
         let mut len = 0;
         let mut push = |value| {
@@ -284,14 +289,65 @@ impl QueueTrie {
         Some(covered)
     }
 
-    pub fn coverage_for_order(
+    /// Existence projection without allocating a bitmap over all queue cases.
+    pub fn accepts_order(
         &self,
         order_bits: u64,
         depth: u8,
         use_hold: bool,
         scratch: &mut QueueTrieScratch,
-    ) -> Vec<u64> {
-        let node_count = self.nodes.len() as u32;
+    ) -> bool {
+        self.project_order(order_bits, depth, use_hold, scratch)
+    }
+
+    /// Canonical queue/hold frontier; ended positions preserve final Hold consumption.
+    pub fn initial_frontier(&self) -> Vec<u32> {
+        if self.perm.is_empty() {
+            Vec::new()
+        } else {
+            vec![Self::normal_state(0, 7)]
+        }
+    }
+    pub fn advance_frontier(
+        &self,
+        frontier: &[u32],
+        piece: Piece,
+        use_hold: bool,
+        scratch: &mut QueueTrieScratch,
+    ) -> Vec<u32> {
+        let generation = scratch.next_generation();
+        let mut next = Vec::new();
+        for &state in frontier {
+            for child in self.advance(state, piece as u8, use_hold) {
+                Self::push_state(&mut next, &mut scratch.state_seen, generation, child);
+            }
+        }
+        next.sort_unstable();
+        next
+    }
+    pub fn coverage_for_frontier(&self, frontier: &[u32]) -> Vec<u64> {
+        let count = self.nodes.len();
+        let mut covered = vec![0; self.words];
+        for &state in frontier {
+            let pos = (state >> 3) as usize;
+            let node = &self.nodes[pos % count];
+            let hi = if pos < count {
+                node.dfs_hi
+            } else {
+                node.dfs_lo + node.terminal_len
+            };
+            Self::set_bit_range(&mut covered, node.dfs_lo as usize, hi as usize);
+        }
+        covered
+    }
+
+    fn project_order(
+        &self,
+        order_bits: u64,
+        depth: u8,
+        use_hold: bool,
+        scratch: &mut QueueTrieScratch,
+    ) -> bool {
         scratch.cur.clear();
         scratch.next.clear();
         scratch.cur.push(Self::normal_state(0, 7));
@@ -299,7 +355,7 @@ impl QueueTrie {
         for step in 0..depth {
             let code = ((order_bits >> (step as u32 * 3)) & 7) as u8;
             if code == 0 {
-                return vec![0u64; self.words];
+                return false;
             }
             let wanted = code - 1;
             let generation = scratch.next_generation();
@@ -310,10 +366,24 @@ impl QueueTrie {
                 }
             }
             if scratch.next.is_empty() {
-                return vec![0u64; self.words];
+                return false;
             }
             std::mem::swap(&mut scratch.cur, &mut scratch.next);
         }
+        !self.perm.is_empty()
+    }
+
+    pub fn coverage_for_order(
+        &self,
+        order_bits: u64,
+        depth: u8,
+        use_hold: bool,
+        scratch: &mut QueueTrieScratch,
+    ) -> Vec<u64> {
+        if !self.project_order(order_bits, depth, use_hold, scratch) {
+            return vec![0u64; self.words];
+        }
+        let node_count = self.nodes.len() as u32;
 
         // Accumulate coverage as a bitmap over DFS positions. Each set bit at
         // position i means perm[i] (an original case ID) is covered. Consumers
@@ -338,5 +408,24 @@ impl QueueTrie {
             Self::set_bit_range(&mut covered, lo, hi);
         }
         covered
+    }
+
+    pub(crate) fn initial_state(&self) -> u32 {
+        Self::normal_state(0, 7)
+    }
+
+    pub(crate) fn add_state_coverage(&self, state: u32, covered: &mut [u64]) {
+        let pos = (state >> 3) as usize;
+        let (node, ended) = if pos < self.nodes.len() {
+            (&self.nodes[pos], false)
+        } else {
+            (&self.nodes[pos - self.nodes.len()], true)
+        };
+        let hi = if ended {
+            node.dfs_lo + node.terminal_len
+        } else {
+            node.dfs_hi
+        };
+        Self::set_bit_range(covered, node.dfs_lo as usize, hi as usize);
     }
 }

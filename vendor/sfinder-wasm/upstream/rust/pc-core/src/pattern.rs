@@ -8,7 +8,18 @@ struct MultisetState {
     remaining_counts: u32,
 }
 
+pub(crate) struct ProbabilityGeometry {
+    dag: std::sync::Arc<FlatDag>,
+    roots: Vec<u32>,
+}
+pub(crate) type ProbabilityKey = (u64, Vec<u32>);
+
 impl PcSolver {
+    pub fn clear_probability_session(&mut self) {
+        self.probability_dags.clear();
+        self.probability_dag_bytes = 0;
+    }
+
     #[inline]
     fn multiset_count(packed: u32, piece: Piece) -> u8 {
         ((packed >> (piece as u32 * 4)) & 0x0f) as u8
@@ -48,7 +59,7 @@ impl PcSolver {
     // These count roots are therefore a small exact superset of all piece
     // multisets that can participate in a PC. Queue-order validation below
     // removes roots/orders that cannot actually be produced by a concrete case.
-    fn pattern_multiset_roots(
+    pub fn pattern_multiset_roots(
         qbits: &[u64],
         qlens: &[u8],
         req: u8,
@@ -228,9 +239,12 @@ impl PcSolver {
         self.trim_cache_between_requests();
         let total = self.height as u32 * 10;
         let empty = total.saturating_sub(initial.count_ones());
-        if !empty.is_multiple_of(4) || !self.legal_accept(initial) {
+        if !empty.is_multiple_of(4) {
             return true;
         }
+        let Some(start_board) = self.initial_search_board(initial) else {
+            return true;
+        };
         let req = (empty / 4) as u8;
         if req == 0 {
             if initial == full_board(self.height) {
@@ -242,8 +256,37 @@ impl PcSolver {
         if roots.is_empty() {
             return true;
         }
-        let start_board = normalize_after_placement(initial, self.height);
-        let (dag, root_ids) = self.build_multiset_dag(start_board, &roots);
+        let mut sorted_roots: Vec<_> = roots.iter().copied().collect();
+        sorted_roots.sort_unstable();
+        let key = (start_board, sorted_roots);
+        let (dag, root_ids) =
+            if self.probability_session_depth != 0 && self.probability_dags.contains_key(&key) {
+                self.probability_dag_hits += 1;
+                let hit = &self.probability_dags[&key];
+                (std::sync::Arc::clone(&hit.dag), hit.roots.clone())
+            } else {
+                let (dag, root_ids) = self.build_multiset_dag(start_board, &roots);
+                let bytes = dag.nodes.len() * std::mem::size_of::<FlatDagNode>()
+                    + dag.edges.len() * std::mem::size_of::<DagEdge>()
+                    + dag.productive.len()
+                    + (root_ids.len() + key.1.len()) * 4
+                    + 128;
+                let dag = std::sync::Arc::new(dag);
+                if self.probability_session_depth != 0
+                    && self.probability_dags.len() < 64
+                    && self.probability_dag_bytes + bytes <= 32 * 1024 * 1024
+                {
+                    self.probability_dag_bytes += bytes;
+                    self.probability_dags.insert(
+                        key,
+                        ProbabilityGeometry {
+                            dag: std::sync::Arc::clone(&dag),
+                            roots: root_ids.clone(),
+                        },
+                    );
+                }
+                (dag, root_ids)
+            };
         if root_ids.is_empty() {
             return true;
         }
@@ -308,6 +351,63 @@ impl PcSolver {
         true
     }
 
+    pub fn enumerate_pc_path_packed(
+        &mut self,
+        initial: u64,
+        qbits: &[u64],
+        qlens: &[u8],
+        use_hold: bool,
+    ) -> Option<Vec<([u64; 7], u32)>> {
+        self.geometry_fallback = false;
+        if qbits.len() != qlens.len() || qlens.iter().any(|&len| len > 21) {
+            return None;
+        }
+        self.trim_cache_between_requests();
+        let empty = (self.height as u32 * 10).saturating_sub(initial.count_ones());
+        if empty == 0 || !empty.is_multiple_of(4) {
+            return Some(Vec::new());
+        }
+        let Some(start_board) = self.initial_search_board(initial) else {
+            return Some(Vec::new());
+        };
+        let roots = Self::pattern_multiset_roots(qbits, qlens, (empty / 4) as u8, use_hold);
+        if roots.is_empty() {
+            return Some(Vec::new());
+        }
+        let mut cleared = 0;
+        for y in 0..self.height {
+            if row(initial, y) == FULL_ROW {
+                cleared |= 1 << y;
+            }
+        }
+        let (dag, roots) = self.build_multiset_dag(start_board, &roots);
+        let trie = QueueTrie::new(qbits, qlens)?;
+        if let Some((out, stats)) = crate::geometry::collect_path_geometry(
+            self.height,
+            &dag,
+            &roots,
+            cleared,
+            &trie,
+            use_hold,
+            (empty / 4) as u8,
+            self.geometry_state_budget,
+        ) {
+            self.reconstruction_visits += stats.visits;
+            self.reconstruction_skipped += stats.skipped;
+            return Some(out);
+        }
+        self.geometry_fallback = true;
+        // An exhausted representation budget cannot turn unknown coverage into false.
+        drop(dag);
+        drop(trie);
+        self.enumerate_pc_pattern_packed(initial, qbits, qlens, use_hold)
+            .map(|rows| {
+                rows.into_iter()
+                    .map(|row| (row.solution.masks, row.cases.len() as u32))
+                    .collect()
+            })
+    }
+
     // Pattern-level compatibility enumeration for broad 4..=6-line queue sets. Geometry is
     // explored once per relevant piece multiset; concrete queues are applied
     // afterwards to the resulting piece orders. This removes the dominant
@@ -325,9 +425,12 @@ impl PcSolver {
         self.trim_cache_between_requests();
         let total = self.height as u32 * 10;
         let empty = total.saturating_sub(initial.count_ones());
-        if !empty.is_multiple_of(4) || !self.legal_accept(initial) {
+        if !empty.is_multiple_of(4) {
             return Some(Vec::new());
         }
+        let Some(start_board) = self.initial_search_board(initial) else {
+            return Some(Vec::new());
+        };
         let req = (empty / 4) as u8;
         if req == 0 {
             return Some(Vec::new());
@@ -343,7 +446,6 @@ impl PcSolver {
                 initial_cleared |= 1 << y;
             }
         }
-        let start_board = normalize_after_placement(initial, self.height);
         let (dag, root_ids) = self.build_multiset_dag(start_board, &roots);
 
         let mut compact = FastMap::default();

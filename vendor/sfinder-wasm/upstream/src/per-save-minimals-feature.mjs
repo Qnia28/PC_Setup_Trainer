@@ -17,7 +17,7 @@ export function calculateLegacyPerSaveMinimalsFeature({
   candidateLimit = 16,
 }) {
   const resolved = resolvePerSaveTargetLines({ targetLines, clear });
-  decodeAndValidate(sourceFumen, resolved);
+  const context = decodeAndValidate(sourceFumen, resolved);
   const calculation = calculatePerSaveMinimals({
     sourceFumen,
     pattern,
@@ -25,8 +25,8 @@ export function calculateLegacyPerSaveMinimalsFeature({
     useHold,
     targetLines: resolved,
     candidateLimit,
-  });
-  const encoded = encodePerSaveMinimals({ sourceFumen, title, calculation });
+  }, context);
+  const encoded = encodePerSaveMinimals({ sourceFumen, title, calculation }, context.page);
   const results = {};
   for (const [piece, result] of Object.entries(calculation.results)) {
     results[piece] = {
@@ -71,9 +71,10 @@ export async function calculatePerSaveMinimalsFeature({
   useHiGHS = undefined,
   UseHiGHS = undefined,
   fastStateBudget = undefined,
+  secondaryWorkers = 'auto',
 }) {
   const resolved = resolvePerSaveTargetLines({ targetLines, clear });
-  decodeAndValidate(sourceFumen, resolved);
+  const context = decodeAndValidate(sourceFumen, resolved);
   const calculation = await calculatePerSaveMinimalsAsync({
     sourceFumen,
     pattern,
@@ -86,8 +87,9 @@ export async function calculatePerSaveMinimalsFeature({
     useHiGHS: useHiGHS ?? UseHiGHS ?? "auto",
     fastStateBudget,
     includeCoverage: false,
-  });
-  const encoded = encodePerSaveMinimals({ sourceFumen, title, calculation });
+    secondaryWorkers,
+  }, context);
+  const encoded = encodePerSaveMinimals({ sourceFumen, title, calculation }, context.page);
   const results = {};
   for (const [piece, result] of Object.entries(calculation.results)) {
     results[piece] = {

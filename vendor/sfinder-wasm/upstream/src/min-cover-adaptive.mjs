@@ -1,3 +1,4 @@
+import { solveExactSecondary } from "./min-cover-exact-secondary.mjs";
 import {primaryRequest, selectPrimaryBackend} from "./primary-backend.mjs";
 import {isORToolsSupported, solveORToolsCardinalityKernel} from "./ortools-min-cover.mjs";
 import { minimumCover } from "./min-cover.mjs";
@@ -90,6 +91,7 @@ export async function minimumCoverAdaptiveAsync(coverage, {
   fastStateBudget = FAST_EXACT_STATE_BUDGET,
   tinyExactMaxCandidates = 48,
   primaryProof = "standard",
+  deferExactSecondary = null,
 } = {}) {
   normalizePrimaryProof(primaryProof);
   assertQualityProvider(qualityFor);
@@ -128,6 +130,7 @@ export async function minimumCoverAdaptiveAsync(coverage, {
     useHiGHS: requested,
     fastStateBudget,
     primaryProof,
+    deferExactSecondary,
   });
 }
 
@@ -139,6 +142,7 @@ export async function minimumCoverAsync(coverage, {
   useHiGHS = "auto",
   fastStateBudget = FAST_EXACT_STATE_BUDGET,
   primaryProof = "standard",
+  deferExactSecondary = null,
 } = {}) {
   normalizePrimaryProof(primaryProof);
   assertQualityProvider(qualityFor);
@@ -199,89 +203,11 @@ export async function minimumCoverAsync(coverage, {
   }
 
   if (qualityMode === "true") {
-    // Ordinary fixed-K quality problems are much faster with the canonical
-    // integrated BestSetSearch once K is already known. Bound that first
-    // attempt so pathological quality structures can fall back to the
-    // sequential-threshold exact prover without sacrificing exactness.
-    if (!primaryHard) {
-      const integrated = solver?.minimumCoverAtCount?.(coverage, primary.count, {
-        qualityFor, seedKeys: primaryKeys, stateBudget: FAST_EXACT_STATE_BUDGET, integrated: true,
-      });
-      if (integrated?.completed && Number.isFinite(integrated.count) && integrated.count === primary.count) {
-        return {
-          ...integrated,
-          backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
-          cardinalityBackend: primary.backend,
-          qualityBackend: "rust-quality-integrated",
-          qualityExact: true,
-          primaryRequested: requestedPrimary, primaryResolved: primary.backend,
-          useHiGHSRequested: requested,
-          useHiGHSResolved: primary.backend === "highs",
-          minimumCoverKernelCases: kernelStats.cases,
-          minimumCoverKernelSolutions: kernelStats.solutions,
-          minimumCoverKernelEntries: kernelStats.entries,
-          primarySearchedStates: primary.searchedStates ?? 0,
-          qualitySearchedStates: integrated.searchedStates ?? 0,
-          fastProbeBudget: null,
-          fastProbeStates: null,
-          fastFallback: false,
-          qualityDecision: "integrated-exact",
-        };
-      }
-      const sequentialSeed = integrated?.keys?.length === primary.count ? integrated.keys : primaryKeys;
-      const exact = solver?.minimumCoverAtCount?.(coverage, primary.count, {
-        qualityFor, seedKeys: sequentialSeed, lockedPrefix: [],
-      }) ?? minimumCover(coverage, { qualityFor, solver });
-      if (!Number.isFinite(exact?.count) || exact.count !== primary.count) {
-        throw new Error(`fixed-count exact quality search failed for K=${primary.count}`);
-      }
-      return {
-        ...exact,
-        backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
-        cardinalityBackend: primary.backend,
-        qualityBackend: "rust-quality-threshold-fallback",
-        qualityExact: true,
-        primaryRequested: requestedPrimary, primaryResolved: primary.backend,
-        useHiGHSRequested: requested,
-        useHiGHSResolved: primary.backend === "highs",
-        minimumCoverKernelCases: kernelStats.cases,
-        minimumCoverKernelSolutions: kernelStats.solutions,
-        minimumCoverKernelEntries: kernelStats.entries,
-        primarySearchedStates: primary.searchedStates ?? 0,
-        qualitySearchedStates: (integrated?.searchedStates ?? 0) + (exact.searchedStates ?? 0),
-        fastProbeBudget: null,
-        fastProbeStates: null,
-        fastFallback: false,
-        qualityDecision: "integrated-budget-to-threshold",
-        integratedProbeStates: integrated?.searchedStates ?? 0,
-      };
-    }
-
-    const exact = solver?.minimumCoverAtCount?.(coverage, primary.count, {
-      qualityFor, seedKeys: primaryKeys, lockedPrefix: [],
-    }) ?? minimumCover(coverage, { qualityFor, solver });
-    if (!Number.isFinite(exact?.count) || exact.count !== primary.count) {
-      throw new Error(`fixed-count exact quality search failed for K=${primary.count}`);
-    }
-    return {
-      ...exact,
-      backend: primary.backend === "highs" ? "highs+rust" : primary.backend === "kernel" ? "kernel+rust" : "rust",
-      cardinalityBackend: primary.backend,
-      qualityBackend: "rust-quality-bnb",
-      qualityExact: true,
-      primaryRequested: requestedPrimary, primaryResolved: primary.backend,
-      useHiGHSRequested: requested,
-      useHiGHSResolved: primary.backend === "highs",
-      minimumCoverKernelCases: kernelStats.cases,
-      minimumCoverKernelSolutions: kernelStats.solutions,
-      minimumCoverKernelEntries: kernelStats.entries,
-      primarySearchedStates: primary.searchedStates ?? 0,
-      qualitySearchedStates: exact.searchedStates ?? 0,
-      fastProbeBudget: null,
-      fastProbeStates: null,
-      fastFallback: false,
-      qualityDecision: "primary-hard-threshold-exact",
-    };
+    const context = { primary, primaryKeys, primaryHard, requestedPrimary, requested, kernelStats };
+    if (deferExactSecondary && !deferExactSecondary.onlyHeavy) return deferExactSecondary(prepared, context);
+      if (deferExactSecondary) return solveExactSecondary(coverage, { ...context, solver, qualityFor,
+        deferThreshold: job => deferExactSecondary(prepared, job) });
+    return solveExactSecondary(coverage, { ...context, solver, qualityFor });
   }
 
   if (primaryHard) {

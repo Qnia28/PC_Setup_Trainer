@@ -9,6 +9,8 @@ import {
   runWorkerRequest,
 } from "../../../src/solver/worker-runtime.mjs";
 
+const COMPLETED_ROW_PER_SAVE = "v115@9gRpDezhRpEeQ4hlg0zhBtR4gli0CeBtQ4glJeAgH";
+
 describe("Solver Worker memory limit", () => {
   it("recycles only after retained solver memory exceeds 128 MiB", () => {
     expect(MAX_RETAINED_SOLVER_MEMORY_BYTES).toBe(128 * 1024 * 1024);
@@ -67,5 +69,34 @@ describe("Solver Worker memory limit", () => {
 
     await expect(load(7)).rejects.toThrow("unsupported height 7");
     expect(attempts).toBe(0);
+  });
+
+  it("aggregates per-save results through two exact secondary workers and remains reusable", async () => {
+    const result = await runWorkerRequest({
+      kind: "per-save-minimals",
+      input: {
+        sourceFumen: COMPLETED_ROW_PER_SAVE,
+        pattern: "T,*p3",
+        targetLines: 4,
+        Primary: "Rust",
+        useHiGHS: false,
+        exactHumanQuality: "true",
+        secondaryWorkers: 2,
+      },
+    }) as {
+      total: number;
+      pcSuccess: number;
+      results: Record<string, { total: number; pcSuccess: number; humanQualityExact: boolean }>;
+    };
+
+    expect(result).toMatchObject({ total: 210, pcSuccess: 190 });
+    expect(Object.keys(result.results).sort()).toEqual(["I", "J", "L", "O", "S", "T", "Z"]);
+    for (const row of Object.values(result.results)) {
+      expect(row).toMatchObject({ total: 210, pcSuccess: 190, humanQualityExact: true });
+    }
+    await expect(runWorkerRequest({ kind: "warmup", input: { targetLines: 4 } })).resolves.toMatchObject({
+      targetLines: 4,
+      ready: true,
+    });
   });
 });

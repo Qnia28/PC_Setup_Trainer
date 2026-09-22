@@ -19,10 +19,10 @@ export function resolvePerSaveTargetLines({targetLines,clear}={}){
   return resolved;
 }
 
-export function perSaveInputGeometry({sourceFumen,targetLines}){
-  const page=decoder.decode(sourceFumen)[0];
+export function perSaveInputGeometry({sourceFumen,targetLines},context){
+  const page=context?.page??decoder.decode(sourceFumen)[0];
   if(!page)throw new PerSaveMinimalsInputError('empty fumen');
-  const board=boardFromFumenPage(page,targetLines);
+  const board=context?.board??boardFromFumenPage(page,targetLines);
   const occupiedCells=popcount(board);
   const remainingCells=targetLines*10-occupiedCells;
   if(remainingCells<=0){
@@ -41,9 +41,9 @@ export function perSaveInputGeometry({sourceFumen,targetLines}){
   return{page,board,targetLines,occupiedCells,remainingCells,piecesNeeded,expectedQueueLength};
 }
 
-export function calculatePerSaveMinimals({sourceFumen,pattern,solver,useHold=true,targetLines,clear,candidateLimit=16}){
+export function calculatePerSaveMinimals({sourceFumen,pattern,solver,useHold=true,targetLines,clear,candidateLimit=16},context){
   const resolvedTargetLines=resolvePerSaveTargetLines({targetLines,clear});
-  const geometry=perSaveInputGeometry({sourceFumen,targetLines:resolvedTargetLines});
+  const geometry=perSaveInputGeometry({sourceFumen,targetLines:resolvedTargetLines},context);
   const queues=expandPatternCases(pattern);
   if(queues.length===0)throw new PerSaveMinimalsInputError('pattern expands to no queues');
   const badQueue=queues.find(entry=>entry.queue.length!==geometry.expectedQueueLength);
@@ -63,7 +63,7 @@ export function calculatePerSaveMinimals({sourceFumen,pattern,solver,useHold=tru
   };
 }
 
-export function encodePerSaveMinimals({sourceFumen,title='',calculation}){
+export function encodePerSaveMinimals({sourceFumen,title='',calculation},sourcePage){
   const pages=[];
   const pageCounts={};
   for(const piece of Object.keys(calculation.results)){
@@ -73,16 +73,16 @@ export function encodePerSaveMinimals({sourceFumen,title='',calculation}){
       pages.push(solutionPage(calculation.board,solution,result.label,calculation.targetLines));
     }
   }
-  return{fumen:combineWithIntro(sourceFumen,title,pages),pageCounts};
+  return{fumen:combineWithIntro(sourceFumen,title,pages,sourcePage),pageCounts};
 }
 
 export async function calculatePerSaveMinimalsAsync({
   sourceFumen,pattern,solver,useHold=true,targetLines,clear,candidateLimit=16,
   primary=undefined,Primary=undefined,exactHumanQuality="true",useHiGHS="auto",UseHiGHS=undefined,fastStateBudget=undefined,
-  tinyExactMaxCandidates=48,includeCoverage=true,
-}){
+  tinyExactMaxCandidates=48,includeCoverage=true,secondaryWorkers='auto',
+},context){
   const resolvedTargetLines=resolvePerSaveTargetLines({targetLines,clear});
-  const geometry=perSaveInputGeometry({sourceFumen,targetLines:resolvedTargetLines});
+  const geometry=perSaveInputGeometry({sourceFumen,targetLines:resolvedTargetLines},context);
   const queues=expandPatternCases(pattern);
   if(queues.length===0)throw new PerSaveMinimalsInputError('pattern expands to no queues');
   const badQueue=queues.find(entry=>entry.queue.length!==geometry.expectedQueueLength);
@@ -95,7 +95,7 @@ export async function calculatePerSaveMinimalsAsync({
   return{
     ...await calculatePerSaveMinimalsFromBoardAsync({
       board:geometry.board,queues,solver,useHold,candidateLimit,
-      exactHumanQuality,primary:primary??Primary,useHiGHS:UseHiGHS??useHiGHS,fastStateBudget,tinyExactMaxCandidates,includeCoverage,
+      exactHumanQuality,primary:primary??Primary,useHiGHS:UseHiGHS??useHiGHS,fastStateBudget,tinyExactMaxCandidates,includeCoverage,secondaryWorkers,
     }),
     targetLines:geometry.targetLines,
     occupiedCells:geometry.occupiedCells,
